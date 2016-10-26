@@ -14,4 +14,4 @@ env:
     - R_CHECK_ARGS="--no-build-vignettes"
 
 after_success:
-    - Rscript -e 'library(covr);codecov()'
+  - bash <(curl -s https://codecov.io/bash)
