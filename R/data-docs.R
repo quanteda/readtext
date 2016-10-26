@@ -1,0 +1,49 @@
+
+#' @name encodedTextxtss
+#' @title a .zip file of texts containing a variety of differently encoded texts
+#' @source The Universal Declaration of Human Rights resources, 
+#'   \url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
+#' @docType data
+#' @description A set of translations of the Universal Declaration of Human
+#'   Rights, plus one or two other miscellaneous texts, for testing the text
+#'   input functions that need to translate different input encodings.
+#' @examples
+#' \dontrun{# unzip the files to a temporary directory
+#' FILEDIR <- tempdir()
+#' unzip(system.file("extdata", "encodedTextFiles.zip", package = "readtext"), exdir = FILEDIR)
+#' 
+#' # get encoding from filename
+#' filenames <- list.files(FILEDIR, "\\.txt$")
+#' # strip the extension
+#' filenames <- gsub(".txt$", "", filenames)
+#' parts <- strsplit(filenames, "_")
+#' fileencodings <- sapply(parts, "[", 3)
+#' fileencodings
+#' 
+#' # find out which conversions are unavailable (through iconv())
+#' cat("Encoding conversions not available for this platform:")
+#' notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
+#' fileencodings[notAvailableIndex]
+#' 
+#' # try readtxt
+#' txts <- readtxt(paste0(FILEDIR, "/", "*.txt"))
+#' substring(texts(txts)[1], 1, 80) # gibberish
+#' substring(texts(txts)[4], 1, 80) # hex
+#' substring(texts(txts)[40], 1, 80) # hex
+#' 
+#' # read them in again
+#' txts <- readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
+#' substring(texts(txts)[1], 1, 80)  # English
+#' substring(texts(txts)[4], 1, 80)  # Arabic, looking good 
+#' substring(texts(txts)[40], 1, 80) # Cyrillic, looking good
+#' substring(texts(txts)[7], 1, 80)  # Chinese, looking good
+#' substring(texts(txts)[26], 1, 80) # Hindi, looking good
+#' 
+#' txts <- readtxt(paste0(FILEDIR, "/", "*.txt"), encoding = fileencodings,
+#'                   docvarsfrom = "filenames", 
+#'                   docvarnames = c("document", "language", "inputEncoding"))
+#' encodingCorpus <- corpus(txts, source = "Created by encoding-tests.R") 
+#' summary(encodingCorpus)
+#' }
+NULL
+
