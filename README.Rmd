@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 An R package for reading text files in all their various formats, by Ken Benoit, Paul Nulty, and Adam Obeng.  (In alphabetical order, not by order of contribution.)
 
-## Introdution
+## Introduction
 
 **readtext** is a one-function package that does exactly what it says on the tin: It reads files containing text, along with any associated document-level metadata, which we call "docvars", for document variables.  Plain text files do not have docvars, but other forms such as .csv, .tab, .xml, and .json files usually do.  
 
