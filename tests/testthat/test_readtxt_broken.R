@@ -2,13 +2,6 @@
 # 
 # Sys.setenv("R_TESTS" = "tests/testthat")
 # 
-# test_that("test globbed tar file",{
-#     expect_equal(
-#         sort(unname(texts(readtext('../data/tar/*')))),
-#         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-#     )
-# })
-# 
 # test_that("test json files", {
 #     expect_equal(
 #         sort(unname(texts(readtext('../data/json/*json', textField='text')))),
