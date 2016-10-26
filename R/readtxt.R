@@ -57,15 +57,6 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' @param docvarnames character vector of variable names for \code{docvars}, if 
 #'   \code{docvarsfrom} is specified.  If this argument is not used, default 
 #'   docvar names will be used (\code{docvar1}, \code{docvar2}, ...).
-#' @param cache If \code{TRUE}, write the object to a temporary file and store 
-#'   the temporary filename in the \link{readtext-class} object definition. 
-#'   If \code{FALSE}, return the data in the object. Caching the file provides a
-#'   way to read in very large quantities of textual data without storing two 
-#'   copies in memory: one as a \link{readtext-class} object and the second 
-#'   as a \link{corpus} class object.  It also provides a way to try different 
-#'   settings of encoding conversion when creating a corpus from a 
-#'   \link{readtext-class} object, without having to load in all of the 
-#'   source data again
 #' @param encoding vector: either the encoding of all files, or one encoding
 #'   for each files
 #' @param ignoreMissingFiles if \code{FALSE}, then if the file
@@ -83,15 +74,17 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' @details If \code{cache = TRUE}, the constructor does not store a copy of 
 #'   the texts, but rather reads
 #'   in the texts and associated data, and saves them to a temporary disk file 
-#'   whose location is specified in the \link{readtext-class} object.  This 
+#'   whose location is specified in the \link{readtext} object.  This 
 #'   prevents a complete copy of the object from cluttering the global 
 #'   environment and consuming additional space.  This does mean however that 
 #'   the state of the file containing the source data will not be cross-platform
 #'   and may not be persistent across sessions.  So the recommended usage is to 
 #'   load the data into a corpus in the same session in which \code{readtxt} is
 #'   called.
-#' @return an object of class \link{readtext-class} that can be read by 
-#'   \link{corpus} to construct a corpus
+#' @return a data.frame consisting of a first column \code{texts} that contains
+#' the texts, with any additional columns consisting of docvars.  This object can
+#' be input directly into the \pkg{quanteda} package's \code{\link[quanteda]{corpus}} 
+#' to construct a corpus.
 #' @author Adam Obeng, Kenneth Benoit, and Paul Nulty
 #' @export
 #' @importFrom utils unzip type.convert

@@ -77,20 +77,12 @@ as it would be give to \code{\link{iconv}}.  See the Encoding section of
 \link{file} for details.  Also useful for passing arguments through to
 \code{\link{read.csv}}, for instance `quote = ""`, if quotes are causing
 problems within comma-delimited fields.}
-
-\item{cache}{If \code{TRUE}, write the object to a temporary file and store 
-the temporary filename in the \link{readtext-class} object definition. 
-If \code{FALSE}, return the data in the object. Caching the file provides a
-way to read in very large quantities of textual data without storing two 
-copies in memory: one as a \link{readtext-class} object and the second 
-as a \link{corpus} class object.  It also provides a way to try different 
-settings of encoding conversion when creating a corpus from a 
-\link{readtext-class} object, without having to load in all of the 
-source data again}
 }
 \value{
-an object of class \link{readtext-class} that can be read by 
-  \link{corpus} to construct a corpus
+a data.frame consisting of a first column \code{texts} that contains
+the texts, with any additional columns consisting of docvars.  This object can
+be input directly into the \pkg{quanteda} package's \code{\link[quanteda]{corpus}} 
+to construct a corpus.
 }
 \description{
 Read texts and (if any) associated document-level meta-data from one or more source files. 
@@ -102,7 +94,7 @@ metadata ("docvars") come from either the file contents or filenames.
 If \code{cache = TRUE}, the constructor does not store a copy of 
   the texts, but rather reads
   in the texts and associated data, and saves them to a temporary disk file 
-  whose location is specified in the \link{readtext-class} object.  This 
+  whose location is specified in the \link{readtext} object.  This 
   prevents a complete copy of the object from cluttering the global 
   environment and consuming additional space.  This does mean however that 
   the state of the file containing the source data will not be cross-platform

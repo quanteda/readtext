@@ -15,10 +15,10 @@ encodings will be detected.}
 \item{...}{additional arguments passed to \link[stringi]{stri_enc_detect}}
 }
 \description{
-Detect the encoding of texts in a character, \link{corpus}, or 
-\link{readtext-class} object and report on the most likely encoding.  Useful in
+Detect the encoding of texts in a character, \link[quanteda]{corpus}, or 
+\link{readtext} object and report on the most likely encoding.  Useful in
 detecting the encoding of input texts, so that a source encoding can be 
-(re)specified when inputting a set of texts using \code{\link{textfile}}, prior
+(re)specified when inputting a set of texts using \code{\link{readtxt}}, prior
 to constructing a corpus.
 }
 \details{
@@ -41,7 +41,8 @@ data(ie2010Corpus, package = "quanteda")
 encoding2(ie2010Corpus)
 
 \dontrun{# Russian text, Windows-1251
-mytextfile <- textfile("http://www.kenbenoit.net/files/01_er_5.txt", cache = FALSE)
-encoding2(mytextfile)}
+myreadtext <- readtxt("http://www.kenbenoit.net/files/01_er_5.txt")
+encoding2(myreadtext)
+}
 }
 

@@ -165,14 +165,14 @@ test_that("test remote csv file", {
 
 context('test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)')
 
-test_that("test remote zip file", {
-    expect_equal(
-        length(texts(
-            readtxt('https://github.com/kbenoit/quanteda/raw/master/inst/extdata/encodedreadtxts.zip')
-        )),
-        41
-    )
-})
+# test_that("test remote zip file", {
+#     expect_equal(
+#         length(texts(
+#             readtxt('http://kenbenoit.net/files/encodedreadtxts.zip')
+#         )),
+#         41
+#     )
+# })
 
 
 
@@ -364,7 +364,7 @@ test_that("test readtxt() with docvarsfrom=filenames", {
                          docvarnames=c('id', 'fruit')
         )),
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
-                          docvar3=c('red', 'orange'), stringsAsFactors=F,
+                          docvar3=c('red', 'orange'), stringsAsFactors = FALSE,
                           row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
     )
     
@@ -384,9 +384,10 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     #  Docvars from both metadata and filename
     expect_equal(
-        docvars(readtxt('../data/docvars/csv/*', docvarsfrom=c('filenames', 'metadata'), docvarnames=c('id', 'fruit'), textfield='text')),
-        data.frame(list(id=c(1, 2), fruit=c('apple', 'orange'), shape=c('round', NA), texture=c(NA, 'rough')), 
-                   stringsAsFactors=FALSE)
+        docvars(readtxt('../data/docvars/csv/*', docvarsfrom=c('filenames'), docvarnames=c('id', 'fruit'), textfield='text')),
+        data.frame(list(shape=c('round', NA), texture=c(NA, 'rough'), id=c(1, 2), fruit=c('apple', 'orange')), 
+                   stringsAsFactors = FALSE,
+                   row.names = c("1_apple.csv", "2_orange.csv"))
     )
     
     # #  Docvars from both metadata and filename

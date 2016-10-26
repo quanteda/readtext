@@ -9,7 +9,7 @@ output:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "##",
   fig.path = "images/"
 )
 ```
@@ -91,8 +91,6 @@ readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
 ```
 
 ## To Do List
-
-1.  Need to tidy up for passing CHECK.  
 
 2.  (Adam) Inspect the **testthat** tests, see my comments.
 

@@ -1,2 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
+^CONDUCT\.md$
+^images
+^.git
+__MACOSX
+^\.travis*
+^vignettes/figure
+^\.httr-oauth$

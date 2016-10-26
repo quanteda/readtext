@@ -1,9 +1,9 @@
 #' detect the encoding of texts
 #' 
-#' Detect the encoding of texts in a character, \link{corpus}, or 
-#' \link{readtext-class} object and report on the most likely encoding.  Useful in
+#' Detect the encoding of texts in a character, \link[quanteda]{corpus}, or 
+#' \link{readtext} object and report on the most likely encoding.  Useful in
 #' detecting the encoding of input texts, so that a source encoding can be 
-#' (re)specified when inputting a set of texts using \code{\link{textfile}}, prior
+#' (re)specified when inputting a set of texts using \code{\link{readtxt}}, prior
 #' to constructing a corpus.
 #' 
 #' Based on \link[stringi]{stri_enc_detect}, which is in turn based on the 
@@ -26,8 +26,9 @@
 #' encoding2(ie2010Corpus)
 #' 
 #' \dontrun{# Russian text, Windows-1251
-#' mytextfile <- textfile("http://www.kenbenoit.net/files/01_er_5.txt", cache = FALSE)
-#' encoding2(mytextfile)}
+#' myreadtext <- readtxt("http://www.kenbenoit.net/files/01_er_5.txt")
+#' encoding2(myreadtext)
+#' }
 #' @export
 encoding2 <- function(x, verbose = TRUE, ...) {
     UseMethod("encoding2")
@@ -35,13 +36,14 @@ encoding2 <- function(x, verbose = TRUE, ...) {
 
 #' @method encoding2 character
 #' @export
+#' @import data.table stringi
 encoding2.character <- function(x, verbose = TRUE, ...) {
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
         warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
 
-    confidence <- conf <- NULL
+    encoding <- confidence <- conf <- NULL
     n <- 1
 
     # assign names if none
@@ -104,17 +106,18 @@ encoding2.character <- function(x, verbose = TRUE, ...) {
 
 
 #' @method encoding2 corpus
+#' @importFrom quanteda texts
 #' @export
 encoding2.corpus <- function(x, verbose = TRUE, ...) {
-    if (verbose) show(x)
-    encoding2(texts(x), verbose, ...)    
+    if (verbose) print(x)
+    encoding2(quanteda::texts(x), verbose, ...)    
 }
 
 #' @method encoding2 readtext
 #' @export
 encoding2.readtext <- function(x, verbose = TRUE, ...) {
-    if (verbose) show(x)
-    encoding2(texts(x), verbose, ...)    
+    if (verbose) print(x)
+    encoding2(readtext::texts(x), verbose, ...)    
 }
 
 
