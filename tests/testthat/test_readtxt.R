@@ -307,12 +307,11 @@ test_that("test readtxt() with docvarsfrom=filenames", {
                           row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
     )
     
-    # STRANGE ERRORS
-    # expect_that(
-    #     docvars(readtxt('../data/docvars/two/*json', textfield='nonesuch', 
-    #                     docvarsfrom='filenames')),
-    #     throws_error("There is no field called")
-    # )
+    expect_that(
+        docvars(readtxt('../data/docvars/two/*json', textfield='nonesuch', 
+                        docvarsfrom='filenames')),
+        throws_error("There is no field called")
+    )
     
     expect_that(
         docvars(readtxt('../data/docvars/unequal/*', docvarsfrom='filenames')),
