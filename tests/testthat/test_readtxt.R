@@ -389,17 +389,15 @@ test_that("test docvars.readtext warning with field!=NULL", {
 
 
 
-#  test_that("test readtxt encoding parameter: UTF-8 encoded file, read as UTF-16 (should not work)", {
-#       print(file.path(FILEDIR, 'UTF-8__characters.txt'))
-#       print(file.exists(file.path(FILEDIR, 'UTF-8__characters.txt')))
-#       expect_warning(
-#         misread_texts <- texts(readtxt(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-16'))
-#       )
-#       utf8_bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
-#       expect_false(
-#              all(as.numeric(charToRaw(misread_texts)) == utf8_bytes)
-#       )
-#  })
+ test_that("test readtxt encoding parameter: UTF-8 encoded file, read as UTF-16 (should not work)", {
+      expect_warning(
+        misread_texts <- texts(readtxt(file.path('../data/encoding', 'UTF-8__characters.txt'), encoding='utf-16'))
+      )
+      utf8_bytes <- data.table::fread(file.path('../data/encoding', 'UTF-8__bytes.tsv'))[[1]]
+      expect_false(
+             all(as.numeric(charToRaw(misread_texts)) == utf8_bytes)
+      )
+ })
 
 
 test_that("test that readtxt encoding argument must be either length 1 or same length as the number of files", {
