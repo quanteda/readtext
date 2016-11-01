@@ -30,13 +30,6 @@ test_that("test print.readtext", {
     )
     
     
-    # testreadtext <- readtxt( '../data/fox/fox.txt', cache = TRUE)
-    # expect_that(
-    #     print(testreadtext),
-    #     prints_text('readtext object with data cached')
-    # )
-    
-    
 })
 
 
@@ -48,33 +41,15 @@ test_that("test readtxt with single filename", {
     )
 })
 
-# test_that("test cached readtxt with single filename", {
-#     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
-#     expect_equal(
-#         texts(readtxt('../data/fox/fox.txt', cache=T)),
-#         fox
-#     )
-# })
-
-# test_that("test classes, slots, and extractor functions", {
-#     
-#     testreadtxt <- readtxt('../data/fox/fox.txt')
-#     
-#     
-#     expect_equal(
-#         slotNames(testreadtxt),
-#         c('texts', 'docvars', 'source', 'created', 'cachedfile')
-#     )
-#     
-#     
-#     expect_is(testreadtxt, 'readtext')
-#     expect_is(testreadtxt@texts, 'character')
-#     expect_is(testreadtxt@docvars, 'data.frame')
-#     expect_is(testreadtxt@source, 'character')
-#     expect_is(testreadtxt@cachedfile, 'character')
-#     
-#     
-# })
+test_that("test classes, slots, and extractor functions", {
+ 
+ testreadtxt <- readtxt('../data/fox/fox.txt')
+ docvars(testreadtxt)
+ 
+ 
+ expect_is(testreadtxt, 'readtext')
+ 
+})
 
 test_that("test readtxt with vector of filenames", {
     expect_equal(

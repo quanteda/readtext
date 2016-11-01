@@ -71,16 +71,6 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \link{file} for details.  Also useful for passing arguments through to
 #'   \code{\link{read.csv}}, for instance `quote = ""`, if quotes are causing
 #'   problems within comma-delimited fields.
-#' @details If \code{cache = TRUE}, the constructor does not store a copy of 
-#'   the texts, but rather reads
-#'   in the texts and associated data, and saves them to a temporary disk file 
-#'   whose location is specified in the \link{readtext} object.  This 
-#'   prevents a complete copy of the object from cluttering the global 
-#'   environment and consuming additional space.  This does mean however that 
-#'   the state of the file containing the source data will not be cross-platform
-#'   and may not be persistent across sessions.  So the recommended usage is to 
-#'   load the data into a corpus in the same session in which \code{readtxt} is
-#'   called.
 #' @return a data.frame consisting of a first column \code{texts} that contains
 #' the texts, with any additional columns consisting of docvars.  This object can
 #' be input directly into the \pkg{quanteda} package's \code{\link[quanteda]{corpus}} 
