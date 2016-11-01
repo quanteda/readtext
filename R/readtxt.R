@@ -108,7 +108,7 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
     
     # combine all of the data.frames returned
@@ -137,6 +137,7 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
 getSource <- function(f, textfield, ...) {
+
     # extension <- file_ext(f)
 
     # fileType <- tryCatch({
