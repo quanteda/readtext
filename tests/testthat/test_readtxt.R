@@ -718,27 +718,27 @@ test_that("test readtxt encoding parameter: ASCII encoded file, read as UTF-8: (
     )
 })
 
-#  context('Loading a corpus from a tar archive')
-#  test_that("A single-level tar file containing txt files can be loaded",{
-#      expect_equal(
-#          unname(sort(texts(corpus(readtxt('../data/tar/test.tar'))))),
-#          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-#      )
-#  })
+ context('Loading a corpus from a tar archive')
+ test_that("A single-level tar file containing txt files can be loaded",{
+     expect_equal(
+         unname(sort(texts(readtxt('../data/tar/test.tar')))),
+         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+     )
+ })
 
-#  context('Loading a corpus from a gzipped tar archive')
-#  test_that("A single-level tar.gz file containing txt files can be loaded",{
-#      expect_equal(
-#          sort(unname(texts(corpus(readtxt('../data/targz/test.tar.gz'))))),
-#          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-#      )
-#  })
+ context('Loading a corpus from a gzipped tar archive')
+ test_that("A single-level tar.gz file containing txt files can be loaded",{
+     expect_equal(
+         sort(unname(texts(readtxt('../data/targz/test.tar.gz')))),
+         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+     )
+ })
 
-#  context('Loading a corpus from a bzipped tar archive')
-#  test_that("A single-level tar.bz file containing txt files can be loaded",{
-#      skip_on_os("windows")
-#      expect_equal(
-#          sort(unname(texts(corpus(readtxt('../data/tarbz/test.tar.bz'))))),
-#          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-#      )
-#  })
+ context('Loading a corpus from a bzipped tar archive')
+ test_that("A single-level tar.bz file containing txt files can be loaded",{
+     skip_on_os("windows")
+     expect_equal(
+         sort(unname(texts(readtxt('../data/tarbz/test.tar.bz')))),
+         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+     )
+ })
