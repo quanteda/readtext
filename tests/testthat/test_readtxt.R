@@ -604,8 +604,6 @@ test_that("test globbed tar file",{
     )
 })
 
-readtxt('../data/json/*json', textfield='text')
-
 test_that("test json files", {
     expect_equal(
         sort(unname(texts(readtxt('../data/json/*json', textfield='text')))),
