@@ -604,63 +604,64 @@ test_that("test globbed tar file",{
     )
 })
 
+readtxt('../data/json/*json', textfield='text')
 
-#   test_that("test json files", {
-#       expect_equal(
-#           sort(unname(texts(readtxt('../data/json/*json', textField='text')))),
-#           c('brown fox', 'Dolor sit', 'Lorem ipsum', 'Now is the winter', 'The quick')
-#       )
-#       
-#       #  test.json and test2.json are newline-delimited json
-#       #  test3.json is a single json object
-#       expected_docvars <- data.frame(list(
-#           colour=c('green', 'red', 'orange', 'blue', NA), 
-#           number=c(42, 99, 0, NA, 3)),
-#           stringsAsFactors=F)
-#       expected_docvars <- expected_docvars[order(expected_docvars$number),]
-#       row.names(expected_docvars) <- NULL
-#       actual_docvars <- docvars(readtxt('../data/json/*json', textField='text'))
-#       actual_docvars <- actual_docvars[order(actual_docvars$number),]
-#       row.names(actual_docvars) <- NULL
-#       row.names(actual_docvars)
-#       row.names(expected_docvars)
-#       expect_equal(
-#           actual_docvars,
-#           expected_docvars
-#       )
-#       
-#       expect_that(
-#           texts(readtxt('../data/json/*json', textField=1)),
-#           throws_error('Cannot use numeric textField with json file')
-#       )
-#       
-#       expect_that(
-#           texts(readtxt('../data/json/test3.json', textField='nonesuch')),
-#           throws_error('There is no field called nonesuch in file')
-#       )
-#       
-#       
-#       # Twitter json files
-#       tweetSource <- readtxt('../data/tweets/stream.json')
-#       
-#       expect_equal(
-#           texts(tweetSource),
-#           c(stream.json="I jumped over the lazy @dog", stream.json="Yawn")
-#       )
-#       
-#       expect_equal(
-#           docvars(tweetSource)$statuses_count,
-#           c(16204, 200)
-#       )
-#       
-#       expect_equal(
-#           docvars(tweetSource)$screen_name,
-#           c('foxxy', 'dog')
-#       )
-#       
-#       
-#   })
- 
+test_that("test json files", {
+    expect_equal(
+        sort(unname(texts(readtxt('../data/json/*json', textfield='text')))),
+        c('brown fox', 'Dolor sit', 'Lorem ipsum', 'Now is the winter', 'The quick')
+    )
+    
+    #  test.json and test2.json are newline-delimited json
+    #  test3.json is a single json object
+    expected_docvars <- data.frame(list(
+        colour=c('green', 'red', 'orange', 'blue', NA), 
+        number=c(42, 99, 0, NA, 3)),
+        stringsAsFactors=F)
+    expected_docvars <- expected_docvars[order(expected_docvars$number),]
+    row.names(expected_docvars) <- NULL
+    actual_docvars <- docvars(readtxt('../data/json/*json', textfield='text'))
+    actual_docvars <- actual_docvars[order(actual_docvars$number),]
+    row.names(actual_docvars) <- NULL
+    row.names(actual_docvars)
+    row.names(expected_docvars)
+    expect_equal(
+        actual_docvars,
+        expected_docvars
+    )
+    
+    expect_that(
+        texts(readtxt('../data/json/*json', textfield=1)),
+        throws_error('Cannot use numeric textfield with json file')
+    )
+    
+    expect_that(
+        texts(readtxt('../data/json/test3.json', textfield='nonesuch')),
+        throws_error('There is no field called nonesuch in file')
+    )
+    
+    
+    # Twitter json files
+    tweetSource <- readtxt('../data/tweets/stream.json')
+    
+    expect_equal(
+        texts(tweetSource),
+        c(stream.json="I jumped over the lazy @dog", stream.json="Yawn")
+    )
+    
+    expect_equal(
+        docvars(tweetSource)$statuses_count,
+        c(16204, 200)
+    )
+    
+    expect_equal(
+        docvars(tweetSource)$screen_name,
+        c('foxxy', 'dog')
+    )
+    
+    
+})
+
 
 test_that("test encoding handling (skipped on travis and CRAN", {
     skip_on_cran()
