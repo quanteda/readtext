@@ -119,9 +119,9 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     # for identical filenames
     uniqueparts <- basename_unique(files, pathonly = TRUE)
     row.names(result) <- if (!identical(uniqueparts, "")) {
-         paste(uniqueparts, as.character(sapply(sources, row.names)), sep = "/")
+         paste(uniqueparts, as.character(as.character(unlist(sapply(sources, row.names)))), sep = "/")
     } else {
-         as.character(sapply(sources, row.names))
+         as.character(unlist(sapply(sources, row.names)))
     }
 
     if ("filenames" %in% docvarsfrom) {
