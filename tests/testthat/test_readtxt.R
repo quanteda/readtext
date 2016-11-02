@@ -644,7 +644,7 @@ test_that("test json files", {
     
     expect_equal(
         texts(tweetSource),
-        c(stream.json="I jumped over the lazy @dog", stream.json="Yawn")
+        c(stream.json.1="I jumped over the lazy @dog", stream.json.2="Yawn")
     )
     
     expect_equal(
@@ -659,7 +659,6 @@ test_that("test json files", {
     
     
 })
-
 
 test_that("test encoding handling (skipped on travis and CRAN", {
     skip_on_cran()
