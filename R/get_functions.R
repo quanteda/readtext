@@ -8,7 +8,17 @@ get_txt <- function(f, ...) {
 
 ## csv format
 get_csv <- function(path, textfield, ...) {
-    docs <- utils::read.csv(path, stringsAsFactors = FALSE, ...)
+
+    #  Use the encoding arg to open the file, pass all other args to fread
+    args <- list(...)
+    txt <- paste(readLines(con <- file(path), encoding=args$encoding, warn = FALSE), collapse="\n")
+    close(con)
+
+    args$encoding <- NULL
+    args <- c(list(input=txt, stringsAsFactors=F), args)
+
+
+    docs <- as.data.frame(do.call(data.table::fread, args))
     if (is.character(textfield)) {
         textfieldi <- which(names(docs) == textfield)
         if (length(textfieldi) == 0)
@@ -17,7 +27,6 @@ get_csv <- function(path, textfield, ...) {
     } else if (is.numeric(textfield) & (textfield > ncol(docs))) {
         stop(paste0("There is no ", textfield, "th field in file ", path))
     }
-    
     data.frame(texts = docs[, textfield], docs[, -textfield, drop = FALSE],
                stringsAsFactors = FALSE)
 }
