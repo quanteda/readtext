@@ -15,10 +15,10 @@ get_csv <- function(path, textfield, ...) {
     close(con)
 
     args$encoding <- NULL
-    args <- c(list(input=txt, stringsAsFactors=F), args)
+    args <- c(list(input=txt, data.table=F, stringsAsFactors=F), args)
 
 
-    docs <- as.data.frame(do.call(data.table::fread, args))
+    docs <- do.call(data.table::fread, args)
     if (is.character(textfield)) {
         textfieldi <- which(names(docs) == textfield)
         if (length(textfieldi) == 0)
