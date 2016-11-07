@@ -159,7 +159,7 @@ get_pdf <- function(f, ...) {
 get_docx <- function(f, ...) {
     args <- list(...)
     txt <- paste0(
-      qdapTools::read_docx('../data/docx/test.docx'), collapse=''
+      qdapTools::read_docx(f), collapse=''
     )
     data.frame(texts = txt, stringsAsFactors = FALSE)
 }
