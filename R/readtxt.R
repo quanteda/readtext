@@ -45,7 +45,8 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   }
 #' @param textfield a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
-#'   specified for file types \code{.csv} and \code{.json}.
+#'   specified for file types \code{.csv} and \code{.json}. For XML files
+#'   an XPath expression can be specified. 
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtxt} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 

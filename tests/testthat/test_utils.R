@@ -1,4 +1,4 @@
-test_that("Test quanteda:::mktemp function for test dirs",{
+test_that("Test readtext:::mktemp function for test dirs",{
     filename <- quanteda:::mktemp()
     expect_true(file.exists(filename))
     filename2 <- quanteda:::mktemp()
@@ -28,3 +28,9 @@ test_that("Test quanteda:::mktemp function for test dirs",{
     
 })
 
+test_that("Test quanteda:::mktemp function for test dirs",{
+    expect_false(is_probably_xpath('A'))
+    expect_false(is_probably_xpath('a:what'))
+    expect_true(is_probably_xpath('/A/B/C'))
+    expect_true(is_probably_xpath('A/B/C'))
+})

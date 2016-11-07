@@ -307,6 +307,21 @@ test_that("test xml files", {
 })
 
 
+test_that("test xml files with XPath", {
+
+    expected <- c('The quick brown fox')
+    names(expected) <- 'tei.xml'
+
+    expect_equal(
+        texts(readtxt('../data/xml/tei.xml',
+                      textfield='/tei:TEI/tei:text/tei:body//tei:p',
+                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))),
+         expected
+    )
+
+
+})
+
 
 test_that("test readtxt() with docvarsfrom=filenames", {
     
