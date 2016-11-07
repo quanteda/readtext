@@ -163,3 +163,13 @@ get_docx <- function(f, ...) {
     )
     data.frame(texts = txt, stringsAsFactors = FALSE)
 }
+
+get_doc <- function(f, ...) {
+    args <- list(...)
+
+    rd <- tm::readDOC()
+    txt <- rd(elem=list(uri=f), language='')
+    txt <- paste0(txt, collapse=' ')
+    txt <- trimws(txt)
+    data.frame(texts = txt, stringsAsFactors = FALSE)
+}

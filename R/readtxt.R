@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx')
+SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
+names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
 
 
 #' read a text file(s)
@@ -25,6 +25,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   Object Notation, consisting of the texts and optionally additional docvars.
 #'   The supported formats are:
 #'   \item PDF files
+#'   \item .doc and .docx Word files
 #'   \itemize{
 #'   \item a single JSON object per file
 #'   \item line-delimited JSON, with one object per line
@@ -178,6 +179,7 @@ getSource <- function(f, textfield, ...) {
                html = get_html(f, textfield=textfield, ...),
                pdf = get_pdf(f, ...),
                docx = get_docx(f, ...),
+               doc = get_doc(f, ...)
         )
 
     # assign filename (variants) unique text names

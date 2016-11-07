@@ -179,11 +179,6 @@ context('test that require recursive invocation of listFileNames (i.e. because a
 
 test_that("test non-implemented functions", {
     
-    expect_that(
-        readtxt('../data/empty/empty.doc'),
-        throws_error('Unsupported extension doc')
-    )
-    
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -666,3 +661,14 @@ test_that("test for docx file", {
 })
 
 
+
+test_that("test for doc file", {
+    expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
+    expected <- trimws(expected)
+    names(expected) <- 'test.doc'
+
+    expect_equal(
+        texts(readtxt('../data/doc/test.doc')),
+        expected
+    )
+})

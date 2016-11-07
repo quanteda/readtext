@@ -31,7 +31,8 @@ Suggests:
     XML,
     testthat,
     pdftools,
-    qdapTools
+    qdapTools,
+    tm
 URL: http://github.com/kbenoit/readtext
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/readtext/issues
