@@ -165,7 +165,7 @@ getSource <- function(f, textfield, ...) {
     if (!(fileType %in% SUPPORTED_FILETYPE_MAPPING))
         if (dir.exists(f)) {
             call <- deparse(sys.call(1))
-            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed=T)
+            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed=TRUE)
             stop("File '", f, "' does not exist, but a directory of this name does exist. ",
                  "To read all files in a directory, you must pass a glob expression like ",
                  call
