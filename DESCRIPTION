@@ -29,7 +29,8 @@ Suggests:
     jsonlite (>= 0.9.10),
     streamR,
     XML,
-    testthat
+    testthat,
+    pdftools
 URL: http://github.com/kbenoit/readtext
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/readtext/issues

@@ -133,3 +133,25 @@ get_xml <- function(path, textfield, encoding,...) {
 }
 
 
+get_html <- function(f, ...) {
+    args <- list(...)
+
+    # http://stackoverflow.com/a/3195926
+    html <- XML::htmlTreeParse(f, useInternal = TRUE)
+    txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]", 
+                           XML::xmlValue)
+    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- paste0(txt, collapse='')
+
+    data.frame(texts = txt, stringsAsFactors = FALSE)
+}
+
+
+get_pdf <- function(f, ...) {
+    args <- list(...)
+
+    txt <- pdftools::pdf_text(f)
+    print(txt)
+    txt <- paste0(txt, collapse='')
+    data.frame(texts = txt, stringsAsFactors = FALSE)
+}

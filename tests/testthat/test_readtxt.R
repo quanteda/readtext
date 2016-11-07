@@ -189,12 +189,6 @@ test_that("test non-implemented functions", {
         throws_error('Unsupported extension docx')
     )
     
-    expect_that(
-        readtxt('../data/empty/empty.pdf'),
-        throws_error('Unsupported extension pdf')
-    )
-    
-    
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -633,3 +627,13 @@ test_that("test globbed tar file",{
 })
 
 
+test_that("test for pdf file", {
+    expected <- c("The quick brown fox jumps over the lazy dog\n                                     1\n")
+    names(expected) <- 'test.pdf'
+
+    expect_equal(
+        texts(readtxt('../data/pdf/test.pdf')),
+        expected
+    )
+
+})

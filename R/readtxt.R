@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv')
+SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf')
+names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf')
 
 
 #' read a text file(s)
@@ -14,6 +14,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #    single filename, a vector of file names a remote URL, or a file "mask" using a 
 #'   "glob"-type'  wildcard value.  Currently available filetypes are: 
 #'   \describe{
+#'   \item html files
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
@@ -22,6 +23,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \item{\code{json}}{data in some form of JavaScript 
 #'   Object Notation, consisting of the texts and optionally additional docvars.
 #'   The supported formats are:
+#'   \item PDF files
 #'   \itemize{
 #'   \item a single JSON object per file
 #'   \item line-delimited JSON, with one object per line
@@ -171,7 +173,9 @@ getSource <- function(f, textfield, ...) {
                tsv = get_csv(f, textfield, sep='\t', ...),
                tab = get_csv(f, textfield, sep='\t', ...),
                json = get_json(f, textfield, ...),
-               xml = get_xml(f, textfield, ...)
+               xml = get_xml(f, textfield, ...),
+               html = get_html(f, textfield=textfield, ...),
+               pdf = get_pdf(f, ...)
         )
 
     # assign filename (variants) unique text names
