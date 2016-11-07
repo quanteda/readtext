@@ -175,8 +175,7 @@ get_docx <- function(f, ...) {
 get_doc <- function(f, ...) {
     args <- list(...)
 
-    rd <- tm::readDOC()
-    txt <- rd(elem=list(uri=f), language='')
+    txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
     txt <- paste0(txt, collapse=' ')
     txt <- trimws(txt)
     data.frame(texts = txt, stringsAsFactors = FALSE)

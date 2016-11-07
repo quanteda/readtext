@@ -652,8 +652,8 @@ test_that("test for pdf file", {
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
     names(expected) <- 'test.docx'
-
-    expect_equal(
+    
+   expect_equal(
         texts(readtxt('../data/docx/test.docx')),
         expected
     )
@@ -667,6 +667,10 @@ test_that("test for doc file", {
     expected <- trimws(expected)
     names(expected) <- 'test.doc'
 
+    devtools::load_all('~/code/readtext/')
+    texts(readtxt('../data/doc/test.doc'))
+
+ 
     expect_equal(
         texts(readtxt('../data/doc/test.doc')),
         expected
