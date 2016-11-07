@@ -626,6 +626,27 @@ test_that("test globbed tar file",{
     )
 })
 
+test_that("test html file",{
+    expected <- c("The quick brown fox jumps over the lazy dog")
+    names(expected) <- 'html5.html'
+
+    expect_equal(
+        texts(readtxt('../data/html/html5.html')),
+        expected
+    )
+
+})
+
+
+test_that("test malformed html file",{
+    expected <- c("The quick brown fox \n    jumps over the lazy dog")
+    names(expected) <- 'malformed_html5.html'
+    expect_equal(
+        texts(readtxt('../data/html/malformed_html5.html')),
+        expected
+    )
+})
+
 
 test_that("test for pdf file", {
     expected <- c("The quick brown fox jumps over the lazy dog\n                                     1\n")
