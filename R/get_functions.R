@@ -9,16 +9,27 @@ get_txt <- function(f, ...) {
 ## csv format
 get_csv <- function(path, textfield, ...) {
 
-    #  Use the encoding arg to open the file, pass all other args to fread
+
     args <- list(...)
-    txt <- paste(readLines(con <- file(path), encoding=args$encoding, warn = FALSE), collapse="\n")
-    close(con)
 
-    args$encoding <- NULL
-    args <- c(list(input=txt, data.table=F, stringsAsFactors=F), args)
-
-
+    # Replace native.enc with UTF-8 if that's what it is
+    if (args$encoding == 'native.enc') {  
+        #  http://r.789695.n4.nabble.com/Find-out-what-quot-native-enc-quot-corresponds-to-td4639208.html
+        args$encoding = strsplit(Sys.getlocale("LC_CTYPE"), '\\.')[[1]][2]
+    }
+    if (!(args$encoding %in% c('Latin-1', 'UTF-8'))) { 
+        # If the encoding is not one fread supports, open the file using R's native function
+        #  Use the encoding arg to open the file, pass all other args to fread
+        txt <- paste(readLines(con <- file(path), encoding=args$encoding, warn = FALSE), collapse="\n")
+        close(con)
+        args$encoding <- NULL
+        args <- c(list(input=txt, data.table=F, stringsAsFactors=F), args)
+    }
+    else {
+        args <- c(list(input=path, data.table=F, stringsAsFactors=F), args)
+    }
     docs <- do.call(data.table::fread, args)
+
     if (is.character(textfield)) {
         textfieldi <- which(names(docs) == textfield)
         if (length(textfieldi) == 0)
