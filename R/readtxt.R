@@ -163,7 +163,17 @@ getSource <- function(f, textfield, ...) {
     ## SIMPLER -KB
     fileType <- file_ext(f)
     if (!(fileType %in% SUPPORTED_FILETYPE_MAPPING))
-        stop(paste('Unsupported extension', fileType, 'of file', f))
+        if (dir.exists(f)) {
+            call <- deparse(sys.call(1))
+            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed=T)
+            stop("File '", f, "' does not exist, but a directory of this name does exist. ",
+                 "To read all files in a directory, you must pass a glob expression like ",
+                 call
+                 )
+        }
+        else {
+            stop(paste('Unsupported extension', fileType, 'of file', f))
+        }
 
     newSource <- switch(fileType, 
                txt = get_txt(f, ...),
