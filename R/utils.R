@@ -153,12 +153,16 @@ extractArchive <- function(i, ignoreMissing) {
         stop(paste("File", i, "does not exist."))
     
     td <- mktemp(directory=T)
-    if (tools::file_ext(i) == 'zip')
+    if (tools::file_ext(i) == 'zip' ||
+        tools::file_ext(i) == 'docx'
+        )
         utils::unzip(i, exdir = td)
     else if ( tools::file_ext(i) == 'gz' ||
               tools::file_ext(i) == 'tar' ||
               tools::file_ext(i) == 'bz' )
         utils::untar(i, exdir = td)
+    else 
+        stop("Archive extension '", tools::file_ext(i), "' unrecognised.")
     
     # Create a glob that matches all the files in the archive
     file.path(td, '*')

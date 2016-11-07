@@ -158,9 +158,17 @@ get_pdf <- function(f, ...) {
 
 get_docx <- function(f, ...) {
     args <- list(...)
-    txt <- paste0(
-      qdapTools::read_docx(f), collapse=''
-    )
+
+    path <- extractArchive(f, ignoreMissing=FALSE)
+    path <- sub('/\\*$', '', path)
+    print(path)
+    path <- file.path(path, 'word', 'document.xml')
+
+    xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+    txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
+    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- paste0(txt, collapse='')
+
     data.frame(texts = txt, stringsAsFactors = FALSE)
 }
 
