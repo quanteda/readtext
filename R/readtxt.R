@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf')
+SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx')
+names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx')
 
 
 #' read a text file(s)
@@ -15,6 +15,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   "glob"-type'  wildcard value.  Currently available filetypes are: 
 #'   \describe{
 #'   \item html files
+#'   \item docx files
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
@@ -175,7 +176,8 @@ getSource <- function(f, textfield, ...) {
                json = get_json(f, textfield, ...),
                xml = get_xml(f, textfield, ...),
                html = get_html(f, textfield=textfield, ...),
-               pdf = get_pdf(f, ...)
+               pdf = get_pdf(f, ...),
+               docx = get_docx(f, ...),
         )
 
     # assign filename (variants) unique text names
