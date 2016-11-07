@@ -625,3 +625,11 @@ test_that("text vectors have names of the files they come from by default (bug 2
 
 }) 
 
+test_that("test globbed tar file",{
+    expect_equal(
+        sort(unname(texts(readtxt('../data/tar/*')))),
+        c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+    )
+})
+
+
