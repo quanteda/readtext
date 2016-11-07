@@ -65,12 +65,10 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
 #' @param ... additional arguments passed through to low-level file reading 
-#'   function, such as \code{\link{file}}, \code{\link{read.csv}}, etc.  Useful 
+#'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
 #'   as it would be give to \code{\link{iconv}}.  See the Encoding section of 
-#'   \link{file} for details.  Also useful for passing arguments through to
-#'   \code{\link{read.csv}}, for instance `quote = ""`, if quotes are causing
-#'   problems within comma-delimited fields.
+#'   \link{file} for details.  
 #' @details If \code{cache = TRUE}, the constructor does not store a copy of 
 #'   the texts, but rather reads
 #'   in the texts and associated data, and saves them to a temporary disk file 
