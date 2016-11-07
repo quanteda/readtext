@@ -150,9 +150,8 @@ get_html <- function(f, ...) {
 get_pdf <- function(f, ...) {
     args <- list(...)
 
-    txt <- pdftools::pdf_text(f)
-    print(txt)
-    txt <- paste0(txt, collapse='')
+    txt <- system2("pdftotext", c(shQuote(f), "-"), stdout = TRUE)
+    txt <- paste0(txt, collapse=' ')
     data.frame(texts = txt, stringsAsFactors = FALSE)
 }
 
@@ -161,7 +160,6 @@ get_docx <- function(f, ...) {
 
     path <- extractArchive(f, ignoreMissing=FALSE)
     path <- sub('/\\*$', '', path)
-    print(path)
     path <- file.path(path, 'word', 'document.xml')
 
     xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)

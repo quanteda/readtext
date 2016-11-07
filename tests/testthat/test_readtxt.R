@@ -639,7 +639,7 @@ test_that("test malformed html file",{
 
 
 test_that("test for pdf file", {
-    expected <- c("The quick brown fox jumps over the lazy dog\n                                     1\n")
+    expected <- c("The quick brown fox jumps over the lazy dog  1  \f")
     names(expected) <- 'test.pdf'
 
     expect_equal(
@@ -667,10 +667,6 @@ test_that("test for doc file", {
     expected <- trimws(expected)
     names(expected) <- 'test.doc'
 
-    devtools::load_all('~/code/readtext/')
-    texts(readtxt('../data/doc/test.doc'))
-
- 
     expect_equal(
         texts(readtxt('../data/doc/test.doc')),
         expected
