@@ -451,7 +451,7 @@ context('Loading an empty gzipped tar archive')
 test_that("An empty tar.gz file raises an error",{
     expect_that(
         readtxt('../data/empty/test.tar.gz'),
-        throws_error("File ../data/empty/test.tar.gz does not exist")
+        throws_error("File '../data/empty/test.tar.gz' does not exist")
     )
 })
 
@@ -514,7 +514,7 @@ test_that("Test function to list files", {
     file.remove(testExistingFile)
     expect_that(
         readtext:::listMatchingFiles(testExistingFile),
-        throws_error('File does not exist')
+        throws_error("File '' does not exist")
     )
     expect_equal(
         readtext:::listMatchingFiles(testExistingFile, ignoreMissing=T),
@@ -633,3 +633,13 @@ test_that("test globbed tar file",{
 })
 
 
+test_that("test readtxt with folder", {
+    expect_error(
+        readtxt('../data/glob'),
+        ".*To read all files in a directory, you must*"
+    )
+    expect_error(
+        readtxt('../data/glob/'),
+        ".*To read all files in a directory, you must*"
+    )
+})

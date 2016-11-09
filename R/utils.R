@@ -132,7 +132,7 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
     #  extension.
     
     if (!(ignoreMissing || (length(x) > 0))) {
-        stop("File does not exist.")
+        stop("File '", x, "' does not exist.")
     }
     
     matchingFiles <- unlist(
@@ -150,7 +150,7 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
 
 extractArchive <- function(i, ignoreMissing) {
     if (!(ignoreMissing || file.exists(i)))
-        stop(paste("File", i, "does not exist."))
+        stop("File '", i, "' does not exist.")
     
     td <- mktemp(directory=T)
     if (tools::file_ext(i) == 'zip')
@@ -200,7 +200,19 @@ listMatchingFile <- function(x, ignoreMissing, verbose = FALSE, lastRound) {
         #  special treatment (zip, remote, etc.) and it was treated as a glob
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
-        if (!(ignoreMissing || file.exists(i))) stop("File", i, "does not exist.")
+        if (!(ignoreMissing || file.exists(i))) {
+            if (dir.exists(i)) {
+                tr <- traceback()
+                call <- tr[[len(tr)]]
+                stop("File", i, "does not exist, but a directory of this name does exist.",
+                     "To read all files in a directory, you must pass a glob expression like ",
+                     tr
+                     )
+            }
+            else {
+                stop("File '", i, "' does not exist.")
+            }
+        }
         if (verbose) message('regular file')
         return(i)
     }
