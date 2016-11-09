@@ -18,7 +18,7 @@ encodings will be detected.}
 Detect the encoding of texts in a character, \link[quanteda]{corpus}, or 
 \link{readtext} object and report on the most likely encoding.  Useful in
 detecting the encoding of input texts, so that a source encoding can be 
-(re)specified when inputting a set of texts using \code{\link{readtxt}}, prior
+(re)specified when inputting a set of texts using \code{\link{readtext}}, prior
 to constructing a corpus.
 }
 \details{
@@ -41,7 +41,7 @@ data(ie2010Corpus, package = "quanteda")
 encoding2(ie2010Corpus)
 
 \dontrun{# Russian text, Windows-1251
-myreadtext <- readtxt("http://www.kenbenoit.net/files/01_er_5.txt")
+myreadtext <- readtext("http://www.kenbenoit.net/files/01_er_5.txt")
 encoding2(myreadtext)
 }
 }

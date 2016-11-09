@@ -10,7 +10,7 @@ docvars(x, field = NULL)
 \method{docvars}{readtext}(x, field = NULL)
 }
 \arguments{
-\item{x}{a \link{readtext} object created by \code{\link{readtxt}}}
+\item{x}{a \link{readtext} object created by \code{\link{readtext}}}
 
 \item{field}{string containing the document-level variable name}
 }
