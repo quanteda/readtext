@@ -457,7 +457,7 @@ test_that("test reading structured text files with different columns", {
 
 context("Tests of new readtxt internals. If these fail, it doesn't necessarily affect the exposed API")
 
-context("Tests for quanteda:::listMatchingFiles")
+context("Tests for listMatchingFiles")
 
 test_that("Test function to list files", {
     expect_that(
@@ -465,13 +465,13 @@ test_that("Test function to list files", {
         throws_error('Unsupported URL scheme')
     )           
     
-    testExistingFile <- quanteda:::mktemp()
+    testExistingFile <- mktemp()
     expect_equal(readtext:::listMatchingFiles(testExistingFile), testExistingFile)
     expect_equal(readtext:::listMatchingFiles(paste0('file://', testExistingFile)), testExistingFile)
     
     
     # Test vector of filenames
-    testExistingFile2 <- quanteda:::mktemp()
+    testExistingFile2 <- mktemp()
     expect_equal(
         readtext:::listMatchingFiles(c(testExistingFile, testExistingFile2)),
         c(testExistingFile, testExistingFile2)
@@ -495,32 +495,32 @@ test_that("Test function to list files", {
     
     
     #Test globbing
-    tempdir <- quanteda:::mktemp(directory=T)
+    tempdir <- mktemp(directory=T)
     
     file.create(file.path(tempdir, '1.tsv'))
     file.create(file.path(tempdir, '2.tsv'))
     file.create(file.path(tempdir, '10.tsv'))
     
     expect_equal(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '*.tsv' ))),
+        length(listMatchingFiles(paste0(tempdir, '/', '*.tsv' ))),
         3
     )
     
     expect_equal(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '?.tsv' ))),
+        length(listMatchingFiles(paste0(tempdir, '/', '?.tsv' ))),
         2
     )
     
     expect_that(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
+        length(listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
         throws_error('File does not exist')
     )
     
     
     # Test globbing subdir
     
-    tempsubdir1 <- quanteda:::mktemp(base_path=tempdir, directory=T)
-    tempsubdir2 <- quanteda:::mktemp(base_path=tempdir, directory=T)
+    tempsubdir1 <- mktemp(base_path=tempdir, directory=T)
+    tempsubdir2 <- mktemp(base_path=tempdir, directory=T)
     
     file.create(file.path(tempsubdir1, '1.tsv'))
     file.create(file.path(tempsubdir1, '2.tsv'))
@@ -542,7 +542,7 @@ test_that("Test function to list files", {
 test_that("Test function to list files with remote sources", {
     skip_on_cran()
     expect_error(
-      quanteda:::listMatchingFiles('http://www.google.com/404.txt'),
+      listMatchingFiles('http://www.google.com/404.txt'),
       ".*404.*"
     )
     
