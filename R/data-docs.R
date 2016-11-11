@@ -40,8 +40,8 @@
 #' substring(texts(txts)[26], 1, 80) # Hindi, looking good
 #' 
 #' txts <- readtxt(paste0(FILEDIR, "/", "*.txt"), encoding = fileencodings,
-#'                   docvarsfrom = "filenames", 
-#'                   docvarnames = c("document", "language", "inputEncoding"))
+#'                   docvars_from = "filenames", 
+#'                   docvars_names = c("document", "language", "inputEncoding"))
 #' encodingCorpus <- corpus(txts, source = "Created by encoding-tests.R") 
 #' summary(encodingCorpus)
 #' }

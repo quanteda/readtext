@@ -1,7 +1,7 @@
 # TODO: re-do docs
 # TODO: Check and remove extranous codes
 # TODO: recurse file listing for e.g. remote ZIP file
-# TODO: readtxt with csv doesn't seem to require textfield
+# TODO: readtxt with csv doesn't seem to require text_field
 
 
 context('test readtxt.R')
@@ -25,7 +25,7 @@ test_that("test print.readtext", {
     )
     
     expect_that(
-        print(readtxt('../data/csv/test.csv', textfield='text')),
+        print(readtxt('../data/csv/test.csv', text_field='text')),
         prints_text('readtext object consisting of 2 documents and 2 docvars.')
     )
     
@@ -129,13 +129,13 @@ test_that("test readtxt with glob-style mask", {
 test_that("test structured readtxt with glob-style mask", {
     expect_equal(
         length(texts(readtxt(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         ))),
         4
     )
     expect_equal(
         nrow(docvars(readtxt(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         ))),
         4
     )
@@ -147,9 +147,9 @@ test_that("test remote text file", {
         texts(readtxt('https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/fox/fox.txt')),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
-    # ignoreMissing with an existing file should make no difference
+    # ignore_missing_files with an existing file should make no difference
     expect_equal(
-        texts(readtxt('https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/fox/fox.txt', ignoreMissing=T)),
+        texts(readtxt('https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/fox/fox.txt', ignore_missing_files=T)),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
 })
@@ -157,7 +157,7 @@ test_that("test remote text file", {
 
 test_that("test remote csv file", {
     expect_equal(
-        texts(readtxt("https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/csv/test.csv", textfield='text')),
+        texts(readtxt("https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/csv/test.csv", text_field='text')),
         c(test.csv.1 = 'Lorem ipsum.', test.csv.2 = 'Dolor sit')
     )
 })
@@ -208,7 +208,7 @@ test_that("test warning for unrecognized filetype", {
 # TODO: Refactor this to loop over filetypes
 test_that("test csv files", {
     # Test corpus object
-    testcorpus <- readtxt('../data/csv/test.csv', textfield='text')
+    testcorpus <- readtxt('../data/csv/test.csv', text_field='text')
     expect_that(
         docvars(testcorpus),
         equals(data.frame(list(colour = c('green', 'red'), number = c(42, 99)), 
@@ -221,19 +221,19 @@ test_that("test csv files", {
     )
     
     expect_that(
-        docvars(readtxt('../data/csv/*', textfield='nonesuch')),
+        docvars(readtxt('../data/csv/*', text_field='nonesuch')),
         throws_error("There is no field called")
     )
     
     expect_that(
-        docvars(readtxt('../data/csv/*', textfield = 9000)),
+        docvars(readtxt('../data/csv/*', text_field = 9000)),
         throws_error("There is no 9000th field")
     )
     
 })
 
 test_that("test tab files", {
-    testreadtext <- readtxt('../data/tab/test.tab', textfield = 'text')
+    testreadtext <- readtxt('../data/tab/test.tab', text_field = 'text')
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -246,14 +246,14 @@ test_that("test tab files", {
     )
     
     expect_that(
-        readtxt('../data/tab/test.tab', textfield='nonexistant'),
+        readtxt('../data/tab/test.tab', text_field='nonexistant'),
         throws_error('There is no field called nonexistant')
     )
     
 })
 
 test_that("test tsv files", {
-    testreadtext <- readtxt('../data/tsv/test.tsv', textfield='text')
+    testreadtext <- readtxt('../data/tsv/test.tsv', text_field='text')
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -266,7 +266,7 @@ test_that("test tsv files", {
     )
     
     expect_that(
-        readtxt('../data/tsv/test.tsv', textfield='nonexistant'),
+        readtxt('../data/tsv/test.tsv', text_field='nonexistant'),
         throws_error('There is no field called nonexistant')
     )
     
@@ -275,7 +275,7 @@ test_that("test tsv files", {
 
 test_that("test xml files", {
     # Test corpus object
-    testcorpus <- readtxt('../data/xml/test.xml', textfield='text')
+    testcorpus <- readtxt('../data/xml/test.xml', text_field='text')
     expect_that(
         docvars(testcorpus),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -288,37 +288,37 @@ test_that("test xml files", {
     )
     
     expect_that(
-        readtxt('../data/xml/test.xml', textfield=1),
-        gives_warning('You should specify textfield by name.*')
+        readtxt('../data/xml/test.xml', text_field=1),
+        gives_warning('You should specify text_field by name.*')
     )
     expect_that(
-        texts(readtxt('../data/xml/test.xml', textfield=1)),
+        texts(readtxt('../data/xml/test.xml', text_field=1)),
         equals(c(test.xml.1='Lorem ipsum.', test.xml.2='Dolor sit'))
     )
     
     expect_that(
-        docvars(readtxt('../data/xml/*', textfield='nonesuch')),
+        docvars(readtxt('../data/xml/*', text_field='nonesuch')),
         throws_error("There is no node called")
     )
     expect_that(
-        docvars(readtxt('../data/xml/*', textfield=9000)),
+        docvars(readtxt('../data/xml/*', text_field=9000)),
         throws_error("There is no 9000th field")
     )
 })
 
 
 
-test_that("test readtxt() with docvarsfrom=filenames", {
+test_that("test readtxt() with docvars_from=filenames", {
     
     expect_that(
-        docvars(readtxt('../data/docvars/one/*', docvarsfrom='filenames')),
+        docvars(readtxt('../data/docvars/one/*', docvars_from='filenames')),
         equals(data.frame(list(docvar1=c(1L, 2L), docvar2=c('apple', 'orange')), 
                           stringsAsFactors = FALSE,
                           row.names = c("1_apple.txt", "2_orange.txt")))
     )
     
     expect_that(
-        docvars(readtxt('../data/docvars/dash/*', docvarsfrom='filenames', dvsep='-')),
+        docvars(readtxt('../data/docvars/dash/*', docvars_from='filenames', docvars_sep='-')),
         equals(data.frame(list(docvar1=c(1,2), docvar2=c('apple', 'orange')), 
                           stringsAsFactors = FALSE,
                           row.names = c("1-apple.txt", "2-orange.txt")))
@@ -326,7 +326,7 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     
     expect_that(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='filenames')),
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='filenames')),
         equals(data.frame(list(docvar1=c(1,2), docvar2=c('apple', 'orange')), docvar3=c('red', 'orange'), 
                           stringsAsFactors = FALSE,
                           row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
@@ -334,19 +334,19 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     # STRANGE ERRORS
     # expect_that(
-    #     docvars(readtxt('../data/docvars/two/*json', textfield='nonesuch', 
-    #                     docvarsfrom='filenames')),
+    #     docvars(readtxt('../data/docvars/two/*json', text_field='nonesuch', 
+    #                     docvars_from='filenames')),
     #     throws_error("There is no field called")
     # )
     
     expect_that(
-        docvars(readtxt('../data/docvars/unequal/*', docvarsfrom='filenames')),
+        docvars(readtxt('../data/docvars/unequal/*', docvars_from='filenames')),
         throws_error("Filename elements are not equal in length.")
     )
     
     expect_that(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='filenames',
-                         docvarnames=c('id', 'fruit', 'colour'))),
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='filenames',
+                         docvars_names=c('id', 'fruit', 'colour'))),
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
                           colour=c('red', 'orange'), stringsAsFactors=F,
                           row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
@@ -354,14 +354,14 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     
     expect_that(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='filenames',
-                         docvarnames=c('id', 'fruit')
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='filenames',
+                         docvars_names=c('id', 'fruit')
         )),
         gives_warning('Fewer docnames supplied than existing docvars - last 1 docvar given generic names.')
     )
     expect_that(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='filenames',
-                         docvarnames=c('id', 'fruit')
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='filenames',
+                         docvars_names=c('id', 'fruit')
         )),
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
                           docvar3=c('red', 'orange'), stringsAsFactors = FALSE,
@@ -370,8 +370,8 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     
     expect_that(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='filenames',
-                         docvarnames=c('id')
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='filenames',
+                         docvars_names=c('id')
         )),
         gives_warning('Fewer docnames supplied than existing docvars - last 2 docvars given generic names.')
     )
@@ -379,12 +379,12 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     #TODO: What happens if you supply more docnames?
     
     expect_error(
-        docvars(readtxt('../data/docvars/two/*txt', docvarsfrom='nonesuch'))
+        docvars(readtxt('../data/docvars/two/*txt', docvars_from='nonesuch'))
     )
     
     #  Docvars from both metadata and filename
     expect_equal(
-        docvars(readtxt('../data/docvars/csv/*', docvarsfrom=c('filenames'), docvarnames=c('id', 'fruit'), textfield='text')),
+        docvars(readtxt('../data/docvars/csv/*', docvars_from=c('filenames'), docvars_names=c('id', 'fruit'), text_field='text')),
         data.frame(list(shape=c('round', NA), texture=c(NA, 'rough'), id=c(1, 2), fruit=c('apple', 'orange')), 
                    stringsAsFactors = FALSE,
                    row.names = c("1_apple.csv", "2_orange.csv"))
@@ -392,7 +392,7 @@ test_that("test readtxt() with docvarsfrom=filenames", {
     
     # #  Docvars from both metadata and filename
     # expect_equal(
-    #     docvars(readtxt('../data/docvars/json/*', docvarsfrom=c('filenames', 'metadata'), docvarnames=c('id', 'fruit'), textfield='text')),
+    #     docvars(readtxt('../data/docvars/json/*', docvars_from=c('filenames', 'metadata'), docvars_names=c('id', 'fruit'), text_field='text')),
     #     data.frame(list(id=c(1, 2), fruit=c('apple', 'orange'), shape=c('round', NA), texture=c(NA, 'rough')), stringsAsFactors=FALSE)
     # )
     
@@ -459,7 +459,7 @@ test_that("An empty tar.gz file raises an error",{
 test_that("test reading structured text files with different columns", {
     testcorpus <- readtxt(
         "../data/fruits/*.csv",
-        textfield='text'
+        text_field='text'
     )
     
     expect_that(
@@ -591,7 +591,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
         )
 
         actual_names <- names(texts(readtxt(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         )))
         expect_equal(
             setdiff(

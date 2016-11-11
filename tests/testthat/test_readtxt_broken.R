@@ -4,7 +4,7 @@
 # 
 # test_that("test json files", {
 #     expect_equal(
-#         sort(unname(texts(readtext('../data/json/*json', textField='text')))),
+#         sort(unname(texts(readtext('../data/json/*json', text_field='text')))),
 #         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'Now is the winter', 'The quick')
 #     )
 #     
@@ -16,7 +16,7 @@
 #         stringsAsFactors=F)
 #     expected_docvars <- expected_docvars[order(expected_docvars$number),]
 #     row.names(expected_docvars) <- NULL
-#     actual_docvars <- docvars(readtext('../data/json/*json', textField='text'))
+#     actual_docvars <- docvars(readtext('../data/json/*json', text_field='text'))
 #     actual_docvars <- actual_docvars[order(actual_docvars$number),]
 #     row.names(actual_docvars) <- NULL
 #     row.names(actual_docvars)
@@ -27,12 +27,12 @@
 #     )
 #     
 #     expect_that(
-#         texts(readtext('../data/json/*json', textField=1)),
-#         throws_error('Cannot use numeric textField with json file')
+#         texts(readtext('../data/json/*json', text_field=1)),
+#         throws_error('Cannot use numeric text_field with json file')
 #     )
 #     
 #     expect_that(
-#         texts(readtext('../data/json/test3.json', textField='nonesuch')),
+#         texts(readtext('../data/json/test3.json', text_field='nonesuch')),
 #         throws_error('There is no field called nonesuch in file')
 #     )
 #     

@@ -17,7 +17,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
-#'   which contains the the text must be specified with the \code{textfield}
+#'   which contains the the text must be specified with the \code{text_field}
 #'   parameter, and all other fields are treated as docvars.}
 #'   \item{\code{json}}{data in some form of JavaScript 
 #'   Object Notation, consisting of the texts and optionally additional docvars.
@@ -43,23 +43,23 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   filetypes, so you could have, for example, a remote URL to a zip file which
 #'   contained Twitter JSON files.}
 #'   }
-#' @param textfield a variable (column) name or column number indicating where 
+#' @param text_field a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
 #'   specified for file types \code{.csv} and \code{.json}.
-#' @param docvarsfrom  used to specify that docvars should be taken from the 
+#' @param docvars_from  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtxt} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
-#'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
-#'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
+#'   (\code{docvars_sep}).  This allows easy assignment of docvars from filenames such
+#'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{docvars_sep}
 #'   or from meta-data embedded in the text file header (\code{headers}).
-#' @param dvsep separator used in filenames to delimit docvar elements if 
-#'   \code{docvarsfrom="filenames"} is used
-#' @param docvarnames character vector of variable names for \code{docvars}, if 
-#'   \code{docvarsfrom} is specified.  If this argument is not used, default 
+#' @param docvars_sep separator used in filenames to delimit docvar elements if 
+#'   \code{docvars_from="filenames"} is used
+#' @param docvars_names character vector of variable names for \code{docvars}, if 
+#'   \code{docvars_from} is specified.  If this argument is not used, default 
 #'   docvar names will be used (\code{docvar1}, \code{docvar2}, ...).
 #' @param encoding vector: either the encoding of all files, or one encoding
 #'   for each files
-#' @param ignoreMissingFiles if \code{FALSE}, then if the file
+#' @param ignore_missing_files if \code{FALSE}, then if the file
 #'   argument doesn't resolve to an existing file, then an error will be thrown.
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
@@ -89,23 +89,23 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
-readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
-                    docvarsfrom = c("metadata", "filenames"), dvsep="_", 
-                    docvarnames = NULL, encoding = NULL, ...) {
+readtxt <- function(file, ignore_missing_files = FALSE, text_field = NULL, 
+                    docvars_from = c("metadata", "filenames"), docvars_sep="_", 
+                    docvars_names = NULL, encoding = NULL, ...) {
     
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
     
-    docvarsfrom <- match.arg(docvarsfrom)
+    docvars_from <- match.arg(docvars_from)
     # # just use the first, if both are specified?
-    # if (is.missing(docvarsfrom))
+    # if (is.missing(docvars_from))
     #     
-    # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
-    #     stop("illegal docvarsfrom value")
+    # if (!all(docvars_from %in% c( c("metadata", "filenames"))))
+    #     stop("illegal docvars_from value")
      
-    if (is.null(textfield)) textfield <- 1
-    files <- listMatchingFiles(file, ignoreMissing = ignoreMissingFiles)
+    if (is.null(text_field)) text_field <- 1
+    files <- listMatchingFiles(file, ignoreMissing = ignore_missing_files)
     
     if (is.null(encoding)) {
         encoding <- getOption("encoding")
@@ -114,11 +114,11 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         if (length(encoding) != length(files)) {
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
-        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, ...),
+        sources <- mapply(function(x, e) getSource(f = x, text_field = text_field, encoding = e, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, text_field, encoding = encoding, ...))
     }
     
     # combine all of the data.frames returned
@@ -134,9 +134,9 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
          as.character(sapply(sources, row.names))
     }
 
-    if ("filenames" %in% docvarsfrom) {
-        filenameDocvars <- getdocvarsFromFilenames(files, dvsep = dvsep, 
-                                                   docvarnames = docvarnames)
+    if ("filenames" %in% docvars_from) {
+        filenameDocvars <- getdocvarsfromFilenames(files, docvars_sep = docvars_sep, 
+                                                   docvars_names = docvars_names)
         result <- cbind(result, imputeDocvarsTypes(filenameDocvars))
     }
     
@@ -146,7 +146,7 @@ readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, ...) {
+getSource <- function(f, text_field, ...) {
     # extension <- file_ext(f)
 
     # fileType <- tryCatch({
@@ -167,11 +167,11 @@ getSource <- function(f, textfield, ...) {
 
     newSource <- switch(fileType, 
                txt = get_txt(f, ...),
-               csv = get_csv(f, textfield, sep=',', ...),
-               tsv = get_csv(f, textfield, sep='\t', ...),
-               tab = get_csv(f, textfield, sep='\t', ...),
-               json = get_json(f, textfield, ...),
-               xml = get_xml(f, textfield, ...)
+               csv = get_csv(f, text_field, sep=',', ...),
+               tsv = get_csv(f, text_field, sep='\t', ...),
+               tab = get_csv(f, text_field, sep='\t', ...),
+               json = get_json(f, text_field, ...),
+               xml = get_xml(f, text_field, ...)
         )
 
     # assign filename (variants) unique text names

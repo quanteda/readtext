@@ -6,10 +6,10 @@ file_ext <- function (x) {
 }
 
 #' @importFrom tools file_path_sans_ext
-getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
+getdocvarsfromFilenames <- function(fnames, docvars_sep="_", docvars_names=NULL) {
     snames <- fnames
     snames <- tools::file_path_sans_ext(basename(snames))
-    parts <- strsplit(snames, dvsep)
+    parts <- strsplit(snames, docvars_sep)
     
     if (!all(sapply(parts,function(x) identical(length(x), length(parts[[1]])))))
         stop("Filename elements are not equal in length.")
@@ -18,12 +18,12 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
                          stringsAsFactors=FALSE)
     # assign default names in any case
     names(dvars) <- paste("docvar", 1:ncol(dvars), sep="")  
-    if (!is.null(docvarnames)) {
-        names(dvars)[1:length(docvarnames)] <- docvarnames
-        if (length(docvarnames) != ncol(dvars)) {
+    if (!is.null(docvars_names)) {
+        names(dvars)[1:length(docvars_names)] <- docvars_names
+        if (length(docvars_names) != ncol(dvars)) {
             warning("Fewer docnames supplied than existing docvars - last ",
-                    ncol(dvars) - length(docvarnames), " docvar",
-                    ifelse((ncol(dvars) - length(docvarnames))==1, "", "s"),
+                    ncol(dvars) - length(docvars_names), " docvar",
+                    ifelse((ncol(dvars) - length(docvars_names))==1, "", "s"),
                     " given generic names.")
         }
     }
