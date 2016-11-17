@@ -43,7 +43,7 @@ test_that("test print.readtext", {
 test_that("test readtext with single filename", {
     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     expect_equal(
-        texts(readtext('../data/fox/fox.txt')),
+        readtext('../data/fox/fox.txt')["text"],
         fox
     )
 })
