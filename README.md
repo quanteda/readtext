@@ -2,7 +2,7 @@
 readtext: Import and handling for plain and formatted text files
 ================================================================
 
-[![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext) ![Downloads](http://cranlogs.r-pkg.org/badges/readtext) [![Travis-CI Build Status](https://travis-ci.org/kbenoit/readtext.svg?branch=master)](https://travis-ci.org/kbenoit/readtext) [![codecov.io](https://codecov.io/github/kbenoit/readtext/coverage.svg?branch=master)](https://codecov.io/gh/kbenoit/readtext/branch/master)
+[![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext) ![Downloads](http://cranlogs.r-pkg.org/badges/readtext) [![Travis-CI Build Status](https://travis-ci.org/kbenoit/readtext.svg?branch=master)](https://travis-ci.org/kbenoit/readtext) [![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026?svg=true)](https://ci.appveyor.com/project/kbenoit/readtext) [![codecov.io](https://codecov.io/github/kbenoit/readtext/coverage.svg?branch=master)](https://codecov.io/gh/kbenoit/readtext/branch/master)
 
 An R package for reading text files in all their various formats, by Ken Benoit, Paul Nulty, and Adam Obeng. (In alphabetical order, not by order of contribution.)
 
@@ -18,14 +18,14 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 Inter-operability with **quanteda**
 -----------------------------------
 
-**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtxt()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
+**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
 
 ``` r
 require(readtext)
 ## Loading required package: readtext
 require(quanteda)
 ## Loading required package: quanteda
-## quanteda version 0.9.8.4
+## quanteda version 0.9.8.12
 ## 
 ## Attaching package: 'quanteda'
 ## The following objects are masked from 'package:readtext':
@@ -65,14 +65,14 @@ fileencodings[notAvailableIndex]
 ## [1] "UTF-8-BOM"
 
 # read in some text files
-# try readtxt
-txts <- readtxt(paste0(FILEDIR, "/", "*.txt"))
+# try readtext
+txts <- readtext(paste0(FILEDIR, "/", "*.txt"))
 # substring(readtext::texts(txts)[1], 1, 80)  # gibberish
 # substring(readtext::texts(txts)[4], 1, 80)  # hex
 # substring(readtext::texts(txts)[40], 1, 80) # hex
 
 # read them in again
-txts <- readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
+txts <- readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
 substring(readtext::texts(txts)[1], 1, 80)  # English
 ##                                                  IndianTreaty_English_UTF-16LE.txt 
 ## "WHEREAS, the Sisseton and Wahpeton Bands of Dakota or Sioux Indians, on the 20th"
@@ -89,7 +89,7 @@ substring(readtext::texts(txts)[26], 1, 80) # Hindi, looking good
 ##                                                         UDHR_Hindi_UTF-8.txt 
 ## "मानव अधिकारों की सार्वभौम घोषणा\n\n१० दिसम्बर १९४८ को यूनाइटेड नेशन्स की जनरल असेम"
 
-txts <- readtxt(paste0(FILEDIR, "/", "*.txt"), 
+txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
                 encoding = fileencodings,
                 docvarsfrom = "filenames", 
                 docvarnames = c("document", "language", "inputEncoding"))
@@ -184,7 +184,7 @@ summary(encodingCorpus)
 ##       Thai         UTF-8
 ## 
 ## Source:  Created by encoding-tests.R
-## Created: Tue Oct 25 21:52:42 2016
+## Created: Thu Nov 17 12:24:52 2016
 ## Notes:
 ```
 
@@ -193,7 +193,7 @@ Piping works too:
 ``` r
 require(magrittr)
 ## Loading required package: magrittr
-readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
+readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
     corpus(textField = "texts") %>% 
         summary
 ## Corpus consisting of 41 documents.
@@ -242,17 +242,6 @@ readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
 ##                 UDHR_Thai_UTF-8.txt   541   2404        34
 ## 
 ## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Tue Oct 25 21:52:42 2016
+## Created: Thu Nov 17 12:24:52 2016
 ## Notes:
 ```
-
-To Do List
-----------
-
-1.  (Adam) Inspect the **testthat** tests, see my comments.
-
-2.  (Ken) Need to redefine the data.frame method for `quanteda::corpus()` so that it takes `textField = "texts"` by default.
-
-3.  More conversion methods?
-
-4.  How can we define methods for `readtext` objects that extend the generics for`texts()` and `docvars()` that are defined in **quanteda**? We don't want a NAMESPACE conflict so cannot redefine the generics in **readtexts**.
