@@ -629,12 +629,10 @@ if (.Platform$OS.type == "unix") {
             readtext('../data/glob'),
             ".*To read all files in a directory, you must*"
         )
-    })
-}        
 
-test_that("test readtext with folder 2", {
-    expect_error(
+        expect_error(
         readtext('../data/glob/'),
         ".*To read all files in a directory, you must*"
-    )
-})
+        )
+    })
+}    
