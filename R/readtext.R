@@ -47,7 +47,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   to find the texts that form the documents for the corpus.  This must be 
 #'   specified for file types \code{.csv} and \code{.json}.
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
-#'   filenames, when the \code{readtxt} inputs are filenames and the elements 
+#'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
 #'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 #'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
@@ -77,7 +77,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   environment and consuming additional space.  This does mean however that 
 #'   the state of the file containing the source data will not be cross-platform
 #'   and may not be persistent across sessions.  So the recommended usage is to 
-#'   load the data into a corpus in the same session in which \code{readtxt} is
+#'   load the data into a corpus in the same session in which \code{readtext} is
 #'   called.
 #' @return a data.frame consisting of a first column \code{texts} that contains
 #' the texts, with any additional columns consisting of docvars.  This object can
@@ -87,7 +87,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
-readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
+readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, ...) {
     

@@ -41,7 +41,7 @@ Collate:
     'quanteda-methods.R'
     'readtext-package.R'
     'utils.R'
-    'text-class.R'
-    'readtxt.R'
+    'readtext-methods.R'
+    'readtext.R'
     'data-docs.R'
 RoxygenNote: 5.0.1

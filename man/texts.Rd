@@ -10,7 +10,7 @@ texts(x, groups = NULL, ...)
 \method{texts}{readtext}(x, groups = NULL, ...)
 }
 \arguments{
-\item{x}{a \link{readtext} object created by \code{\link{readtxt}}}
+\item{x}{a \link{readtext} object created by \code{\link{readtext}}}
 
 \item{groups}{character vector containing the names of document variables in 
 a corpus, or a factor equal in length to the number of documents, used for 

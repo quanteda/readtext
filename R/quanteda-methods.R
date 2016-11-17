@@ -2,7 +2,7 @@
 #' 
 #' Get the texts in a text or corpus object, with grouping options. Works for
 #' plain character vectors too, if \code{groups} is a factor.
-#' @param x a \link{readtext} object created by \code{\link{readtxt}}
+#' @param x a \link{readtext} object created by \code{\link{readtext}}
 #' @param groups character vector containing the names of document variables in 
 #'   a corpus, or a factor equal in length to the number of documents, used for 
 #'   aggregating the texts through concatenation.  If \code{x} is of type
@@ -33,7 +33,7 @@ texts.readtext <- function(x, groups = NULL, ...) {
 #' extract document-level metadata from a readtext object
 #' 
 #' Get the document-level metadata, also known as "docvars", from a \link{readtext} object.
-#' @param x a \link{readtext} object created by \code{\link{readtxt}}
+#' @param x a \link{readtext} object created by \code{\link{readtext}}
 #' @param field string containing the document-level variable name
 #' @return \code{docvars} returns a data.frame of the document-level variables
 #' @export
