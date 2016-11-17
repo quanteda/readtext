@@ -1,8 +1,12 @@
+###
+### low-level file handling functions
+###
+
 ## txt format
 get_txt <- function(f, ...) {
     txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse="\n")
     close(con)
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 
@@ -38,7 +42,7 @@ get_csv <- function(path, textfield, ...) {
     } else if (is.numeric(textfield) & (textfield > ncol(docs))) {
         stop(paste0("There is no ", textfield, "th field in file ", path))
     }
-    data.frame(texts = docs[, textfield], docs[, -textfield, drop = FALSE],
+    data.frame(text = docs[, textfield], docs[, -textfield, drop = FALSE],
                stringsAsFactors = FALSE)
 }
 
@@ -77,7 +81,7 @@ get_json_tweets <- function(path, source="twitter", ...) {
     txt <- readLines(path, warn = FALSE, ...)
     
     results <- streamR::parseTweets(txt, verbose=FALSE, ...)
-    data.frame(texts = results[, 1], as.data.frame(results[, -1, drop = FALSE]),
+    data.frame(text = results[, 1], as.data.frame(results[, -1, drop = FALSE]),
                stringsAsFactors = FALSE)
 }
 
@@ -96,7 +100,7 @@ get_json_object <- function(path, textfield, ...) {
         stop(paste("There is no field called", textfield, "in file", path))
     }
     
-    data.frame(texts = docs[[textfield]], docs[, -textfield, with = FALSE],
+    data.frame(text = docs[[textfield]], docs[, -textfield, with = FALSE],
                stringsAsFactors = FALSE)
 }
 
@@ -119,7 +123,7 @@ get_json_lines <- function(path, textfield, ...) {
         stop(paste("There is no field called", textfield, "in file", path))
     }
     
-    data.frame(texts = docs[[textfield]], docs[, -textfield, with = FALSE],
+    data.frame(text = docs[[textfield]], docs[, -textfield, with = FALSE],
                stringsAsFactors = FALSE)
 }
 
@@ -147,7 +151,7 @@ get_xml <- function(path, textfield, encoding,...) {
     
     # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
     # ourselves, to match get_csv's behaviour
-    data.frame(texts = docs[, textfield], 
+    data.frame(text = docs[, textfield], 
                imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
                stringsAsFactors = FALSE)
 }
