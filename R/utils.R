@@ -33,7 +33,7 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
 # @rdname catm
 # make temporary files and directories in a more reasonable way than tempfile()
 # or tempdir(): here, the filename is different each time you call mktemp()
-mktemp <- function(prefix='tmp.', base_path=NULL, directory=F) {
+mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
     #  Create a randomly-named temporary file or directory, sort of like
     #  https://www.mktemp.org/manual.html
     if (is.null(base_path))
