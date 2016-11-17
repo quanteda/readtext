@@ -3,6 +3,22 @@
 # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn't seem to require textfield
 
+# needs to be added in because not in CRAN quanteda
+# texts <- function(x, groups = NULL, ...) {
+#     UseMethod("texts")
+# }
+texts.readtext <- function(x, groups = NULL, ...) {
+    if (!is.null(groups))
+        stop("groups argument not supported for texts() on a readtext object")
+    result <- x[["text"]]
+    names(result) <- row.names(x)
+    result
+}
+docvars.readtext <- function(x, field = NULL) {
+    if (!is.null(field))
+        warning("field argument not used for docvars on a readtext object", noBreaks. = TRUE)
+    as.data.frame(x[, -which(names(x)=="text"), drop = FALSE])
+}
 
 context('test readtext.R')
 
@@ -598,6 +614,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
 
 }) 
 
+## FAILS THE CHECK FOR SOME REASON
 # test_that("test globbed tar file",{
 #     expect_equal(
 #         sort(unname(texts(readtext('../data/tar/*')))),
