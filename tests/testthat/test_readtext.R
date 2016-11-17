@@ -43,38 +43,11 @@ test_that("test print.readtext", {
 test_that("test readtext with single filename", {
     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     expect_equal(
-        readtext('../data/fox/fox.txt')["text"],
+        texts(readtext('../data/fox/fox.txt')),
         fox
     )
 })
 
-# test_that("test cached readtext with single filename", {
-#     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
-#     expect_equal(
-#         texts(readtext('../data/fox/fox.txt', cache=T)),
-#         fox
-#     )
-# })
-
-# test_that("test classes, slots, and extractor functions", {
-#     
-#     testreadtext <- readtext('../data/fox/fox.txt')
-#     
-#     
-#     expect_equal(
-#         slotNames(testreadtext),
-#         c('texts', 'docvars', 'source', 'created', 'cachedfile')
-#     )
-#     
-#     
-#     expect_is(testreadtext, 'readtext')
-#     expect_is(testreadtext@texts, 'character')
-#     expect_is(testreadtext@docvars, 'data.frame')
-#     expect_is(testreadtext@source, 'character')
-#     expect_is(testreadtext@cachedfile, 'character')
-#     
-#     
-# })
 
 test_that("test readtext with vector of filenames", {
     expect_equal(
@@ -625,12 +598,12 @@ test_that("text vectors have names of the files they come from by default (bug 2
 
 }) 
 
-test_that("test globbed tar file",{
-    expect_equal(
-        sort(unname(texts(readtext('../data/tar/*')))),
-        c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-    )
-})
+# test_that("test globbed tar file",{
+#     expect_equal(
+#         sort(unname(texts(readtext('../data/tar/*')))),
+#         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+#     )
+# })
 
 
 test_that("test readtext with folder", {
