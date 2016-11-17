@@ -109,7 +109,7 @@ encoding.character <- function(x, verbose = TRUE, ...) {
 #' @rdname encoding
 #' @noRd
 #' @export
-encoding.readtext <- function(x, ...) {
+encoding.readtext <- function(x, verbose = TRUE, ...) {
     if (verbose) print(x)
     encoding(as.character(x), ...)    
 }

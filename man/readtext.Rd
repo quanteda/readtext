@@ -77,28 +77,15 @@ as it would be give to \code{\link{iconv}}.  See the Encoding section of
 \link{file} for details.}
 }
 \value{
-a data.frame consisting of a first column \code{texts} that contains
-the texts, with any additional columns consisting of docvars.  This object can
-be input directly into the \pkg{quanteda} package's \code{\link[quanteda]{corpus}} 
-to construct a corpus.
+a data.frame consisting of a first column \code{text} that contains
+the texts, with any additional columns consisting of document-level variables either found in the 
+file containing the texts, or created through the \code{readtext} call.
 }
 \description{
 Read texts and (if any) associated document-level meta-data from one or more source files. 
 The text source files 
 come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.
-}
-\details{
-If \code{cache = TRUE}, the constructor does not store a copy of 
-  the texts, but rather reads
-  in the texts and associated data, and saves them to a temporary disk file 
-  whose location is specified in the \link{readtext} object.  This 
-  prevents a complete copy of the object from cluttering the global 
-  environment and consuming additional space.  This does mean however that 
-  the state of the file containing the source data will not be cross-platform
-  and may not be persistent across sessions.  So the recommended usage is to 
-  load the data into a corpus in the same session in which \code{readtext} is
-  called.
 }
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
