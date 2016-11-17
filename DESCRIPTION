@@ -21,9 +21,9 @@ Imports:
     utils,
     stringi,
     data.table,
-    httr,
-    quanteda
+    httr
 Suggests:
+    quanteda,
     knitr,
     rmarkdown,
     jsonlite (>= 0.9.10),
