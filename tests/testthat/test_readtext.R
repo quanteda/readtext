@@ -623,11 +623,16 @@ test_that("text vectors have names of the files they come from by default (bug 2
 # })
 
 
-test_that("test readtext with folder", {
-    expect_error(
-        readtext('../data/glob'),
-        ".*To read all files in a directory, you must*"
-    )
+if (.Platform$OS.type == "unix") {
+    test_that("test readtext with folder 1", {
+        expect_error(
+            readtext('../data/glob'),
+            ".*To read all files in a directory, you must*"
+        )
+    })
+}        
+
+test_that("test readtext with folder 2", {
     expect_error(
         readtext('../data/glob/'),
         ".*To read all files in a directory, you must*"
