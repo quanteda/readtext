@@ -28,6 +28,14 @@ test_that("Test readtext:::mktemp function for test dirs",{
     
 })
 
+test_that("Test is_probably_xpath",{
+    expect_false(is_probably_xpath('A'))
+    expect_false(is_probably_xpath('a:what'))
+    expect_true(is_probably_xpath('/A/B/C'))
+    expect_true(is_probably_xpath('A/B/C'))
+})
+
+
 
 test_that("Test readtext:::getdocvarsFromFilenames for parsing filenames", {
     
@@ -53,4 +61,13 @@ test_that("file_ext returns expected extensions", {
                    "~/tmp/spaced words/Ireland_black_bear.tar.gz") 
     expect_equal(readtext:::file_ext(filenames),
                  c("txt", "csv", "json", "gz"))
+})
+
+
+test_that("Test downloadRemote",{
+
+    expect_error(
+        downloadRemote('http://www.google.com/404.txt', ignoreMissing=F)
+    )
+
 })

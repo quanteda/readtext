@@ -134,26 +134,34 @@ get_xml <- function(path, textfield, encoding,...) {
     if (!requireNamespace("XML", quietly = TRUE))
         stop("You must have XML installed to read XML files.")
     
-    docs <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
-    if (is.numeric(textfield) & (textfield > ncol(docs))) {
-        stop(paste0("There is no ", textfield, "th field in file ", path))
-    }
-    if (is.character(textfield)) {
-        textfieldi <- which(names(docs)==textfield)
-        if (length(textfieldi)==0)
-            stop(paste("There is no node called", textfield, "in file", path))
-        textfield <- textfieldi
+    if (is_probably_xpath(textfield))  {
+        xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+        txt <- XML::xpathApply(xml, textfield, XML::xmlValue, ...)
+        txt <- paste0(txt, collapse='')
+        return(data.frame(texts = txt, stringsAsFactors = FALSE))
     }
     else {
-        warning(paste("You should specify textfield by name rather than by index, unless",
-                      "you're certain that your XML file's fields are always in the same order."))
+        docs <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
+        if (is.numeric(textfield) & (textfield > ncol(docs))) {
+            stop(paste0("There is no ", textfield, "th field in file ", path))
+        }
+        if (is.character(textfield)) {
+            textfieldi <- which(names(docs)==textfield)
+            if (length(textfieldi)==0)
+                stop(paste("There is no node called", textfield, "in file", path))
+            textfield <- textfieldi
+        }
+        else {
+            warning(paste("You should specify textfield by name rather than by index, unless",
+                          "you're certain that your XML file's fields are always in the same order."))
+        }
+        
+        # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
+        # ourselves, to match get_csv's behaviour
+        return(data.frame(texts = docs[, textfield], 
+                   imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
+                   stringsAsFactors = FALSE))
     }
-    
-    # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
-    # ourselves, to match get_csv's behaviour
-    data.frame(text = docs[, textfield], 
-               imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
-               stringsAsFactors = FALSE)
 }
 
 

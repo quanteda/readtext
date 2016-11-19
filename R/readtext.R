@@ -13,9 +13,10 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   automagically handle a number of common scenarios, so the value can be a
 #    single filename, a vector of file names a remote URL, or a file "mask" using a 
 #'   "glob"-type'  wildcard value.  Currently available filetypes are: 
+#'   
+#'   \strong{Single file formats:}
+#'   
 #'   \describe{
-#'   \item html files
-#'   \item docx files
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
@@ -24,8 +25,6 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \item{\code{json}}{data in some form of JavaScript 
 #'   Object Notation, consisting of the texts and optionally additional docvars.
 #'   The supported formats are:
-#'   \item PDF files
-#'   \item .doc and .docx Word files
 #'   \itemize{
 #'   \item a single JSON object per file
 #'   \item line-delimited JSON, with one object per line
@@ -36,7 +35,18 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
 #'   kind supported by the function xmlToDataFrame function of the \strong{XML} 
 #'   package.}
-#'   \code{file} can also not be a path to a single local file, such as
+#'   \item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
+#'   Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
+#'   or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
+#'   \item{\code{doc, docx}}{Microsoft Word formatted files, converted through 
+#'   \code{antiword}.  
+#'   Requires that \code{antiword} be installed, either through \code{brew install antiword} (macOS) 
+#'   or from \url{http://www.winfield.demon.nl} (Windows).}
+#'   
+#'   \strong{Reading multiple files and file types:} 
+#'   
+#'   In addition, \code{file} can also not be a path 
+#'   to a single local file, but also combinations of any of the above types, such as:
 #'    \item{a wildcard value}{any valid 
 #'   pathname with a wildcard ("glob") expression that can be expanded by the 
 #'   operating system.  This may consist of multiple file types.} 
@@ -49,7 +59,8 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   }
 #' @param textfield a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
-#'   specified for file types \code{.csv} and \code{.json}.
+#'   specified for file types \code{.csv} and \code{.json}. For XML files
+#'   an XPath expression can be specified. 
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
@@ -109,7 +120,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
     
     # combine all of the data.frames returned
@@ -120,9 +131,9 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     # for identical filenames
     uniqueparts <- basename_unique(files, pathonly = TRUE)
     row.names(result) <- if (!identical(uniqueparts, "")) {
-         paste(uniqueparts, as.character(sapply(sources, row.names)), sep = "/")
+         paste(uniqueparts, as.character(as.character(unlist(sapply(sources, row.names)))), sep = "/")
     } else {
-         as.character(sapply(sources, row.names))
+         as.character(unlist(sapply(sources, row.names)))
     }
 
     if ("filenames" %in% docvarsfrom) {
