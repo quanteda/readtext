@@ -78,9 +78,6 @@ downloadRemote <- function (i, ignoreMissing) {
     if (ignoreMissing) {
         httr::warn_for_status(r)
     }
-    else if (httr::http_error(r)) {
-            return(NULL)
-    }
     else {
         httr::stop_for_status(r)
     }
