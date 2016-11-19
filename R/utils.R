@@ -33,7 +33,7 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
 # @rdname catm
 # make temporary files and directories in a more reasonable way than tempfile()
 # or tempdir(): here, the filename is different each time you call mktemp()
-mktemp <- function(prefix='tmp.', base_path=NULL, directory=F) {
+mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
     #  Create a randomly-named temporary file or directory, sort of like
     #  https://www.mktemp.org/manual.html
     if (is.null(base_path))
@@ -60,13 +60,6 @@ mktemp <- function(prefix='tmp.', base_path=NULL, directory=F) {
     return(filename)
 }
 
-
-# @rdname catm
-# messages() with some of the same syntax as cat(): takes a sep argument and
-# does not append a newline by default
-catm <- function(..., sep = " ", appendLF = F) {
-    message(paste(..., sep = sep), appendLF = appendLF)
-}
 
 downloadRemote <- function (i, ignoreMissing) {
     # First, check that this is not a URL with an unsupported scheme
@@ -132,7 +125,7 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
     #  extension.
     
     if (!(ignoreMissing || (length(x) > 0))) {
-        stop("File does not exist.")
+        stop("File '", x, "' does not exist.")
     }
     
     matchingFiles <- unlist(
@@ -150,7 +143,7 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
 
 extractArchive <- function(i, ignoreMissing) {
     if (!(ignoreMissing || file.exists(i)))
-        stop(paste("File", i, "does not exist."))
+        stop("File '", i, "' does not exist.")
     
     td <- mktemp(directory=T)
     if (tools::file_ext(i) == 'zip')
@@ -200,7 +193,19 @@ listMatchingFile <- function(x, ignoreMissing, verbose = FALSE, lastRound) {
         #  special treatment (zip, remote, etc.) and it was treated as a glob
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
-        if (!(ignoreMissing || file.exists(i))) stop("File", i, "does not exist.")
+        if (!(ignoreMissing || file.exists(i))) {
+            if (dir.exists(i)) {
+                tr <- traceback()
+                call <- tr[[length(tr)]]
+                stop("File", i, "does not exist, but a directory of this name does exist.",
+                     "To read all files in a directory, you must pass a glob expression like ",
+                     tr
+                     )
+            }
+            else {
+                stop("File '", i, "' does not exist.")
+            }
+        }
         if (verbose) message('regular file')
         return(i)
     }

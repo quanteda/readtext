@@ -1,14 +1,39 @@
+###
+### low-level file handling functions
+###
+
 ## txt format
 get_txt <- function(f, ...) {
     txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse="\n")
     close(con)
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 
 ## csv format
 get_csv <- function(path, textfield, ...) {
-    docs <- utils::read.csv(path, stringsAsFactors = FALSE, ...)
+
+
+    args <- list(...)
+
+    # Replace native.enc with UTF-8 if that's what it is
+    if (args$encoding == 'native.enc') {  
+        #  http://r.789695.n4.nabble.com/Find-out-what-quot-native-enc-quot-corresponds-to-td4639208.html
+        args$encoding = strsplit(Sys.getlocale("LC_CTYPE"), '\\.')[[1]][2]
+    }
+    if (!(args$encoding %in% c('Latin-1', 'UTF-8'))) { 
+        # If the encoding is not one fread supports, open the file using R's native function
+        #  Use the encoding arg to open the file, pass all other args to fread
+        txt <- paste(readLines(con <- file(path), encoding=args$encoding, warn = FALSE), collapse="\n")
+        close(con)
+        args$encoding <- NULL
+        args <- c(list(input=txt, data.table=F, stringsAsFactors=F), args)
+    }
+    else {
+        args <- c(list(input=path, data.table=F, stringsAsFactors=F), args)
+    }
+    docs <- do.call(data.table::fread, args)
+
     if (is.character(textfield)) {
         textfieldi <- which(names(docs) == textfield)
         if (length(textfieldi) == 0)
@@ -17,8 +42,7 @@ get_csv <- function(path, textfield, ...) {
     } else if (is.numeric(textfield) & (textfield > ncol(docs))) {
         stop(paste0("There is no ", textfield, "th field in file ", path))
     }
-    
-    data.frame(texts = docs[, textfield], docs[, -textfield, drop = FALSE],
+    data.frame(text = docs[, textfield], docs[, -textfield, drop = FALSE],
                stringsAsFactors = FALSE)
 }
 
@@ -57,7 +81,7 @@ get_json_tweets <- function(path, source="twitter", ...) {
     txt <- readLines(path, warn = FALSE, ...)
     
     results <- streamR::parseTweets(txt, verbose=FALSE, ...)
-    data.frame(texts = results[, 1], as.data.frame(results[, -1, drop = FALSE]),
+    data.frame(text = results[, 1], as.data.frame(results[, -1, drop = FALSE]),
                stringsAsFactors = FALSE)
 }
 
@@ -76,7 +100,7 @@ get_json_object <- function(path, textfield, ...) {
         stop(paste("There is no field called", textfield, "in file", path))
     }
     
-    data.frame(texts = docs[[textfield]], docs[, -textfield, with = FALSE],
+    data.frame(text = docs[[textfield]], docs[, -textfield, with = FALSE],
                stringsAsFactors = FALSE)
 }
 
@@ -99,7 +123,7 @@ get_json_lines <- function(path, textfield, ...) {
         stop(paste("There is no field called", textfield, "in file", path))
     }
     
-    data.frame(texts = docs[[textfield]], docs[, -textfield, with = FALSE],
+    data.frame(text = docs[[textfield]], docs[, -textfield, with = FALSE],
                stringsAsFactors = FALSE)
 }
 

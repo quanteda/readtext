@@ -48,7 +48,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   specified for file types \code{.csv} and \code{.json}. For XML files
 #'   an XPath expression can be specified. 
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
-#'   filenames, when the \code{readtxt} inputs are filenames and the elements 
+#'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
 #'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 #'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
@@ -66,31 +66,18 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
 #' @param ... additional arguments passed through to low-level file reading 
-#'   function, such as \code{\link{file}}, \code{\link{read.csv}}, etc.  Useful 
+#'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
 #'   as it would be give to \code{\link{iconv}}.  See the Encoding section of 
-#'   \link{file} for details.  Also useful for passing arguments through to
-#'   \code{\link{read.csv}}, for instance `quote = ""`, if quotes are causing
-#'   problems within comma-delimited fields.
-#' @details If \code{cache = TRUE}, the constructor does not store a copy of 
-#'   the texts, but rather reads
-#'   in the texts and associated data, and saves them to a temporary disk file 
-#'   whose location is specified in the \link{readtext} object.  This 
-#'   prevents a complete copy of the object from cluttering the global 
-#'   environment and consuming additional space.  This does mean however that 
-#'   the state of the file containing the source data will not be cross-platform
-#'   and may not be persistent across sessions.  So the recommended usage is to 
-#'   load the data into a corpus in the same session in which \code{readtxt} is
-#'   called.
-#' @return a data.frame consisting of a first column \code{texts} that contains
-#' the texts, with any additional columns consisting of docvars.  This object can
-#' be input directly into the \pkg{quanteda} package's \code{\link[quanteda]{corpus}} 
-#' to construct a corpus.
+#'   \link{file} for details.  
+#' @return a data.frame consisting of a first column \code{text} that contains
+#' the texts, with any additional columns consisting of document-level variables either found in the 
+#' file containing the texts, or created through the \code{readtext} call.
 #' @author Adam Obeng, Kenneth Benoit, and Paul Nulty
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
-readtxt <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
+readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, ...) {
     
@@ -164,7 +151,17 @@ getSource <- function(f, textfield, ...) {
     ## SIMPLER -KB
     fileType <- file_ext(f)
     if (!(fileType %in% SUPPORTED_FILETYPE_MAPPING))
-        stop(paste('Unsupported extension', fileType, 'of file', f))
+        if (dir.exists(f)) {
+            call <- deparse(sys.call(1))
+            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed=TRUE)
+            stop("File '", f, "' does not exist, but a directory of this name does exist. ",
+                 "To read all files in a directory, you must pass a glob expression like ",
+                 call
+                 )
+        }
+        else {
+            stop(paste('Unsupported extension', fileType, 'of file', f))
+        }
 
     newSource <- switch(fileType, 
                txt = get_txt(f, ...),

@@ -2,25 +2,24 @@
 % Please edit documentation in R/readtext-package.R
 \docType{package}
 \name{readtext-package}
-\alias{readtext}
 \alias{readtext-package}
 \title{Import and handling for plain and formatted text files}
 \description{
-Import and handling for plain and formatted text files
+A set of functions for  importing and handling text files and formatted text
+files with additional meta-data, such including .csv, .tab, .json, .xml, and
+others.
+}
+\details{
+\pkg{readtext} makes it easy to import text files in various formats, 
+including using operating system filemasks to load in groups of files based 
+on glob pattern matches, including files in multiple directories or 
+sub-directories. \pkg{readtext} can also read multiple files into R from 
+compressed archive files such as .gz, .zip, .tar.gz, etc.  Finally 
+\pkg{readtext} reads in the document-level meta-data associated with texts, 
+if those texts are in a format (e.g. .csv, .json) that includes additional, 
+non-textual data.
 }
 \author{
 Ken Benoit, Paul Nulty, and Adam Obeng
-  
-  A set of functions for  importing and handling text files and formatted
-  text files with additional meta-data, such including .csv, .tab, .json,
-  .xml, and others.
-  
-  \pkg{readtext} makes it easy to import text files in various formats, including 
-  using operating system filemasks to load in groups of files based on glob pattern
-  matches, including files in multiple directories or sub-directories.
-  \pkg{readtext} can also read multiple files into R from compressed archive files such as 
-  .gz, .zip, .tar.gz, etc.  Finally \pkg{readtext} reads in the document-level meta-data
-  associated with texts, if those texts are in a format (e.g. .csv, .json) that includes
-  additional, non-textual data.
 }
 
