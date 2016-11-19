@@ -266,24 +266,34 @@ test_that("test xml files", {
     # Test corpus object
     testcorpus <- readtext('../data/xml/test.xml', textfield='text')
     expect_that(
-        docvars(testcorpus),
+        data.frame(testcorpus[,-1]),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
                           stringsAsFactors = FALSE,
                           row.names = c("test.xml.1", "test.xml.2")))
     )
     expect_that(
-        texts(testcorpus),
-        equals(c(test.xml.1='Lorem ipsum.', test.xml.2='Dolor sit'))
+        testcorpus[,'texts'],
+        equals(c('Lorem ipsum.','Dolor sit'))
     )
+    expect_that(
+        row.names(testcorpus),
+        equals(c("test.xml.1", "test.xml.2"))
+    )
+
     
     expect_that(
         readtext('../data/xml/test.xml', textfield=1),
         gives_warning('You should specify textfield by name.*')
     )
     expect_that(
-        texts(readtext('../data/xml/test.xml', textfield=1)),
-        equals(c(test.xml.1='Lorem ipsum.', test.xml.2='Dolor sit'))
+        readtext('../data/xml/test.xml', textfield=1)[,'texts'],
+        equals(c('Lorem ipsum.', 'Dolor sit'))
     )
+    expect_that(
+        row.names(testcorpus),
+        equals(c("test.xml.1", "test.xml.2"))
+    )
+
     
     expect_that(
         docvars(readtext('../data/xml/*', textfield='nonesuch')),
@@ -299,14 +309,14 @@ test_that("test xml files", {
 test_that("test xml files with XPath", {
 
     expected <- c('The quick brown fox')
-    names(expected) <- 'tei.xml'
+    expected_names <- 'tei.xml'
 
-    expect_equal(
-        texts(readtxt('../data/xml/tei.xml',
+    actual <- readtext('../data/xml/tei.xml',
                       textfield='/tei:TEI/tei:text/tei:body//tei:p',
-                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))),
-         expected
-    )
+                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+
+    expect_equal(actual[,'texts'], expected)
+    expect_equal(row.names(actual), expected_names)
 
 
 })
