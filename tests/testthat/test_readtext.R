@@ -269,15 +269,13 @@ test_that("test xml files", {
 test_that("test xml files with XPath", {
 
     expected <- c('The quick brown fox')
-    expected_names <- 'tei.xml'
+    names(expected) <- 'tei.xml'
 
     actual <- readtext('../data/xml/tei.xml',
                       textfield='/tei:TEI/tei:text/tei:body//tei:p',
                       namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
 
     expect_equal(texts(actual), expected)
-    expect_equal(row.names(actual), expected_names)
-
 
 })
 
@@ -605,16 +603,11 @@ test_that("test globbed tar file",{
 
 test_that("test html file",{
     expected <- c("The quick brown fox jumps over the lazy dog")
-    expected_names <- 'html5.html'
+    names(expected) <- 'html5.html'
 
     expect_equal(
         texts(readtext('../data/html/html5.html')),
         expected
-    )
-
-   expect_equal(
-        row.names(readtext('../data/html/html5.html')),
-        expected_names
     )
 
 })
@@ -622,14 +615,10 @@ test_that("test html file",{
 
 test_that("test malformed html file",{
     expected <- c("The quick brown fox \n    jumps over the lazy dog")
-    expected_names <- 'malformed_html5.html'
+    names(expected) <- 'malformed_html5.html'
     expect_equal(
         texts(readtext('../data/html/malformed_html5.html')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/html/malformed_html5.html')),
-        expected_names
     )
 })
 
@@ -638,30 +627,22 @@ test_that("test for pdf file", {
     skip_on_cran()
     skip_on_travis()
     expected <- c("The quick brown fox jumps over the lazy dog  1  \f")
-    expected_names <- 'test.pdf'
+    names(expected) <- 'test.pdf'
 
     expect_equal(
         texts(readtext('../data/pdf/test.pdf')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/pdf/test.pdf')),
-        expected_names
     )
 
 })
 
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
-    expected_names <- 'test.docx'
+    names(expected) <- 'test.docx'
     
    expect_equal(
         texts(readtext('../data/docx/test.docx')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/docx/test.docx')),
-        expected_names
     )
 
 })
@@ -674,15 +655,11 @@ test_that("test for doc file", {
 
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
     expected <- trimws(expected)
-    expected_names <- 'test.doc'
+    names(expected) <- 'test.doc'
 
     expect_equal(
         texts(readtext('../data/doc/test.doc')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/doc/test.doc')),
-        expected_names
     )
 })
 
