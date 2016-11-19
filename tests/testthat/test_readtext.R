@@ -387,7 +387,9 @@ test_that("test docvars.readtext warning with field!=NULL", {
 
 
  test_that("test readtext encoding parameter: UTF-8 encoded file, read as UTF-16 (should not work)", {
-      expect_warning(
+     skip_on_cran()
+     skip_on_travis()
+     expect_warning(
         misread_texts <- texts(readtext(file.path('../data/encoding', 'UTF-8__characters.txt'), encoding='utf-16'))
       )
       utf8_bytes <- data.table::fread(file.path('../data/encoding', 'UTF-8__bytes.tsv'))[[1]]
@@ -595,6 +597,8 @@ test_that("text vectors have names of the files they come from by default (bug 2
 }) 
 
 test_that("test globbed tar file",{
+    skip_on_cran()
+    skip_on_travis()
     expect_equal(
         unname(texts(readtext("../data/tar/*"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
@@ -664,6 +668,8 @@ test_that("test for doc file", {
 })
 
 test_that("test json files", {
+    skip_on_cran()
+    skip_on_travis()
     expect_equal(
         unname(texts(readtext('../data/json/*json', textfield='text'))),
         c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
@@ -793,6 +799,8 @@ test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: 
 
 context('Loading a corpus from a tar archive')
 test_that("A single-level tar file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
     expect_equal(
         unname(texts(readtext("../data/tar/test.tar"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
@@ -801,6 +809,8 @@ test_that("A single-level tar file containing txt files can be loaded",{
 
 context('Loading a corpus from a gzipped tar archive')
 test_that("A single-level tar.gz file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
     expect_equal(
         unname(texts(readtext('../data/targz/test.tar.gz'))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
@@ -809,6 +819,8 @@ test_that("A single-level tar.gz file containing txt files can be loaded",{
 
 context('Loading a corpus from a bzipped tar archive')
 test_that("A single-level tar.bz file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
     skip_on_os("windows")
     expect_equal(
         unname(texts(readtext("../data/tarbz/test.tar.bz"))),
