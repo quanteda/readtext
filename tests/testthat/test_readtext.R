@@ -519,7 +519,7 @@ test_that("Test function to list files", {
     
     expect_that(
         length(listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
-        throws_error('File does not exist')
+        throws_error("File '' does not exist")
     )
     
     
@@ -612,7 +612,7 @@ test_that("test globbed tar file",{
 
 test_that("test json files", {
     expect_equal(
-        sort(unname(texts(readtxt('../data/json/*json', textfield='text')))),
+        sort(unname(texts(readtext('../data/json/*json', textfield='text')))),
         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'Now is the winter', 'The quick')
     )
     
@@ -624,7 +624,7 @@ test_that("test json files", {
         stringsAsFactors=F)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
-    actual_docvars <- docvars(readtxt('../data/json/*json', textfield='text'))
+    actual_docvars <- docvars(readtext('../data/json/*json', textfield='text'))
     actual_docvars <- actual_docvars[order(actual_docvars$number),]
     row.names(actual_docvars) <- NULL
     row.names(actual_docvars)
@@ -635,18 +635,18 @@ test_that("test json files", {
     )
     
     expect_that(
-        texts(readtxt('../data/json/*json', textfield=1)),
+        texts(readtext('../data/json/*json', textfield=1)),
         throws_error('Cannot use numeric textfield with json file')
     )
     
     expect_that(
-        texts(readtxt('../data/json/test3.json', textfield='nonesuch')),
+        texts(readtext('../data/json/test3.json', textfield='nonesuch')),
         throws_error('There is no field called nonesuch in file')
     )
     
     
     # Twitter json files
-    tweetSource <- readtxt('../data/tweets/stream.json')
+    tweetSource <- readtext('../data/tweets/stream.json')
     
     expect_equal(
         texts(tweetSource),
@@ -711,26 +711,26 @@ test_that("test encoding handling (skipped on travis and CRAN", {
         filename <- filenames[[i]]
         encoding <- fileencodings[[i]]
         
-        test_that(paste("test readtxt encoding parameter, encoding", encoding), {
+        test_that(paste("test readtext encoding parameter, encoding", encoding), {
             characters <- as.numeric(charToRaw(
-                texts(readtxt(filename, encoding=fileencodings[[i]]))
+                texts(readtext(filename, encoding=fileencodings[[i]]))
             ))
             bytes <- data.table::fread(gsub('__characters.txt', '__bytes.tsv', filename))[[1]]
             expect_equal(characters, bytes)
         })
     }
     test_that("Test loading all these files at once with different encodings", {
-        encodedreadtxtsCorpus <- corpus(readtxt(filenames, encoding=fileencodings))
+        encodedreadtxtsCorpus <- corpus(readtext(filenames, encoding=fileencodings))
     })
 })
 
-test_that("test readtxt encoding parameter: ASCII encoded file, read as UTF-8: (should work)", {
+test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: (should work)", {
     skip_on_cran()
     skip_on_travis()
     utf8_bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
     expect_that(
         as.numeric(charToRaw(
-            texts(readtxt(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-8'),
+            texts(readtext(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-8'),
             ))),
         equals(utf8_bytes)
     )
@@ -739,7 +739,7 @@ test_that("test readtxt encoding parameter: ASCII encoded file, read as UTF-8: (
  context('Loading a corpus from a tar archive')
  test_that("A single-level tar file containing txt files can be loaded",{
      expect_equal(
-         unname(sort(texts(readtxt('../data/tar/test.tar')))),
+         unname(sort(texts(readtext('../data/tar/test.tar')))),
          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
      )
  })
@@ -747,7 +747,7 @@ test_that("test readtxt encoding parameter: ASCII encoded file, read as UTF-8: (
  context('Loading a corpus from a gzipped tar archive')
  test_that("A single-level tar.gz file containing txt files can be loaded",{
      expect_equal(
-         sort(unname(texts(readtxt('../data/targz/test.tar.gz')))),
+         sort(unname(texts(readtext('../data/targz/test.tar.gz')))),
          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
      )
  })
@@ -756,7 +756,7 @@ test_that("test readtxt encoding parameter: ASCII encoded file, read as UTF-8: (
  test_that("A single-level tar.bz file containing txt files can be loaded",{
      skip_on_os("windows")
      expect_equal(
-         sort(unname(texts(readtxt('../data/tarbz/test.tar.bz')))),
+         sort(unname(texts(readtext('../data/tarbz/test.tar.bz')))),
          c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
      )
  })

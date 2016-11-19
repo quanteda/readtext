@@ -56,13 +56,6 @@ test_that("file_ext returns expected extensions", {
 })
 
 
-test_that("Test catm",{
-    expect_output(
-        catm('a', 'b'),
-        'a b'
-    )
-})
-
 test_that("Test downloadRemote",{
 
     expect_error(

@@ -30,7 +30,7 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
     dvars
 }
 
-# @rdname catm
+# @rdname mktemp
 # make temporary files and directories in a more reasonable way than tempfile()
 # or tempdir(): here, the filename is different each time you call mktemp()
 mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
