@@ -3,7 +3,7 @@
 #' Detect the encoding of texts in a character, \link[quanteda]{corpus}, or 
 #' \link{readtext} object and report on the most likely encoding.  Useful in
 #' detecting the encoding of input texts, so that a source encoding can be 
-#' (re)specified when inputting a set of texts using \code{\link{readtxt}}, prior
+#' (re)specified when inputting a set of texts using \code{\link{readtext}}, prior
 #' to constructing a corpus.
 #' 
 #' Based on \link[stringi]{stri_enc_detect}, which is in turn based on the 
@@ -13,31 +13,34 @@
 #'   encodings will be detected.
 #' @param verbose if \code{FALSE}, do not print diagnostic report
 #' @param ... additional arguments passed to \link[stringi]{stri_enc_detect}
-#' @note This function has been \strong{temporarily} named \code{encoding2} to avoid
+#' @note This function has been \strong{temporarily} named \code{encoding} to avoid
 #' namespace conflicts with \pkg{quanteda}, which until we remove it from that package
 #' will retain the function \link[quanteda]{encoding}.
 #' @examples
 #' data(encodedTexts, package = "quanteda")
-#' encoding2(encodedTexts)
+#' encoding(encodedTexts)
 #' # show detected value for each text, versus known encoding
-#' data.frame(labelled = names(encodedTexts), detected = encoding2(encodedTexts)$all)
+#' data.frame(labelled = names(encodedTexts), detected = encoding(encodedTexts)$all)
 #'
-#' data(ie2010Corpus, package = "quanteda") 
-#' encoding2(ie2010Corpus)
+#' \dontrun{
+#' if ("quanteda" %in% installed.packages()[, "Package"]) {
+#'     data(ie2010Corpus, package = "quanteda") 
+#'     encoding(ie2010Corpus)
+#' }}
 #' 
 #' \dontrun{# Russian text, Windows-1251
-#' myreadtext <- readtxt("http://www.kenbenoit.net/files/01_er_5.txt")
-#' encoding2(myreadtext)
+#' myreadtext <- readtext("http://www.kenbenoit.net/files/01_er_5.txt")
+#' encoding(myreadtext)
 #' }
 #' @export
-encoding2 <- function(x, verbose = TRUE, ...) {
-    UseMethod("encoding2")
+encoding <- function(x, verbose = TRUE, ...) {
+    UseMethod("encoding")
 }
 
-#' @method encoding2 character
+#' @noRd
 #' @export
 #' @import data.table stringi
-encoding2.character <- function(x, verbose = TRUE, ...) {
+encoding.character <- function(x, verbose = TRUE, ...) {
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
@@ -70,54 +73,45 @@ encoding2.character <- function(x, verbose = TRUE, ...) {
     topEncodingsTable[, conf := conf/sum(conf)]
     topEncodingsTable <- topEncodingsTable[order(-conf)]
         
-    if (verbose) catm("Probable encoding: ", topEncodingsTable[1, encoding], sep = "")
+    if (verbose) 
+        message("Probable encoding: ", topEncodingsTable[1, encoding], sep = "", appendLF = FALSE)
     if (nrow(topEncodingsTable) == 1 & topEncodingsTable[1, encoding] == "ISO-8859-1")
-        if (verbose) catm("\n  (but note: detector often reports ISO-8859-1 when encoding is actually UTF-8.)")
+        if (verbose) 
+            message("\n  (but note: detector often reports ISO-8859-1 when encoding is actually UTF-8.)",
+                    appendLF = FALSE)
     if (nrow(topEncodingsTable) > 1) {
         if (verbose) 
-            catm("   (but ", "other encodings",
+            message("   (but ", "other encodings",
             # paste(topEncodingsTable[2:nrow(topEncodingsTable), encoding], collapse = ", "),
-            " also detected)\n", sep = "")
+            " also detected)\n", sep = "", appendLF = FALSE)
         barsize <- 60
         proportions <- round(topEncodingsTable$conf * barsize)
         plotsymbols <- c("*", "-", ".", "~", letters[1:5])
-        if (verbose) catm("  Encoding proportions: ")
-        if (verbose) catm("[", rep(plotsymbols[1:nrow(topEncodingsTable)], proportions[1:nrow(topEncodingsTable)]), "]", sep="")
-#         spacer <- "\n                         "
-#         catm(spacer)
-#         catm(paste(topEncodingsTable$encoding, " (", 
-#                   format(topEncodingsTable$conf, nsmall=3, digits=3), ") ", plotsymbols[1:nrow(topEncodingsTable)],
-#                   collapse = spacer, sep=""))
+        if (verbose) message("  Encoding proportions: ", appendLF = FALSE)
+        if (verbose) message("[", rep(plotsymbols[1:nrow(topEncodingsTable)], 
+                                      proportions[1:nrow(topEncodingsTable)]), "]", 
+                             appendLF = FALSE)
         if (verbose) {
-            catm("\n  Samples of the first text as:\n")
+            message("\n  Samples of the first text as:")
             for (i in 1:nrow(topEncodingsTable)) {
-                catm(sprintf("%-21s", paste0("  [", plotsymbols[i], "] ",
-                                            topEncodingsTable$encoding[i])),
-                    stri_sub(suppressWarnings(stri_encode(x[1], topEncodingsTable$encoding[i])), length = 60),
-                    "\n", sep = "")
+                message(sprintf("%-21s", paste0("  [", plotsymbols[i], "] ",
+                                                topEncodingsTable$encoding[i])),
+                        stri_sub(suppressWarnings(stri_encode(x[1], topEncodingsTable$encoding[i])), length = 60))
             }
         }
     } else 
-        if (verbose) catm("\n")
+        if (verbose) message("")
 
     invisible(list(probably = topEncodingsTable[1, encoding], 
                    all = sapply(detectedEncodings, function(x) x$Encoding[1])))
 }
 
-
-#' @method encoding2 corpus
-#' @importFrom quanteda texts
+#' @rdname encoding
+#' @noRd
 #' @export
-encoding2.corpus <- function(x, verbose = TRUE, ...) {
+encoding.readtext <- function(x, verbose = TRUE, ...) {
     if (verbose) print(x)
-    encoding2(quanteda::texts(x), verbose, ...)    
-}
-
-#' @method encoding2 readtext
-#' @export
-encoding2.readtext <- function(x, verbose = TRUE, ...) {
-    if (verbose) print(x)
-    encoding2(readtext::texts(x), verbose, ...)    
+    encoding(as.character(x), ...)    
 }
 
 
