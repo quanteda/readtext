@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 ![Downloads](http://cranlogs.r-pkg.org/badges/readtext)
 [![Travis-CI Build Status](https://travis-ci.org/kbenoit/readtext.svg?branch=master)](https://travis-ci.org/kbenoit/readtext)
+[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026?svg=true)](https://ci.appveyor.com/project/kbenoit/readtext)
 [![codecov.io](https://codecov.io/github/kbenoit/readtext/coverage.svg?branch=master)][1]
 
 
@@ -36,7 +37,7 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 
 ## Inter-operability with **quanteda**
 
-**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data.  It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**.  Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtxt()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
+**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data.  It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**.  Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
 
 ```{r}
 require(readtext)
@@ -59,21 +60,21 @@ notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
 fileencodings[notAvailableIndex]
 
 # read in some text files
-# try readtxt
-txts <- readtxt(paste0(FILEDIR, "/", "*.txt"))
+# try readtext
+txts <- readtext(paste0(FILEDIR, "/", "*.txt"))
 # substring(readtext::texts(txts)[1], 1, 80)  # gibberish
 # substring(readtext::texts(txts)[4], 1, 80)  # hex
 # substring(readtext::texts(txts)[40], 1, 80) # hex
 
 # read them in again
-txts <- readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
+txts <- readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
 substring(readtext::texts(txts)[1], 1, 80)  # English
 substring(readtext::texts(txts)[4], 1, 80)  # Arabic, looking good 
 substring(readtext::texts(txts)[40], 1, 80) # Cyrillic, looking good
 substring(readtext::texts(txts)[7], 1, 80)  # Chinese, looking good
 substring(readtext::texts(txts)[26], 1, 80) # Hindi, looking good
 
-txts <- readtxt(paste0(FILEDIR, "/", "*.txt"), 
+txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
                 encoding = fileencodings,
                 docvarsfrom = "filenames", 
                 docvarnames = c("document", "language", "inputEncoding"))
@@ -85,21 +86,12 @@ summary(encodingCorpus)
 Piping works too:
 ```{r}
 require(magrittr)
-readtxt(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
+readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
     corpus(textField = "texts") %>% 
         summary
 ```
 
-## To Do List
 
-2.  (Adam) Inspect the **testthat** tests, see my comments.
-
-3.  (Ken) Need to redefine the data.frame method for `quanteda::corpus()` so that it takes
-    `textField = "texts"` by default.
-    
-4.  More conversion methods?  
-
-5.  How can we define methods for `readtext` objects that extend the generics for`texts()` and `docvars()` that are defined in **quanteda**?  We don't want a NAMESPACE conflict so cannot redefine the generics in **readtexts**.
 
 
 

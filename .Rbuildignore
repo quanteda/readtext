@@ -8,3 +8,4 @@ __MACOSX
 ^\.travis*
 ^vignettes/figure
 ^\.httr-oauth$
+^appveyor\.yml$
