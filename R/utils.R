@@ -264,3 +264,9 @@ imputeDocvarsTypes <- function(docv) {
     data.frame(docv)
 }
 
+is_probably_xpath <- function(x) {
+    invalid_xml_element_chars <- c('/', '@')
+    any(
+        sapply(invalid_xml_element_chars, function(i) {grepl(i, x, perl=T)})
+    )
+}
