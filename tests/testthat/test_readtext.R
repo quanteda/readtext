@@ -553,8 +553,8 @@ test_that("Test function to list files with remote sources", {
     )
     
     expect_equal(
-      length(readtext:::listMatchingFiles('http://www.google.com/404.txt', ignoreMissing=T)),
-      0
+      length(readtext('http://www.google.com/404.txt', ignoreMissing = TRUE)),
+      1
     )
 })
 
@@ -605,15 +605,15 @@ test_that("text vectors have names of the files they come from by default (bug 2
 
 test_that("test globbed tar file",{
     expect_equal(
-        sort(unname(texts(readtext('../data/tar/*')))),
-        c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
+        unname(texts(readtext("../data/tar/*"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
 
 test_that("test json files", {
     expect_equal(
-        sort(unname(texts(readtext('../data/json/*json', textfield='text')))),
-        c('brown fox', 'Dolor sit', 'Lorem ipsum', 'Now is the winter', 'The quick')
+        unname(texts(readtext('../data/json/*json', textfield='text'))),
+        c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
     )
     
     #  test.json and test2.json are newline-delimited json
@@ -621,7 +621,7 @@ test_that("test json files", {
     expected_docvars <- data.frame(list(
         colour=c('green', 'red', 'orange', 'blue', NA), 
         number=c(42, 99, 0, NA, 3)),
-        stringsAsFactors=F)
+        stringsAsFactors = FALSE)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
     actual_docvars <- docvars(readtext('../data/json/*json', textfield='text'))
@@ -725,6 +725,8 @@ test_that("test encoding handling (skipped on travis and CRAN", {
 })
 
 test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: (should work)", {
+    FILEDIR <- '../data/encoding'
+
     skip_on_cran()
     skip_on_travis()
     utf8_bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
@@ -736,27 +738,27 @@ test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: 
     )
 })
 
- context('Loading a corpus from a tar archive')
- test_that("A single-level tar file containing txt files can be loaded",{
-     expect_equal(
-         unname(sort(texts(readtext('../data/tar/test.tar')))),
-         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-     )
- })
+context('Loading a corpus from a tar archive')
+test_that("A single-level tar file containing txt files can be loaded",{
+    expect_equal(
+        unname(texts(readtext("../data/tar/test.tar"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
 
- context('Loading a corpus from a gzipped tar archive')
- test_that("A single-level tar.gz file containing txt files can be loaded",{
-     expect_equal(
-         sort(unname(texts(readtext('../data/targz/test.tar.gz')))),
-         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-     )
- })
+context('Loading a corpus from a gzipped tar archive')
+test_that("A single-level tar.gz file containing txt files can be loaded",{
+    expect_equal(
+        unname(texts(readtext('../data/targz/test.tar.gz'))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
 
- context('Loading a corpus from a bzipped tar archive')
- test_that("A single-level tar.bz file containing txt files can be loaded",{
-     skip_on_os("windows")
-     expect_equal(
-         sort(unname(texts(readtext('../data/tarbz/test.tar.bz')))),
-         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-     )
- })
+context('Loading a corpus from a bzipped tar archive')
+test_that("A single-level tar.bz file containing txt files can be loaded",{
+    skip_on_os("windows")
+    expect_equal(
+        unname(texts(readtext("../data/tarbz/test.tar.bz"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
