@@ -164,7 +164,7 @@ get_html <- function(f, ...) {
     html <- XML::htmlTreeParse(f, useInternal = TRUE)
     txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]", 
                            XML::xmlValue)
-    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse='')
 
     data.frame(texts = txt, stringsAsFactors = FALSE)
