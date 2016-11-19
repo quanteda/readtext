@@ -62,3 +62,12 @@ test_that("file_ext returns expected extensions", {
     expect_equal(readtext:::file_ext(filenames),
                  c("txt", "csv", "json", "gz"))
 })
+
+
+test_that("Test downloadRemote",{
+
+    expect_error(
+        downloadRemote('http://www.google.com/404.txt', ignoreMissing=F)
+    )
+
+})

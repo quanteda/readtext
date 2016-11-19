@@ -106,7 +106,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
     
     # combine all of the data.frames returned
@@ -117,9 +117,9 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     # for identical filenames
     uniqueparts <- basename_unique(files, pathonly = TRUE)
     row.names(result) <- if (!identical(uniqueparts, "")) {
-         paste(uniqueparts, as.character(sapply(sources, row.names)), sep = "/")
+         paste(uniqueparts, as.character(as.character(unlist(sapply(sources, row.names)))), sep = "/")
     } else {
-         as.character(sapply(sources, row.names))
+         as.character(unlist(sapply(sources, row.names)))
     }
 
     if ("filenames" %in% docvarsfrom) {
