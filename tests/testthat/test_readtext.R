@@ -3,22 +3,6 @@
 # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn't seem to require textfield
 
-# needs to be added in because not in CRAN quanteda
-# texts <- function(x, groups = NULL, ...) {
-#     UseMethod("texts")
-# }
-texts.readtext <- function(x, groups = NULL, ...) {
-    if (!is.null(groups))
-        stop("groups argument not supported for texts() on a readtext object")
-    result <- x[["text"]]
-    names(result) <- row.names(x)
-    result
-}
-docvars.readtext <- function(x, field = NULL) {
-    if (!is.null(field))
-        warning("field argument not used for docvars on a readtext object", noBreaks. = TRUE)
-    as.data.frame(x[, -which(names(x)=="text"), drop = FALSE])
-}
 
 context('test readtext.R')
 
@@ -248,7 +232,7 @@ test_that("test xml files", {
                           row.names = c("test.xml.1", "test.xml.2")))
     )
     expect_that(
-        testcorpus[,'texts'],
+        unname(texts(testcorpus)),
         equals(c('Lorem ipsum.','Dolor sit'))
     )
     expect_that(
@@ -262,7 +246,7 @@ test_that("test xml files", {
         gives_warning('You should specify textfield by name.*')
     )
     expect_that(
-        readtext('../data/xml/test.xml', textfield=1)[,'texts'],
+        unname(texts(readtext('../data/xml/test.xml', textfield=1))),
         equals(c('Lorem ipsum.', 'Dolor sit'))
     )
     expect_that(
@@ -291,7 +275,7 @@ test_that("test xml files with XPath", {
                       textfield='/tei:TEI/tei:text/tei:body//tei:p',
                       namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
 
-    expect_equal(actual[,'texts'], expected)
+    expect_equal(texts(actual), expected)
     expect_equal(row.names(actual), expected_names)
 
 
@@ -624,7 +608,7 @@ test_that("test html file",{
     expected_names <- 'html5.html'
 
     expect_equal(
-        readtext('../data/html/html5.html')[,'texts'],
+        texts(readtext('../data/html/html5.html')),
         expected
     )
 
@@ -640,7 +624,7 @@ test_that("test malformed html file",{
     expected <- c("The quick brown fox \n    jumps over the lazy dog")
     expected_names <- 'malformed_html5.html'
     expect_equal(
-        readtext('../data/html/malformed_html5.html')[,'texts'],
+        texts(readtext('../data/html/malformed_html5.html')),
         expected
     )
    expect_equal(
@@ -657,7 +641,7 @@ test_that("test for pdf file", {
     expected_names <- 'test.pdf'
 
     expect_equal(
-        readtext('../data/pdf/test.pdf')[,'texts'],
+        texts(readtext('../data/pdf/test.pdf')),
         expected
     )
    expect_equal(
@@ -672,7 +656,7 @@ test_that("test for docx file", {
     expected_names <- 'test.docx'
     
    expect_equal(
-        readtext('../data/docx/test.docx')[,'texts'],
+        texts(readtext('../data/docx/test.docx')),
         expected
     )
    expect_equal(
@@ -693,7 +677,7 @@ test_that("test for doc file", {
     expected_names <- 'test.doc'
 
     expect_equal(
-        readtext('../data/doc/test.doc')[,'texts'],
+        texts(readtext('../data/doc/test.doc')),
         expected
     )
    expect_equal(

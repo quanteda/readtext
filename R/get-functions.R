@@ -138,7 +138,7 @@ get_xml <- function(path, textfield, encoding,...) {
         xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
         txt <- XML::xpathApply(xml, textfield, XML::xmlValue, ...)
         txt <- paste0(txt, collapse='')
-        return(data.frame(texts = txt, stringsAsFactors = FALSE))
+        return(data.frame(text = txt, stringsAsFactors = FALSE))
     }
     else {
         docs <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
@@ -158,7 +158,7 @@ get_xml <- function(path, textfield, encoding,...) {
         
         # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
         # ourselves, to match get_csv's behaviour
-        return(data.frame(texts = docs[, textfield], 
+        return(data.frame(text = docs[, textfield], 
                    imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
                    stringsAsFactors = FALSE))
     }
@@ -175,7 +175,7 @@ get_html <- function(f, ...) {
     txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse='')
 
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 
@@ -184,7 +184,7 @@ get_pdf <- function(f, ...) {
 
     txt <- system2("pdftotext", c(shQuote(f), "-"), stdout = TRUE)
     txt <- paste0(txt, collapse=' ')
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 get_docx <- function(f, ...) {
@@ -199,7 +199,7 @@ get_docx <- function(f, ...) {
     txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse='')
 
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 get_doc <- function(f, ...) {
@@ -208,5 +208,5 @@ get_doc <- function(f, ...) {
     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
     txt <- paste0(txt, collapse=' ')
     txt <- trimws(txt)
-    data.frame(texts = txt, stringsAsFactors = FALSE)
+    data.frame(text = txt, stringsAsFactors = FALSE)
 }
