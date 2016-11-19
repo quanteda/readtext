@@ -168,6 +168,25 @@ context('test that require recursive invocation of listFileNames (i.e. because a
 
 test_that("test non-implemented functions", {
     
+<<<<<<< HEAD:tests/testthat/test_readtxt.R
+=======
+    expect_that(
+        readtext('../data/empty/empty.doc'),
+        throws_error('Unsupported extension doc')
+    )
+    
+    expect_that(
+        readtext('../data/empty/empty.docx'),
+        throws_error('Unsupported extension docx')
+    )
+    
+    expect_that(
+        readtext('../data/empty/empty.pdf'),
+        throws_error('Unsupported extension pdf')
+    )
+    
+    
+>>>>>>> master:tests/testthat/test_readtext.R
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -606,18 +625,15 @@ test_that("text vectors have names of the files they come from by default (bug 2
 #     )
 # })
 
+
+<<<<<<< HEAD:tests/testthat/test_readtxt.R
 test_that("test html file",{
     expected <- c("The quick brown fox jumps over the lazy dog")
-    expected_names <- 'html5.html'
+    names(expected) <- 'html5.html'
 
     expect_equal(
-        readtext('../data/html/html5.html')[,'texts'],
+        texts(readtxt('../data/html/html5.html')),
         expected
-    )
-
-   expect_equal(
-        row.names(readtext('../data/html/html5.html')),
-        expected_names
     )
 
 })
@@ -625,44 +641,32 @@ test_that("test html file",{
 
 test_that("test malformed html file",{
     expected <- c("The quick brown fox \n    jumps over the lazy dog")
-    expected_names <- 'malformed_html5.html'
+    names(expected) <- 'malformed_html5.html'
     expect_equal(
-        readtext('../data/html/malformed_html5.html')[,'texts'],
+        texts(readtxt('../data/html/malformed_html5.html')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/html/malformed_html5.html')),
-        expected_names
     )
 })
 
 
 test_that("test for pdf file", {
     expected <- c("The quick brown fox jumps over the lazy dog  1  \f")
-    expected_names <- 'test.pdf'
+    names(expected) <- 'test.pdf'
 
     expect_equal(
-        readtext('../data/pdf/test.pdf')[,'texts'],
+        texts(readtxt('../data/pdf/test.pdf')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/pdf/test.pdf')),
-        expected_names
     )
 
 })
 
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
-    expected_names <- 'test.docx'
+    names(expected) <- 'test.docx'
     
    expect_equal(
-        readtext('../data/docx/test.docx')[,'texts'],
+        texts(readtxt('../data/docx/test.docx')),
         expected
-    )
-   expect_equal(
-        row.names(readtext('../data/docx/test.docx')),
-        expected_names
     )
 
 })
@@ -672,19 +676,14 @@ test_that("test for docx file", {
 test_that("test for doc file", {
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
     expected <- trimws(expected)
-    expected_names <- 'test.doc'
+    names(expected) <- 'test.doc'
 
     expect_equal(
-        readtext('../data/doc/test.doc')[,'texts'],
+        texts(readtxt('../data/doc/test.doc')),
         expected
     )
-   expect_equal(
-        row.names(readtext('../data/doc/test.doc')),
-        expected_names
-    )
 })
-
-
+=======
 if (.Platform$OS.type == "unix") {
     test_that("test readtext with folder 1", {
         expect_error(
@@ -698,3 +697,4 @@ if (.Platform$OS.type == "unix") {
         )
     })
 }    
+>>>>>>> master:tests/testthat/test_readtext.R
