@@ -12,6 +12,9 @@ readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
 \item{file}{the complete filename(s) to be read. This is designed to 
 automagically handle a number of common scenarios, so the value can be a
 "glob"-type'  wildcard value.  Currently available filetypes are: 
+
+\strong{Single file formats:}
+
 \describe{
 \item{\code{txt}}{plain text files:
 So-called structured text files, which describe both texts and metadata:
@@ -31,7 +34,18 @@ into docvars.  The correct format for each JSON file is automatically detected.}
 \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
 kind supported by the function xmlToDataFrame function of the \strong{XML} 
 package.}
-\code{file} can also not be a path to a single local file, such as
+\item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
+Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
+or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
+\item{\code{doc, docx}}{Microsoft Word formatted files, converted through 
+\code{antiword}.  
+Requires that \code{antiword} be installed, either through \code{brew install antiword} (macOS) 
+or from \url{http://www.winfield.demon.nl} (Windows).}
+
+\strong{Reading multiple files and file types:} 
+
+In addition, \code{file} can also not be a path 
+to a single local file, but also combinations of any of the above types, such as:
  \item{a wildcard value}{any valid 
 pathname with a wildcard ("glob") expression that can be expanded by the 
 operating system.  This may consist of multiple file types.} 
@@ -51,7 +65,8 @@ pattern that matches no files.}
 
 \item{textfield}{a variable (column) name or column number indicating where 
 to find the texts that form the documents for the corpus.  This must be 
-specified for file types \code{.csv} and \code{.json}.}
+specified for file types \code{.csv} and \code{.json}. For XML files
+an XPath expression can be specified.}
 
 \item{docvarsfrom}{used to specify that docvars should be taken from the 
 filenames, when the \code{readtext} inputs are filenames and the elements 

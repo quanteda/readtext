@@ -160,22 +160,6 @@ test_that("test remote zip file", {
 
 test_that("test non-implemented functions", {
     
-    expect_that(
-        readtext('../data/empty/empty.doc'),
-        throws_error('Unsupported extension doc')
-    )
-    
-    expect_that(
-        readtext('../data/empty/empty.docx'),
-        throws_error('Unsupported extension docx')
-    )
-    
-    expect_that(
-        readtext('../data/empty/empty.pdf'),
-        throws_error('Unsupported extension pdf')
-    )
-    
-    
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -632,6 +616,89 @@ test_that("test globbed tar file",{
     expect_equal(
         unname(texts(readtext("../data/tar/*"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
+
+test_that("test html file",{
+    expected <- c("The quick brown fox jumps over the lazy dog")
+    expected_names <- 'html5.html'
+
+    expect_equal(
+        readtext('../data/html/html5.html')[,'texts'],
+        expected
+    )
+
+   expect_equal(
+        row.names(readtext('../data/html/html5.html')),
+        expected_names
+    )
+
+})
+
+
+test_that("test malformed html file",{
+    expected <- c("The quick brown fox \n    jumps over the lazy dog")
+    expected_names <- 'malformed_html5.html'
+    expect_equal(
+        readtext('../data/html/malformed_html5.html')[,'texts'],
+        expected
+    )
+   expect_equal(
+        row.names(readtext('../data/html/malformed_html5.html')),
+        expected_names
+    )
+})
+
+
+test_that("test for pdf file", {
+    skip_on_cran()
+    skip_on_travis()
+    expected <- c("The quick brown fox jumps over the lazy dog  1  \f")
+    expected_names <- 'test.pdf'
+
+    expect_equal(
+        readtext('../data/pdf/test.pdf')[,'texts'],
+        expected
+    )
+   expect_equal(
+        row.names(readtext('../data/pdf/test.pdf')),
+        expected_names
+    )
+
+})
+
+test_that("test for docx file", {
+    expected <- c("The quick brown fox jumps over the lazy dog")
+    expected_names <- 'test.docx'
+    
+   expect_equal(
+        readtext('../data/docx/test.docx')[,'texts'],
+        expected
+    )
+   expect_equal(
+        row.names(readtext('../data/docx/test.docx')),
+        expected_names
+    )
+
+})
+
+
+
+test_that("test for doc file", {
+    skip_on_cran()
+    skip_on_travis()
+
+    expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
+    expected <- trimws(expected)
+    expected_names <- 'test.doc'
+
+    expect_equal(
+        readtext('../data/doc/test.doc')[,'texts'],
+        expected
+    )
+   expect_equal(
+        row.names(readtext('../data/doc/test.doc')),
+        expected_names
     )
 })
 
