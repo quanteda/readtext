@@ -182,8 +182,10 @@ get_html <- function(f, ...) {
 get_pdf <- function(f, ...) {
     args <- list(...)
 
-    txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-"), stdout = TRUE)
+    txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-nopgbrk", "-"), 
+                   stdout = TRUE)
     txt <- paste0(txt, collapse='\n')
+    Encoding(txt) <- "UTF-8"
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
