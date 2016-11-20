@@ -197,7 +197,7 @@ get_docx <- function(f, ...) {
     xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
     txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
     txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
-    txt <- paste0(txt, collapse='\n')
+    txt <- paste0(txt, collapse = "\n")
 
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
@@ -206,7 +206,7 @@ get_doc <- function(f, ...) {
     args <- list(...)
 
     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
-    txt <- paste0(txt, collapse='\n')
+    txt <- paste0(txt, collapse = "\n")
     txt <- trimws(txt)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
