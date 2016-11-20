@@ -102,6 +102,60 @@ The text source files
 come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.
 }
+\examples{
+\donttest{
+## get the data directory
+DATA_DIR <- system.file("extdata/", package = "readtext")
+
+## read in some text data
+# all UDHR files
+rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+str(rt1)
+# manifestos with docvars from filenames
+rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+                docvarsfrom = "filenames", 
+                docvarnames = c("unit", "context", "year", "language", "party"))
+# recurse through subdirectories
+rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+
+## read in csv data
+rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"))
+str(rt4)
+
+## read in tab-separated data
+rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
+str(rt5)
+
+## read in JSON data
+rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
+str(rt6)
+
+## read in pdf data
+# UNHDR
+rt7 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+                docvarsfrom = "filenames", docvarnames = c("document", "language"))
+str(rt7)
+Encoding(rt7$text)
+# easier data
+rt7a <- readtext(paste0(DATA_DIR, "pdf/easy/*.pdf"))
+str(rt7a)
+Encoding(rt7a$text)
+# harder data
+rt7b <- readtext(paste0(DATA_DIR, "pdf/hard/*.pdf"))
+str(rt7b)
+Encoding(rt7b$text)
+
+## read in Word data (.doc)
+rt8 <- readtext(paste0(DATA_DIR, "word/*.doc"))
+str(rt8)
+Encoding(rt8$text)
+
+## read in Word data (.docx)
+rt9 <- readtext(paste0(DATA_DIR, "word/*.docx"))
+str(rt9)
+Encoding(rt9$text)
+}
+}
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
 }
