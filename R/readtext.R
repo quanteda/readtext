@@ -116,7 +116,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' str(rt5)
 #' 
 #' ## read in JSON data
-#' rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "text")
+#' rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
 #' str(rt6)
 #' 
 #' ## read in pdf data
