@@ -4,7 +4,7 @@
 
 ## txt format
 get_txt <- function(f, ...) {
-    txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse="\n")
+    txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse = "\n")
     close(con)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
@@ -116,7 +116,7 @@ get_json_lines <- function(path, textfield, ...) {
     
     docs <- data.table::rbindlist(
         lapply(lines, function(x)jsonlite::fromJSON(x, flatten=TRUE, ...)),
-        use.names=TRUE, fill=TRUE
+        use.names = TRUE, fill = TRUE
     )
     
     if (!(textfield %in% colnames(docs))) {
@@ -168,12 +168,12 @@ get_xml <- function(path, textfield, encoding,...) {
 get_html <- function(f, ...) {
     args <- list(...)
 
-    # http://stackoverflow.com/a/3195926
+    # http://stackoverflow.com/a/3195926
     html <- XML::htmlTreeParse(f, useInternal = TRUE)
     txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]", 
                            XML::xmlValue)
     txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
-    txt <- paste0(txt, collapse='')
+    txt <- paste0(txt, collapse='\n')
 
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
@@ -182,8 +182,8 @@ get_html <- function(f, ...) {
 get_pdf <- function(f, ...) {
     args <- list(...)
 
-    txt <- system2("pdftotext", c(shQuote(f), "-"), stdout = TRUE)
-    txt <- paste0(txt, collapse=' ')
+    txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-"), stdout = TRUE)
+    txt <- paste0(txt, collapse='\n')
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
@@ -197,7 +197,7 @@ get_docx <- function(f, ...) {
     xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
     txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
     txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
-    txt <- paste0(txt, collapse='')
+    txt <- paste0(txt, collapse = "\n")
 
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
@@ -206,7 +206,7 @@ get_doc <- function(f, ...) {
     args <- list(...)
 
     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
-    txt <- paste0(txt, collapse=' ')
+    txt <- paste0(txt, collapse = "\n")
     txt <- trimws(txt)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }

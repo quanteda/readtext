@@ -606,7 +606,7 @@ test_that("test globbed tar file",{
 })
 
 test_that("test html file",{
-    expected <- c("The quick brown fox jumps over the lazy dog")
+    expected <- c("The quick brown fox \njumps over the lazy dog")
     names(expected) <- 'html5.html'
 
     expect_equal(
@@ -618,7 +618,7 @@ test_that("test html file",{
 
 
 test_that("test malformed html file",{
-    expected <- c("The quick brown fox \n    jumps over the lazy dog")
+    expected <- c("The quick brown fox \n    \njumps over the lazy dog")
     names(expected) <- 'malformed_html5.html'
     expect_equal(
         texts(readtext('../data/html/malformed_html5.html')),
@@ -630,7 +630,7 @@ test_that("test malformed html file",{
 test_that("test for pdf file", {
     skip_on_cran()
     skip_on_travis()
-    expected <- c("The quick brown fox jumps over the lazy dog  1  \f")
+    expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n\n\f")
     names(expected) <- 'test.pdf'
 
     expect_equal(
@@ -658,11 +658,15 @@ test_that("test for doc file", {
     skip_on_travis()
 
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
-    expected <- trimws(expected)
     names(expected) <- 'test.doc'
 
+    txts <- texts(readtext('../data/doc/test.doc'))
+    namestmp <- names(txts)
+    txts <- stringi::stri_replace_all_regex(txts, "\\n", " ")
+    names(txts) <- namestmp
+
     expect_equal(
-        texts(readtext('../data/doc/test.doc')),
+        txts,
         expected
     )
 })
@@ -779,7 +783,7 @@ test_that("test encoding handling (skipped on travis and CRAN", {
         })
     }
     test_that("Test loading all these files at once with different encodings", {
-        encodedreadtxtsCorpus <- corpus(readtext(filenames, encoding=fileencodings))
+        encodedreadtxts <- readtext(filenames, encoding = fileencodings)
     })
 })
 
