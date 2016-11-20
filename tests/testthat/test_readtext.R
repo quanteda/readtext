@@ -779,7 +779,7 @@ test_that("test encoding handling (skipped on travis and CRAN", {
         })
     }
     test_that("Test loading all these files at once with different encodings", {
-        encodedreadtxtsCorpus <- corpus(readtext(filenames, encoding=fileencodings))
+        encodedreadtxts <- readtext(filenames, encoding = fileencodings)
     })
 })
 
