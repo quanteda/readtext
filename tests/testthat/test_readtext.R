@@ -741,15 +741,10 @@ test_that("test json files", {
 })
 
 if (.Platform$OS.type == "unix") {
-    test_that("test readtext with folder 1", {
-        expect_error(
-            readtext('../data/glob'),
-            ".*To read all files in a directory, you must*"
-        )
-
-        expect_error(
-        readtext('../data/glob/'),
-        ".*To read all files in a directory, you must*"
+    test_that("test readtext with folder", {
+        expect_equal(
+            length(readtext('../data/fruits')$text),
+            7
         )
     })
 }    

@@ -194,18 +194,11 @@ listMatchingFile <- function(x, ignoreMissing, verbose = FALSE, lastRound) {
         #  special treatment (zip, remote, etc.) and it was treated as a glob
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
+        if (dir.exists(i)) {
+                return(listMatchingFiles(ignoreMissing=ignoreMissing, file.path(i, '*')))
+        }
         if (!(ignoreMissing || file.exists(i))) {
-            if (dir.exists(i)) {
-                tr <- traceback()
-                call <- tr[[length(tr)]]
-                stop("File", i, "does not exist, but a directory of this name does exist.",
-                     "To read all files in a directory, you must pass a glob expression like ",
-                     tr
-                     )
-            }
-            else {
                 stop("File '", i, "' does not exist.")
-            }
         }
         if (verbose) message('regular file')
         return(i)
