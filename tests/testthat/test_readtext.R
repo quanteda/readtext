@@ -149,16 +149,16 @@ test_that("test non-implemented functions", {
 test_that("test warning for unrecognized filetype", {
     expect_that(
         readtext('../data/empty/empty.nonesuch'),
-        gives_warning('Unsupported extension nonesuch')
+        gives_warning('Unsupported extension " nonesuch " of file')
     )
 
     # But test that it still loads
     expect_that(
         readtext('../data/unknown/unknown'),
-        gives_warning('Unsupported extension nonesuch')
+        gives_warning('Unsupported extension "  " of file *')
     )
     expect_equal(
-        readtext('../data/unknown/unknown')$texts,
+        readtext('../data/unknown/unknown')$text,
         c("The quick brown fox jumps over the lazy dog.")
     )
 
