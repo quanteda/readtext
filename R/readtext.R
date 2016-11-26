@@ -159,7 +159,8 @@ getSource <- function(f, textfield, ...) {
                  )
         }
         else {
-            stop(paste('Unsupported extension', fileType, 'of file', f))
+            warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            fileType <- 'txt'
         }
 
     newSource <- switch(fileType, 
