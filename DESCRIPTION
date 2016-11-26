@@ -10,10 +10,10 @@ Author: Kenneth Benoit [aut, cre],
     Adam Obeng [ctb]
 Maintainer: Kenneth Benoit <kbenoit@lse.ac.uk>
 Version: 0.2.0
-Date: 2016-11-17
+Date: 2016-11-19
 Description: Functions for importing and handling text files and formatted text
-    files with additional meta-data, such including .csv, .tab, .json, .xml, and
-    others.
+    files with additional meta-data, such including .csv, .tab, .json, .xml, 
+    .pdf, .doc, .docx, and others.
 License: GPL-3
 Depends:
     R (>= 3.3.1)

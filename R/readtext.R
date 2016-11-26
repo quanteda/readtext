@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv')
+SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
+names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
 
 
 #' read a text file(s)
@@ -13,6 +13,9 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   automagically handle a number of common scenarios, so the value can be a
 #    single filename, a vector of file names a remote URL, or a file "mask" using a 
 #'   "glob"-type'  wildcard value.  Currently available filetypes are: 
+#'   
+#'   \strong{Single file formats:}
+#'   
 #'   \describe{
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
@@ -32,7 +35,18 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
 #'   kind supported by the function xmlToDataFrame function of the \strong{XML} 
 #'   package.}
-#'   \code{file} can also not be a path to a single local file, such as
+#'   \item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
+#'   Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
+#'   or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
+#'   \item{\code{doc, docx}}{Microsoft Word formatted files, converted through 
+#'   \code{antiword}.  
+#'   Requires that \code{antiword} be installed, either through \code{brew install antiword} (macOS) 
+#'   or from \url{http://www.winfield.demon.nl} (Windows).}
+#'   
+#'   \strong{Reading multiple files and file types:} 
+#'   
+#'   In addition, \code{file} can also not be a path 
+#'   to a single local file, but also combinations of any of the above types, such as:
 #'    \item{a wildcard value}{any valid 
 #'   pathname with a wildcard ("glob") expression that can be expanded by the 
 #'   operating system.  This may consist of multiple file types.} 
@@ -45,7 +59,8 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   }
 #' @param textfield a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
-#'   specified for file types \code{.csv} and \code{.json}.
+#'   specified for file types \code{.csv} and \code{.json}. For XML files
+#'   an XPath expression can be specified. 
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
@@ -76,6 +91,59 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
+#' @examples 
+#' \donttest{
+#' ## get the data directory
+#' DATA_DIR <- system.file("extdata/", package = "readtext")
+#' 
+#' ## read in some text data
+#' # all UDHR files
+#' rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+#' str(rt1)
+#' # manifestos with docvars from filenames
+#' rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+#'                 docvarsfrom = "filenames", 
+#'                 docvarnames = c("unit", "context", "year", "language", "party"))
+#' # recurse through subdirectories
+#' rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+#' 
+#' ## read in csv data
+#' rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"))
+#' str(rt4)
+#' 
+#' ## read in tab-separated data
+#' rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
+#' str(rt5)
+#' 
+#' ## read in JSON data
+#' rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
+#' str(rt6)
+#' 
+#' ## read in pdf data
+#' # UNHDR
+#' rt7 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+#'                 docvarsfrom = "filenames", docvarnames = c("document", "language"))
+#' str(rt7)
+#' Encoding(rt7$text)
+#' # easier data
+#' rt7a <- readtext(paste0(DATA_DIR, "pdf/easy/*.pdf"))
+#' str(rt7a)
+#' Encoding(rt7a$text)
+#' # harder data
+#' rt7b <- readtext(paste0(DATA_DIR, "pdf/hard/*.pdf"))
+#' str(rt7b)
+#' Encoding(rt7b$text)
+#' 
+#' ## read in Word data (.doc)
+#' rt8 <- readtext(paste0(DATA_DIR, "word/*.doc"))
+#' str(rt8)
+#' Encoding(rt8$text)
+#'
+#' ## read in Word data (.docx)
+#' rt9 <- readtext(paste0(DATA_DIR, "word/*.docx"))
+#' str(rt9)
+#' Encoding(rt9$text)
+#' }
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, ...) {
@@ -105,7 +173,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
     
     # combine all of the data.frames returned
@@ -116,9 +184,9 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     # for identical filenames
     uniqueparts <- basename_unique(files, pathonly = TRUE)
     row.names(result) <- if (!identical(uniqueparts, "")) {
-         paste(uniqueparts, as.character(sapply(sources, row.names)), sep = "/")
+         paste(uniqueparts, as.character(as.character(unlist(sapply(sources, row.names)))), sep = "/")
     } else {
-         as.character(sapply(sources, row.names))
+         as.character(unlist(sapply(sources, row.names)))
     }
 
     if ("filenames" %in% docvarsfrom) {
@@ -169,7 +237,11 @@ getSource <- function(f, textfield, ...) {
                tsv = get_csv(f, textfield, sep='\t', ...),
                tab = get_csv(f, textfield, sep='\t', ...),
                json = get_json(f, textfield, ...),
-               xml = get_xml(f, textfield, ...)
+               xml = get_xml(f, textfield, ...),
+               html = get_html(f, textfield=textfield, ...),
+               pdf = get_pdf(f, ...),
+               docx = get_docx(f, ...),
+               doc = get_doc(f, ...)
         )
 
     # assign filename (variants) unique text names

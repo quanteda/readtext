@@ -4,7 +4,7 @@
 
 ## txt format
 get_txt <- function(f, ...) {
-    txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse="\n")
+    txt <- paste(readLines(con <- file(f, ...), warn = FALSE), collapse = "\n")
     close(con)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
@@ -116,7 +116,7 @@ get_json_lines <- function(path, textfield, ...) {
     
     docs <- data.table::rbindlist(
         lapply(lines, function(x)jsonlite::fromJSON(x, flatten=TRUE, ...)),
-        use.names=TRUE, fill=TRUE
+        use.names = TRUE, fill = TRUE
     )
     
     if (!(textfield %in% colnames(docs))) {
@@ -134,26 +134,81 @@ get_xml <- function(path, textfield, encoding,...) {
     if (!requireNamespace("XML", quietly = TRUE))
         stop("You must have XML installed to read XML files.")
     
-    docs <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
-    if (is.numeric(textfield) & (textfield > ncol(docs))) {
-        stop(paste0("There is no ", textfield, "th field in file ", path))
-    }
-    if (is.character(textfield)) {
-        textfieldi <- which(names(docs)==textfield)
-        if (length(textfieldi)==0)
-            stop(paste("There is no node called", textfield, "in file", path))
-        textfield <- textfieldi
+    if (is_probably_xpath(textfield))  {
+        xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+        txt <- XML::xpathApply(xml, textfield, XML::xmlValue, ...)
+        txt <- paste0(txt, collapse='')
+        return(data.frame(text = txt, stringsAsFactors = FALSE))
     }
     else {
-        warning(paste("You should specify textfield by name rather than by index, unless",
-                      "you're certain that your XML file's fields are always in the same order."))
+        docs <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
+        if (is.numeric(textfield) & (textfield > ncol(docs))) {
+            stop(paste0("There is no ", textfield, "th field in file ", path))
+        }
+        if (is.character(textfield)) {
+            textfieldi <- which(names(docs)==textfield)
+            if (length(textfieldi)==0)
+                stop(paste("There is no node called", textfield, "in file", path))
+            textfield <- textfieldi
+        }
+        else {
+            warning(paste("You should specify textfield by name rather than by index, unless",
+                          "you're certain that your XML file's fields are always in the same order."))
+        }
+        
+        # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
+        # ourselves, to match get_csv's behaviour
+        return(data.frame(text = docs[, textfield], 
+                   imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
+                   stringsAsFactors = FALSE))
     }
-    
-    # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
-    # ourselves, to match get_csv's behaviour
-    data.frame(text = docs[, textfield], 
-               imputeDocvarsTypes(docs[, -textfield, drop = FALSE]),
-               stringsAsFactors = FALSE)
 }
 
 
+get_html <- function(f, ...) {
+    args <- list(...)
+
+    # http://stackoverflow.com/a/3195926
+    html <- XML::htmlTreeParse(f, useInternal = TRUE)
+    txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]", 
+                           XML::xmlValue)
+    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- paste0(txt, collapse='\n')
+
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}
+
+
+get_pdf <- function(f, ...) {
+    args <- list(...)
+
+    txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-nopgbrk", "-"), 
+                   stdout = TRUE)
+    txt <- paste0(txt, collapse='\n')
+    Encoding(txt) <- "UTF-8"
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}
+
+get_docx <- function(f, ...) {
+    args <- list(...)
+
+    path <- extractArchive(f, ignoreMissing=FALSE)
+    path <- sub('/\\*$', '', path)
+    path <- file.path(path, 'word', 'document.xml')
+
+    xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+    txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
+    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- paste0(txt, collapse = "\n")
+
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}
+
+get_doc <- function(f, ...) {
+    args <- list(...)
+
+    txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
+    txt <- paste0(txt, collapse = "\n")
+    txt <- trimws(txt)
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Lorem Ipsum 1</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Some Place</publisher>
+        <pubPlace>Anywhere, US</pubPlace>
+      </publicationStmt>
+      <notesStmt>
+        <note nation="American"/>
+      </notesStmt>
+      <sourceDesc>
+        <p/>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <front>
+      <p>Nope</p>
+    </front>
+    <body>
+      <p>The </p>
+      <p>quick </p>
+      <p>brown </p>
+      <p>fox</p>
+    </body>
+    <back>
+      <p>Nope</p>
+    </back>
+  </text>
+</TEI>

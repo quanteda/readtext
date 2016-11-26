@@ -30,7 +30,7 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
     dvars
 }
 
-# @rdname catm
+# @rdname mktemp
 # make temporary files and directories in a more reasonable way than tempfile()
 # or tempdir(): here, the filename is different each time you call mktemp()
 mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
@@ -77,9 +77,6 @@ downloadRemote <- function (i, ignoreMissing) {
     r <- httr::GET(i, httr::write_disk(localfile))
     if (ignoreMissing) {
         httr::warn_for_status(r)
-        if (httr::http_error(r)) {
-            return(NULL)
-        }
     }
     else {
         httr::stop_for_status(r)
@@ -146,12 +143,16 @@ extractArchive <- function(i, ignoreMissing) {
         stop("File '", i, "' does not exist.")
     
     td <- mktemp(directory=T)
-    if (tools::file_ext(i) == 'zip')
+    if (tools::file_ext(i) == 'zip' ||
+        tools::file_ext(i) == 'docx'
+        )
         utils::unzip(i, exdir = td)
     else if ( tools::file_ext(i) == 'gz' ||
               tools::file_ext(i) == 'tar' ||
               tools::file_ext(i) == 'bz' )
         utils::untar(i, exdir = td)
+    else 
+        stop("Archive extension '", tools::file_ext(i), "' unrecognised.")
     
     # Create a glob that matches all the files in the archive
     file.path(td, '*')
@@ -264,3 +265,9 @@ imputeDocvarsTypes <- function(docv) {
     data.frame(docv)
 }
 
+is_probably_xpath <- function(x) {
+    invalid_xml_element_chars <- c('/', '@')
+    any(
+        sapply(invalid_xml_element_chars, function(i) {grepl(i, x, perl=T)})
+    )
+}

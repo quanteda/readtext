@@ -3,22 +3,6 @@
 # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn't seem to require textfield
 
-# needs to be added in because not in CRAN quanteda
-# texts <- function(x, groups = NULL, ...) {
-#     UseMethod("texts")
-# }
-texts.readtext <- function(x, groups = NULL, ...) {
-    if (!is.null(groups))
-        stop("groups argument not supported for texts() on a readtext object")
-    result <- x[["text"]]
-    names(result) <- row.names(x)
-    result
-}
-docvars.readtext <- function(x, field = NULL) {
-    if (!is.null(field))
-        warning("field argument not used for docvars on a readtext object", noBreaks. = TRUE)
-    as.data.frame(x[, -which(names(x)=="text"), drop = FALSE])
-}
 
 context('test readtext.R')
 
@@ -44,13 +28,6 @@ test_that("test print.readtext", {
         print(readtext('../data/csv/test.csv', textfield='text')),
         prints_text('readtext object consisting of 2 documents and 2 docvars.')
     )
-    
-    
-    # testreadtext <- readtext( '../data/fox/fox.txt', cache = TRUE)
-    # expect_that(
-    #     print(testreadtext),
-    #     prints_text('readtext object with data cached')
-    # )
     
     
 })
@@ -153,36 +130,19 @@ test_that("test remote csv file", {
 
 
 context('test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)')
-
-# test_that("test remote zip file", {
-#     expect_equal(
-#         length(texts(
-#             readtext('http://kenbenoit.net/files/encodedreadtexts.zip')
-#         )),
-#         41
-#     )
-# })
+test_that("test remote zip file", {
+    expect_equal(
+        length(texts(
+            readtext('https://github.com/kbenoit/quanteda/raw/master/inst/extdata/encodedTextFiles.zip')
+        )),
+        41
+    )
+})
 
 
 
 
 test_that("test non-implemented functions", {
-    
-    expect_that(
-        readtext('../data/empty/empty.doc'),
-        throws_error('Unsupported extension doc')
-    )
-    
-    expect_that(
-        readtext('../data/empty/empty.docx'),
-        throws_error('Unsupported extension docx')
-    )
-    
-    expect_that(
-        readtext('../data/empty/empty.pdf'),
-        throws_error('Unsupported extension pdf')
-    )
-    
     
 })
 
@@ -277,24 +237,34 @@ test_that("test xml files", {
     # Test corpus object
     testcorpus <- readtext('../data/xml/test.xml', textfield='text')
     expect_that(
-        docvars(testcorpus),
+        data.frame(testcorpus[,-1]),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
                           stringsAsFactors = FALSE,
                           row.names = c("test.xml.1", "test.xml.2")))
     )
     expect_that(
-        texts(testcorpus),
-        equals(c(test.xml.1='Lorem ipsum.', test.xml.2='Dolor sit'))
+        unname(texts(testcorpus)),
+        equals(c('Lorem ipsum.','Dolor sit'))
     )
+    expect_that(
+        row.names(testcorpus),
+        equals(c("test.xml.1", "test.xml.2"))
+    )
+
     
     expect_that(
         readtext('../data/xml/test.xml', textfield=1),
         gives_warning('You should specify textfield by name.*')
     )
     expect_that(
-        texts(readtext('../data/xml/test.xml', textfield=1)),
-        equals(c(test.xml.1='Lorem ipsum.', test.xml.2='Dolor sit'))
+        unname(texts(readtext('../data/xml/test.xml', textfield=1))),
+        equals(c('Lorem ipsum.', 'Dolor sit'))
     )
+    expect_that(
+        row.names(testcorpus),
+        equals(c("test.xml.1", "test.xml.2"))
+    )
+
     
     expect_that(
         docvars(readtext('../data/xml/*', textfield='nonesuch')),
@@ -306,6 +276,19 @@ test_that("test xml files", {
     )
 })
 
+
+test_that("test xml files with XPath", {
+
+    expected <- c('The quick brown fox')
+    names(expected) <- 'tei.xml'
+
+    actual <- readtext('../data/xml/tei.xml',
+                      textfield='/tei:TEI/tei:text/tei:body//tei:p',
+                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+
+    expect_equal(texts(actual), expected)
+
+})
 
 
 test_that("test readtext() with docvarsfrom=filenames", {
@@ -332,12 +315,11 @@ test_that("test readtext() with docvarsfrom=filenames", {
                           row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
     )
     
-    # STRANGE ERRORS
-    # expect_that(
-    #     docvars(readtext('../data/docvars/two/*json', textfield='nonesuch', 
-    #                     docvarsfrom='filenames')),
-    #     throws_error("There is no field called")
-    # )
+    expect_that(
+        docvars(readtext('../data/docvars/two/*json', textfield='nonesuch', 
+                        docvarsfrom='filenames')),
+        throws_error("There is no field called")
+    )
     
     expect_that(
         docvars(readtext('../data/docvars/unequal/*', docvarsfrom='filenames')),
@@ -415,17 +397,17 @@ test_that("test docvars.readtext warning with field!=NULL", {
 
 
 
-#  test_that("test readtext encoding parameter: UTF-8 encoded file, read as UTF-16 (should not work)", {
-#       print(file.path(FILEDIR, 'UTF-8__characters.txt'))
-#       print(file.exists(file.path(FILEDIR, 'UTF-8__characters.txt')))
-#       expect_warning(
-#         misread_texts <- texts(readtext(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-16'))
-#       )
-#       utf8_bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
-#       expect_false(
-#              all(as.numeric(charToRaw(misread_texts)) == utf8_bytes)
-#       )
-#  })
+ test_that("test readtext encoding parameter: UTF-8 encoded file, read as UTF-16 (should not work)", {
+     skip_on_cran()
+     skip_on_travis()
+     expect_warning(
+        misread_texts <- texts(readtext(file.path('../data/encoding', 'UTF-8__characters.txt'), encoding='utf-16'))
+      )
+      utf8_bytes <- data.table::fread(file.path('../data/encoding', 'UTF-8__bytes.tsv'))[[1]]
+      expect_false(
+             all(as.numeric(charToRaw(misread_texts)) == utf8_bytes)
+      )
+ })
 
 
 test_that("test that readtext encoding argument must be either length 1 or same length as the number of files", {
@@ -485,7 +467,7 @@ test_that("test reading structured text files with different columns", {
 
 context("Tests of new readtext internals. If these fail, it doesn't necessarily affect the exposed API")
 
-context("Tests for quanteda:::listMatchingFiles")
+context("Tests for listMatchingFiles")
 
 test_that("Test function to list files", {
     expect_that(
@@ -493,13 +475,13 @@ test_that("Test function to list files", {
         throws_error('Unsupported URL scheme')
     )           
     
-    testExistingFile <- quanteda:::mktemp()
+    testExistingFile <- mktemp()
     expect_equal(readtext:::listMatchingFiles(testExistingFile), testExistingFile)
     expect_equal(readtext:::listMatchingFiles(paste0('file://', testExistingFile)), testExistingFile)
     
     
     # Test vector of filenames
-    testExistingFile2 <- quanteda:::mktemp()
+    testExistingFile2 <- mktemp()
     expect_equal(
         readtext:::listMatchingFiles(c(testExistingFile, testExistingFile2)),
         c(testExistingFile, testExistingFile2)
@@ -523,32 +505,32 @@ test_that("Test function to list files", {
     
     
     #Test globbing
-    tempdir <- quanteda:::mktemp(directory=T)
+    tempdir <- mktemp(directory=T)
     
     file.create(file.path(tempdir, '1.tsv'))
     file.create(file.path(tempdir, '2.tsv'))
     file.create(file.path(tempdir, '10.tsv'))
     
     expect_equal(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '*.tsv' ))),
+        length(listMatchingFiles(paste0(tempdir, '/', '*.tsv' ))),
         3
     )
     
     expect_equal(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '?.tsv' ))),
+        length(listMatchingFiles(paste0(tempdir, '/', '?.tsv' ))),
         2
     )
     
     expect_that(
-        length(quanteda:::listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
-        throws_error('File does not exist')
+        length(listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
+        throws_error("File '' does not exist")
     )
     
     
     # Test globbing subdir
     
-    tempsubdir1 <- quanteda:::mktemp(base_path=tempdir, directory=T)
-    tempsubdir2 <- quanteda:::mktemp(base_path=tempdir, directory=T)
+    tempsubdir1 <- mktemp(base_path=tempdir, directory=T)
+    tempsubdir2 <- mktemp(base_path=tempdir, directory=T)
     
     file.create(file.path(tempsubdir1, '1.tsv'))
     file.create(file.path(tempsubdir1, '2.tsv'))
@@ -570,13 +552,13 @@ test_that("Test function to list files", {
 test_that("Test function to list files with remote sources", {
     skip_on_cran()
     expect_error(
-      quanteda:::listMatchingFiles('http://www.google.com/404.txt'),
+      listMatchingFiles('http://www.google.com/404.txt'),
       ".*404.*"
     )
     
     expect_equal(
-      length(readtext:::listMatchingFiles('http://www.google.com/404.txt', ignoreMissing=T)),
-      0
+      length(readtext('http://www.google.com/404.txt', ignoreMissing = TRUE)),
+      1
     )
 })
 
@@ -625,14 +607,138 @@ test_that("text vectors have names of the files they come from by default (bug 2
 
 }) 
 
-## FAILS THE CHECK FOR SOME REASON
-# test_that("test globbed tar file",{
-#     expect_equal(
-#         sort(unname(texts(readtext('../data/tar/*')))),
-#         c('brown fox', 'Dolor sit', 'Lorem ipsum', 'The quick')
-#     )
-# })
+test_that("test globbed tar file",{
+    skip_on_cran()
+    skip_on_travis()
+    expect_equal(
+        unname(texts(readtext("../data/tar/*"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
 
+test_that("test html file",{
+    expected <- c("The quick brown fox \njumps over the lazy dog")
+    names(expected) <- 'html5.html'
+
+    expect_equal(
+        texts(readtext('../data/html/html5.html')),
+        expected
+    )
+
+})
+
+
+test_that("test malformed html file",{
+    expected <- c("The quick brown fox \n    \njumps over the lazy dog")
+    names(expected) <- 'malformed_html5.html'
+    expect_equal(
+        texts(readtext('../data/html/malformed_html5.html')),
+        expected
+    )
+})
+
+
+test_that("test for pdf file", {
+    skip_on_cran()
+    skip_on_travis()
+    expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n\n\f")
+    names(expected) <- 'test.pdf'
+
+    expect_equal(
+        texts(readtext('../data/pdf/test.pdf')),
+        expected
+    )
+
+})
+
+test_that("test for docx file", {
+    expected <- c("The quick brown fox jumps over the lazy dog")
+    names(expected) <- 'test.docx'
+    
+   expect_equal(
+        texts(readtext('../data/docx/test.docx')),
+        expected
+    )
+
+})
+
+
+
+test_that("test for doc file", {
+    skip_on_cran()
+    skip_on_travis()
+
+    expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
+    names(expected) <- 'test.doc'
+
+    txts <- texts(readtext('../data/doc/test.doc'))
+    namestmp <- names(txts)
+    txts <- stringi::stri_replace_all_regex(txts, "\\n", " ")
+    names(txts) <- namestmp
+
+    expect_equal(
+        txts,
+        expected
+    )
+})
+
+test_that("test json files", {
+    skip_on_cran()
+    skip_on_travis()
+    expect_equal(
+        unname(texts(readtext('../data/json/*json', textfield='text'))),
+        c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
+    )
+    
+    #  test.json and test2.json are newline-delimited json
+    #  test3.json is a single json object
+    expected_docvars <- data.frame(list(
+        colour=c('green', 'red', 'orange', 'blue', NA), 
+        number=c(42, 99, 0, NA, 3)),
+        stringsAsFactors = FALSE)
+    expected_docvars <- expected_docvars[order(expected_docvars$number),]
+    row.names(expected_docvars) <- NULL
+    actual_docvars <- docvars(readtext('../data/json/*json', textfield='text'))
+    actual_docvars <- actual_docvars[order(actual_docvars$number),]
+    row.names(actual_docvars) <- NULL
+    row.names(actual_docvars)
+    row.names(expected_docvars)
+    expect_equal(
+        actual_docvars,
+        expected_docvars
+    )
+    
+    expect_that(
+        texts(readtext('../data/json/*json', textfield=1)),
+        throws_error('Cannot use numeric textfield with json file')
+    )
+    
+    expect_that(
+        texts(readtext('../data/json/test3.json', textfield='nonesuch')),
+        throws_error('There is no field called nonesuch in file')
+    )
+    
+    
+    # Twitter json files
+    tweetSource <- readtext('../data/tweets/stream.json')
+    
+    expect_equal(
+        texts(tweetSource),
+        c(stream.json.1="I jumped over the lazy @dog", stream.json.2="Yawn")
+    )
+    
+    expect_equal(
+        docvars(tweetSource)$statuses_count,
+        c(16204, 200)
+    )
+    
+    expect_equal(
+        docvars(tweetSource)$screen_name,
+        c('foxxy', 'dog')
+    )
+    
+    
+})
 
 if (.Platform$OS.type == "unix") {
     test_that("test readtext with folder 1", {
@@ -647,3 +753,92 @@ if (.Platform$OS.type == "unix") {
         )
     })
 }    
+
+test_that("test encoding handling (skipped on travis and CRAN", {
+    skip_on_cran()
+    skip_on_travis()
+    
+    # Currently, these encodings don't work for reasons that seem unrelated 
+    # to quanteda, and are either a problem in base R or on travis-ci
+    broken_encodings <- c(
+        "437", "850", "852", "855", "857", "860", "861", "862", "863", "865", 
+        "869", "BIG5-HKSCS", "CHINESE", "CP1251", "CP1255", "CP1256", "CP1361",
+        "CP154", "CP737", "CP858", "CP864", "CP856", "CP932", "CP950", "EUC-JISX0213", 
+        "EUC-JP", "EUC-KR", "GB18030", "HEBREW", "HZ","ISO-2022-JP-1", "ISO-2022-JP-2", 
+        "ISO-2022-JP-3", "ISO-8859-11", "ISO-IR-166", "KOI8-R",
+        "UNICODE-1-1-UTF-7",
+        "MACCENTRALEUROPE", "MACCYRILLIC", "MACGREEK", "MACICELAND", "MACTURKISH",
+        "MS_KANJI", "SHIFT_JISX0213"
+    )
+    
+    
+    FILEDIR <- '../data/encoding'
+    
+    filenames <- list.files(FILEDIR, "*__characters.txt$")
+    parts <- strsplit(gsub(".txt$", "", filenames), "__")
+    fileencodings <- sapply(parts, "[", 1)
+    
+    fileencodings <- fileencodings[!(fileencodings %in% broken_encodings)]
+    filenames <- file.path(FILEDIR, paste0(fileencodings,  "__characters.txt"))
+    
+    for (i in 1:length(fileencodings)) {
+        filename <- filenames[[i]]
+        encoding <- fileencodings[[i]]
+        
+        test_that(paste("test readtext encoding parameter, encoding", encoding), {
+            characters <- as.numeric(charToRaw(
+                texts(readtext(filename, encoding=fileencodings[[i]]))
+            ))
+            bytes <- data.table::fread(gsub('__characters.txt', '__bytes.tsv', filename))[[1]]
+            expect_equal(characters, bytes)
+        })
+    }
+    test_that("Test loading all these files at once with different encodings", {
+        encodedreadtxts <- readtext(filenames, encoding = fileencodings)
+    })
+})
+
+test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: (should work)", {
+    FILEDIR <- '../data/encoding'
+
+    skip_on_cran()
+    skip_on_travis()
+    utf8_bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
+    expect_that(
+        as.numeric(charToRaw(
+            texts(readtext(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-8'),
+            ))),
+        equals(utf8_bytes)
+    )
+})
+
+context('Loading a corpus from a tar archive')
+test_that("A single-level tar file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
+    expect_equal(
+        unname(texts(readtext("../data/tar/test.tar"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
+
+context('Loading a corpus from a gzipped tar archive')
+test_that("A single-level tar.gz file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
+    expect_equal(
+        unname(texts(readtext('../data/targz/test.tar.gz'))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
+
+context('Loading a corpus from a bzipped tar archive')
+test_that("A single-level tar.bz file containing txt files can be loaded",{
+    skip_on_cran()
+    skip_on_travis()
+    skip_on_os("windows")
+    expect_equal(
+        unname(texts(readtext("../data/tarbz/test.tar.bz"))),
+        c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
+    )
+})
