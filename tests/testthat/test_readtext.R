@@ -131,10 +131,9 @@ test_that("test remote csv file", {
 
 context('test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)')
 test_that("test remote zip file", {
-    expect_equal(
-        length(texts(
-            readtext('https://github.com/kbenoit/quanteda/raw/master/inst/extdata/encodedTextFiles.zip')
-        )),
+    DATA_DIR <- system.file("extdata/", package = "readtext")
+        expect_equal(
+        length(texts(readtext(paste0(DATA_DIR, "encodedTextFiles.zip")))),
         41
     )
 })
@@ -641,7 +640,7 @@ test_that("test malformed html file",{
 test_that("test for pdf file", {
     skip_on_cran()
     skip_on_travis()
-    expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n\n\f")
+    expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n")
     names(expected) <- 'test.pdf'
 
     expect_equal(
