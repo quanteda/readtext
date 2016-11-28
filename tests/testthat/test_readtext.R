@@ -131,6 +131,7 @@ test_that("test remote csv file", {
 
 context('test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)')
 test_that("test remote zip file", {
+    skip_on_appveyor()
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
         length(texts(readtext(paste0(DATA_DIR, "encodedTextFiles.zip")))),
