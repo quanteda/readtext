@@ -17,10 +17,10 @@
 #' namespace conflicts with \pkg{quanteda}, which until we remove it from that package
 #' will retain the function \link[quanteda]{encoding}.
 #' @examples
-#' data(encodedTexts, package = "quanteda")
-#' encoding(encodedTexts)
+#' encoding(data_char_encodedtexts)
 #' # show detected value for each text, versus known encoding
-#' data.frame(labelled = names(encodedTexts), detected = encoding(encodedTexts)$all)
+#' data.frame(labelled = names(data_char_encodedtexts), 
+#'            detected = encoding(data_char_encodedtexts)$all)
 #'
 #' \dontrun{
 #' if ("quanteda" %in% installed.packages()[, "Package"]) {
