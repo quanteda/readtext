@@ -15,6 +15,20 @@ Introduction
 
 As encoding can also be a challenging issue for those reading in texts, we include functions for diagnosing encodings on a file-by-file basis, and allow you to specify vectorized input encodings to read in file types with individually set (and different) encodings. (All ecnoding functions are handled by the **stringi** package.)
 
+How to Install
+--------------
+
+1.  From GitHub
+
+    ``` r
+    # devtools packaged required to install quanteda from Github 
+    devtools::install_github("kbenoit/quanteda") 
+    ```
+
+2.  From CRAN
+
+    (coming soon)
+
 Inter-operability with **quanteda**
 -----------------------------------
 
@@ -25,12 +39,9 @@ require(readtext)
 ## Loading required package: readtext
 require(quanteda)
 ## Loading required package: quanteda
-## quanteda version 0.9.8.12
+## quanteda version 0.9.8.9029
 ## 
 ## Attaching package: 'quanteda'
-## The following objects are masked from 'package:readtext':
-## 
-##     docvars, texts
 ## The following object is masked from 'package:base':
 ## 
 ##     sample
@@ -67,34 +78,36 @@ fileencodings[notAvailableIndex]
 # read in some text files
 # try readtext
 txts <- readtext(paste0(FILEDIR, "/", "*.txt"))
-# substring(readtext::texts(txts)[1], 1, 80)  # gibberish
-# substring(readtext::texts(txts)[4], 1, 80)  # hex
-# substring(readtext::texts(txts)[40], 1, 80) # hex
+# substring(texts(txts)[1], 1, 80)  # gibberish
+# substring(texts(txts)[4], 1, 80)  # hex
+# substring(texts(txts)[40], 1, 80) # hex
 
 # read them in again
 txts <- readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
-substring(readtext::texts(txts)[1], 1, 80)  # English
+substring(texts(txts)[1], 1, 80)  # English
 ##                                                  IndianTreaty_English_UTF-16LE.txt 
 ## "WHEREAS, the Sisseton and Wahpeton Bands of Dakota or Sioux Indians, on the 20th"
-substring(readtext::texts(txts)[4], 1, 80)  # Arabic, looking good 
+substring(texts(txts)[4], 1, 80)  # Arabic, looking good 
 ##                                                           UDHR_Arabic_MACARABIC.txt 
 ## "الديباجة\nلما كان الاعتراف بالكرامة المتأصلة في جميع أعضاء الأسرة البشرية وبحقوقه"
-substring(readtext::texts(txts)[40], 1, 80) # Cyrillic, looking good
+substring(texts(txts)[40], 1, 80) # Cyrillic, looking good
 ##                                                       UDHR_Russian_WINDOWS-1251.txt 
 ## "Всеобщая декларация прав человека\nПринята и провозглашена резолюцией 217 А (III)"
-substring(readtext::texts(txts)[7], 1, 80)  # Chinese, looking good
+substring(texts(txts)[7], 1, 80)  # Chinese, looking good
 ##                                                                                                                           UDHR_Chinese_GB2312.txt 
 ## "世界人权宣言\n联合国大会一九四八年十二月十日第217A(III)号决议通过并颁布\n\n1948年12月10日，联合国大会通过并颁布《世界人权宣言》。这一具有历史意"
-substring(readtext::texts(txts)[26], 1, 80) # Hindi, looking good
+substring(texts(txts)[26], 1, 80) # Hindi, looking good
 ##                                                         UDHR_Hindi_UTF-8.txt 
 ## "मानव अधिकारों की सार्वभौम घोषणा\n\n१० दिसम्बर १९४८ को यूनाइटेड नेशन्स की जनरल असेम"
 
 txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
-                encoding = fileencodings,
-                docvarsfrom = "filenames", 
-                docvarnames = c("document", "language", "inputEncoding"))
+                 encoding = fileencodings,
+                 docvarsfrom = "filenames", 
+                 docvarnames = c("document", "language", "inputEncoding"))
 encodingCorpus <- corpus(txts, textField = "texts", 
                          source = "Created by encoding-tests.R") 
+## Warning in corpus.character(x[, text_fieldi], docvars = x[, -text_fieldi, :
+## Arguments textFieldsource not used.
 summary(encodingCorpus)
 ## Corpus consisting of 41 documents.
 ## 
@@ -183,8 +196,8 @@ summary(encodingCorpus)
 ##    Russian  WINDOWS-1251
 ##       Thai         UTF-8
 ## 
-## Source:  Created by encoding-tests.R
-## Created: Thu Nov 17 12:24:52 2016
+## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
+## Created: Fri Dec 30 09:24:17 2016
 ## Notes:
 ```
 
@@ -196,6 +209,8 @@ require(magrittr)
 readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
     corpus(textField = "texts") %>% 
         summary
+## Warning in corpus.character(x[, text_fieldi], docvars = x[, -text_fieldi, :
+## Argument textField not used.
 ## Corpus consisting of 41 documents.
 ## 
 ##                                Text Types Tokens Sentences
@@ -242,6 +257,6 @@ readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
 ##                 UDHR_Thai_UTF-8.txt   541   2404        34
 ## 
 ## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Thu Nov 17 12:24:52 2016
+## Created: Fri Dec 30 09:24:17 2016
 ## Notes:
 ```
