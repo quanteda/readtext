@@ -29,7 +29,7 @@ ICU libraries.  See the ICU User Guide,
 \note{
 This function has been \strong{temporarily} named \code{encoding} to avoid
 namespace conflicts with \pkg{quanteda}, which until we remove it from that package
-will retain the function \link[quanteda]{encoding}.
+will retain the function.
 }
 \examples{
 encoding(data_char_encodedtexts)

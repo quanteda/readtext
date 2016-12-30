@@ -110,12 +110,12 @@ test_that("test structured readtext with glob-style mask", {
 
 test_that("test remote text file", {
     expect_equal(
-        texts(readtext('https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/fox/fox.txt')),
+        texts(readtext('https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt')),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
     # ignoreMissing with an existing file should make no difference
     expect_equal(
-        texts(readtext('https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/fox/fox.txt', ignoreMissing=T)),
+        texts(readtext('https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt', ignoreMissing=T)),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
 })
@@ -123,7 +123,7 @@ test_that("test remote text file", {
 
 test_that("test remote csv file", {
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/quanteda/master/tests/data/csv/test.csv", textfield='text')),
+        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", textfield='text')),
         c(test.csv.1 = 'Lorem ipsum.', test.csv.2 = 'Dolor sit')
     )
 })
