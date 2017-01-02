@@ -837,3 +837,54 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
+
+context('Tests for verbosity argument')
+   test_that("test warning for unrecognized filetype", {
+       expect_that(
+           readtext('../data/empty/empty.nonesuch'),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=4),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=3),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=2),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=1),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=0),
+           not(gives_warning())
+       )
+
+   test_that("messages from listMatchingFile",{
+       expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=0),
+          not(shows_message())
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=1),
+          not(shows_message())
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=2),
+          shows_message('archive')
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
+          shows_message('archive')
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=4),
+          shows_message('archive')
+       )
+   })
+}
