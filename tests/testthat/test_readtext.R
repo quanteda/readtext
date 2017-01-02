@@ -640,7 +640,6 @@ test_that("test malformed html file",{
 
 test_that("test for pdf file", {
     skip_on_cran()
-    skip_on_travis()
     expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n")
     names(expected) <- 'test.pdf'
 
@@ -666,7 +665,6 @@ test_that("test for docx file", {
 
 test_that("test for doc file", {
     skip_on_cran()
-    skip_on_travis()
 
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
     names(expected) <- 'test.doc'
