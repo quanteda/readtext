@@ -15,3 +15,6 @@ env:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+install:
+  - apt-get install -y antiword poppler-utils
