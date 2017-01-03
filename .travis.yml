@@ -14,7 +14,7 @@ env:
     - R_CHECK_ARGS="--no-build-vignettes"
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - Rscript -e 'library(covr);codecov()'
 
 install:
   - apt-get install -y antiword poppler-utils
