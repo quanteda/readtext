@@ -16,5 +16,5 @@ env:
 after_success:
   - Rscript -e 'library(covr);codecov()'
 
-install:
+before_install:
   - sudo apt-get install -y antiword poppler-utils
