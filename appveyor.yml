@@ -19,7 +19,7 @@ install:
 
 build_script:
   - travis-tool.sh install_r digest
-  - travis-tool.sh install_github hadley/devtools
+  - travis-tool.sh install_r devtools
   - travis-tool.sh install_deps
 
 test_script:
