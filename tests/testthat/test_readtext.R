@@ -1,6 +1,5 @@
 # TODO: re-do docs
-# TODO: Check and remove extranous codes
-# TODO: recurse file listing for e.g. remote ZIP file
+# TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn't seem to require textfield
 
 
@@ -839,7 +838,7 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
 })
 
 context('Tests for verbosity argument')
-   test_that("test warning for unrecognized filetype", {
+test_that("test warning for unrecognized filetype", {
        expect_that(
            readtext('../data/empty/empty.nonesuch'),
            gives_warning('Unsupported extension " nonesuch " of file')
@@ -887,4 +886,4 @@ context('Tests for verbosity argument')
           shows_message('archive')
        )
    })
-}
+})
