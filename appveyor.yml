@@ -18,7 +18,7 @@ install:
 # Adapt as necessary starting from here
 
 build_script:
-  - travis-tool.sh install_r digest devtools crayon testthat
+  - travis-tool.sh install_r digest devtools crayon testthat quanteda
   - travis-tool.sh install_deps
 
 test_script:
