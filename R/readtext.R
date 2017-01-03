@@ -156,6 +156,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                     docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3),
                     ...) {
     
+    options('readtext-verbosity'=verbosity)
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
@@ -184,7 +185,6 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
 
-    options('readtext-verbosity'=verbosity)
     
     # combine all of the data.frames returned
     result <- data.frame(data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
@@ -237,7 +237,7 @@ getSource <- function(f, textfield, ...) {
                  )
         }
         else {
-            if (options('readtext-verbosity') >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            if (options('readtext-verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
             fileType <- 'txt'
         }
 
