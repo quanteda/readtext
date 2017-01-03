@@ -153,7 +153,7 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' }
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
-                    docvarnames = NULL, encoding = NULL, verbosity = c(0, 1, 2, 3),
+                    docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3),
                     ...) {
     
     # some error checks
@@ -183,6 +183,8 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     } else {
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
+
+    options('readtext-verbosity'=verbosity)
     
     # combine all of the data.frames returned
     result <- data.frame(data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
@@ -235,7 +237,7 @@ getSource <- function(f, textfield, ...) {
                  )
         }
         else {
-            if (verbosity >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            if (options('readtext-verbosity') >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
             fileType <- 'txt'
         }
 
