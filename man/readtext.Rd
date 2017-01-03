@@ -6,7 +6,7 @@
 \usage{
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, ...)
+  docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
@@ -84,6 +84,14 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
+
+\item{verbosity}{\itemize{
+  \item 0: silent, no output except for errors
+  \item 1: only errors and warnings
+  \item 2: default level
+  \item 3: detailed reporting
+  \item 4: the most detailed reporting
+}}
 
 \item{...}{additional arguments passed through to low-level file reading 
 function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
