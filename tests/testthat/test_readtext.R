@@ -835,6 +835,27 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
     )
 })
 
+context('Character class replacements')
+test_that("Unicode character classes are correctly replaced",{
+    
+    expect_equal(
+        unname(texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))),
+        "Pd Punctuation Dash: -,-,-,-\nZs Space Separator:  , , ,\nPi Initial Punctuation: ',','\nPf Final Punctuation: ',',','\nCo Private Use: ,,,,,\nCn Unassigned: "
+    )
+    
+    expect_true(
+        stringi::stri_detect(
+            stringi::stri_escape_unicode(
+                texts(readtext("../data/character_classes/test.txt"))
+            ),
+            fixed='\\u301c'
+        )
+    )
+    
+    texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))
+    
+})
+    
 context('Tests for verbosity argument')
 test_that("test warning for unrecognized filetype", {
        expect_that(
@@ -861,27 +882,27 @@ test_that("test warning for unrecognized filetype", {
            readtext('../data/empty/empty.nonesuch', verbosity=0),
            not(gives_warning())
        )
+})
 
-   test_that("messages from listMatchingFile",{
-       expect_that(
-          readtext('../data/zip/inauguralTopLevel.zip', verbosity=0),
-          not(shows_message())
-       )
-      expect_that(
-          readtext('../data/zip/inauguralTopLevel.zip', verbosity=1),
-          not(shows_message())
-       )
-      expect_that(
-          readtext('../data/zip/inauguralTopLevel.zip', verbosity=2),
-          shows_message('archive')
-       )
-      expect_that(
-          readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
-          shows_message('archive')
-       )
-      expect_that(
-          readtext('../data/zip/inauguralTopLevel.zip', verbosity=4),
-          shows_message('archive')
-       )
-   })
+test_that("messages from listMatchingFile",{
+    expect_that(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=0),
+        not(shows_message())
+    )
+    expect_that(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=1),
+        not(shows_message())
+    )
+    expect_that(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=2),
+        shows_message('archive')
+    )
+    expect_that(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
+        shows_message('archive')
+    )
+    expect_that(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=4),
+        shows_message('archive')
+    )
 })
