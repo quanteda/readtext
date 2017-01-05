@@ -1,0 +1,6 @@
+Pd Punctuation Dash: ⸺,—,〜,-
+Zs Space Separator:  , , ,
+Pi Initial Punctuation: “,‟,«
+Pf Final Punctuation: »,’,”,›
+Co Private Use: ,,󰀀,󿿽,􀀀,
+Cn Unassigned: 
