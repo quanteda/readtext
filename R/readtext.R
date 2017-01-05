@@ -1,6 +1,16 @@
 ## some globals
 SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
 names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
+CHARACTER_CLASS_REPLACEMENTS = list(
+                                    '\\p{Dash_Punctuation}' = '-',
+                                    '\\p{Space_Separator}' = ' ',
+                                    '\\p{Initial_Punctuation}' = "'",
+                                    '\\p{Final_Punctuation}' = "'",
+                                    '\\p{Private_Use}' = "",
+                                    '\\p{Unassigned}' = ""
+                                    )
+
+
 
 
 #' read a text file(s)
@@ -79,6 +89,10 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
+#' @param replace_character_classes if \code{TRUE}, replace 
+#'   characters which are members of the character classes Pd, Zs, Pi, Pf, with 
+#'   similar ASCII characters, and remove characters in classes Co, and Cn. In 
+#'   particular, this replaces 'special' hyphens and quotes with regular ones.
 #' @param ... additional arguments passed through to low-level file reading 
 #'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
@@ -146,7 +160,8 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' }
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
-                    docvarnames = NULL, encoding = NULL, ...) {
+                    docvarnames = NULL, encoding = NULL, 
+                    replace_character_classes = FALSE, ...) {
     
     # some error checks
     if (!is.character(file))
@@ -169,11 +184,13 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         if (length(encoding) != length(files)) {
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
-        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, ...),
+        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, 
+                                                   replace_character_classes = replace_character_classes,  ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, 
+                                                       replace_character_classes = replace_character_classes, ...))
     }
     
     # combine all of the data.frames returned
@@ -201,7 +218,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, ...) {
+getSource <- function(f, textfield, replace_character_classes=FALSE, ...) {
     # extension <- file_ext(f)
 
     # fileType <- tryCatch({
@@ -251,9 +268,17 @@ getSource <- function(f, textfield, ...) {
         row.names(newSource) <- basename(f)
     }
 
+    if (replace_character_classes) {
+        newSource$text <- sapply(newSource$text, make_character_class_replacements)
+    }
+
+    # replace unicode characters classes
     return(newSource)
 }
 
-
-
-
+make_character_class_replacements <- function (char, mapping=CHARACTER_CLASS_REPLACEMENTS)  {
+    for (i in names(mapping)) {
+        char <- stringi::stri_replace_all(char, mapping[i], regex=i)
+    }
+    char
+}

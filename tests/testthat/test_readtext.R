@@ -837,3 +837,17 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
+
+
+context('Character class replacements')
+test_that("Unicode character classes are correctly replaced",{
+    expect_equal(
+      texts(readtext("../data/character_classes/test.txt")),
+      "Pd Punctuation Dash: -,-,-,-\nZs Space Separator:  , , ,\nPi Initial Punctuation: ',',',\"\nPf Final Punctuation: ',',',',\"\nCo Private Use: ,,,,,\nCn Unassigned: "
+   )
+
+   texts(readtext("../data/character_classes/test.txt", replace_character_classes=TRUE))
+
+})
+
+devtools::load_all('~/code/readtext/')
