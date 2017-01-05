@@ -79,6 +79,13 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
+#' @param verbosity \itemize{
+#'   \item 0: silent, no output except for errors
+#'   \item 1: only errors and warnings
+#'   \item 2: default level
+#'   \item 3: detailed reporting
+#'   \item 4: the most detailed reporting
+#' }
 #' @param ... additional arguments passed through to low-level file reading 
 #'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
@@ -146,8 +153,10 @@ names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar',
 #' }
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
-                    docvarnames = NULL, encoding = NULL, ...) {
+                    docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3),
+                    ...) {
     
+    options('readtext-verbosity'=verbosity)
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
@@ -175,6 +184,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     } else {
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
+
     
     # combine all of the data.frames returned
     result <- data.frame(data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
@@ -227,7 +237,7 @@ getSource <- function(f, textfield, ...) {
                  )
         }
         else {
-            warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            if (options('readtext-verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
             fileType <- 'txt'
         }
 

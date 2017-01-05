@@ -23,7 +23,7 @@ get_csv <- function(path, textfield, ...) {
     }
     if (!(args$encoding %in% c('Latin-1', 'UTF-8'))) { 
         # If the encoding is not one fread supports, open the file using R's native function
-        #  Use the encoding arg to open the file, pass all other args to fread
+        #  Use the encoding arg to open the file, pass all other args to fread
         txt <- paste(readLines(con <- file(path), encoding=args$encoding, warn = FALSE), collapse="\n")
         close(con)
         args$encoding <- NULL
@@ -58,14 +58,14 @@ get_json <- function(path, textfield, encoding, ...) {
     },
     error = function(e) {
         tryCatch({
-            warning("Doesn't look like Tweets json file, trying general JSON")
+            if (options('readtext-verbosity')[[1]] >= 1) warning("Doesn't look like Tweets json file, trying general JSON")
             return(get_json_object(path, textfield, ...))
         },
         error = function(e) {
             if (e == paste("There is no field called", textfield, "in file", path)) {
                 stop(e)
             }
-            warning("File doesn't contain a single valid JSON object, trying line-delimited json")
+            if (options('readtext-verbosity')[[1]] >= 1) warning("File doesn't contain a single valid JSON object, trying line-delimited json")
             return(get_json_lines(path, textfield, ...))
         })
     })
@@ -152,8 +152,10 @@ get_xml <- function(path, textfield, encoding,...) {
             textfield <- textfieldi
         }
         else {
-            warning(paste("You should specify textfield by name rather than by index, unless",
+            if (options('readtext-verbosity')[[1]] >= 1) {
+                warning(paste("You should specify textfield by name rather than by index, unless",
                           "you're certain that your XML file's fields are always in the same order."))
+            }
         }
         
         # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
