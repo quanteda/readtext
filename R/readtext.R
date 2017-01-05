@@ -169,7 +169,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
                     replace_special_characters = FALSE,
-                    docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3),
+                    verbosity = c(2, 0, 1, 3),
                     ...) {
     
     options('readtext-verbosity'=verbosity)
