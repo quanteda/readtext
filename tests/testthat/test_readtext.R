@@ -843,8 +843,8 @@ context('Character class replacements')
 test_that("Unicode character classes are correctly replaced",{
 
    expect_equal(
-      texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE)),
-      "Pd Punctuation Dash: -,-,-,-\nZs Space Separator:  , , ,\nPi Initial Punctuation: ',','\nPf Final Punctuation: ',',',',\nCo Private Use: ,,,,,\nCn Unassigned: "
+      unname(texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))),
+      "Pd Punctuation Dash: -,-,-,-\nZs Space Separator:  , , ,\nPi Initial Punctuation: ',','\nPf Final Punctuation: ',',','\nCo Private Use: ,,,,,\nCn Unassigned: "
    )
 
    expect_true(
@@ -859,5 +859,3 @@ test_that("Unicode character classes are correctly replaced",{
    texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))
 
 })
-
-devtools::load_all('~/code/readtext/')
