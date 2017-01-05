@@ -7,7 +7,7 @@
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames"), dvsep = "_",
   docvarnames = NULL, encoding = NULL, replace_special_characters = FALSE,
-  ...)
+  verbosity = c(2, 0, 1, 3), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
@@ -90,6 +90,14 @@ for each files}
 characters which are members of the character classes Pd, Zs, Pi, Pf, with 
 similar ASCII characters, and remove characters in classes Co, and Cn. In 
 particular, this replaces 'special' hyphens and quotes with regular ones.}
+
+\item{verbosity}{\itemize{
+  \item 0: silent, no output except for errors
+  \item 1: only errors and warnings
+  \item 2: default level
+  \item 3: detailed reporting
+  \item 4: the most detailed reporting
+}}
 
 \item{...}{additional arguments passed through to low-level file reading 
 function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 

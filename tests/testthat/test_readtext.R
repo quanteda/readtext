@@ -1,6 +1,5 @@
 # TODO: re-do docs
-# TODO: Check and remove extranous codes
-# TODO: recurse file listing for e.g. remote ZIP file
+# TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn't seem to require textfield
 
 
@@ -640,7 +639,6 @@ test_that("test malformed html file",{
 
 test_that("test for pdf file", {
     skip_on_cran()
-    skip_on_travis()
     expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n")
     names(expected) <- 'test.pdf'
 
@@ -666,7 +664,6 @@ test_that("test for docx file", {
 
 test_that("test for doc file", {
     skip_on_cran()
-    skip_on_travis()
 
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
     names(expected) <- 'test.doc'
@@ -838,7 +835,6 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
     )
 })
 
-
 context('Character class replacements')
 test_that("Unicode character classes are correctly replaced",{
 
@@ -858,4 +854,53 @@ test_that("Unicode character classes are correctly replaced",{
 
    texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))
 
+context('Tests for verbosity argument')
+test_that("test warning for unrecognized filetype", {
+       expect_that(
+           readtext('../data/empty/empty.nonesuch'),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=4),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=3),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=2),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=1),
+           gives_warning('Unsupported extension " nonesuch " of file')
+       )
+       expect_that(
+           readtext('../data/empty/empty.nonesuch', verbosity=0),
+           not(gives_warning())
+       )
+
+   test_that("messages from listMatchingFile",{
+       expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=0),
+          not(shows_message())
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=1),
+          not(shows_message())
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=2),
+          shows_message('archive')
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
+          shows_message('archive')
+       )
+      expect_that(
+          readtext('../data/zip/inauguralTopLevel.zip', verbosity=4),
+          shows_message('archive')
+       )
+   })
 })

@@ -93,6 +93,13 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   characters which are members of the character classes Pd, Zs, Pi, Pf, with 
 #'   similar ASCII characters, and remove characters in classes Co, and Cn. In 
 #'   particular, this replaces 'special' hyphens and quotes with regular ones.
+#' @param verbosity \itemize{
+#'   \item 0: silent, no output except for errors
+#'   \item 1: only errors and warnings
+#'   \item 2: default level
+#'   \item 3: detailed reporting
+#'   \item 4: the most detailed reporting
+#' }
 #' @param ... additional arguments passed through to low-level file reading 
 #'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
@@ -161,8 +168,11 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    replace_special_characters = FALSE, ...) {
+                    replace_special_characters = FALSE,
+                    docvarnames = NULL, encoding = NULL, verbosity = c(2, 0, 1, 3),
+                    ...) {
     
+    options('readtext-verbosity'=verbosity)
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
@@ -192,6 +202,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, 
                                                        replace_special_characters = replace_special_characters, ...))
     }
+
     
     # combine all of the data.frames returned
     result <- data.frame(data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
@@ -244,7 +255,7 @@ getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
                  )
         }
         else {
-            warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            if (options('readtext-verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
             fileType <- 'txt'
         }
 

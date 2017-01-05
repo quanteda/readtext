@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 ![Downloads](http://cranlogs.r-pkg.org/badges/readtext)
 [![Travis-CI Build Status](https://travis-ci.org/kbenoit/readtext.svg?branch=master)](https://travis-ci.org/kbenoit/readtext)
-[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026?svg=true)](https://ci.appveyor.com/project/kbenoit/readtext)
+[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/kbenoit/readtext)
 [![codecov.io](https://codecov.io/github/kbenoit/readtext/coverage.svg?branch=master)][1]
 
 
