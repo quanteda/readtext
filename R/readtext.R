@@ -89,7 +89,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
-#' @param replace_character_classes if \code{TRUE}, replace 
+#' @param replace_special_characters if \code{TRUE}, replace 
 #'   characters which are members of the character classes Pd, Zs, Pi, Pf, with 
 #'   similar ASCII characters, and remove characters in classes Co, and Cn. In 
 #'   particular, this replaces 'special' hyphens and quotes with regular ones.
@@ -161,7 +161,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    replace_character_classes = FALSE, ...) {
+                    replace_special_characters = FALSE, ...) {
     
     # some error checks
     if (!is.character(file))
@@ -185,12 +185,12 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
         sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, 
-                                                   replace_character_classes = replace_character_classes,  ...),
+                                                   replace_special_characters = replace_special_characters,  ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, 
-                                                       replace_character_classes = replace_character_classes, ...))
+                                                       replace_special_characters = replace_special_characters, ...))
     }
     
     # combine all of the data.frames returned
@@ -218,7 +218,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, replace_character_classes=FALSE, ...) {
+getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
     # extension <- file_ext(f)
 
     # fileType <- tryCatch({
@@ -268,7 +268,7 @@ getSource <- function(f, textfield, replace_character_classes=FALSE, ...) {
         row.names(newSource) <- basename(f)
     }
 
-    if (replace_character_classes) {
+    if (replace_special_characters) {
         newSource$text <- sapply(newSource$text, make_character_class_replacements)
     }
 

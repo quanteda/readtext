@@ -6,7 +6,7 @@
 \usage{
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, replace_character_classes = FALSE,
+  docvarnames = NULL, encoding = NULL, replace_special_characters = FALSE,
   ...)
 }
 \arguments{
@@ -86,7 +86,7 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
 
-\item{replace_character_classes}{if \code{TRUE}, replace 
+\item{replace_special_characters}{if \code{TRUE}, replace 
 characters which are members of the character classes Pd, Zs, Pi, Pf, with 
 similar ASCII characters, and remove characters in classes Co, and Cn. In 
 particular, this replaces 'special' hyphens and quotes with regular ones.}

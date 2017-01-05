@@ -841,12 +841,22 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
 
 context('Character class replacements')
 test_that("Unicode character classes are correctly replaced",{
-    expect_equal(
-      texts(readtext("../data/character_classes/test.txt")),
+
+   expect_equal(
+      texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))
       "Pd Punctuation Dash: -,-,-,-\nZs Space Separator:  , , ,\nPi Initial Punctuation: ',',',\"\nPf Final Punctuation: ',',',',\"\nCo Private Use: ,,,,,\nCn Unassigned: "
    )
 
-   texts(readtext("../data/character_classes/test.txt", replace_character_classes=TRUE))
+   expect_true(
+    stringi::stri_detect(
+     stringi::stri_escape_unicode(
+      texts(readtext("../data/character_classes/test.txt"))
+      ),
+    fixed='\\u301c'
+    )
+   )
+
+   texts(readtext("../data/character_classes/test.txt", replace_special_characters=TRUE))
 
 })
 
