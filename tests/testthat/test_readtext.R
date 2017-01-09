@@ -790,6 +790,20 @@ test_that("test encoding handling (skipped on travis and CRAN", {
     })
 })
 
+test_that("test encoding handling (UTF-8 only)", {
+    
+   FILEDIR <- '../data/encoding'
+
+   characters <- as.numeric(charToRaw(
+          texts(readtext(file.path(FILEDIR, 'UTF-8__characters.txt'), encoding='utf-8'),
+      )
+   ))
+
+      bytes <- data.table::fread(file.path(FILEDIR, 'UTF-8__bytes.tsv'))[[1]]
+      expect_equal(characters, bytes)
+})
+
+
 test_that("test readtext encoding parameter: ASCII encoded file, read as UTF-8: (should work)", {
     FILEDIR <- '../data/encoding'
 
