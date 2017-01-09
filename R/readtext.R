@@ -169,6 +169,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
                     replace_special_characters = FALSE,
+                    normalize_unicode = c("nfc", "nfd", "nfkd", "nfkc", "nfkc_casefold", NULL),
                     verbosity = c(2, 0, 1, 3),
                     ...) {
     
@@ -195,12 +196,15 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
         sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, 
-                                                   replace_special_characters = replace_special_characters,  ...),
+                                                   replace_special_characters = replace_special_characters, 
+                                                   normalize_unicode=normalize_unicode, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
         sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, 
-                                                       replace_special_characters = replace_special_characters, ...))
+                                                       replace_special_characters = replace_special_characters, 
+                                                       normalize_unicode=normalize_unicode,
+                                                       ...))
     }
 
     
@@ -229,7 +233,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
+getSource <- function(f, textfield, replace_special_characters=FALSE, normalize_unicode, ...) {
     # extension <- file_ext(f)
 
     # fileType <- tryCatch({
@@ -281,6 +285,10 @@ getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
 
     if (replace_special_characters) {
         newSource$text <- sapply(newSource$text, make_character_class_replacements)
+    }
+
+    if (!is.null(normalize_unicode)) {
+        newSource$text <- sapply(newSource$text, unicodeNorm, type=normalize_unicode)
     }
 
     # replace unicode characters classes
