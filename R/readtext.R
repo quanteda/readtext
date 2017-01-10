@@ -89,10 +89,6 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
-#' @param replace_special_characters if \code{TRUE}, replace 
-#'   characters which are members of the character classes Pd, Zs, Pi, Pf, with 
-#'   similar ASCII characters, and remove characters in classes Co, and Cn. In 
-#'   particular, this replaces 'special' hyphens and quotes with regular ones.
 #' @param verbosity \itemize{
 #'   \item 0: silent, no output except for errors
 #'   \item 1: only errors and warnings
@@ -168,7 +164,6 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    replace_special_characters = FALSE,
                     verbosity = c(2, 0, 1, 3),
                     ...) {
     
@@ -194,13 +189,11 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         if (length(encoding) != length(files)) {
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
-        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, 
-                                                   replace_special_characters = replace_special_characters,  ...),
+        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, 
-                                                       replace_special_characters = replace_special_characters, ...))
+        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
     }
 
     
