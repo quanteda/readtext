@@ -164,10 +164,13 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    verbosity = c(2, 0, 1, 3),
+                    verbosity = 2,
                     ...) {
     
-    options('readtext-verbosity'=verbosity)
+    if (!verbosity %in% 0:3) {
+        stop("verbosity must be one of 0, 1, 2, 3")
+    }
+    options('readtext-verbosity' = verbosity)
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
