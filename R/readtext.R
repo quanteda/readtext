@@ -89,10 +89,6 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
-#' @param replace_special_characters if \code{TRUE}, replace 
-#'   characters which are members of the character classes Pd, Zs, Pi, Pf, with 
-#'   similar ASCII characters, and remove characters in classes Co, and Cn. In 
-#'   particular, this replaces 'special' hyphens and quotes with regular ones.
 #' @param verbosity \itemize{
 #'   \item 0: silent, no output except for errors
 #'   \item 1: only errors and warnings
@@ -178,6 +174,8 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
     
+    normalize_unicode <- match.arg(normalize_unicode)
+    
     docvarsfrom <- match.arg(docvarsfrom)
     # # just use the first, if both are specified?
     # if (is.missing(docvarsfrom))
@@ -197,7 +195,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
         }
         sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, 
                                                    replace_special_characters = replace_special_characters, 
-                                                   normalize_unicode=normalize_unicode, ...),
+                                                   normalize_unicode = normalize_unicode, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
