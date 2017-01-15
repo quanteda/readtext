@@ -22,7 +22,7 @@ How to Install
 
     ``` r
     # devtools packaged required to install quanteda from Github 
-    devtools::install_github("kbenoit/quanteda") 
+    devtools::install_github("kbenoit/readtext") 
     ```
 
 2.  From CRAN
