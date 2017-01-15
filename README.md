@@ -21,7 +21,7 @@ How to Install
 1.  From GitHub
 
     ``` r
-    # devtools packaged required to install quanteda from Github 
+    # devtools packaged required to install readtext from Github 
     devtools::install_github("kbenoit/readtext") 
     ```
 
@@ -39,9 +39,12 @@ require(readtext)
 ## Loading required package: readtext
 require(quanteda)
 ## Loading required package: quanteda
-## quanteda version 0.9.8.9038
+## quanteda version 0.9.9.7
 ## 
 ## Attaching package: 'quanteda'
+## The following object is masked from 'package:utils':
+## 
+##     View
 ## The following object is masked from 'package:base':
 ## 
 ##     sample
@@ -700,8 +703,8 @@ summary(encodingCorpus)
 ##    Russian  WINDOWS-1251
 ##       Thai         UTF-8
 ## 
-## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Thu Jan  5 19:46:21 2017
+## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
+## Created: Sun Jan 15 11:27:13 2017
 ## Notes:
 ```
 
@@ -928,7 +931,7 @@ readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
 ##       UDHR_Russian_WINDOWS-1251.txt   762   1829        62
 ##                 UDHR_Thai_UTF-8.txt   541   2404        34
 ## 
-## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Thu Jan  5 19:46:22 2017
+## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
+## Created: Sun Jan 15 11:27:14 2017
 ## Notes:
 ```
