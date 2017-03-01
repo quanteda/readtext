@@ -167,4 +167,3 @@ Encoding(rt9$text)
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
 }
-

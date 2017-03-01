@@ -22,4 +22,3 @@ non-textual data.
 \author{
 Ken Benoit, Paul Nulty, and Adam Obeng
 }
-

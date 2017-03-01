@@ -35,4 +35,4 @@ Encoding: UTF-8
 BugReports: https://github.com/kbenoit/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
