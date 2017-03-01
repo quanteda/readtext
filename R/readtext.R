@@ -167,8 +167,8 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                     verbosity = 2,
                     ...) {
     
-    if (!verbosity %in% 0:3) {
-        stop("verbosity must be one of 0, 1, 2, 3")
+    if (!verbosity %in% 0:4) {
+        stop("verbosity must be one of 0, 1, 2, 3, 4")
     }
     options('readtext-verbosity' = verbosity)
     # some error checks
