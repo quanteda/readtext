@@ -164,7 +164,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    verbosity = 2,
+                    verbosity = 0,
                     ...) {
     
     if (!verbosity %in% 0:4) {
