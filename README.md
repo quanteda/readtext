@@ -201,7 +201,7 @@ summary(encodingCorpus)
 ##       Thai         UTF-8
 ## 
 ## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Thu Mar  2 08:44:06 2017
+## Created: Thu Mar  2 08:46:50 2017
 ## Notes:
 ```
 
@@ -261,6 +261,6 @@ readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
 ##                 UDHR_Thai_UTF-8.txt   541   2404        34
 ## 
 ## Source:  /Users/kbenoit/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Thu Mar  2 08:44:06 2017
+## Created: Thu Mar  2 08:46:51 2017
 ## Notes:
 ```
