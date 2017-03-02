@@ -21,8 +21,8 @@ How to Install
 1.  From GitHub
 
     ``` r
-    # devtools packaged required to install quanteda from Github 
-    devtools::install_github("kbenoit/quanteda") 
+    # devtools packaged required to install readtext from Github 
+    devtools::install_github("kbenoit/readtext") 
     ```
 
 2.  From CRAN
@@ -41,6 +41,7 @@ require(quanteda)
 ## Loading required package: quanteda
 ## quanteda version 0.9.9.29
 ## Using 7 of 8 cores for parallel computing
+## quanteda version 0.9.9.7
 ## 
 ## Attaching package: 'quanteda'
 ## The following object is masked from 'package:utils':
