@@ -6,8 +6,8 @@
 \usage{
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, replace_special_characters = FALSE,
-  verbosity = c(2, 0, 1, 3), ...)
+  docvarnames = NULL, encoding = NULL,
+  verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
@@ -85,11 +85,6 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
-
-\item{replace_special_characters}{if \code{TRUE}, replace 
-characters which are members of the character classes Pd, Zs, Pi, Pf, with 
-similar ASCII characters, and remove characters in classes Co, and Cn. In 
-particular, this replaces 'special' hyphens and quotes with regular ones.}
 
 \item{verbosity}{\itemize{
   \item 0: silent, no output except for errors
@@ -173,4 +168,3 @@ Encoding(rt9$text)
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
 }
-

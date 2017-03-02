@@ -19,4 +19,3 @@ data.frame(labelled = names(data_char_encodedtexts),
            detected = encoding(data_char_encodedtexts)$all)
 }
 \keyword{datasets}
-

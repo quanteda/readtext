@@ -48,4 +48,3 @@ myreadtext <- readtext("http://www.kenbenoit.net/files/01_er_5.txt")
 encoding(myreadtext)
 }
 }
-

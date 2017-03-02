@@ -58,14 +58,14 @@ get_json <- function(path, textfield, encoding, ...) {
     },
     error = function(e) {
         tryCatch({
-            if (options('readtext-verbosity')[[1]] >= 1) warning("Doesn't look like Tweets json file, trying general JSON")
+            if (options('readtext_verbosity')[[1]] >= 1) warning("Doesn't look like Tweets json file, trying general JSON")
             return(get_json_object(path, textfield, ...))
         },
         error = function(e) {
             if (e == paste("There is no field called", textfield, "in file", path)) {
                 stop(e)
             }
-            if (options('readtext-verbosity')[[1]] >= 1) warning("File doesn't contain a single valid JSON object, trying line-delimited json")
+            if (options('readtext_verbosity')[[1]] >= 1) warning("File doesn't contain a single valid JSON object, trying line-delimited json")
             return(get_json_lines(path, textfield, ...))
         })
     })
@@ -152,7 +152,7 @@ get_xml <- function(path, textfield, encoding,...) {
             textfield <- textfieldi
         }
         else {
-            if (options('readtext-verbosity')[[1]] >= 1) {
+            if (options('readtext_verbosity')[[1]] >= 1) {
                 warning(paste("You should specify textfield by name rather than by index, unless",
                           "you're certain that your XML file's fields are always in the same order."))
             }

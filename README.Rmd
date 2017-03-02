@@ -40,8 +40,8 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 1.  From GitHub
 
     ```{r, eval = FALSE}
-    # devtools packaged required to install quanteda from Github 
-    devtools::install_github("kbenoit/quanteda") 
+    # devtools packaged required to install readtext from Github 
+    devtools::install_github("kbenoit/readtext") 
     ```
 
 2.  From CRAN

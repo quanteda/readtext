@@ -1,7 +1,7 @@
 #' Import and handling for plain and formatted text files
 #' 
-#' A set of functions for  importing and handling text files and formatted text
-#' files with additional meta-data, such including .csv, .tab, .json, .xml, and
+#' A set of functions for  importing and handling text files and formatted text 
+#' files with additional meta-data, such including .csv, .tab, .json, .xml, and 
 #' others.
 #' 
 #' \pkg{readtext} makes it easy to import text files in various formats, 
@@ -12,6 +12,9 @@
 #' \pkg{readtext} reads in the document-level meta-data associated with texts, 
 #' if those texts are in a format (e.g. .csv, .json) that includes additional, 
 #' non-textual data.
+#' @section Package options: \describe{ \item{\code{readtext_verbosity}}{Default
+#'   verbosity for messages produced when reading files.  See
+#'   \code{\link{readtext}}.} }
 #' @author Ken Benoit, Paul Nulty, and Adam Obeng
 #' @docType package
 #' @name readtext-package
