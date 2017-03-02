@@ -167,9 +167,12 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
     
-    if (!verbosity %in% 0:4) {
+    # in case the function was called without attaching the package, 
+    # in which case the option is never set
+    if (is.null(verbosity)) 
+        verbosity <- 1
+    if (!verbosity %in% 0:4) 
         stop("verbosity must be one of 0, 1, 2, 3, 4")
-    }
     options('readtext_verbosity' = verbosity)
     # some error checks
     if (!is.character(file))
