@@ -44,7 +44,7 @@ encoding.character <- function(x, verbose = TRUE, ...) {
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
-        if (options('readtext-verbosity')[[1]] >= 1) warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
+        if (options('readtext_verbosity')[[1]] >= 1) warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
 
     encoding <- confidence <- conf <- NULL
     n <- 1

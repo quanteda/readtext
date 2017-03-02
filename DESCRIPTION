@@ -9,8 +9,8 @@ Author: Kenneth Benoit [aut, cre],
     Adam Obeng [ctb],
     Paul Nulty [aut]
 Maintainer: Kenneth Benoit <kbenoit@lse.ac.uk>
-Version: 0.2.9000
-Date: 2017-03-01
+Version: 0.2.9001
+Date: 2017-03-02
 Description: Functions for importing and handling text files and formatted text
     files with additional meta-data, such including .csv, .tab, .json, .xml, 
     .pdf, .doc, .docx, and others.

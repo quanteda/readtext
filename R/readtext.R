@@ -164,13 +164,13 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
-                    verbosity = 0,
+                    verbosity = getOption("readtext_verbosity"),
                     ...) {
     
     if (!verbosity %in% 0:4) {
         stop("verbosity must be one of 0, 1, 2, 3, 4")
     }
-    options('readtext-verbosity' = verbosity)
+    options('readtext_verbosity' = verbosity)
     # some error checks
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
@@ -251,7 +251,7 @@ getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
                  )
         }
         else {
-            if (options('readtext-verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+            if (options('readtext_verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
             fileType <- 'txt'
         }
 

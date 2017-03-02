@@ -6,7 +6,8 @@
 \usage{
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, verbosity = 0, ...)
+  docvarnames = NULL, encoding = NULL,
+  verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
