@@ -2,8 +2,4 @@
 readtext 0.1.0
 ==============
 
-## New Features
-
-
-## Bug fixes
-
+General announcements about our first CRAN release.
