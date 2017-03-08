@@ -19,3 +19,4 @@ An accessor function to return the texts from a \link{readtext} object as a
 character vector, with names matching the document names.
 }
 \keyword{internal}
+

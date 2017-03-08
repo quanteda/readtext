@@ -77,8 +77,11 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 #'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
 #'   or from meta-data embedded in the text file header (\code{headers}).
-#' @param dvsep separator used in filenames to delimit docvar elements if 
-#'   \code{docvarsfrom="filenames"} is used
+#'   If \code{docvarsfrom} is set to "filepaths", consider the full path to the
+#'   file, not just the filename. To split 
+#' @param dvsep separator (a regular expression character string) used in 
+#'  filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
+#'  or \code{docvarsfrom="filepaths"} is used
 #' @param docvarnames character vector of variable names for \code{docvars}, if 
 #'   \code{docvarsfrom} is specified.  If this argument is not used, default 
 #'   docvar names will be used (\code{docvar1}, \code{docvar2}, ...).
@@ -160,9 +163,17 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' rt9 <- readtext(paste0(DATA_DIR, "word/*.docx"))
 #' str(rt9)
 #' Encoding(rt9$text)
+#'
+#' ## use elements of path and filename as docvars
+#' rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+#'                  docvarsfrom = "filepaths", dvsep="[/_.]"
+#' )
+#' str(rt10)
 #' }
+
+
 readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
-                    docvarsfrom = c("metadata", "filenames"), dvsep="_", 
+                    docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
@@ -218,7 +229,11 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
     if ("filenames" %in% docvarsfrom) {
         filenameDocvars <- getdocvarsFromFilenames(files, dvsep = dvsep, 
-                                                   docvarnames = docvarnames)
+                                                   docvarnames = docvarnames, include_path=FALSE)
+        result <- cbind(result, imputeDocvarsTypes(filenameDocvars))
+    } else if ("filepaths" %in% docvarsfrom) {
+        filenameDocvars <- getdocvarsFromFilenames(files, dvsep = dvsep, 
+                                                   docvarnames = docvarnames, include_path=TRUE)
         result <- cbind(result, imputeDocvarsTypes(filenameDocvars))
     }
     

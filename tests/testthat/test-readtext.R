@@ -379,6 +379,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
     
 })
 
+
 test_that("test texts.readtext error with groups!=NULL", {
     expect_that(
         texts(readtext('../data/fox/fox.txt'), groups='anything'),

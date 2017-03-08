@@ -6,9 +6,11 @@ file_ext <- function (x) {
 }
 
 #' @importFrom tools file_path_sans_ext
-getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL) {
+getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL, include_path=FALSE) {
     snames <- fnames
-    snames <- tools::file_path_sans_ext(basename(snames))
+    if (include_path==FALSE) {
+        snames <- tools::file_path_sans_ext(basename(snames))
+    }
     parts <- strsplit(snames, dvsep)
     
     if (!all(sapply(parts,function(x) identical(length(x), length(parts[[1]])))))
