@@ -1,7 +1,16 @@
+# devtools::load_all('~/code/readtext/')
+# options(error=traceback)
+
 context("test filename extension case")
 
 test_that("test case for txt files with glob", {
-    tmp <- readtext( '../data/TXTcaps/*.TXT')
+    expect_equal(
+        length(texts(readtext( '../data/TXTcaps/*.TXT'))),
+        2
+    )
+
+    # Expect no warning
+    expect_warning( readtext( '../data/TXTcaps/*.TXT'), NA)
 })
 
 test_that("test case for csv files with glob", {
@@ -11,10 +20,6 @@ test_that("test case for csv files with glob", {
         ))),
         4
     )
-    expect_equal(
-        nrow(docvars(readtext(
-            '../data/csv/*.CSV', textfield='text'
-        ))),
-        4
-    )
+    # Expect no warning
+    expect_warning( readtext( '../data/CSVcaps/*.CSV'), NA)
 })
