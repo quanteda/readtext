@@ -24,7 +24,7 @@ non-textual data.
   verbosity for messages produced when reading files.  See
   \code{\link{readtext}}.} }
 }
-
 \author{
 Ken Benoit, Paul Nulty, and Adam Obeng
 }
+

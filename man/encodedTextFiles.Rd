@@ -52,3 +52,4 @@ encodingCorpus <- corpus(txts, source = "Created by encoding-tests.R")
 summary(encodingCorpus)
 }
 }
+

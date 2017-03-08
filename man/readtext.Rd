@@ -5,7 +5,7 @@
 \title{read a text file(s)}
 \usage{
 readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
-  docvarsfrom = c("metadata", "filenames"), dvsep = "_",
+  docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
   docvarnames = NULL, encoding = NULL,
   verbosity = getOption("readtext_verbosity"), ...)
 }
@@ -74,10 +74,12 @@ filenames, when the \code{readtext} inputs are filenames and the elements
 of the filenames are document variables, separated by a delimiter 
 (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
-or from meta-data embedded in the text file header (\code{headers}).}
+or from meta-data embedded in the text file header (\code{headers}).
+If \code{docvarsfrom} is set to "filepaths", consider the full path to the
+file, not just the filename.}
 
 \item{dvsep}{separator used in filenames to delimit docvar elements if 
-\code{docvarsfrom="filenames"} is used}
+\code{docvarsfrom="filenames"} or \code{docvarsfrom="filepaths"} is used}
 
 \item{docvarnames}{character vector of variable names for \code{docvars}, if 
 \code{docvarsfrom} is specified.  If this argument is not used, default 
@@ -168,3 +170,4 @@ Encoding(rt9$text)
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
 }
+
