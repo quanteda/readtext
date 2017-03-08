@@ -228,36 +228,23 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, replace_special_characters=FALSE, ...) {
-    # extension <- file_ext(f)
+getSource <- function(f, textfield, replace_special_characters = FALSE, ...) {
 
-    # fileType <- tryCatch({
-    #      SUPPORTED_FILETYPE_MAPPING[[extension]]
-    # }, error = function(e) {
-    #     if (e == 'subscript out of bounds') {
-    #         stop(paste('Unsupported extension', extension, 'of file', f))
-    #     }
-    #     else {
-    #         stop(e)
-    #     }
-    # })
-
-    ## SIMPLER -KB
-    fileType <- file_ext(f)
-    if (!(fileType %in% SUPPORTED_FILETYPE_MAPPING))
+    fileType <- tolower(file_ext(f))
+    if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
         if (dir.exists(f)) {
             call <- deparse(sys.call(1))
-            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed=TRUE)
+            call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed = TRUE)
             stop("File '", f, "' does not exist, but a directory of this name does exist. ",
                  "To read all files in a directory, you must pass a glob expression like ",
                  call
-                 )
+            )
         }
-        else {
-            if (options('readtext_verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
-            fileType <- 'txt'
-        }
-
+    } else {
+        if (options('readtext_verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+        fileType <- 'txt'
+    }
+    
     newSource <- switch(fileType, 
                txt = get_txt(f, ...),
                csv = get_csv(f, textfield, sep=',', ...),
