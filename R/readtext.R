@@ -230,8 +230,8 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
 ## file types
 getSource <- function(f, textfield, replace_special_characters = FALSE, ...) {
 
-    fileType <- file_ext(f)
-    if (any(stringi::stri_detect_fixed(SUPPORTED_FILETYPE_MAPPING, fileType, case_insensitive = TRUE))) {
+    fileType <- tolower(file_ext(f))
+    if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
         if (dir.exists(f)) {
             call <- deparse(sys.call(1))
             call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed = TRUE)
