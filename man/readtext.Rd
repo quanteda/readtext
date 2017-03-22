@@ -177,4 +177,3 @@ str(rt10)
 \author{
 Adam Obeng, Kenneth Benoit, and Paul Nulty
 }
-
