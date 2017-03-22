@@ -76,7 +76,7 @@ of the filenames are document variables, separated by a delimiter
 as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
 or from meta-data embedded in the text file header (\code{headers}).
 If \code{docvarsfrom} is set to "filepaths", consider the full path to the
-file, not just the filename. To split}
+file, not just the filename.}
 
 \item{dvsep}{separator (a regular expression character string) used in 
 filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
