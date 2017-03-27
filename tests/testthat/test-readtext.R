@@ -112,9 +112,10 @@ test_that("test remote text file", {
         texts(readtext('https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt')),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
-    # ignoreMissing with an existing file should make no difference
+    # ignore_missing_files with an existing file should make no difference
     expect_equal(
-        texts(readtext('https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt', ignoreMissing=T)),
+        texts(readtext('https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt', 
+                       ignore_missing_files = TRUE)),
         c(fox.txt='The quick brown fox jumps over the lazy dog.')
     )
 })
@@ -133,7 +134,7 @@ test_that("test remote zip file", {
     skip_on_appveyor()
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
-        length(texts(readtext(paste0(DATA_DIR, "encodedTextFiles.zip")))),
+        length(texts(readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip")))),
         41
     )
 })
@@ -557,7 +558,7 @@ test_that("Test function to list files with remote sources", {
     )
     
     expect_equal(
-      length(readtext('http://www.google.com/404.txt', ignoreMissing = TRUE)),
+      length(readtext('http://www.google.com/404.txt', ignore_missing_files = TRUE)),
       1
     )
 })

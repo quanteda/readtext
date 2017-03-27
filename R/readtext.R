@@ -87,7 +87,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   docvar names will be used (\code{docvar1}, \code{docvar2}, ...).
 #' @param encoding vector: either the encoding of all files, or one encoding
 #'   for each files
-#' @param ignoreMissingFiles if \code{FALSE}, then if the file
+#' @param ignore_missing_files if \code{FALSE}, then if the file
 #'   argument doesn't resolve to an existing file, then an error will be thrown.
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
@@ -172,7 +172,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' }
 
 
-readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL, 
+readtext <- function(file, ignore_missing_files = FALSE, textfield = NULL, 
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
                     verbosity = getOption("readtext_verbosity"),
@@ -197,7 +197,7 @@ readtext <- function(file, ignoreMissingFiles = FALSE, textfield = NULL,
     #     stop("illegal docvarsfrom value")
      
     if (is.null(textfield)) textfield <- 1
-    files <- listMatchingFiles(file, ignoreMissing = ignoreMissingFiles)
+    files <- listMatchingFiles(file, ignoreMissing = ignore_missing_files)
     
     if (is.null(encoding)) {
         encoding <- getOption("encoding")

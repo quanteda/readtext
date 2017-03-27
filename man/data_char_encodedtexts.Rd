@@ -3,7 +3,6 @@
 \docType{data}
 \name{data_char_encodedtexts}
 \alias{data_char_encodedtexts}
-\alias{encodedTexts}
 \title{encoded texts for testing}
 \format{An object of class \code{character} of length 10.}
 \usage{

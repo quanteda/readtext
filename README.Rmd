@@ -57,7 +57,7 @@ require(readtext)
 require(quanteda)
 
 FILEDIR <- tempdir()
-unzip(system.file("extdata", "encodedTextFiles.zip", package = "readtext"), exdir = FILEDIR)
+unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
 
 # get encoding from filename
 filenames <- list.files(FILEDIR, "\\.txt$")

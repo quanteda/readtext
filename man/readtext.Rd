@@ -4,7 +4,7 @@
 \alias{readtext}
 \title{read a text file(s)}
 \usage{
-readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
+readtext(file, ignore_missing_files = FALSE, textfield = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
   docvarnames = NULL, encoding = NULL,
   verbosity = getOption("readtext_verbosity"), ...)
@@ -58,7 +58,7 @@ filetypes, so you could have, for example, a remote URL to a zip file which
 contained Twitter JSON files.}
 }}
 
-\item{ignoreMissingFiles}{if \code{FALSE}, then if the file
+\item{ignore_missing_files}{if \code{FALSE}, then if the file
 argument doesn't resolve to an existing file, then an error will be thrown.
 Note that this can happen in a number of ways, including passing a path 
 to a file that does not exist, to an empty archive file, or to a glob 

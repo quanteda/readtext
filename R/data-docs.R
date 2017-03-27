@@ -1,5 +1,5 @@
 
-#' @name encodedTextFiles
+#' @name data_files_encodedtexts
 #' @title a .zip file of texts containing a variety of differently encoded texts
 #' @source The Universal Declaration of Human Rights resources, 
 #'   \url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
@@ -10,7 +10,8 @@
 #' @examples
 #' \dontrun{# unzip the files to a temporary directory
 #' FILEDIR <- tempdir()
-#' unzip(system.file("extdata", "encodedTextFiles.zip", package = "readtext"), exdir = FILEDIR)
+#' unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), 
+#'       exdir = FILEDIR)
 #' 
 #' # get encoding from filename
 #' filenames <- list.files(FILEDIR, "\\.txt$")
@@ -51,7 +52,6 @@ NULL
 #' 
 #' \code{data_char_encodedtexts} is a 10-element character vector with 10
 #' different encodings
-#' @aliases encodedTexts
 #' @examples
 #' Encoding(data_char_encodedtexts)
 #' data.frame(labelled = names(data_char_encodedtexts), 

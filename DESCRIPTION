@@ -9,8 +9,7 @@ Author: Kenneth Benoit [aut, cre],
     Adam Obeng [ctb],
     Paul Nulty [aut]
 Maintainer: Kenneth Benoit <kbenoit@lse.ac.uk>
-Version: 0.2.9002
-Date: 2017-03-08
+Version: 0.2.9003
 Description: Functions for importing and handling text files and formatted text
     files with additional meta-data, such including .csv, .tab, .json, .xml,
     .pdf, .doc, .docx, and others.
@@ -23,7 +22,7 @@ Imports:
     data.table,
     httr
 Suggests:
-    quanteda,
+    quanteda (>= 0.9.9.24),
     knitr,
     rmarkdown,
     jsonlite (>= 0.9.10),
