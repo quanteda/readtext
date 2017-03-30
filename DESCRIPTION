@@ -1,4 +1,5 @@
 Package: readtext
+Version: 0.3
 Type: Package
 Title: Import and handling for plain and formatted text files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
@@ -9,7 +10,6 @@ Author: Kenneth Benoit [aut, cre],
     Adam Obeng [ctb],
     Paul Nulty [aut]
 Maintainer: Kenneth Benoit <kbenoit@lse.ac.uk>
-Version: 0.2.9003
 Description: Functions for importing and handling text files and formatted text
     files with additional meta-data, such including .csv, .tab, .json, .xml,
     .pdf, .doc, .docx, and others.

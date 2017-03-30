@@ -1,5 +1,5 @@
 
-readtext 0.1.0
+readtext 0.3.0
 ==============
 
-General announcements about our first CRAN release.
+First CRAN release.
