@@ -103,8 +103,10 @@ test_that("test remote csv file", {
 
 
 context('test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)')
-test_that("test remote zip file", {
+
+test_that("test zip file", {
     skip_on_appveyor()
+    skip_on_cran()
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
         length(texts(readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip")))),
@@ -116,7 +118,7 @@ test_that("test remote zip file", {
 
 
 test_that("test non-implemented functions", {
-    
+    # 100% code coverage of non-existent functions! 
 })
 
 test_that("test warning for unrecognized filetype", {
