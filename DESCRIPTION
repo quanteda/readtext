@@ -3,9 +3,9 @@ Version: 0.3
 Type: Package
 Title: Import and handling for plain and formatted text files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
+    c("aut", "cre", "cph")), 
     person("Adam", "Obeng", email = "quanteda@binaryeagle.com", role = "aut"),
-    c("aut", "cre", "cph")), person("Paul", "Nulty", email = "paul.nulty@gmail.com",
-    role = "aut") )
+    person("Paul", "Nulty", email = "paul.nulty@gmail.com", role = "aut") )
 Description: Functions for importing and handling text files and formatted text
     files with additional meta-data, such including .csv, .tab, .json, .xml,
     .pdf, .doc, .docx, and others.
