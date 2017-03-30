@@ -19,12 +19,13 @@ print.readtext <- function(x, ...) {
 #' @param use.names logical; if \code{TRUE}, attach document names to the vector
 #'   of texts
 #' @param ... further arguments passed to or from other methods
-#' @keywords internal
+#' @export
 as.character.readtext <- function(x, use.names = TRUE, ...) {
     result <- x[["text"]]
     if (use.names) names(result) <- row.names(x)
     result
 }
+
 
 #' return only the docvars from a readtext object
 #' 
