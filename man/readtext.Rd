@@ -126,7 +126,8 @@ str(rt1)
 # manifestos with docvars from filenames
 rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
                 docvarsfrom = "filenames", 
-                docvarnames = c("unit", "context", "year", "language", "party"))
+                docvarnames = c("unit", "context", "year", "language", "party"),
+                encoding = "LATIN1")
 # recurse through subdirectories
 rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
 

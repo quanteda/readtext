@@ -1,5 +1,5 @@
 Package: readtext
-Version: 0.3
+Version: 0.30
 Type: Package
 Title: Import and handling for plain and formatted text files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
@@ -16,7 +16,9 @@ Imports:
     utils,
     stringi,
     data.table,
-    httr
+    httr,
+    antiword,
+    pdftools
 Suggests:
     quanteda (>= 0.9.9.24),
     knitr,
