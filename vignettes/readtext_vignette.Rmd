@@ -19,7 +19,7 @@ library(readtext)
 
 The vignette walks you through importing a variety of different text files into R using the **readtext** package. Currently, **readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx).
 
-**readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly -- **readtext** takes this information from the file ending.
+**readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly - **readtext** takes this information from the file ending.
 
 The **readtext** package comes with a data directory called `extdata` that contains examples of all files listed above. In the vignette, we use this data directory.
 
@@ -136,7 +136,7 @@ Encoding(rt_docx$text)
 You can also read in text directly from a URL.
 
 ```{r}
-# Note: Example required -- which URL should we use?
+# Note: Example required: which URL should we use?
 ```
 
 ## 2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)
