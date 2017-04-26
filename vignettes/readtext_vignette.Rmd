@@ -1,0 +1,287 @@
+---
+title: "Read text files with readtext()"
+output: 
+  rmarkdown::html_vignette:
+    css: mystyle.css
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Readtextfiles}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r eval=TRUE, message = FALSE}
+# Load readtext package
+library(readtext)
+```
+
+# 1. Introduction
+
+The vignette walks you through importing a variety of different text files into R using the **readtext** package. Currently, **readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx).
+
+**readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly - **readtext** takes this information from the file ending.
+
+The **readtext** package comes with a data directory called `extdata` that contains examples of all files listed above. In the vignette, we use this data directory.
+
+```{r}
+# Get the data directory from readtext
+DATA_DIR <- system.file("extdata/", package = "readtext")
+```
+
+The `extdata` directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The `paste0` command is used to concatenate the `extdata` folder from the 
+**readtext** package with the subfolders. When reading in custom text files, you will need to determine your own data directory (see `?setwd()`). 
+
+
+# 2. Reading one or more text files
+
+## 2.1 Plain text files (.txt)
+
+The folder "txt" contains a subfolder named UDHR with .txt files of the Universal Declaration of Human Rights in 13 languages. 
+
+```{r}
+# Read in all files from a folder
+rt_txt_1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+str(rt_txt_1)
+```
+
+We can specify document-level metadata (`docvars`) based on the file names or on a separate data.frame. Below we take the docvars from the filenames (`docvarsfrom = "filenames"`) and set the names for each variable (`docvarnames = c("unit", "context", "year", "language", "party")`). The command `dvsep = "_"` determines the separator (a regular expression character string) included in the filenames to delimit the `docvar` elements. 
+
+```{r}
+# Manifestos with docvars from filenames
+rt_txt_2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+                docvarsfrom = "filenames", 
+                docvarnames = c("unit", "context", "year", "language", "party"),
+                dvsep = "_")
+
+str(rt_txt_2)
+```
+
+**readtext** can also curse through subdirectories. In our example, the folder `txt/movie_reviews` contains two subfolders (called `neg` and `pos`). We can load all texts included in both folders. 
+
+```{r}
+# Recurse through subdirectories
+rt_txt_3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+str(rt_txt_3)
+```
+
+## 2.2 Comma- or tab-separated values (.csv, .tab, .tsv)
+
+Read in comma separted values (.csv files) that contain textual data. We determine the `texts` variable in our .csv file as the `textfield`. This is the column that contains the actual text. The other columns of the original csv file (`Year`, `President`, `FirstName`) are by default treated as document-level variables. 
+
+```{r}
+# Read in comma-separated values
+rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+str(rt_csv)
+```
+
+The same procedure applies to tab-separated values.
+
+```{r}
+# Read in tab-separated values
+rt_tsv <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
+str(rt_tsv)
+```
+
+## 2.3 JSON data (.json)
+
+You can also read .json data. Again you need to specify the `textfield`. 
+
+```{r}
+## Read in JSON data
+rt_json <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
+str(rt_json)
+```
+
+## 2.4 PDF files
+
+**readtext** can also read in .pdf files after converting them through `pdftotext`. In older versions this required `xpdf` to be installed, either through `brew install xpdf` (macOS; see extensively <https://brew.sh>) or from <http://www.winfield.demon.nl> (Windows). Note that the most recent version of **readtext** should install this software automatically.
+
+In the example below we load all .pdf files stored in the `UDHR` folder, and determine that the `docvars` shall be taken from the filenames. We call the document-level variables `document` and `language`, and specify the delimiter (`dvsep`).
+
+```{r}
+## Read in Universal Declaration of Human Rights pdf files
+rt_pdf <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+                docvarsfrom = "filenames", 
+                docvarnames = c("document", "language"),
+                sep = "_")
+str(rt_pdf)
+```
+
+We can always check the encoding of each file. 
+
+```{r}
+Encoding(rt_pdf$text)
+```
+
+## 2.5 Microsoft Word files (.doc, .docx)
+
+Microsoft Word formatted files are converted through `antiword`. In older versions you might need to install `antiword` either through `brew install antiword` (macOS; see extensively <https://brew.sh>) or from <http://www.winfield.demon.nl> (Windows). Again, the most recent version of **readtext** should install `antiword` by default. If it is not working try:
+
+```{r, message = FALSE, eval = FALSE}
+install.packages("antiword")
+require(antiword)
+```
+
+
+```{r}
+## Read in Word data (.docx)
+rt_docx <- readtext(paste0(DATA_DIR, "word/*.docx"))
+
+str(rt_docx)
+Encoding(rt_docx$text)
+```
+
+## 2.6 Text from URLs
+
+You can also read in text directly from a URL.
+
+```{r}
+# Note: Example required: which URL should we use?
+```
+
+## 2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)
+
+Finally, it is possible to inclue text from archives.
+
+```{r}
+# Note: Archive file required. The only zip archive included in readtext has 
+# different encodings and is difficult to import (see section 4.2).
+```
+
+# 3. Inter-operability with quanteda
+
+**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
+
+```{r, message = FALSE}
+require(quanteda)
+```
+
+You can easily contruct a corpus from a **readtext** object.
+
+```{r}
+# Read in comma-separated values with readtext
+rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+
+# Create quanteda corpus
+corpus_csv <- quanteda::corpus(rt_csv)
+
+summary(corpus_csv, 5)
+```
+
+# 4. Solving common problems 
+
+## 4.1 Remove page numbers using regular expressions
+
+When a document contains page numbers, they are imported as well. If you want to remove them, you can use a regular expression. We strongly recommend using the [**stringi**](https://github.com/gagolews/stringi) package. For the most common regular expressions you can look at this [cheatsheet](http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf).
+
+You first need to check in the original file in which format the page numbers occur (e.g., "1", "-1-", "page 1" etc.). We can make use of the fact that page numbers are almost always preceded and followed by a linebreak (`\n`). After loading the text with **readtext**, you can replace the page numbers. 
+
+```{r, message = FALSE}
+# Load stringi package
+require(stringi)
+```
+
+In the first example, the page numbers have the format "page X".
+
+```{r}
+# Make some text with page numbers
+sample_text_a <- "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, 
+page 1 
+with the newspaper from a boy named quick Seamus, in his mouth.
+page 2
+The quicker brown fox jumped over 2 lazy dogs."
+
+sample_text_a
+
+# Remove "page" and respective digit
+sample_text_a2 <- unlist(stri_split_fixed(sample_text_a, '\n'), use.names = FALSE)
+sample_text_a2 <- stri_replace_all_regex(sample_text_a2, "page \\d*", "")
+sample_text_a2 <- stri_trim_both(sample_text_a2)
+sample_text_a2 <- sample_text_a2[sample_text_a2 != '']
+stri_paste(sample_text_a2, collapse = '\n')
+```
+In the second example we remove page numbers which have the format "- X -".
+
+```{r}
+sample_text_b <- "The quick brown fox named Seamus 
+- 1 - 
+jumps over the lazy dog also named Seamus, with 
+- 2 - 
+the newspaper from a boy named quick Seamus, in his mouth. 
+- 33 - 
+The quicker brown fox jumped over 2 lazy dogs."
+
+sample_text_b
+
+sample_text_b2 <- unlist(stri_split_fixed(sample_text_b, '\n'), use.names = FALSE)
+sample_text_b2 <- stri_replace_all_regex(sample_text_b2, "[-] \\d* [-]", "")
+sample_text_b2 <- stri_trim_both(sample_text_b2)
+sample_text_b2 <- sample_text_b2[sample_text_b2 != '']
+stri_paste(sample_text_b2, collapse = '\n')
+```
+
+Such **stringi** functions can also be applied to **readtext** objects. 
+
+## 4.2 Read files with different encodings
+
+Sometimes files of the same type have different encodings. If the encoding of a file is included in the file name, we can extract this information and import the texts correctly. 
+
+```{r}
+# Create a temporary directory to extract the .zip file
+FILEDIR <- tempdir()
+
+# Unzip file
+unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
+```
+
+```{r}
+# Get encoding from filename
+filenames <- list.files(FILEDIR, "\\.txt$")
+
+head(filenames)
+
+# Strip the extension
+filenames <- gsub(".txt$", "", filenames)
+parts <- strsplit(filenames, "_")
+fileencodings <- sapply(parts, "[", 3)
+
+head(fileencodings)
+
+# Check whether certain file encodings are not supported
+notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
+fileencodings[notAvailableIndex]
+```
+
+If we read the text files without specifying the encoding, we get errendously formatted text. To avoid this, we determine the `encoding` using the character object `fileencoding` created above. 
+
+```{r}
+# Read txt files
+txts <- readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
+
+substring(texts(txts)[1], 1, 40)  # English, looking good
+
+substring(texts(txts)[4], 1, 40)  # Arabic, looking good 
+
+substring(texts(txts)[40], 1, 40) # Cyrillic, looking good
+
+substring(texts(txts)[7], 1, 40)  # Chinese, looking good
+
+substring(texts(txts)[26], 1, 40) # Hindi, looking good
+```
+
+Again, we can add `docvars` based on the filenames.
+
+```{r}
+txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
+                 encoding = fileencodings,
+                 docvarsfrom = "filenames", 
+                 docvarnames = c("document", "language", "input_encoding"))
+```
+
+From this file we can easily create a **quanteda** `corpus` object.
+
+```{r}
+corpus_txts <- corpus(txts)
+
+summary(corpus_txts, 5)
+```
