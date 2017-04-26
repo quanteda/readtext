@@ -1,9 +1,5 @@
 r_packages:
     - covr
-    - knitr
-    - rmarkdown
-    - pdftools
-    - antiword
 language: r
 sudo: true
 dist: trusty
@@ -13,4 +9,4 @@ env:
     global:
     - R_CHECK_ARGS="--no-build-vignettes"
 after_success:
-  - Rscript -e 'library(covr);codecov()'
+  - Rscript -e 'library(covr); codecov()'
