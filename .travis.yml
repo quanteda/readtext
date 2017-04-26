@@ -1,10 +1,14 @@
 r_packages:
     - covr
+    - pdftools
 language: r
 sudo: true
 dist: trusty
-before_install:
-  - sudo apt-get install libapparmor-dev
+addons:
+  apt:
+    packages:
+      - libapparmor-dev
+      - libpoppler-cpp-dev
 env:
     global:
     - R_CHECK_ARGS="--no-build-vignettes"
