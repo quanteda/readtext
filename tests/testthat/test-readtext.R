@@ -618,6 +618,7 @@ test_that("test malformed html file",{
 
 test_that("test for pdf file", {
     skip_on_os("windows")
+    skip_on_os("travis")
     expected <- c(test.pdf = "The quick brown fox jumps over the lazy dog\n                                     1\n")
     expect_equal(
         texts(readtext('../data/pdf/test.pdf')),
