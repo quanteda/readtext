@@ -5,6 +5,8 @@ r_packages:
 language: r
 sudo: true
 dist: trusty
+before_install:
+  - sudo apt-get install libapparmor-dev
 env:
     global:
     - R_CHECK_ARGS="--no-build-vignettes"
