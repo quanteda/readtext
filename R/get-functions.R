@@ -184,17 +184,19 @@ get_html <- function(f, ...) {
 get_pdf <- function(f, ...) {
     args <- list(...)
 
-    tryCatch({
-        txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-nopgbrk", "-"), 
-                   stdout = TRUE)
-    },
-    error = function(e) {
-        if (grepl('error in running command', e)) {
-            stop(e, 'Please check whether pdftotext is installed. You can download it as part of Xpdf from http://www.foolabs.com/xpdf/home.html')
-        } else {
-        stop(e)
-        }
-    })
+    txt <- pdftools::pdf_text(as.character(f))
+
+    # tryCatch({
+    #     txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-nopgbrk", "-"), 
+    #                stdout = TRUE)
+    # },
+    # error = function(e) {
+    #     if (grepl('error in running command', e)) {
+    #         stop(e, 'Please check whether pdftotext is installed. You can download it as part of Xpdf from http://www.foolabs.com/xpdf/home.html')
+    #     } else {
+    #     stop(e)
+    #     }
+    # })
 
     txt <- paste0(txt, collapse='\n')
     Encoding(txt) <- "UTF-8"
@@ -218,16 +220,19 @@ get_docx <- function(f, ...) {
 
 get_doc <- function(f, ...) {
     args <- list(...)
-    tryCatch({
-        txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
-    },
-    error = function(e) {
-        if (grepl('error in running command', e)) {
-            stop(e, 'Please check whether antiword is installed. You can download it from http://www.winfield.demon.nl/')
-        } else {
-        stop(e)
-        }
-    })
+    
+    txt <- antiword::antiword(as.character(normalizePath(f)))
+    
+    # tryCatch({
+    #     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
+    # },
+    # error = function(e) {
+    #     if (grepl('error in running command', e)) {
+    #         stop(e, 'Please check whether antiword is installed. You can download it from http://www.winfield.demon.nl/')
+    #     } else {
+    #     stop(e)
+    #     }
+    # })
     txt <- paste0(txt, collapse = "\n")
     txt <- trimws(txt)
     data.frame(text = txt, stringsAsFactors = FALSE)

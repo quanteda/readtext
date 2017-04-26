@@ -107,6 +107,7 @@ context('test that require recursive invocation of listFileNames (i.e. because a
 test_that("test zip file", {
     skip_on_appveyor()
     skip_on_cran()
+    skip_on_os("windows")
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
         length(texts(readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip")))),
@@ -605,6 +606,7 @@ test_that("test html file",{
 
 
 test_that("test malformed html file",{
+    skip_on_os("windows")
     expected <- c("The quick brown fox \n    \njumps over the lazy dog")
     names(expected) <- 'malformed_html5.html'
     expect_equal(
@@ -615,22 +617,20 @@ test_that("test malformed html file",{
 
 
 test_that("test for pdf file", {
-    skip_on_cran()
-    expected <- c("The quick brown fox jumps over the lazy dog\n\n1\n")
-    names(expected) <- 'test.pdf'
-
+    skip_on_os("windows")
+    skip_on_travis()
+    expected <- c(test.pdf = "The quick brown fox jumps over the lazy dog\n                                     1\n")
     expect_equal(
         texts(readtext('../data/pdf/test.pdf')),
         expected
     )
-
 })
 
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
     names(expected) <- 'test.docx'
     
-   expect_equal(
+    expect_equal(
         texts(readtext('../data/docx/test.docx')),
         expected
     )
@@ -640,8 +640,7 @@ test_that("test for docx file", {
 
 
 test_that("test for doc file", {
-    skip_on_cran()
-
+    skip_on_os("windows")  
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =' ')
     names(expected) <- 'test.doc'
 
@@ -726,6 +725,7 @@ if (.Platform$OS.type == "unix") {
 test_that("test encoding handling (skipped on travis and CRAN", {
     skip_on_cran()
     skip_on_travis()
+    skip_on_os("windows")
     
     # Currently, these encodings don't work for reasons that seem unrelated 
     # to quanteda, and are either a problem in base R or on travis-ci
