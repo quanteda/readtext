@@ -111,7 +111,7 @@ test_that("test zip file", {
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
         length(texts(readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip")))),
-        41
+        36
     )
 })
 
