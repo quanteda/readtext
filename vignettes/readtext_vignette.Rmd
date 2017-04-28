@@ -219,7 +219,7 @@ unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"
 Here, we will get the encoding from the filenames themselves.
 ```{r}
 # get encoding from filename
-filenames <- list.files(FILEDIR, "\\.txt$")
+filenames <- list.files(FILEDIR, "^(Indian|UDHR_).*\\.txt$")
 
 head(filenames)
 
@@ -239,7 +239,7 @@ If we read the text files without specifying the encoding, we get erroneously fo
 
 We can also add `docvars` based on the filenames.
 ```{r}
-txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
+txts <- readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip"), 
                  encoding = fileencodings,
                  docvarsfrom = "filenames", 
                  docvarnames = c("document", "language", "input_encoding"))
