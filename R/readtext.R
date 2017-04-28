@@ -107,7 +107,6 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' @return a data.frame consisting of a first column \code{text} that contains
 #' the texts, with any additional columns consisting of document-level variables either found in the 
 #' file containing the texts, or created through the \code{readtext} call.
-#' @author Adam Obeng, Kenneth Benoit, and Paul Nulty
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk

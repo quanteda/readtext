@@ -171,6 +171,3 @@ rt10
 head(rt10[, -1])
 }
 }
-\author{
-Adam Obeng, Kenneth Benoit, and Paul Nulty
-}
