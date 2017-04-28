@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 [1]: https://codecov.io/gh/kbenoit/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Paul Nulty, and Adam Obeng.  (In alphabetical order, not by order of contribution.)
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, and Paul Nulty.
 
 ## Introduction
 
