@@ -1,14 +1,24 @@
-
+#' print method for a readtext object
+#' 
+#' Print a readtext object in a nicely formatted way.
 #' @method print readtext
-#' @keywords internal
-print.readtext <- function(x, ...) {
+#' @param x the readtext object to be printed
+#' @param n a single integer, the number of rows of a readtext object to print.
+#' @param text_width number of characters to display of the text field
+#' @param ... not used here
+#' @importFrom utils head
+#' @importFrom tibble trunc_mat
+#' @export
+print.readtext <- function(x, n = 6L, text_width = 10L, ...) {
     cat("readtext object consisting of ", nrow(x), 
         " document", ifelse(nrow(x) == 1, "", "s"), " and ", 
         ncol(x)-1, " docvar", ifelse((ncol(x)-1) == 1, "", "s"), 
         ".\n", sep="")
-    # print(head(as.data.frame(x))
+    x$text <- paste0("\"", substr(x$text, 1, text_width), "\"...")
+    x <- cbind(data.frame(doc_id = rownames(x), stringsAsFactors = FALSE), x)
+    class(x) <- "data.frame"
+    print(tibble::trunc_mat(x, n = 6))
 }
-
 
 #' return only the texts from a readtext object
 #' 
@@ -16,28 +26,11 @@ print.readtext <- function(x, ...) {
 #' character vector, with names matching the document names.
 #' @method as.character readtext
 #' @param x the readtext object whose texts will be extracted
-#' @param use.names logical; if \code{TRUE}, attach document names to the vector
-#'   of texts
 #' @param ... further arguments passed to or from other methods
 #' @export
-as.character.readtext <- function(x, use.names = TRUE, ...) {
+as.character.readtext <- function(x, ...) {
     result <- x[["text"]]
-    if (use.names) names(result) <- row.names(x)
+    names(result) <- row.names(x)
     result
 }
 
-
-#' return only the docvars from a readtext object
-#' 
-#' An accessor function to return the non-text variables from a \link{readtext} object.
-#' @method as.data.frame readtext
-#' @param x the readtext object whose non-text variables will be extracted
-#' @param ... further arguments passed to or from other methods
-#' @keywords internal
-# as.data.frame.readtext <- function(x, ...) {
-#     if (length(x) == 1 & names(x) == "text") {
-#         return(NULL) 
-#     } else {
-#         return(x[, -which(names(x) == "text")])
-#     }
-# }
