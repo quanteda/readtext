@@ -28,15 +28,15 @@ readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
 
 ## ------------------------------------------------------------------------
 # Read in comma-separated values
-readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
 
 ## ------------------------------------------------------------------------
 # Read in tab-separated values
-readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
+readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech")
 
 ## ------------------------------------------------------------------------
 ## Read in JSON data
-readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
+readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts")
 
 ## ------------------------------------------------------------------------
 ## Read in Universal Declaration of Human Rights pdf files
@@ -61,7 +61,7 @@ require(quanteda)
 
 ## ------------------------------------------------------------------------
 # read in comma-separated values with readtext
-rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
 
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)
