@@ -30,7 +30,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   \item{\code{txt}}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
-#'   which contains the the text must be specified with the \code{textfield}
+#'   which contains the the text must be specified with the \code{text_field}
 #'   parameter, and all other fields are treated as docvars.}
 #'   \item{\code{json}}{data in some form of JavaScript 
 #'   Object Notation, consisting of the texts and optionally additional docvars.
@@ -67,7 +67,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   filetypes, so you could have, for example, a remote URL to a zip file which
 #'   contained Twitter JSON files.}
 #'   }
-#' @param textfield a variable (column) name or column number indicating where 
+#' @param text_field a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
 #'   specified for file types \code{.csv} and \code{.json}. For XML files
 #'   an XPath expression can be specified. 
@@ -132,10 +132,10 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' str(rt4)
 #' 
 #' ## read in tab-separated data
-#' (rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech"))
+#' (rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech"))
 #' 
 #' ## read in JSON data
-#' (rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts"))
+#' (rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts"))
 #' 
 #' ## read in pdf data
 #' # UNHDR
@@ -166,11 +166,20 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' rt10
 #' head(rt10[, -1])
 #' }
-readtext <- function(file, ignore_missing_files = FALSE, textfield = NULL, 
+readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL, 
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
+    
+    # trap "textfield", issue a warning, and call with text_field
+    thecall <- as.list(match.call())
+    thecall <- thecall[2:length(thecall)]
+    if ("textfield" %in% names(thecall)) {
+        warning("textfield is deprecated; use text_field instead")
+        names(thecall)[which(names(thecall)=="textfield")] <- "text_field"
+        return(do.call(readtext, thecall))
+    }
     
     # in case the function was called without attaching the package, 
     # in which case the option is never set
@@ -190,7 +199,7 @@ readtext <- function(file, ignore_missing_files = FALSE, textfield = NULL,
     # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
     #     stop("illegal docvarsfrom value")
      
-    if (is.null(textfield)) textfield <- 1
+    if (is.null(text_field)) text_field <- 1
     files <- listMatchingFiles(file, ignoreMissing = ignore_missing_files)
     
     if (is.null(encoding)) {
@@ -200,11 +209,11 @@ readtext <- function(file, ignore_missing_files = FALSE, textfield = NULL,
         if (length(encoding) != length(files)) {
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
-        sources <- mapply(function(x, e) getSource(f = x, textfield = textfield, encoding = e, ...),
+        sources <- mapply(function(x, e) getSource(f = x, text_field = text_field, encoding = e, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, textfield = textfield, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, text_field = text_field, encoding = encoding, ...))
     }
 
     
@@ -237,7 +246,7 @@ readtext <- function(file, ignore_missing_files = FALSE, textfield = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, textfield, replace_special_characters = FALSE, ...) {
+getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
 
     fileType <- tolower(file_ext(f))
     if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
@@ -256,12 +265,12 @@ getSource <- function(f, textfield, replace_special_characters = FALSE, ...) {
     
     newSource <- switch(fileType, 
                txt = get_txt(f, ...),
-               csv = get_csv(f, textfield, sep=',', ...),
-               tsv = get_csv(f, textfield, sep='\t', ...),
-               tab = get_csv(f, textfield, sep='\t', ...),
-               json = get_json(f, textfield, ...),
-               xml = get_xml(f, textfield, ...),
-               html = get_html(f, textfield=textfield, ...),
+               csv = get_csv(f, text_field, sep=',', ...),
+               tsv = get_csv(f, text_field, sep='\t', ...),
+               tab = get_csv(f, text_field, sep='\t', ...),
+               json = get_json(f, text_field, ...),
+               xml = get_xml(f, text_field, ...),
+               html = get_html(f, text_field=text_field, ...),
                pdf = get_pdf(f, ...),
                docx = get_docx(f, ...),
                doc = get_doc(f, ...)
