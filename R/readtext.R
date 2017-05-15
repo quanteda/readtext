@@ -218,7 +218,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
     
     # combine all of the data.frames returned
-    result <- data.frame(data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
+    result <- data.frame(doc_id = "", 
+                         data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
                          stringsAsFactors = FALSE)
 
     # this is in case some smart-alec (like AO) globs different directories 
@@ -239,6 +240,10 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
                                                    docvarnames = docvarnames, include_path=TRUE)
         result <- cbind(result, imputeDocvarsTypes(filenameDocvars))
     }
+    
+    # change rownames to doc_id 
+    result$doc_id <- rownames(result)
+    rownames(result) <- NULL
     
     class(result) <- c("readtext", class(result))
     result
