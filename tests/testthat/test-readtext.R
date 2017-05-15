@@ -148,8 +148,7 @@ test_that("test csv files", {
     expect_that(
         docvars(testcorpus),
         equals(data.frame(list(colour = c('green', 'red'), number = c(42, 99)), 
-                          stringsAsFactors = FALSE, 
-                          row.names = c("test.csv.1", "test.csv.2")))
+                          stringsAsFactors = FALSE))
     )
     expect_equal(
         texts(testcorpus),
@@ -173,8 +172,7 @@ test_that("test tab files", {
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
-                          stringsAsFactors = FALSE,
-                          row.names = c("test.tab.1", "test.tab.2")))
+                          stringsAsFactors = FALSE))
     )
     expect_that(
         texts(testreadtext),
@@ -193,8 +191,7 @@ test_that("test tsv files", {
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
-                          stringsAsFactors=F,
-                          row.names = c("test.tsv.1", "test.tsv.2")))
+                          stringsAsFactors = FALSE))
     )
     expect_that(
         texts(testreadtext),
@@ -213,21 +210,19 @@ test_that("test xml files", {
     # Test corpus object
     testcorpus <- readtext('../data/xml/test.xml', text_field='text')
     expect_that(
-        data.frame(testcorpus[,-1]),
+        data.frame(testcorpus[,-c(1,2)]),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
-                          stringsAsFactors = FALSE,
-                          row.names = c("test.xml.1", "test.xml.2")))
+                          stringsAsFactors = FALSE))
     )
     expect_that(
         unname(texts(testcorpus)),
         equals(c('Lorem ipsum.','Dolor sit'))
     )
     expect_that(
-        row.names(testcorpus),
+        docnames(testcorpus),
         equals(c("test.xml.1", "test.xml.2"))
     )
 
-    
     expect_that(
         readtext('../data/xml/test.xml', text_field=1),
         gives_warning('You should specify text_field by name.*')
@@ -237,7 +232,7 @@ test_that("test xml files", {
         equals(c('Lorem ipsum.', 'Dolor sit'))
     )
     expect_that(
-        row.names(testcorpus),
+        docnames(testcorpus),
         equals(c("test.xml.1", "test.xml.2"))
     )
 
@@ -272,28 +267,25 @@ test_that("test readtext() with docvarsfrom=filenames", {
     expect_that(
         docvars(readtext('../data/docvars/one/*', docvarsfrom='filenames')),
         equals(data.frame(list(docvar1=c(1L, 2L), docvar2=c('apple', 'orange')), 
-                          stringsAsFactors = FALSE,
-                          row.names = c("1_apple.txt", "2_orange.txt")))
+                          stringsAsFactors = FALSE))
     )
     
     expect_that(
         docvars(readtext('../data/docvars/dash/*', docvarsfrom='filenames', dvsep='-')),
         equals(data.frame(list(docvar1=c(1,2), docvar2=c('apple', 'orange')), 
-                          stringsAsFactors = FALSE,
-                          row.names = c("1-apple.txt", "2-orange.txt")))
+                          stringsAsFactors = FALSE))
     )
     
     
     expect_that(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames')),
         equals(data.frame(list(docvar1=c(1,2), docvar2=c('apple', 'orange')), docvar3=c('red', 'orange'), 
-                          stringsAsFactors = FALSE,
-                          row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
+                          stringsAsFactors = FALSE))
     )
     
     expect_that(
-        docvars(readtext('../data/docvars/two/*json', text_field='nonesuch', 
-                        docvarsfrom='filenames')),
+        docvars(readtext('../data/docvars/two/*json', text_field = 'nonesuch', 
+                        docvarsfrom = 'filenames')),
         throws_error("There is no field called")
     )
     
@@ -306,11 +298,9 @@ test_that("test readtext() with docvarsfrom=filenames", {
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
                          docvarnames=c('id', 'fruit', 'colour'))),
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
-                          colour=c('red', 'orange'), stringsAsFactors=F,
-                          row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
+                          colour=c('red', 'orange'), stringsAsFactors=F))
     )
-    
-    
+
     expect_that(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
                          docvarnames=c('id', 'fruit')
@@ -322,8 +312,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
                          docvarnames=c('id', 'fruit')
         )),
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
-                          docvar3=c('red', 'orange'), stringsAsFactors = FALSE,
-                          row.names = c("1_apple_red.txt", "2_orange_orange.txt")))
+                          docvar3=c('red', 'orange'), stringsAsFactors = FALSE))
     )
     
     
@@ -344,8 +333,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
     expect_equal(
         docvars(readtext('../data/docvars/csv/*', docvarsfrom=c('filenames'), docvarnames=c('id', 'fruit'), text_field='text')),
         data.frame(list(shape=c('round', NA), texture=c(NA, 'rough'), id=c(1, 2), fruit=c('apple', 'orange')), 
-                   stringsAsFactors = FALSE,
-                   row.names = c("1_apple.csv", "2_orange.csv"))
+                   stringsAsFactors = FALSE)
     )
     
     # #  Docvars from both metadata and filename
@@ -427,9 +415,7 @@ test_that("test reading structured text files with different columns", {
             color=c('green', 'orange', NA, NA), 
             shape=c(NA, NA, 'round', 'long')
         ),
-        stringsAsFactors=F,
-        row.names = c("1.csv.1", "1.csv.2", "2.csv.1", "2.csv.2")
-        ))
+        stringsAsFactors=F))
     )
     expected_texts <- c('apple', 'orange', 'apple', 'banana')
     names(expected_texts) <- c('1.csv.1', '1.csv.2', '2.csv.1', '2.csv.2')
@@ -529,13 +515,13 @@ test_that("Test function to list files", {
 test_that("Test function to list files with remote sources", {
     skip_on_cran()
     expect_error(
-      listMatchingFiles('http://www.google.com/404.txt'),
+      readtext:::listMatchingFiles('http://www.google.com/404.txt'),
       ".*404.*"
     )
     
     expect_equal(
-      length(readtext('http://www.google.com/404.txt', ignore_missing_files = TRUE)),
-      1
+      dim(readtext('http://www.google.com/404.txt', ignore_missing_files = TRUE)),
+      c(1,2)
     )
 })
 
