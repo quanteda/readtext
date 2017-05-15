@@ -26,5 +26,5 @@ non-textual data.
 }
 
 \author{
-Ken Benoit, Paul Nulty, and Adam Obeng
+Ken Benoit, Adam Obeng, and Paul Nulty
 }
