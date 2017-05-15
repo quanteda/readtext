@@ -10,14 +10,24 @@ library(quanteda)
 texts.readtext <- function(x, groups = NULL, ...) {
     if (!is.null(groups))
         stop("groups argument not supported for texts() on a readtext object")
-    result <- x[["text"]]
-    names(result) <- row.names(x)
-    result
+    as.character(x)
+    # result <- x[["text"]]
+    # names(result) <- row.names(x)
+    # result
 }
 docvars.readtext <- function(x, field = NULL) {
     if (!is.null(field))
         warning("field argument not used for docvars on a readtext object", noBreaks. = TRUE)
-    as.data.frame(x[, -which(names(x)=="text"), drop = FALSE])
+    as.data.frame(x[, -which(names(x) %in% c("doc_id", "text")), drop = FALSE])
 }
+
+docnames.readtext <- function(x) {
+    x[["doc_id"]]
+}
+
+ndoc.readtext <- function(x) {
+    nrow(x)
+}
+
 
 test_check("readtext")

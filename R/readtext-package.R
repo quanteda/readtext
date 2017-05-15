@@ -15,7 +15,7 @@
 #' @section Package options: \describe{ \item{\code{readtext_verbosity}}{Default
 #'   verbosity for messages produced when reading files.  See
 #'   \code{\link{readtext}}.} }
-#' @author Ken Benoit, Paul Nulty, and Adam Obeng
+#' @author Ken Benoit, Adam Obeng, and Paul Nulty
 #' @docType package
 #' @name readtext-package
 NULL

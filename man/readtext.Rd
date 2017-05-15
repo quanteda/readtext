@@ -104,9 +104,11 @@ as it would be give to \code{\link{iconv}}.  See the Encoding section of
 \link{file} for details.}
 }
 \value{
-a data.frame consisting of a first column \code{text} that contains
-the texts, with any additional columns consisting of document-level variables either found in the 
-file containing the texts, or created through the \code{readtext} call.
+a data.frame consisting of a columns \code{doc_id} and \code{text} 
+  that contain a document identifier and the texts respectively, with any 
+  additional columns consisting of document-level variables either found 
+  in the file containing the texts, or created through the 
+  \code{readtext} call.
 }
 \description{
 Read texts and (if any) associated document-level meta-data from one or more source files. 
