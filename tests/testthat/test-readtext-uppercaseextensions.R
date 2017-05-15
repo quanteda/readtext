@@ -16,7 +16,7 @@ test_that("test case for txt files with glob", {
 test_that("test case for csv files with glob", {
     expect_equal(
         length(texts(readtext(
-            '../data/CSVcaps/*.CSV', textfield='text'
+            '../data/CSVcaps/*.CSV', text_field='text'
         ))),
         4
     )

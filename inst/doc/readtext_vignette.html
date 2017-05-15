@@ -107,6 +107,20 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>The folder “txt” contains a subfolder named UDHR with .txt files of the Universal Declaration of Human Rights in 13 languages.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in all files from a folder</span>
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/UDHR/*&quot;</span>))
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
 ## readtext object consisting of 13 documents and 0 docvars.
 ## # data.frame [13 × 2]
 ##              doc_id                      text
@@ -125,6 +139,24 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
          <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;unit&quot;</span>, <span class="st">&quot;context&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;language&quot;</span>, <span class="st">&quot;party&quot;</span>),
          <span class="dt">dvsep =</span> <span class="st">&quot;_&quot;</span>, 
          <span class="dt">encoding =</span> <span class="st">&quot;ISO-8859-1&quot;</span>)
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
 ## readtext object consisting of 17 documents and 5 docvars.
 ## # data.frame [17 × 7]
 ##                    doc_id             text  unit context  year language
@@ -139,6 +171,109 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Recurse through subdirectories</span>
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/movie_reviews/*&quot;</span>))
+## possible glob pattern
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
 ## readtext object consisting of 100 documents and 0 docvars.
 ## # data.frame [100 × 2]
 ##                    doc_id            text
@@ -156,6 +291,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>Read in comma separted values (.csv files) that contain textual data. We determine the <code>texts</code> variable in our .csv file as the <code>textfield</code>. This is the column that contains the actual text. The other columns of the original csv file (<code>Year</code>, <code>President</code>, <code>FirstName</code>) are by default treated as document-level variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in comma-separated values</span>
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;csv/inaugCorpus.csv&quot;</span>), <span class="dt">textfield =</span> <span class="st">&quot;texts&quot;</span>)
+## possible glob pattern
+## regular file
 ## readtext object consisting of 5 documents and 3 docvars.
 ## # data.frame [5 × 5]
 ##              doc_id            text  Year  President FirstName
@@ -168,6 +305,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>The same procedure applies to tab-separated values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in tab-separated values</span>
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;tsv/dailsample.tsv&quot;</span>), <span class="dt">textfield =</span> <span class="st">&quot;speech&quot;</span>)
+## possible glob pattern
+## regular file
 ## readtext object consisting of 33 documents and 9 docvars.
 ## # data.frame [33 × 11]
 ##             doc_id            text speechID memberID partyID constID
@@ -186,6 +325,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>You can also read .json data. Again you need to specify the <code>textfield</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in JSON data
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;json/inaugural_sample.json&quot;</span>), <span class="dt">textfield =</span> <span class="st">&quot;texts&quot;</span>)
+## possible glob pattern
+## regular file
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): Doesn't look
 ## like Tweets json file, trying general JSON
 ## readtext object consisting of 3 documents and 3 docvars.
@@ -205,6 +346,18 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
                     <span class="dt">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, 
                     <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;document&quot;</span>, <span class="st">&quot;language&quot;</span>),
                     <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>))
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
 ## readtext object consisting of 11 documents and 2 docvars.
 ## # data.frame [11 × 4]
 ##             doc_id                      text document language
@@ -222,6 +375,9 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>Microsoft Word formatted files are converted through the package <strong>antiword</strong> for older <code>.doc</code> files, and using <strong>XML</strong> for newer <code>.docx</code> files.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Word data (.docx)
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;word/*.docx&quot;</span>))
+## possible glob pattern
+## regular file
+## regular file
 ## readtext object consisting of 2 documents and 0 docvars.
 ## # data.frame [2 × 2]
 ##                        doc_id            text
@@ -248,6 +404,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p>You can easily contruct a corpus from a <strong>readtext</strong> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in comma-separated values with readtext</span>
 rt_csv &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;csv/inaugCorpus.csv&quot;</span>), <span class="dt">textfield =</span> <span class="st">&quot;texts&quot;</span>)
+## possible glob pattern
+## regular file
 
 <span class="co"># create quanteda corpus</span>
 corpus_csv &lt;-<span class="st"> </span><span class="kw">corpus</span>(rt_csv)
@@ -262,7 +420,7 @@ corpus_csv &lt;-<span class="st"> </span><span class="kw">corpus</span>(rt_csv)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Fri Apr 28 07:13:04 2017
+## Created: Mon May 15 09:56:04 2017
 ## Notes:</code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -349,6 +507,44 @@ fileencodings[notAvailableIndex]
                  <span class="dt">encoding =</span> fileencodings,
                  <span class="dt">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, 
                  <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;document&quot;</span>, <span class="st">&quot;language&quot;</span>, <span class="st">&quot;input_encoding&quot;</span>))
+## archive
+## possible glob pattern
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
+## regular file
 <span class="kw">print</span>(txts, <span class="dt">n =</span> <span class="dv">50</span>)
 ## readtext object consisting of 36 documents and 3 docvars.
 ## # data.frame [36 × 5]
@@ -411,7 +607,7 @@ fileencodings[notAvailableIndex]
 ##    Arabic   WINDOWS-1256
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Fri Apr 28 07:13:04 2017
+## Created: Mon May 15 09:56:04 2017
 ## Notes:</code></pre></div>
 </div>
 </div>

@@ -68,27 +68,27 @@ readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
 
 ## 2.2 Comma- or tab-separated values (.csv, .tab, .tsv)
 
-Read in comma separted values (.csv files) that contain textual data. We determine the `texts` variable in our .csv file as the `textfield`. This is the column that contains the actual text. The other columns of the original csv file (`Year`, `President`, `FirstName`) are by default treated as document-level variables. 
+Read in comma separted values (.csv files) that contain textual data. We determine the `texts` variable in our .csv file as the `text_field`. This is the column that contains the actual text. The other columns of the original csv file (`Year`, `President`, `FirstName`) are by default treated as document-level variables. 
 
 ```{r}
 # Read in comma-separated values
-readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
 ```
 
 The same procedure applies to tab-separated values.
 
 ```{r}
 # Read in tab-separated values
-readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
+readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech")
 ```
 
 ## 2.3 JSON data (.json)
 
-You can also read .json data. Again you need to specify the `textfield`. 
+You can also read .json data. Again you need to specify the `text_field`. 
 
 ```{r}
 ## Read in JSON data
-readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
+readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts")
 ```
 
 ## 2.4 PDF files
@@ -144,7 +144,7 @@ You can easily contruct a corpus from a **readtext** object.
 
 ```{r}
 # read in comma-separated values with readtext
-rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), textfield = "texts")
+rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
 
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)

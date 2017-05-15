@@ -1,6 +1,6 @@
 # TODO: re-do docs
 # TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
-# TODO: readtext with csv doesn't seem to require textfield
+# TODO: readtext with csv doesn't seem to require text_field
 
 
 context('test readtext.R')
@@ -67,13 +67,13 @@ test_that("test readtext with glob-style mask", {
 test_that("test structured readtext with glob-style mask", {
     expect_equal(
         length(texts(readtext(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         ))),
         4
     )
     expect_equal(
         nrow(docvars(readtext(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         ))),
         4
     )
@@ -96,7 +96,7 @@ test_that("test remote text file", {
 
 test_that("test remote csv file", {
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", textfield='text')),
+        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", text_field='text')),
         c(test.csv.1 = 'Lorem ipsum.', test.csv.2 = 'Dolor sit')
     )
 })
@@ -144,7 +144,7 @@ test_that("test warning for unrecognized filetype", {
 # TODO: Refactor this to loop over filetypes
 test_that("test csv files", {
     # Test corpus object
-    testcorpus <- readtext('../data/csv/test.csv', textfield='text')
+    testcorpus <- readtext('../data/csv/test.csv', text_field='text')
     expect_that(
         docvars(testcorpus),
         equals(data.frame(list(colour = c('green', 'red'), number = c(42, 99)), 
@@ -157,19 +157,19 @@ test_that("test csv files", {
     )
     
     expect_that(
-        docvars(readtext('../data/csv/*', textfield='nonesuch')),
+        docvars(readtext('../data/csv/*', text_field='nonesuch')),
         throws_error("There is no field called")
     )
     
     expect_that(
-        docvars(readtext('../data/csv/*', textfield = 9000)),
+        docvars(readtext('../data/csv/*', text_field = 9000)),
         throws_error("There is no 9000th field")
     )
     
 })
 
 test_that("test tab files", {
-    testreadtext <- readtext('../data/tab/test.tab', textfield = 'text')
+    testreadtext <- readtext('../data/tab/test.tab', text_field = 'text')
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -182,14 +182,14 @@ test_that("test tab files", {
     )
     
     expect_that(
-        readtext('../data/tab/test.tab', textfield='nonexistant'),
+        readtext('../data/tab/test.tab', text_field='nonexistant'),
         throws_error('There is no field called nonexistant')
     )
     
 })
 
 test_that("test tsv files", {
-    testreadtext <- readtext('../data/tsv/test.tsv', textfield='text')
+    testreadtext <- readtext('../data/tsv/test.tsv', text_field='text')
     expect_that(
         docvars(testreadtext),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -202,7 +202,7 @@ test_that("test tsv files", {
     )
     
     expect_that(
-        readtext('../data/tsv/test.tsv', textfield='nonexistant'),
+        readtext('../data/tsv/test.tsv', text_field='nonexistant'),
         throws_error('There is no field called nonexistant')
     )
     
@@ -211,7 +211,7 @@ test_that("test tsv files", {
 
 test_that("test xml files", {
     # Test corpus object
-    testcorpus <- readtext('../data/xml/test.xml', textfield='text')
+    testcorpus <- readtext('../data/xml/test.xml', text_field='text')
     expect_that(
         data.frame(testcorpus[,-1]),
         equals(data.frame(list(colour=c('green', 'red'), number=c(42, 99)), 
@@ -229,11 +229,11 @@ test_that("test xml files", {
 
     
     expect_that(
-        readtext('../data/xml/test.xml', textfield=1),
-        gives_warning('You should specify textfield by name.*')
+        readtext('../data/xml/test.xml', text_field=1),
+        gives_warning('You should specify text_field by name.*')
     )
     expect_that(
-        unname(texts(readtext('../data/xml/test.xml', textfield=1))),
+        unname(texts(readtext('../data/xml/test.xml', text_field=1))),
         equals(c('Lorem ipsum.', 'Dolor sit'))
     )
     expect_that(
@@ -243,11 +243,11 @@ test_that("test xml files", {
 
     
     expect_that(
-        docvars(readtext('../data/xml/*', textfield='nonesuch')),
+        docvars(readtext('../data/xml/*', text_field='nonesuch')),
         throws_error("There is no node called")
     )
     expect_that(
-        docvars(readtext('../data/xml/*', textfield=9000)),
+        docvars(readtext('../data/xml/*', text_field=9000)),
         throws_error("There is no 9000th field")
     )
 })
@@ -259,7 +259,7 @@ test_that("test xml files with XPath", {
     names(expected) <- 'tei.xml'
 
     actual <- readtext('../data/xml/tei.xml',
-                      textfield='/tei:TEI/tei:text/tei:body//tei:p',
+                      text_field='/tei:TEI/tei:text/tei:body//tei:p',
                       namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
 
     expect_equal(texts(actual), expected)
@@ -292,7 +292,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
     )
     
     expect_that(
-        docvars(readtext('../data/docvars/two/*json', textfield='nonesuch', 
+        docvars(readtext('../data/docvars/two/*json', text_field='nonesuch', 
                         docvarsfrom='filenames')),
         throws_error("There is no field called")
     )
@@ -342,7 +342,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
     
     #  Docvars from both metadata and filename
     expect_equal(
-        docvars(readtext('../data/docvars/csv/*', docvarsfrom=c('filenames'), docvarnames=c('id', 'fruit'), textfield='text')),
+        docvars(readtext('../data/docvars/csv/*', docvarsfrom=c('filenames'), docvarnames=c('id', 'fruit'), text_field='text')),
         data.frame(list(shape=c('round', NA), texture=c(NA, 'rough'), id=c(1, 2), fruit=c('apple', 'orange')), 
                    stringsAsFactors = FALSE,
                    row.names = c("1_apple.csv", "2_orange.csv"))
@@ -350,7 +350,7 @@ test_that("test readtext() with docvarsfrom=filenames", {
     
     # #  Docvars from both metadata and filename
     # expect_equal(
-    #     docvars(readtext('../data/docvars/json/*', docvarsfrom=c('filenames', 'metadata'), docvarnames=c('id', 'fruit'), textfield='text')),
+    #     docvars(readtext('../data/docvars/json/*', docvarsfrom=c('filenames', 'metadata'), docvarnames=c('id', 'fruit'), text_field='text')),
     #     data.frame(list(id=c(1, 2), fruit=c('apple', 'orange'), shape=c('round', NA), texture=c(NA, 'rough')), stringsAsFactors=FALSE)
     # )
     
@@ -418,7 +418,7 @@ test_that("An empty tar.gz file raises an error",{
 test_that("test reading structured text files with different columns", {
     testcorpus <- readtext(
         "../data/fruits/*.csv",
-        textfield='text'
+        text_field='text'
     )
     
     expect_that(
@@ -550,7 +550,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
         )
 
         actual_names <- names(texts(readtext(
-            '../data/csv/*.csv', textfield='text'
+            '../data/csv/*.csv', text_field='text'
         )))
         expect_equal(
             setdiff(
@@ -659,7 +659,7 @@ test_that("test json files", {
     skip_on_cran()
     skip_on_travis()
     expect_equal(
-        unname(texts(readtext('../data/json/*json', textfield='text'))),
+        unname(texts(readtext('../data/json/*json', text_field='text'))),
         c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
     )
     
@@ -671,7 +671,7 @@ test_that("test json files", {
         stringsAsFactors = FALSE)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
-    actual_docvars <- docvars(readtext('../data/json/*json', textfield='text'))
+    actual_docvars <- docvars(readtext('../data/json/*json', text_field='text'))
     actual_docvars <- actual_docvars[order(actual_docvars$number),]
     row.names(actual_docvars) <- NULL
     row.names(actual_docvars)
@@ -682,12 +682,12 @@ test_that("test json files", {
     )
     
     expect_that(
-        texts(readtext('../data/json/*json', textfield=1)),
-        throws_error('Cannot use numeric textfield with json file')
+        texts(readtext('../data/json/*json', text_field=1)),
+        throws_error('Cannot use numeric text_field with json file')
     )
     
     expect_that(
-        texts(readtext('../data/json/test3.json', textfield='nonesuch')),
+        texts(readtext('../data/json/test3.json', text_field='nonesuch')),
         throws_error('There is no field called nonesuch in file')
     )
     

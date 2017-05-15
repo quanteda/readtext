@@ -4,7 +4,7 @@
 \alias{readtext}
 \title{read a text file(s)}
 \usage{
-readtext(file, ignore_missing_files = FALSE, textfield = NULL,
+readtext(file, ignore_missing_files = FALSE, text_field = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
   docvarnames = NULL, encoding = NULL,
   verbosity = getOption("readtext_verbosity"), ...)
@@ -20,7 +20,7 @@ automagically handle a number of common scenarios, so the value can be a
 \item{\code{txt}}{plain text files:
 So-called structured text files, which describe both texts and metadata:
 For all structured text filetypes, the column, field, or node 
-which contains the the text must be specified with the \code{textfield}
+which contains the the text must be specified with the \code{text_field}
 parameter, and all other fields are treated as docvars.}
 \item{\code{json}}{data in some form of JavaScript 
 Object Notation, consisting of the texts and optionally additional docvars.
@@ -64,7 +64,7 @@ Note that this can happen in a number of ways, including passing a path
 to a file that does not exist, to an empty archive file, or to a glob 
 pattern that matches no files.}
 
-\item{textfield}{a variable (column) name or column number indicating where 
+\item{text_field}{a variable (column) name or column number indicating where 
 to find the texts that form the documents for the corpus.  This must be 
 specified for file types \code{.csv} and \code{.json}. For XML files
 an XPath expression can be specified.}
@@ -136,10 +136,10 @@ rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"))
 str(rt4)
 
 ## read in tab-separated data
-(rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech"))
+(rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech"))
 
 ## read in JSON data
-(rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts"))
+(rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts"))
 
 ## read in pdf data
 # UNHDR
