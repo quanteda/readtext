@@ -862,3 +862,28 @@ test_that("messages from listMatchingFile",{
         shows_message('archive')
     )
 })
+
+test_that("readtext called with textfield works with deprecation warning", {
+    expect_equal(
+        length(texts(readtext(
+            '../data/csv/*.csv', textfield='text'
+        ))),
+        4
+    )
+    expect_equal(
+        nrow(docvars(readtext(
+            '../data/csv/*.csv', textfield='text'
+        ))),
+        4
+    )
+    expect_equal(
+        length(texts(readtext(
+            '../data/csv/*.csv', textfield='text'
+        ))),
+        4
+    )
+    expect_warning(
+        readtext('../data/csv/*.csv', textfield='text'),
+        "textfield is deprecated; use text_field instead"
+    )
+})

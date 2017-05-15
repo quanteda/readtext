@@ -172,6 +172,15 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
     
+    # trap "textfield", issue a warning, and call with text_field
+    thecall <- as.list(match.call())
+    thecall <- thecall[2:length(thecall)]
+    if ("textfield" %in% names(thecall)) {
+        warning("textfield is deprecated; use text_field instead")
+        names(thecall)[which(names(thecall)=="textfield")] <- "text_field"
+        return(do.call(readtext, thecall))
+    }
+    
     # in case the function was called without attaching the package, 
     # in which case the option is never set
     if (is.null(verbosity)) 
