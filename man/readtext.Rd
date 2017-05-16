@@ -4,11 +4,11 @@
 \alias{readtext}
 \title{read a text file(s)}
 \usage{
-readtext(file, ignoreMissingFiles = FALSE, textfield = NULL,
-  docvarsfrom = c("metadata", "filenames"), dvsep = "_",
+readtext(file, ignore_missing_files = FALSE, text_field = NULL,
+  docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
   docvarnames = NULL, encoding = NULL, replace_special_characters = FALSE,
   normalize_unicode = c("nfc", "nfd", "nfkd", "nfkc", "nfkc_casefold", NULL),
-  verbosity = c(2, 0, 1, 3), ...)
+  verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
@@ -21,7 +21,7 @@ automagically handle a number of common scenarios, so the value can be a
 \item{\code{txt}}{plain text files:
 So-called structured text files, which describe both texts and metadata:
 For all structured text filetypes, the column, field, or node 
-which contains the the text must be specified with the \code{textfield}
+which contains the the text must be specified with the \code{text_field}
 parameter, and all other fields are treated as docvars.}
 \item{\code{json}}{data in some form of JavaScript 
 Object Notation, consisting of the texts and optionally additional docvars.
@@ -59,13 +59,13 @@ filetypes, so you could have, for example, a remote URL to a zip file which
 contained Twitter JSON files.}
 }}
 
-\item{ignoreMissingFiles}{if \code{FALSE}, then if the file
+\item{ignore_missing_files}{if \code{FALSE}, then if the file
 argument doesn't resolve to an existing file, then an error will be thrown.
 Note that this can happen in a number of ways, including passing a path 
 to a file that does not exist, to an empty archive file, or to a glob 
 pattern that matches no files.}
 
-\item{textfield}{a variable (column) name or column number indicating where 
+\item{text_field}{a variable (column) name or column number indicating where 
 to find the texts that form the documents for the corpus.  This must be 
 specified for file types \code{.csv} and \code{.json}. For XML files
 an XPath expression can be specified.}
@@ -75,10 +75,13 @@ filenames, when the \code{readtext} inputs are filenames and the elements
 of the filenames are document variables, separated by a delimiter 
 (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
-or from meta-data embedded in the text file header (\code{headers}).}
+or from meta-data embedded in the text file header (\code{headers}).
+If \code{docvarsfrom} is set to "filepaths", consider the full path to the
+file, not just the filename.}
 
-\item{dvsep}{separator used in filenames to delimit docvar elements if 
-\code{docvarsfrom="filenames"} is used}
+\item{dvsep}{separator (a regular expression character string) used in 
+filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
+or \code{docvarsfrom="filepaths"} is used}
 
 \item{docvarnames}{character vector of variable names for \code{docvars}, if 
 \code{docvarsfrom} is specified.  If this argument is not used, default 
@@ -86,6 +89,10 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
+
+\item{replace_special_characters}{needs documentation}
+
+\item{normalize_unicode}{needs documentation}
 
 \item{verbosity}{\itemize{
   \item 0: silent, no output except for errors
@@ -102,9 +109,11 @@ as it would be give to \code{\link{iconv}}.  See the Encoding section of
 \link{file} for details.}
 }
 \value{
-a data.frame consisting of a first column \code{text} that contains
-the texts, with any additional columns consisting of document-level variables either found in the 
-file containing the texts, or created through the \code{readtext} call.
+a data.frame consisting of a columns \code{doc_id} and \code{text} 
+  that contain a document identifier and the texts respectively, with any 
+  additional columns consisting of document-level variables either found 
+  in the file containing the texts, or created through the 
+  \code{readtext} call.
 }
 \description{
 Read texts and (if any) associated document-level meta-data from one or more source files. 
@@ -122,29 +131,28 @@ DATA_DIR <- system.file("extdata/", package = "readtext")
 rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*"))
 str(rt1)
 # manifestos with docvars from filenames
-rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
-                docvarsfrom = "filenames", 
-                docvarnames = c("unit", "context", "year", "language", "party"))
+(rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+                 docvarsfrom = "filenames", 
+                 docvarnames = c("unit", "context", "year", "language", "party"),
+                 encoding = "LATIN1"))
 # recurse through subdirectories
-rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+(rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*")))
 
 ## read in csv data
 rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"))
 str(rt4)
 
 ## read in tab-separated data
-rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), textfield = "speech")
-str(rt5)
+(rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech"))
 
 ## read in JSON data
-rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), textfield = "texts")
-str(rt6)
+(rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts"))
 
 ## read in pdf data
 # UNHDR
-rt7 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
-                docvarsfrom = "filenames", docvarnames = c("document", "language"))
-str(rt7)
+(rt7 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+                 docvarsfrom = "filenames", 
+                 docvarnames = c("document", "language")))
 Encoding(rt7$text)
 # easier data
 rt7a <- readtext(paste0(DATA_DIR, "pdf/easy/*.pdf"))
@@ -156,17 +164,17 @@ str(rt7b)
 Encoding(rt7b$text)
 
 ## read in Word data (.doc)
-rt8 <- readtext(paste0(DATA_DIR, "word/*.doc"))
-str(rt8)
+(rt8 <- readtext(paste0(DATA_DIR, "word/*.doc")))
 Encoding(rt8$text)
 
 ## read in Word data (.docx)
-rt9 <- readtext(paste0(DATA_DIR, "word/*.docx"))
-str(rt9)
+(rt9 <- readtext(paste0(DATA_DIR, "word/*.docx")))
 Encoding(rt9$text)
-}
-}
-\author{
-Adam Obeng, Kenneth Benoit, and Paul Nulty
-}
 
+## use elements of path and filename as docvars
+rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+                 docvarsfrom = "filepaths", dvsep = "[/_.]")
+rt10
+head(rt10[, -1])
+}
+}

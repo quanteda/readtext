@@ -4,13 +4,10 @@
 \alias{as.character.readtext}
 \title{return only the texts from a readtext object}
 \usage{
-\method{as.character}{readtext}(x, use.names = TRUE, ...)
+\method{as.character}{readtext}(x, ...)
 }
 \arguments{
 \item{x}{the readtext object whose texts will be extracted}
-
-\item{use.names}{logical; if \code{TRUE}, attach document names to the vector
-of texts}
 
 \item{...}{further arguments passed to or from other methods}
 }
@@ -18,5 +15,3 @@ of texts}
 An accessor function to return the texts from a \link{readtext} object as a
 character vector, with names matching the document names.
 }
-\keyword{internal}
-

@@ -1,20 +1,16 @@
 r_packages:
     - covr
-    - knitr
-    - rmarkdown
-
+    - pdftools
 language: r
 sudo: true
-
-r_binary_packages:
-    - testthat
-
+dist: trusty
+addons:
+  apt:
+    packages:
+      - libapparmor-dev
+      - libpoppler-cpp-dev
 env:
     global:
     - R_CHECK_ARGS="--no-build-vignettes"
-
 after_success:
-  - Rscript -e 'library(covr);codecov()'
-
-before_install:
-  - sudo apt-get install -y antiword poppler-utils
+  - Rscript -e 'library(covr); codecov()'

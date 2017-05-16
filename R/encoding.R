@@ -1,32 +1,23 @@
 #' detect the encoding of texts
 #' 
-#' Detect the encoding of texts in a character, \link[quanteda]{corpus}, or 
-#' \link{readtext} object and report on the most likely encoding.  Useful in
-#' detecting the encoding of input texts, so that a source encoding can be 
-#' (re)specified when inputting a set of texts using \code{\link{readtext}}, prior
-#' to constructing a corpus.
+#' Detect the encoding of texts in a character \link{readtext} object and report
+#' on the most likely encoding for each document.  Useful in detecting the
+#' encoding of input texts, so that a source encoding can be (re)specified when
+#' inputting a set of texts using \code{\link{readtext}}, prior to constructing
+#' a corpus.
 #' 
-#' Based on \link[stringi]{stri_enc_detect}, which is in turn based on the 
-#' ICU libraries.  See the ICU User Guide, 
+#' Based on \link[stringi]{stri_enc_detect}, which is in turn based on the ICU
+#' libraries.  See the ICU User Guide, 
 #' \url{http://userguide.icu-project.org/conversion/detection}.
-#' @param x character vector, corpus, or readtext object whose texts' 
-#'   encodings will be detected.
+#' @param x character vector, corpus, or readtext object whose texts' encodings
+#'   will be detected.
 #' @param verbose if \code{FALSE}, do not print diagnostic report
 #' @param ... additional arguments passed to \link[stringi]{stri_enc_detect}
-#' @note This function has been \strong{temporarily} named \code{encoding} to avoid
-#' namespace conflicts with \pkg{quanteda}, which until we remove it from that package
-#' will retain the function.
 #' @examples
 #' encoding(data_char_encodedtexts)
 #' # show detected value for each text, versus known encoding
 #' data.frame(labelled = names(data_char_encodedtexts), 
 #'            detected = encoding(data_char_encodedtexts)$all)
-#'
-#' \dontrun{
-#' if ("quanteda" %in% installed.packages()[, "Package"]) {
-#'     data(ie2010Corpus, package = "quanteda") 
-#'     encoding(ie2010Corpus)
-#' }}
 #' 
 #' \dontrun{# Russian text, Windows-1251
 #' myreadtext <- readtext("http://www.kenbenoit.net/files/01_er_5.txt")
@@ -44,7 +35,7 @@ encoding.character <- function(x, verbose = TRUE, ...) {
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
-        if (options('readtext-verbosity')[[1]] >= 1) warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
+        if (options('readtext_verbosity')[[1]] >= 1) warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
 
     encoding <- confidence <- conf <- NULL
     n <- 1

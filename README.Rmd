@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 [1]: https://codecov.io/gh/kbenoit/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Paul Nulty, and Adam Obeng.  (In alphabetical order, not by order of contribution.)
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, and Paul Nulty.
 
 ## Introduction
 
@@ -40,8 +40,8 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 1.  From GitHub
 
     ```{r, eval = FALSE}
-    # devtools packaged required to install quanteda from Github 
-    devtools::install_github("kbenoit/quanteda") 
+    # devtools packaged required to install readtext from Github 
+    devtools::install_github("kbenoit/readtext") 
     ```
 
 2.  From CRAN
@@ -57,7 +57,7 @@ require(readtext)
 require(quanteda)
 
 FILEDIR <- tempdir()
-unzip(system.file("extdata", "encodedTextFiles.zip", package = "readtext"), exdir = FILEDIR)
+unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
 
 # get encoding from filename
 filenames <- list.files(FILEDIR, "\\.txt$")
@@ -91,7 +91,7 @@ txts <- readtext(paste0(FILEDIR, "/", "*.txt"),
                  encoding = fileencodings,
                  docvarsfrom = "filenames", 
                  docvarnames = c("document", "language", "inputEncoding"))
-encodingCorpus <- corpus(txts, textField = "texts", 
+encodingCorpus <- corpus(txts, text_field = "texts", 
                          source = "Created by encoding-tests.R") 
 summary(encodingCorpus)
 ```
@@ -100,8 +100,8 @@ Piping works too:
 ```{r}
 require(magrittr)
 readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
-    corpus(textField = "texts") %>% 
-        summary
+    corpus(text_field = "texts") %>% 
+    summary
 ```
 
 

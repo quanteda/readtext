@@ -1,9 +1,5 @@
 
-readtext 0.1.0
+readtext 0.3.0
 ==============
 
-## New Features
-
-
-## Bug fixes
-
+First CRAN release.

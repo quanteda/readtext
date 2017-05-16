@@ -1,18 +1,13 @@
 Package: readtext
+Version: 0.32
 Type: Package
-Title: Import and handling for plain and formatted text files
+Title: Import and Handling for Plain and Formatted Text Files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
-    c("aut", "cre")), person("Paul", "Nulty", email = "paul.nulty@gmail.com",
-    role = "aut"), 
-    person("Adam", "Obeng", email = "quanteda@binaryeagle.com", role = "aut") )
-Author: Kenneth Benoit [aut, cre],
-    Adam Obeng [ctb],
-    Paul Nulty [aut]
-Maintainer: Kenneth Benoit <kbenoit@lse.ac.uk>
-Version: 0.2.9000
-Date: 2017-01-05
+    c("aut", "cre", "cph")), 
+    person("Adam", "Obeng", email = "quanteda@binaryeagle.com", role = "aut"),
+    person("Paul", "Nulty", email = "paul.nulty@gmail.com", role = "aut") )
 Description: Functions for importing and handling text files and formatted text
-    files with additional meta-data, such including .csv, .tab, .json, .xml, 
+    files with additional meta-data, such including .csv, .tab, .json, .xml,
     .pdf, .doc, .docx, and others.
 License: GPL-3
 Depends:
@@ -21,9 +16,12 @@ Imports:
     utils,
     stringi,
     data.table,
-    httr
+    httr,
+    antiword,
+    pdftools,
+    tibble
 Suggests:
-    quanteda,
+    quanteda (>= 0.9.9.24),
     knitr,
     rmarkdown,
     jsonlite (>= 0.9.10),
@@ -35,4 +33,4 @@ Encoding: UTF-8
 BugReports: https://github.com/kbenoit/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
