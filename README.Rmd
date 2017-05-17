@@ -56,6 +56,9 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 require(readtext)
 require(quanteda)
 
+# set verbosity level to 2
+options(readtext_verbosity = 2)
+
 FILEDIR <- tempdir()
 unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
 
