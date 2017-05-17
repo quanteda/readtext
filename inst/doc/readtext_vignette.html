@@ -139,8 +139,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Recurse through subdirectories</span>
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/movie_reviews/*&quot;</span>))
-## readtext object consisting of 100 documents and 0 docvars.
-## # data.frame [100 × 2]
+## readtext object consisting of 10 documents and 0 docvars.
+## # data.frame [10 × 2]
 ##                    doc_id            text
 ##                     &lt;chr&gt;           &lt;chr&gt;
 ## 1 neg/neg_cv000_29416.txt &quot;plot : two&quot;...
@@ -148,8 +148,8 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 ## 3 neg/neg_cv002_17424.txt &quot;it is movi&quot;...
 ## 4 neg/neg_cv003_12683.txt &quot; &quot; quest f&quot;...
 ## 5 neg/neg_cv004_12641.txt &quot;synopsis :&quot;...
-## 6 neg/neg_cv005_29357.txt &quot;capsule : &quot;...
-## # ... with 94 more rows</code></pre></div>
+## 6 pos/pos_cv000_29590.txt &quot;films adap&quot;...
+## # ... with 4 more rows</code></pre></div>
 </div>
 <div id="comma--or-tab-separated-values-.csv-.tab-.tsv" class="section level2">
 <h2>2.2 Comma- or tab-separated values (.csv, .tab, .tsv)</h2>
@@ -198,7 +198,7 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 </div>
 <div id="pdf-files" class="section level2">
 <h2>2.4 PDF files</h2>
-<p><strong>readtext</strong> can also read in .pdf files after converting them through <code>pdftotext</code>. In older versions this required <code>xpdf</code> to be installed, either through <code>brew install xpdf</code> (macOS; see extensively <a href="https://brew.sh" class="uri">https://brew.sh</a>) or from <a href="http://www.winfield.demon.nl" class="uri">http://www.winfield.demon.nl</a> (Windows). Note that the most recent version of <strong>readtext</strong> should install this software automatically.</p>
+<p><strong>readtext</strong> can also read in and convert .pdf files.</p>
 <p>In the example below we load all .pdf files stored in the <code>UDHR</code> folder, and determine that the <code>docvars</code> shall be taken from the filenames. We call the document-level variables <code>document</code> and <code>language</code>, and specify the delimiter (<code>dvsep</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Universal Declaration of Human Rights pdf files
 (rt_pdf &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;pdf/UDHR/*.pdf&quot;</span>), 
@@ -243,7 +243,7 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 </div>
 <div id="inter-operability-with-quanteda" class="section level1">
 <h1>3. Inter-operability with quanteda</h1>
-<p><strong>readtext</strong> was originally developed in early versions of the <a href="https://github.com/kbenoit/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. It was spawned from the <code>textfile()</code> function from that package, and now lives exclusively in <strong>readtext</strong>. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code>readtext()</code>, it can construct a corpus directly from a <code>readtext</code> object, preserving all docvars and other meta-data.</p>
+<p><strong>readtext</strong> was originally developed in early versions of the <a href="http://github.com/kbenoit/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. It was spawned from the <code>textfile()</code> function from that package, and now lives exclusively in <strong>readtext</strong>. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code>readtext()</code>, it can construct a corpus directly from a <code>readtext</code> object, preserving all docvars and other meta-data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(quanteda)</code></pre></div>
 <p>You can easily contruct a corpus from a <strong>readtext</strong> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in comma-separated values with readtext</span>
@@ -262,14 +262,14 @@ corpus_csv &lt;-<span class="st"> </span><span class="kw">corpus</span>(rt_csv)
 ##  text5   804   2381        45 inaugCorpus.csv.5 1805  Jefferson    Thomas
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Wed May 17 11:48:59 2017
+## Created: Wed May 17 15:32:42 2017
 ## Notes:</code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
 <h1>4. Solving common problems</h1>
 <div id="remove-page-numbers-using-regular-expressions" class="section level2">
 <h2>4.1 Remove page numbers using regular expressions</h2>
-<p>When a document contains page numbers, they are imported as well. If you want to remove them, you can use a regular expression. We strongly recommend using the <a href="https://github.com/gagolews/stringi"><strong>stringi</strong></a> package. For the most common regular expressions you can look at this <a href="http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf">cheatsheet</a>.</p>
+<p>When a document contains page numbers, they are imported as well. If you want to remove them, you can use a regular expression. We strongly recommend using the <a href="http://github.com/gagolews/stringi"><strong>stringi</strong></a> package. For the most common regular expressions you can look at this <a href="http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf">cheatsheet</a>.</p>
 <p>You first need to check in the original file in which format the page numbers occur (e.g., “1”, “-1-”, “page 1” etc.). We can make use of the fact that page numbers are almost always preceded and followed by a linebreak (<code>\n</code>). After loading the text with <strong>readtext</strong>, you can replace the page numbers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load stringi package</span>
 <span class="kw">require</span>(stringi)</code></pre></div>
@@ -411,7 +411,7 @@ fileencodings[notAvailableIndex]
 ##          UDHR   Arabic   WINDOWS-1256
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Wed May 17 11:49:00 2017
+## Created: Wed May 17 15:32:43 2017
 ## Notes:</code></pre></div>
 </div>
 </div>

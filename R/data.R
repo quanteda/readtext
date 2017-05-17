@@ -27,6 +27,7 @@
 #' fileencodings[notAvailableIndex]
 #' 
 #' # try readtext
+#' require(quanteda)
 #' txts <- readtext(paste0(FILEDIR, "/", "*.txt"))
 #' substring(texts(txts)[1], 1, 80) # gibberish
 #' substring(texts(txts)[4], 1, 80) # hex

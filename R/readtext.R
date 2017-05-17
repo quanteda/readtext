@@ -118,19 +118,20 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' 
 #' ## read in some text data
 #' # all UDHR files
-#' rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*"))
-#' str(rt1)
+#' (rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*")))
+#' 
 #' # manifestos with docvars from filenames
 #' (rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
 #'                  docvarsfrom = "filenames", 
 #'                  docvarnames = c("unit", "context", "year", "language", "party"),
 #'                  encoding = "LATIN1"))
+#'                  
 #' # recurse through subdirectories
-#' (rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*")))
+#' (rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"), 
+#'                  docvarsfrom = "filepaths", docvarnames = "sentiment"))
 #' 
 #' ## read in csv data
-#' rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"))
-#' str(rt4)
+#' (rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv")))
 #' 
 #' ## read in tab-separated data
 #' (rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech"))
@@ -144,15 +145,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'                  docvarsfrom = "filenames", 
 #'                  docvarnames = c("document", "language")))
 #' Encoding(rt7$text)
-#' # easier data
-#' rt7a <- readtext(paste0(DATA_DIR, "pdf/easy/*.pdf"))
-#' str(rt7a)
-#' Encoding(rt7a$text)
-#' # harder data
-#' rt7b <- readtext(paste0(DATA_DIR, "pdf/hard/*.pdf"))
-#' str(rt7b)
-#' Encoding(rt7b$text)
-#' 
+#'
 #' ## read in Word data (.doc)
 #' (rt8 <- readtext(paste0(DATA_DIR, "word/*.doc")))
 #' Encoding(rt8$text)
@@ -162,10 +155,8 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #' Encoding(rt9$text)
 #'
 #' ## use elements of path and filename as docvars
-#' rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
-#'                  docvarsfrom = "filepaths", dvsep = "[/_.]")
-#' rt10
-#' head(rt10[, -1])
+#' (rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+#'                   docvarsfrom = "filepaths", dvsep = "[/_.]"))
 #' }
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL, 
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep="_", 
