@@ -23,11 +23,12 @@ getdocvarsFromFilenames <- function(fnames, dvsep="_", docvarnames=NULL, include
     if (!is.null(docvarnames)) {
         names(dvars)[1:length(docvarnames)] <- docvarnames
         if (length(docvarnames) != ncol(dvars)) {
-            if (options('readtext_verbosity')[[1]] >= 1){ warning("Fewer docnames supplied than existing docvars - last ",
-                    ncol(dvars) - length(docvarnames), " docvar",
-                    ifelse((ncol(dvars) - length(docvarnames))==1, "", "s"),
-                    " given generic names.")
-                         }
+            if (getOption("readtext_verbosity") >= 1) { 
+                warning("Fewer docnames supplied than existing docvars - last ",
+                        ncol(dvars) - length(docvarnames), " docvar",
+                        ifelse((ncol(dvars) - length(docvarnames))==1, "", "s"),
+                        " given generic names.")
+            }
         }
     }
     dvars
@@ -172,7 +173,7 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
-        if (options('readtext_verbosity')[[1]] >=2 ) message('Remote file')
+        if (getOption("readtext_verbosity") >=3 ) message(', reading remote file', appendLF = FALSE)
         #  If there is a non-'file' scheme, treat it as remote
         localfile <- downloadRemote(i, ignoreMissing=ignoreMissing)
         return(listMatchingFiles(localfile, ignoreMissing=ignoreMissing))
@@ -184,7 +185,8 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
         tools::file_ext(i) == 'tar' ||
         tools::file_ext(i) == 'bz' 
     ) {
-        if (options('readtext_verbosity')[[1]] >=2 ) message('archive')
+        if (getOption("readtext_verbosity") >=3 ) 
+            message(", unpacking .", tools::file_ext(i), " archive", appendLF = FALSE)
         archiveFiles <- extractArchive(i, ignoreMissing=ignoreMissing)
         return(listMatchingFiles(archiveFiles, ignoreMissing=ignoreMissing))
     }
@@ -202,12 +204,13 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
         if (!(ignoreMissing || file.exists(i))) {
                 stop("File '", i, "' does not exist.")
         }
-        if (options('readtext_verbosity')[[1]] >=2 ) message('regular file')
+        if (getOption("readtext_verbosity") >= 3) 
+            message("... reading (", tools::file_ext(i), ") file: ", basename(i))
         return(i)
     }
     else {
         #  If it wasn't a glob pattern last time, then it may be this time
-        if (options('readtext_verbosity')[[1]] >=2 ) message('possible glob pattern')
+        if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
         i <- Sys.glob(i)
         return(
             listMatchingFiles(i, ignoreMissing=ignoreMissing, lastRound=T)

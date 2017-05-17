@@ -805,10 +805,6 @@ test_that("test warning for unrecognized filetype", {
            gives_warning('Unsupported extension " nonesuch " of file')
        )
        expect_that(
-           readtext('../data/empty/empty.nonesuch', verbosity=4),
-           gives_warning('Unsupported extension " nonesuch " of file')
-       )
-       expect_that(
            readtext('../data/empty/empty.nonesuch', verbosity=3),
            gives_warning('Unsupported extension " nonesuch " of file')
        )
@@ -827,25 +823,19 @@ test_that("test warning for unrecognized filetype", {
 })
 
 test_that("messages from listMatchingFile",{
-    expect_that(
-        readtext('../data/zip/inauguralTopLevel.zip', verbosity=0),
-        not(shows_message())
+    expect_silent(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=0)
     )
-    expect_that(
-        readtext('../data/zip/inauguralTopLevel.zip', verbosity=1),
-        not(shows_message())
+    expect_silent(
+        readtext('../data/zip/inauguralTopLevel.zip', verbosity=1)
     )
-    expect_that(
+    expect_message(
         readtext('../data/zip/inauguralTopLevel.zip', verbosity=2),
-        shows_message('archive')
+        "Reading texts from \\.\\./data/zip/inauguralTopLevel\\.zip"
     )
-    expect_that(
+    expect_message(
         readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
-        shows_message('archive')
-    )
-    expect_that(
-        readtext('../data/zip/inauguralTopLevel.zip', verbosity=4),
-        shows_message('archive')
+        "reading \\(txt\\) file: 1789-Washington\\.txt"
     )
 })
 

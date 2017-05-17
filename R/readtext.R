@@ -93,11 +93,10 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
 #' @param verbosity \itemize{
-#'   \item 0: silent, no output except for errors
-#'   \item 1: only errors and warnings
-#'   \item 2: default level
-#'   \item 3: detailed reporting
-#'   \item 4: the most detailed reporting
+#'   \item 0: output errors only
+#'   \item 1: output errors and warnings (default)
+#'   \item 2: output a brief summary message
+#'   \item 3: output detailed file-related messages
 #' }
 #' @param ... additional arguments passed through to low-level file reading 
 #'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
@@ -185,10 +184,12 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     
     # in case the function was called without attaching the package, 
     # in which case the option is never set
-    if (is.null(verbosity)) 
+    if (is.null(verbosity)) { 
         verbosity <- 1
-    if (!verbosity %in% 0:4) 
-        stop("verbosity must be one of 0, 1, 2, 3, 4")
+    }
+    if (!verbosity %in% 0:3) 
+        stop("verbosity must be one of 0, 1, 2, 3")
+    orig_verbosity <- getOption("readtext_verbosity")
     options('readtext_verbosity' = verbosity)
     # some error checks
     if (!is.character(file))
@@ -201,9 +202,14 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
     #     stop("illegal docvarsfrom value")
      
+    if (verbosity >= 2) {
+        msg <- paste0("Reading texts from ", file)
+        message(msg, appendLF = FALSE)
+    }
+    
     if (is.null(text_field)) text_field <- 1
     files <- listMatchingFiles(file, ignoreMissing = ignore_missing_files)
-    
+
     if (is.null(encoding)) {
         encoding <- getOption("encoding")
     }
@@ -247,6 +253,17 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     result$doc_id <- rownames(result)
     rownames(result) <- NULL
     
+    if (verbosity >= 2) {
+        pad <- ""
+        if (verbosity == 2) pad <- " ... "
+        if (verbosity == 2 & nchar(msg) >70) pad <- paste0("\n", pad)
+        message(pad, "read ", nrow(result), " document", 
+                ifelse(nrow(result) == 1, "", "s."))
+    }
+    
+    # reset verbosity level to that before overridden by call
+    options('readtext_verbosity' = orig_verbosity)
+
     class(result) <- c("readtext", class(result))
     result
 }
@@ -266,7 +283,7 @@ getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
             )
         }
     } else {
-        if (options('readtext_verbosity')[[1]] >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
+        if (getOption("readtext_verbosity") >= 1) warning(paste('Unsupported extension "', fileType, '" of file', f, 'treating as plain text'))
         fileType <- 'txt'
     }
     

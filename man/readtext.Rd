@@ -90,11 +90,10 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 for each files}
 
 \item{verbosity}{\itemize{
-  \item 0: silent, no output except for errors
-  \item 1: only errors and warnings
-  \item 2: default level
-  \item 3: detailed reporting
-  \item 4: the most detailed reporting
+  \item 0: output errors only
+  \item 1: output errors and warnings (default)
+  \item 2: output a brief summary message
+  \item 3: output detailed file-related messages
 }}
 
 \item{...}{additional arguments passed through to low-level file reading 
