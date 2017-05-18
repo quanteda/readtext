@@ -9,6 +9,9 @@ library(readtext)
 ## ------------------------------------------------------------------------
 # Get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
+# add a trailing "/" to Windows paths, that other OSes keep
+if (Sys.info()['sysname'] == "Windows") 
+  DATA_DIR <- paste0(DATA_DIR, "/")
 
 ## ------------------------------------------------------------------------
 # Read in all files from a folder

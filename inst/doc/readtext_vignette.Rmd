@@ -31,6 +31,9 @@ The **readtext** package comes with a data directory called `extdata` that conta
 ```{r}
 # Get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
+# add a trailing "/" to Windows paths, that other OSes keep
+if (Sys.info()['sysname'] == "Windows") 
+  DATA_DIR <- paste0(DATA_DIR, "/")
 ```
 
 The `extdata` directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The `paste0` command is used to concatenate the `extdata` folder from the 
