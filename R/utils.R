@@ -125,6 +125,8 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
     #  extension, because '/path/to/*.zip' is a glob expression with a 'zip'
     #  extension.
     
+    print(ignoreMissing)
+
     if (!(ignoreMissing || (length(x) > 0))) {
         stop("File '", x, "' does not exist.")
     }
@@ -268,4 +270,17 @@ is_probably_xpath <- function(x) {
     any(
         sapply(invalid_xml_element_chars, function(i) {grepl(i, x, perl=T)})
     )
+}
+
+
+get_numeric_textfield <- function(text_field, docs) {
+    if (is.character(text_field)) {
+        text_fieldi <- which(names(docs) == text_field)
+        if (length(text_fieldi) == 0)
+            stop(paste("There is no field called", text_field, "in file", path))
+        text_field <- text_fieldi
+    } else if (is.numeric(text_field) & (text_field > ncol(docs))) {
+        stop(paste0("There is no ", text_field, "th field in file ", path))
+    }
+    text_field
 }
