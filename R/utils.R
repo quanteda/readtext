@@ -74,7 +74,7 @@ downloadRemote <- function (i, ignoreMissing) {
     
     # If this is a supported-scheme remote URL
     extension <- tools::file_ext(i)
-    if (!(extension %in% names(SUPPORTED_FILETYPE_MAPPING))) {
+    if (!(extension %in% SUPPORTED_FILETYPES)) {
         stop('Remote URL does not end in known extension. Please download the file manually.')
     }
     localfile <- file.path(mktemp(directory=T), basename(i))
