@@ -169,7 +169,7 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
     #  Remove 'file' scheme
     i <- stringi::stri_replace(x, replacement ='', regex='^file://')
     
-    scheme <- stringi::stri_match(i, regex='^([a-z][a-z+.-]*):')[, 2]
+    scheme <- stringi::stri_match(i, regex='^([A-Za-z][A-Za-z0-9+.-]*)://')[, 2]
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
