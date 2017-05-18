@@ -9,9 +9,6 @@ library(readtext)
 ## ------------------------------------------------------------------------
 # Get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
-# add a trailing "/" to Windows paths, that other OSes keep
-if (Sys.info()['sysname'] == "Windows") 
-  DATA_DIR <- paste0(DATA_DIR, "/")
 
 ## ------------------------------------------------------------------------
 # Read in all files from a folder
@@ -19,7 +16,7 @@ readtext(paste0(DATA_DIR, "txt/UDHR/*"))
 
 ## ------------------------------------------------------------------------
 # Manifestos with docvars from filenames
-readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+readtext(paste0(DATA_DIR, "/txt/EU_manifestos/*.txt"),
          docvarsfrom = "filenames", 
          docvarnames = c("unit", "context", "year", "language", "party"),
          dvsep = "_", 
@@ -27,30 +24,30 @@ readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
 
 ## ------------------------------------------------------------------------
 # Recurse through subdirectories
-readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+readtext(paste0(DATA_DIR, "/txt/movie_reviews/*"))
 
 ## ------------------------------------------------------------------------
 # Read in comma-separated values
-readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
+readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 
 ## ------------------------------------------------------------------------
 # Read in tab-separated values
-readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech")
+readtext(paste0(DATA_DIR, "/tsv/dailsample.tsv"), text_field = "speech")
 
 ## ------------------------------------------------------------------------
 ## Read in JSON data
-readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts")
+readtext(paste0(DATA_DIR, "/json/inaugural_sample.json"), text_field = "texts")
 
 ## ------------------------------------------------------------------------
 ## Read in Universal Declaration of Human Rights pdf files
-(rt_pdf <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+(rt_pdf <- readtext(paste0(DATA_DIR, "/pdf/UDHR/*.pdf"), 
                     docvarsfrom = "filenames", 
                     docvarnames = c("document", "language"),
                     sep = "_"))
 
 ## ------------------------------------------------------------------------
 ## Read in Word data (.docx)
-readtext(paste0(DATA_DIR, "word/*.docx"))
+readtext(paste0(DATA_DIR, "/word/*.docx"))
 
 ## ------------------------------------------------------------------------
 # Note: Example required: which URL should we use?
@@ -64,7 +61,7 @@ require(quanteda)
 
 ## ------------------------------------------------------------------------
 # read in comma-separated values with readtext
-rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
+rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)

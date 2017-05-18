@@ -31,9 +31,6 @@ The **readtext** package comes with a data directory called `extdata` that conta
 ```{r}
 # Get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
-# add a trailing "/" to Windows paths, that other OSes keep
-if (Sys.info()['sysname'] == "Windows") 
-  DATA_DIR <- paste0(DATA_DIR, "/")
 ```
 
 The `extdata` directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The `paste0` command is used to concatenate the `extdata` folder from the 
@@ -55,7 +52,7 @@ We can specify document-level metadata (`docvars`) based on the file names or on
 
 ```{r}
 # Manifestos with docvars from filenames
-readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+readtext(paste0(DATA_DIR, "/txt/EU_manifestos/*.txt"),
          docvarsfrom = "filenames", 
          docvarnames = c("unit", "context", "year", "language", "party"),
          dvsep = "_", 
@@ -66,7 +63,7 @@ readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
 
 ```{r}
 # Recurse through subdirectories
-readtext(paste0(DATA_DIR, "txt/movie_reviews/*"))
+readtext(paste0(DATA_DIR, "/txt/movie_reviews/*"))
 ```
 
 ## 2.2 Comma- or tab-separated values (.csv, .tab, .tsv)
@@ -75,14 +72,14 @@ Read in comma separted values (.csv files) that contain textual data. We determi
 
 ```{r}
 # Read in comma-separated values
-readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
+readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ```
 
 The same procedure applies to tab-separated values.
 
 ```{r}
 # Read in tab-separated values
-readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech")
+readtext(paste0(DATA_DIR, "/tsv/dailsample.tsv"), text_field = "speech")
 ```
 
 ## 2.3 JSON data (.json)
@@ -91,7 +88,7 @@ You can also read .json data. Again you need to specify the `text_field`.
 
 ```{r}
 ## Read in JSON data
-readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts")
+readtext(paste0(DATA_DIR, "/json/inaugural_sample.json"), text_field = "texts")
 ```
 
 ## 2.4 PDF files
@@ -102,7 +99,7 @@ In the example below we load all .pdf files stored in the `UDHR` folder, and det
 
 ```{r}
 ## Read in Universal Declaration of Human Rights pdf files
-(rt_pdf <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+(rt_pdf <- readtext(paste0(DATA_DIR, "/pdf/UDHR/*.pdf"), 
                     docvarsfrom = "filenames", 
                     docvarnames = c("document", "language"),
                     sep = "_"))
@@ -115,7 +112,7 @@ Microsoft Word formatted files are converted through the package **antiword** fo
 
 ```{r}
 ## Read in Word data (.docx)
-readtext(paste0(DATA_DIR, "word/*.docx"))
+readtext(paste0(DATA_DIR, "/word/*.docx"))
 ```
 
 ## 2.6 Text from URLs
@@ -147,7 +144,7 @@ You can easily contruct a corpus from a **readtext** object.
 
 ```{r}
 # read in comma-separated values with readtext
-rt_csv <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv"), text_field = "texts")
+rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)

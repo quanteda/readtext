@@ -97,10 +97,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><strong>readtext</strong> also handles multiple files and file types using for instance a “glob” expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly - <strong>readtext</strong> takes this information from the file ending.</p>
 <p>The <strong>readtext</strong> package comes with a data directory called <code>extdata</code> that contains examples of all files listed above. In the vignette, we use this data directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the data directory from readtext</span>
-DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;readtext&quot;</span>)
-<span class="co"># add a trailing &quot;/&quot; to Windows paths, that other OSes keep</span>
-if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<span class="st"> &quot;Windows&quot;</span>) 
-  DATA_DIR &lt;-<span class="st"> </span><span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/&quot;</span>)</code></pre></div>
+DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;readtext&quot;</span>)</code></pre></div>
 <p>The <code>extdata</code> directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The <code>paste0</code> command is used to concatenate the <code>extdata</code> folder from the <strong>readtext</strong> package with the subfolders. When reading in custom text files, you will need to determine your own data directory (see <code>?setwd()</code>).</p>
 </div>
 <div id="reading-one-or-more-text-files" class="section level1">
@@ -112,18 +109,18 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 <span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/UDHR/*&quot;</span>))
 ## readtext object consisting of 13 documents and 0 docvars.
 ## # data.frame [13 × 2]
-##              doc_id            text
-##               &lt;chr&gt;           &lt;chr&gt;
-## 1  UDHR_chinese.txt &quot;ä¸çäººæ&quot;...
-## 2    UDHR_czech.txt &quot;VÅ EOBECNÃ&quot;...
-## 3   UDHR_danish.txt &quot;Den 10. de&quot;...
-## 4  UDHR_english.txt &quot;Universal &quot;...
-## 5   UDHR_french.txt &quot;DÃ©clarati&quot;...
-## 6 UDHR_georgian.txt &quot;FLFVBFYBC &quot;...
+##              doc_id                      text
+##               &lt;chr&gt;                     &lt;chr&gt;
+## 1  UDHR_chinese.txt &quot;世界人权宣言\n联合国&quot;...
+## 2    UDHR_czech.txt           &quot;VŠEOBECNÁ &quot;...
+## 3   UDHR_danish.txt           &quot;Den 10. de&quot;...
+## 4  UDHR_english.txt           &quot;Universal &quot;...
+## 5   UDHR_french.txt           &quot;Déclaratio&quot;...
+## 6 UDHR_georgian.txt           &quot;FLFVBFYBC &quot;...
 ## # ... with 7 more rows</code></pre></div>
 <p>We can specify document-level metadata (<code>docvars</code>) based on the file names or on a separate data.frame. Below we take the docvars from the filenames (<code>docvarsfrom = &quot;filenames&quot;</code>) and set the names for each variable (<code>docvarnames = c(&quot;unit&quot;, &quot;context&quot;, &quot;year&quot;, &quot;language&quot;, &quot;party&quot;)</code>). The command <code>dvsep = &quot;_&quot;</code> determines the separator (a regular expression character string) included in the filenames to delimit the <code>docvar</code> elements.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Manifestos with docvars from filenames</span>
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/EU_manifestos/*.txt&quot;</span>),
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/txt/EU_manifestos/*.txt&quot;</span>),
          <span class="dt">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, 
          <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;unit&quot;</span>, <span class="st">&quot;context&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;language&quot;</span>, <span class="st">&quot;party&quot;</span>),
          <span class="dt">dvsep =</span> <span class="st">&quot;_&quot;</span>, 
@@ -141,7 +138,7 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 ## # ... with 11 more rows, and 1 more variables: party &lt;chr&gt;</code></pre></div>
 <p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Recurse through subdirectories</span>
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/movie_reviews/*&quot;</span>))
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/txt/movie_reviews/*&quot;</span>))
 ## readtext object consisting of 10 documents and 0 docvars.
 ## # data.frame [10 × 2]
 ##                    doc_id            text
@@ -158,7 +155,7 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 <h2>2.2 Comma- or tab-separated values (.csv, .tab, .tsv)</h2>
 <p>Read in comma separted values (.csv files) that contain textual data. We determine the <code>texts</code> variable in our .csv file as the <code>text_field</code>. This is the column that contains the actual text. The other columns of the original csv file (<code>Year</code>, <code>President</code>, <code>FirstName</code>) are by default treated as document-level variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in comma-separated values</span>
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;csv/inaugCorpus.csv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/csv/inaugCorpus.csv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
 ## readtext object consisting of 5 documents and 3 docvars.
 ## # data.frame [5 × 5]
 ##              doc_id            text  Year  President FirstName
@@ -170,16 +167,16 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 ## 5 inaugCorpus.csv.5 &quot;Proceeding&quot;...  1805  Jefferson    Thomas</code></pre></div>
 <p>The same procedure applies to tab-separated values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in tab-separated values</span>
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;tsv/dailsample.tsv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;speech&quot;</span>)
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/tsv/dailsample.tsv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;speech&quot;</span>)
 ## readtext object consisting of 33 documents and 9 docvars.
 ## # data.frame [33 × 11]
 ##             doc_id            text speechID memberID partyID constID
 ##              &lt;chr&gt;           &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt;
 ## 1 dailsample.tsv.1 &quot;Molaimse d&quot;...        1      977      22     158
-## 2 dailsample.tsv.2 &quot;Is brÃ³d m&quot;...        2     1603      22     103
-## 3 dailsample.tsv.3 &quot;' A chÃ¡ir&quot;...        3      116      22     178
-## 4 dailsample.tsv.4 &quot;TÃ¡ ceathr&quot;...        4      116      22     178
-## 5 dailsample.tsv.5 &quot;LÃ©ighfead&quot;...        5      116      22     178
+## 2 dailsample.tsv.2 &quot;Is bród mó&quot;...        2     1603      22     103
+## 3 dailsample.tsv.3 &quot;' A cháird&quot;...        3      116      22     178
+## 4 dailsample.tsv.4 &quot;Tá ceathra&quot;...        4      116      22     178
+## 5 dailsample.tsv.5 &quot;Léighfead &quot;...        5      116      22     178
 ## 6 dailsample.tsv.6 &quot;-Braithean&quot;...        6      116      22     178
 ## # ... with 27 more rows, and 5 more variables: title &lt;chr&gt;, date &lt;chr&gt;,
 ## #   member_name &lt;chr&gt;, party_name &lt;chr&gt;, const_name &lt;chr&gt;</code></pre></div>
@@ -188,7 +185,7 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 <h2>2.3 JSON data (.json)</h2>
 <p>You can also read .json data. Again you need to specify the <code>text_field</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in JSON data
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;json/inaugural_sample.json&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/json/inaugural_sample.json&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
 ## Warning in doTryCatch(return(expr), name, parentenv, handler): Doesn't look
 ## like Tweets json file, trying general JSON
 ## readtext object consisting of 3 documents and 3 docvars.
@@ -204,28 +201,27 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 <p><strong>readtext</strong> can also read in and convert .pdf files.</p>
 <p>In the example below we load all .pdf files stored in the <code>UDHR</code> folder, and determine that the <code>docvars</code> shall be taken from the filenames. We call the document-level variables <code>document</code> and <code>language</code>, and specify the delimiter (<code>dvsep</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Universal Declaration of Human Rights pdf files
-(rt_pdf &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;pdf/UDHR/*.pdf&quot;</span>), 
+(rt_pdf &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/pdf/UDHR/*.pdf&quot;</span>), 
                     <span class="dt">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, 
                     <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;document&quot;</span>, <span class="st">&quot;language&quot;</span>),
                     <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>))
 ## readtext object consisting of 11 documents and 2 docvars.
 ## # data.frame [11 × 4]
-##             doc_id
-##              &lt;chr&gt;
-## 1 UDHR_chinese.pdf
-## 2   UDHR_czech.pdf
-## 3  UDHR_danish.pdf
-## 4 UDHR_english.pdf
-## 5  UDHR_french.pdf
-## 6   UDHR_greek.pdf
-## # ... with 5 more rows, and 3 more variables: text &lt;chr&gt;, document &lt;chr&gt;,
-## #   language &lt;chr&gt;</code></pre></div>
+##             doc_id                      text document language
+##              &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;
+## 1 UDHR_chinese.pdf &quot;世界人权宣言\n联合国&quot;...     UDHR  chinese
+## 2   UDHR_czech.pdf           &quot;VŠEOBECNÁ &quot;...     UDHR    czech
+## 3  UDHR_danish.pdf           &quot;Den 10. de&quot;...     UDHR   danish
+## 4 UDHR_english.pdf           &quot;Universal &quot;...     UDHR  english
+## 5  UDHR_french.pdf           &quot;Déclaratio&quot;...     UDHR   french
+## 6   UDHR_greek.pdf           &quot;ΟΙΚΟΥΜΕΝΙΚ&quot;...     UDHR    greek
+## # ... with 5 more rows</code></pre></div>
 </div>
 <div id="microsoft-word-files-.doc-.docx" class="section level2">
 <h2>2.5 Microsoft Word files (.doc, .docx)</h2>
 <p>Microsoft Word formatted files are converted through the package <strong>antiword</strong> for older <code>.doc</code> files, and using <strong>XML</strong> for newer <code>.docx</code> files.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Word data (.docx)
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;word/*.docx&quot;</span>))
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/word/*.docx&quot;</span>))
 ## readtext object consisting of 2 documents and 0 docvars.
 ## # data.frame [2 × 2]
 ##                        doc_id            text
@@ -251,22 +247,22 @@ if (<span class="kw">Sys.info</span>()[<span class="st">'sysname'</span>] ==<spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(quanteda)</code></pre></div>
 <p>You can easily contruct a corpus from a <strong>readtext</strong> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in comma-separated values with readtext</span>
-rt_csv &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;csv/inaugCorpus.csv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
+rt_csv &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/csv/inaugCorpus.csv&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)
 
 <span class="co"># create quanteda corpus</span>
 corpus_csv &lt;-<span class="st"> </span><span class="kw">corpus</span>(rt_csv)
 <span class="kw">summary</span>(corpus_csv, <span class="dv">5</span>)
 ## Corpus consisting of 5 documents.
 ## 
-##   Text Types Tokens Sentences            doc_id Year  President FirstName
-##  text1   626   1542        23 inaugCorpus.csv.1 1789 Washington    George
-##  text2    96    147         4 inaugCorpus.csv.2 1793 Washington    George
-##  text3   826   2584        37 inaugCorpus.csv.3 1797      Adams      John
-##  text4   716   1935        41 inaugCorpus.csv.4 1801  Jefferson    Thomas
-##  text5   804   2381        45 inaugCorpus.csv.5 1805  Jefferson    Thomas
+##               Text Types Tokens Sentences Year  President FirstName
+##  inaugCorpus.csv.1   626   1542        23 1789 Washington    George
+##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
+##  inaugCorpus.csv.3   826   2584        37 1797      Adams      John
+##  inaugCorpus.csv.4   716   1935        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
-## Source:  C:/Users/kbenoit/Documents/GitHub/readtext/vignettes/* on x86-64 by kbenoit
-## Created: Thu May 18 09:33:38 2017
+## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
+## Created: Thu May 18 10:04:05 2017
 ## Notes:</code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -346,10 +342,7 @@ fileencodings &lt;-<span class="st"> </span><span class="kw">sapply</span>(parts
 <span class="co"># Check whether certain file encodings are not supported</span>
 notAvailableIndex &lt;-<span class="st"> </span><span class="kw">which</span>(!(fileencodings %in%<span class="st"> </span><span class="kw">iconvlist</span>()))
 fileencodings[notAvailableIndex]
-##  [1] &quot;UTF-8-BOM&quot;    &quot;ISO-8859-6&quot;   &quot;WINDOWS-1256&quot; &quot;GB2312&quot;      
-##  [5] &quot;WINDOWS-1252&quot; &quot;WINDOWS-1252&quot; &quot;WINDOWS-1252&quot; &quot;ISO-8859-7&quot;  
-##  [9] &quot;WINDOWS-1252&quot; &quot;ISO-2022-KR&quot;  &quot;ISO-8859-5&quot;   &quot;KOI8-R&quot;      
-## [13] &quot;WINDOWS-1251&quot;</code></pre></div>
+## [1] &quot;UTF-8-BOM&quot;</code></pre></div>
 <p>If we read the text files without specifying the encoding, we get erroneously formatted text. To avoid this, we determine the <code>encoding</code> using the character object <code>fileencoding</code> created above.</p>
 <p>We can also add <code>docvars</code> based on the filenames.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txts &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;data_files_encodedtexts.zip&quot;</span>), 
@@ -359,66 +352,66 @@ fileencodings[notAvailableIndex]
 <span class="kw">print</span>(txts, <span class="dt">n =</span> <span class="dv">50</span>)
 ## readtext object consisting of 36 documents and 3 docvars.
 ## # data.frame [36 × 5]
-##                                doc_id
-##                                 &lt;chr&gt;
-## 1   IndianTreaty_English_UTF-16LE.txt
-## 2  IndianTreaty_English_UTF-8-BOM.txt
-## 3          UDHR_Arabic_ISO-8859-6.txt
-## 4               UDHR_Arabic_UTF-8.txt
-## 5        UDHR_Arabic_WINDOWS-1256.txt
-## 6             UDHR_Chinese_GB2312.txt
-## 7                UDHR_Chinese_GBK.txt
-## 8              UDHR_Chinese_UTF-8.txt
-## 9           UDHR_English_UTF-16BE.txt
-## 10          UDHR_English_UTF-16LE.txt
-## 11             UDHR_English_UTF-8.txt
-## 12      UDHR_English_WINDOWS-1252.txt
-## 13         UDHR_French_ISO-8859-1.txt
-## 14              UDHR_French_UTF-8.txt
-## 15       UDHR_French_WINDOWS-1252.txt
-## 16         UDHR_German_ISO-8859-1.txt
-## 17              UDHR_German_UTF-8.txt
-## 18       UDHR_German_WINDOWS-1252.txt
-## 19              UDHR_Greek_CP1253.txt
-## 20          UDHR_Greek_ISO-8859-7.txt
-## 21               UDHR_Greek_UTF-8.txt
-## 22               UDHR_Hindi_UTF-8.txt
-## 23      UDHR_Icelandic_ISO-8859-1.txt
-## 24           UDHR_Icelandic_UTF-8.txt
-## 25    UDHR_Icelandic_WINDOWS-1252.txt
-## 26            UDHR_Japanese_CP932.txt
-## 27      UDHR_Japanese_ISO-2022-JP.txt
-## 28            UDHR_Japanese_UTF-8.txt
-## 29      UDHR_Japanese_WINDOWS-936.txt
-## 30        UDHR_Korean_ISO-2022-KR.txt
-## 31              UDHR_Korean_UTF-8.txt
-## 32        UDHR_Russian_ISO-8859-5.txt
-## 33            UDHR_Russian_KOI8-R.txt
-## 34             UDHR_Russian_UTF-8.txt
-## 35      UDHR_Russian_WINDOWS-1251.txt
-## 36                UDHR_Thai_UTF-8.txt
-## # ... with 4 more variables: text &lt;chr&gt;, document &lt;chr&gt;, language &lt;chr&gt;,
+##                                doc_id                      text
+##                                 &lt;chr&gt;                     &lt;chr&gt;
+## 1   IndianTreaty_English_UTF-16LE.txt           &quot;WHEREAS, t&quot;...
+## 2  IndianTreaty_English_UTF-8-BOM.txt           &quot;ARTICLE 1.&quot;...
+## 3          UDHR_Arabic_ISO-8859-6.txt          &quot;الديباجة\nل&quot;...
+## 4               UDHR_Arabic_UTF-8.txt          &quot;الديباجة\nل&quot;...
+## 5        UDHR_Arabic_WINDOWS-1256.txt          &quot;الديباجة\nل&quot;...
+## 6             UDHR_Chinese_GB2312.txt &quot;世界人权宣言\n联合国&quot;...
+## 7                UDHR_Chinese_GBK.txt &quot;世界人权宣言\n联合国&quot;...
+## 8              UDHR_Chinese_UTF-8.txt &quot;世界人权宣言\n联合国&quot;...
+## 9           UDHR_English_UTF-16BE.txt           &quot;Universal &quot;...
+## 10          UDHR_English_UTF-16LE.txt           &quot;Universal &quot;...
+## 11             UDHR_English_UTF-8.txt           &quot;Universal &quot;...
+## 12      UDHR_English_WINDOWS-1252.txt           &quot;Universal &quot;...
+## 13         UDHR_French_ISO-8859-1.txt           &quot;Déclaratio&quot;...
+## 14              UDHR_French_UTF-8.txt           &quot;Déclaratio&quot;...
+## 15       UDHR_French_WINDOWS-1252.txt           &quot;Déclaratio&quot;...
+## 16         UDHR_German_ISO-8859-1.txt           &quot;Die Allgem&quot;...
+## 17              UDHR_German_UTF-8.txt           &quot;Die Allgem&quot;...
+## 18       UDHR_German_WINDOWS-1252.txt           &quot;Die Allgem&quot;...
+## 19              UDHR_Greek_CP1253.txt           &quot;ΟΙΚΟΥΜΕΝΙΚ&quot;...
+## 20          UDHR_Greek_ISO-8859-7.txt           &quot;ΟΙΚΟΥΜΕΝΙΚ&quot;...
+## 21               UDHR_Greek_UTF-8.txt           &quot;ΟΙΚΟΥΜΕΝΙΚ&quot;...
+## 22               UDHR_Hindi_UTF-8.txt           &quot;मानव अधिका&quot;...
+## 23      UDHR_Icelandic_ISO-8859-1.txt           &quot;Mannréttin&quot;...
+## 24           UDHR_Icelandic_UTF-8.txt           &quot;Mannréttin&quot;...
+## 25    UDHR_Icelandic_WINDOWS-1252.txt           &quot;Mannréttin&quot;...
+## 26            UDHR_Japanese_CP932.txt  &quot;『世界人権宣言』\n &quot;...
+## 27      UDHR_Japanese_ISO-2022-JP.txt  &quot;『世界人権宣言』\n &quot;...
+## 28            UDHR_Japanese_UTF-8.txt  &quot;『世界人権宣言』\n &quot;...
+## 29      UDHR_Japanese_WINDOWS-936.txt  &quot;『世界人権宣言』\n &quot;...
+## 30        UDHR_Korean_ISO-2022-KR.txt      &quot;세 계 인 권 선 &quot;...
+## 31              UDHR_Korean_UTF-8.txt      &quot;세 계 인 권 선 &quot;...
+## 32        UDHR_Russian_ISO-8859-5.txt           &quot;Всеобщая д&quot;...
+## 33            UDHR_Russian_KOI8-R.txt           &quot;Всеобщая д&quot;...
+## 34             UDHR_Russian_UTF-8.txt           &quot;Всеобщая д&quot;...
+## 35      UDHR_Russian_WINDOWS-1251.txt           &quot;Всеобщая д&quot;...
+## 36                UDHR_Thai_UTF-8.txt            &quot;ปฏิญญาสากล&quot;...
+## # ... with 3 more variables: document &lt;chr&gt;, language &lt;chr&gt;,
 ## #   input_encoding &lt;chr&gt;</code></pre></div>
 <p>From this file we can easily create a <strong>quanteda</strong> <code>corpus</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus_txts &lt;-<span class="st"> </span><span class="kw">corpus</span>(txts)
 <span class="kw">summary</span>(corpus_txts, <span class="dv">5</span>)
 ## Corpus consisting of 36 documents, showing 5 documents.
 ## 
-##   Text Types Tokens Sentences                             doc_id
-##  text1   690   2938       155  IndianTreaty_English_UTF-16LE.txt
-##  text2   646   3104       154 IndianTreaty_English_UTF-8-BOM.txt
-##  text3   753   1555        86         UDHR_Arabic_ISO-8859-6.txt
-##  text4   753   1555        86              UDHR_Arabic_UTF-8.txt
-##  text5   753   1555        86       UDHR_Arabic_WINDOWS-1256.txt
-##      document language input_encoding
-##  IndianTreaty  English       UTF-16LE
-##  IndianTreaty  English      UTF-8-BOM
-##          UDHR   Arabic     ISO-8859-6
-##          UDHR   Arabic          UTF-8
-##          UDHR   Arabic   WINDOWS-1256
+##                                Text Types Tokens Sentences     document
+##   IndianTreaty_English_UTF-16LE.txt   690   2938       155 IndianTreaty
+##  IndianTreaty_English_UTF-8-BOM.txt   646   3104       154 IndianTreaty
+##          UDHR_Arabic_ISO-8859-6.txt   753   1555        86         UDHR
+##               UDHR_Arabic_UTF-8.txt   753   1555        86         UDHR
+##        UDHR_Arabic_WINDOWS-1256.txt   753   1555        86         UDHR
+##  language input_encoding
+##   English       UTF-16LE
+##   English      UTF-8-BOM
+##    Arabic     ISO-8859-6
+##    Arabic          UTF-8
+##    Arabic   WINDOWS-1256
 ## 
-## Source:  C:/Users/kbenoit/Documents/GitHub/readtext/vignettes/* on x86-64 by kbenoit
-## Created: Thu May 18 09:33:39 2017
+## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
+## Created: Thu May 18 10:04:05 2017
 ## Notes:</code></pre></div>
 </div>
 </div>
@@ -430,7 +423,7 @@ fileencodings[notAvailableIndex]
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
