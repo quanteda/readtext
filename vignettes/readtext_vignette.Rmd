@@ -239,7 +239,7 @@ If we read the text files without specifying the encoding, we get erroneously fo
 
 We can also add `docvars` based on the filenames.
 ```{r}
-txts <- readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip"), 
+txts <- readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip"), 
                  encoding = fileencodings,
                  docvarsfrom = "filenames", 
                  docvarnames = c("document", "language", "input_encoding"))
