@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
+SUPPORTED_FILETYPES <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc',
+                         'xls', 'xlsx')
 CHARACTER_CLASS_REPLACEMENTS = list(
                                     '\\p{Dash_Punctuation}' = '-',
                                     '\\p{Space_Separator}' = ' ',
@@ -264,7 +264,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
 
     fileType <- tolower(file_ext(f))
-    if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
+    if (fileType %in% SUPPORTED_FILETYPES) {
         if (dir.exists(f)) {
             call <- deparse(sys.call(1))
             call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed = TRUE)
@@ -288,7 +288,9 @@ getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
                html = get_html(f, text_field=text_field, ...),
                pdf = get_pdf(f, ...),
                docx = get_docx(f, ...),
-               doc = get_doc(f, ...)
+               doc = get_doc(f, ...),
+               xls = get_excel(f, text_field, ...),
+               xlsx = get_excel(f, text_field, ...)
         )
 
     # assign filename (variants) unique text names
