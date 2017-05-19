@@ -129,7 +129,7 @@ get_json_lines <- function(path, text_field, ...) {
 
 
 ## flat xml format
-get_xml <- function(path, text_field, encoding,...) {
+get_xml <- function(path, text_field, encoding, collapse='', ...) {
     # TODO: encoding param is ignored
     if (!requireNamespace("XML", quietly = TRUE))
         stop("You must have XML installed to read XML files.")
@@ -137,7 +137,7 @@ get_xml <- function(path, text_field, encoding,...) {
     if (is_probably_xpath(text_field))  {
         xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
         txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
-        txt <- paste0(txt, collapse='')
+        txt <- paste0(txt, collapse=collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
     }
     else {

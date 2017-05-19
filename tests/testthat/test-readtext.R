@@ -256,9 +256,13 @@ test_that("test xml files with XPath", {
     actual <- readtext('../data/xml/tei.xml',
                       text_field='/tei:TEI/tei:text/tei:body//tei:p',
                       namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
-
     expect_equal(texts(actual), expected)
 
+
+    actual <- readtext('~/code/readtext/tests/data/xml/tei.xml', collapse='P',
+                      text_field='/tei:TEI/tei:text/tei:body//tei:p',
+                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+    expect_equal(texts(actual), 'The Pquick Pbrown Pfox')
 })
 
 
