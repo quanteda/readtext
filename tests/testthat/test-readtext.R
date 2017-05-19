@@ -867,8 +867,8 @@ test_that("readtext called with textfield works with deprecation warning", {
 
 test_that("tests for Excel files", {
 
-    expect_equal(texts(
-        readtext('../data/xls/test.xlsx', text_field='text')),
+    expect_equal(unname(texts(
+        readtext('../data/xls/test.xlsx', text_field='text'))),
         c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
     )
     expect_equal(
@@ -877,7 +877,7 @@ test_that("tests for Excel files", {
                         doc_id=c('test.xlsx.1', 'test.xlsx.2', 'test.xlsx.3', 'test.xlsx.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
                         number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, 'sweet', 'umami'),
+                        taste=c(NA, NA, 'sweet', 'umami')
                         ), stringsAsFactors=FALSE)
     )
 
