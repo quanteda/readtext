@@ -868,11 +868,11 @@ test_that("readtext called with textfield works with deprecation warning", {
 test_that("tests for Excel files", {
 
     expect_equal(texts(
-        readtext('~/code/readtext/tests/data/xls/test.xlsx', text_field='text')),
+        readtext('../data/xls/test.xlsx', text_field='text')),
         c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
     )
     expect_equal(
-        docvars(readtext('~/code/readtext/tests/data/xls/test.xlsx', text_field='text')),
+        docvars(readtext('../data/xls/test.xlsx', text_field='text')),
         data.frame(list(
                         doc_id=c('test.xlsx.1', 'test.xlsx.2', 'test.xlsx.3', 'test.xlsx.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
@@ -883,11 +883,11 @@ test_that("tests for Excel files", {
 
 
     expect_equal(texts(
-        readtext('~/code/readtext/tests/data/xls/test.xls', text_field='text')),
+        readtext('../data/xls/test.xls', text_field='text')),
         c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
     )
     expect_equal(
-        docvars(readtext('~/code/readtext/tests/data/xls/test.xls', text_field='text')),
+        docvars(readtext('../data/xls/test.xls', text_field='text')),
         data.frame(list(
                         doc_id=c('test.xls.1', 'test.xls.2', 'test.xls.3', 'test.xls.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
