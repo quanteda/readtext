@@ -34,7 +34,7 @@ get_csv <- function(path, text_field, ...) {
     }
     docs <- do.call(data.table::fread, args)
 
-    text_field <- get_numeric_textfield(text_field, docs)
+    text_field <- get_numeric_textfield(text_field, docs, path)
 
     data.frame(text = docs[, text_field], docs[, -text_field, drop = FALSE],
                stringsAsFactors = FALSE)
@@ -242,7 +242,7 @@ get_excel <- function(f, text_field, ...) {
     }
 
     docs <- data.table::rbindlist(sheets, fill=TRUE)
-    text_field <- get_numeric_textfield(text_field, docs)
+    text_field <- get_numeric_textfield(text_field, docs, path)
 
     data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
                stringsAsFactors = FALSE)

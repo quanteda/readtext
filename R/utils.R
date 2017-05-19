@@ -271,7 +271,7 @@ is_probably_xpath <- function(x) {
 }
 
 
-get_numeric_textfield <- function(text_field, docs) {
+get_numeric_textfield <- function(text_field, docs, path) {
     if (is.character(text_field)) {
         text_fieldi <- which(names(docs) == text_field)
         if (length(text_fieldi) == 0)
