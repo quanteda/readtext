@@ -884,7 +884,7 @@ test_that("tests for Excel files", {
 
     expect_equal(texts(
         readtext('../data/xls/test.xls', text_field='text')),
-        c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
+        c('1'='The quick', '2'='brown fox', '3'='jumps over', '4'='the lazy dog.')
     )
     expect_equal(
         docvars(readtext('../data/xls/test.xls', text_field='text')),
@@ -892,7 +892,7 @@ test_that("tests for Excel files", {
                         doc_id=c('test.xls.1', 'test.xls.2', 'test.xls.3', 'test.xls.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
                         number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, 'sweet', 'umami'),
+                        taste=c(NA, NA, 'sweet', 'umami')
                         ), stringsAsFactors=FALSE)
     )
 
