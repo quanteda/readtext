@@ -871,6 +871,7 @@ test_that("tests for Excel files", {
         readtext('../data/xls/test.xlsx', text_field='text'))),
         c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
     )
+    print(docvars(readtext('../data/xls/test.xlsx', text_field='text')))
     expect_that(
         docvars(readtext('../data/xls/test.xlsx', text_field='text')),
         equals(data.frame(list(
@@ -882,10 +883,10 @@ test_that("tests for Excel files", {
     )
 
 
-    print(texts(readtext('../data/xls/test.xls', text_field='text')))
     expect_equal(
         texts(readtext('../data/xls/test.xls', text_field='text')),
-        c('1'='The quick', '2'='brown fox', '3'='jumps over', '4'='the lazy dog.')
+        c('test.xls.1'='The quick', 'test.xls.2'='brown fox', 
+          'test.xls.3'='jumps over', 'test.xls.4'='the lazy dog.')
     )
     #  expect_that(
     #      docvars(readtext('../data/xls/test.xls', text_field='text')),
