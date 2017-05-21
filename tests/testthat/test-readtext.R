@@ -874,13 +874,11 @@ test_that("tests for Excel files", {
     expect_that(
         docvars(readtext('../data/xls/test.xlsx', text_field='text')),
         equals(data.frame(list(
-                        doc_id=c('test.xlsx.1', 'test.xlsx.2', 'test.xlsx.3', 'test.xlsx.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
                         number=c(0, NA, NA, NA),
                         taste=c(NA, NA, 'sweet', 'umami')
                         ), stringsAsFactors=FALSE))
     )
-    print(docvars(readtext('../data/xls/test.xlsx', text_field='text')))
 
 
     expect_equal(
@@ -888,15 +886,14 @@ test_that("tests for Excel files", {
         c('test.xls.1'='The quick', 'test.xls.2'='brown fox', 
           'test.xls.3'='jumps over', 'test.xls.4'='the lazy dog.')
     )
-    #  expect_that(
-    #      docvars(readtext('../data/xls/test.xls', text_field='text')),
-    #      equals(data.frame(list(
-    #                      doc_id=c('test.xls.1', 'test.xls.2', 'test.xls.3', 'test.xls.4'),
-    #                      colour=c('orange', 'blue', 'pink', 'pink'),
-    #                      number=c(0, NA, NA, NA),
-    #                      taste=c(NA, NA, 'sweet', 'umami')
-    #                      ), stringsAsFactors=FALSE))
-    #  )
+    expect_that(
+        docvars(readtext('../data/xls/test.xls', text_field='text')),
+        equals(data.frame(list(
+                        colour=c('orange', 'blue', 'pink', 'pink'),
+                        number=c(0, NA, NA, NA),
+                        taste=c(NA, NA, 'sweet', 'umami')
+                        ), stringsAsFactors=FALSE))
+    )
 
 
 })
