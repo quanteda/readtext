@@ -849,6 +849,16 @@ test_that("messages from listMatchingFile",{
     )
 })
 
+context('Tests for unicode normalisation from http://unicode.org/reports/tr15/#Examples')
+for (n in c("nfc", "nfd", "nfkc", "nfkd")) {
+	rt <- readtext('../data/unicode_normalization/unicode_normalization.tsv', normalize_unicode=n, verbosity=0)
+	e <- quanteda::docvars(rt)[,n]
+	t <- stringi::stri_escape_unicode(quanteda::texts(rt))
+        test_that(paste("test unicode normalisation to", n), {
+            expect_equal(t, e)
+        })
+}
+
 test_that("readtext called with textfield works with deprecation warning", {
     expect_equal(
         length(texts(readtext(

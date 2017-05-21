@@ -93,6 +93,8 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
+#' @param replace_special_characters needs documentation
+#' @param normalize_unicode needs documentation
 #' @param verbosity \itemize{
 #'   \item 0: output errors only
 #'   \item 1: output errors and warnings (default)
@@ -162,6 +164,8 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL, 
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep="_", 
                     docvarnames = NULL, encoding = NULL, 
+                    replace_special_characters = FALSE,
+                    normalize_unicode = c("nfc", "nfd", "nfkd", "nfkc", "nfkc_casefold", NULL),
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
     
@@ -187,6 +191,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     if (!is.character(file))
         stop("file must be a character (specifying file location(s))")
     
+    normalize_unicode <- match.arg(normalize_unicode)
+    
     docvarsfrom <- match.arg(docvarsfrom)
     # # just use the first, if both are specified?
     # if (is.missing(docvarsfrom))
@@ -209,11 +215,16 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         if (length(encoding) != length(files)) {
             stop('encoding parameter must be length 1, or as long as the number of files')
         }
-        sources <- mapply(function(x, e) getSource(f = x, text_field = text_field, encoding = e, ...),
+        sources <- mapply(function(x, e) getSource(f = x, text_field = text_field, encoding = e, 
+                                                   replace_special_characters = replace_special_characters, 
+                                                   normalize_unicode = normalize_unicode, ...),
                          files, encoding,
                          SIMPLIFY = FALSE)
     } else {
-        sources <- lapply(files, function(x) getSource(x, text_field = text_field, encoding = encoding, ...))
+        sources <- lapply(files, function(x) getSource(x, text_field = text_field, encoding = encoding, 
+                                                       replace_special_characters = replace_special_characters, 
+                                                       normalize_unicode = normalize_unicode,
+                                                       ...))
     }
 
     
@@ -262,7 +273,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
 ## read each file as appropriate, calling the get_* functions for recognized
 ## file types
-getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
+getSource <- function(f, text_field, replace_special_characters = FALSE, normalize_unicode, ...) {
+    # extension <- file_ext(f)
 
     fileType <- tolower(file_ext(f))
     if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
@@ -301,6 +313,10 @@ getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
 
     if (replace_special_characters) {
         newSource$text <- sapply(newSource$text, make_character_class_replacements)
+    }
+
+    if (!is.null(normalize_unicode)) {
+        newSource$text <- sapply(newSource$text, unicodeNorm, type=normalize_unicode)
     }
 
     # replace unicode characters classes

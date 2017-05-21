@@ -1,0 +1,4 @@
+texts	name	nfc	nfd	nfkc	nfkd
+ḋ	D-dot_above	\u1e0b	d\u0307	\u1e0b	d\u0307
+Å	angstrom_sign	\u00c5	A\u030a	\u00c5	A\u030a
+Äffin		\u00c4ffin	A\u0308ffin	\u00c4ffin	A\u0308ffin
