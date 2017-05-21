@@ -907,3 +907,21 @@ test_that("tests for Excel files", {
 
 
 })
+
+
+test_that("tests for ODS files", {
+
+    expect_equal(unname(texts(
+        readtext('../data/ods/test.ods', text_field='text'))),
+        c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
+    )
+    expect_equal(
+        docvars(readtext('../data/ods/test.ods', text_field='text')),
+        data.frame(list(
+                        colour=c('orange', 'blue', 'pink', 'pink'),
+                        number=c(0, NA, NA, NA),
+                        taste=c(NA, NA, 'sweet', 'umami')
+                        ), stringsAsFactors=FALSE)
+    )
+
+})

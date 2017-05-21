@@ -1,6 +1,6 @@
 ## some globals
 SUPPORTED_FILETYPES <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc',
-                         'xls', 'xlsx')
+                         'xls', 'xlsx', 'ods')
 CHARACTER_CLASS_REPLACEMENTS = list(
                                     '\\p{Dash_Punctuation}' = '-',
                                     '\\p{Space_Separator}' = ' ',
@@ -288,7 +288,8 @@ getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
                docx = get_docx(f, ...),
                doc = get_doc(f, ...),
                xls = get_excel(f, text_field, ...),
-               xlsx = get_excel(f, text_field, ...)
+               xlsx = get_excel(f, text_field, ...),
+               ods = get_ods(f, text_field, ...)
         )
 
     # assign filename (variants) unique text names

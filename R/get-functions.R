@@ -242,9 +242,24 @@ get_excel <- function(f, text_field, ...) {
     }
 
     docs <- data.table::rbindlist(sheets, fill=TRUE)
-    text_field <- get_numeric_textfield(text_field, docs, f)
+    text_field <- get_numeric_textfield(text_field, docs, path=f)
 
     data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
                stringsAsFactors = FALSE)
 }
 
+
+get_ods <- function(f, text_field, ...) {
+    sheet_names <- readODS::ods_sheets(f)
+    sheets <- lapply(sheet_names, function(x, ...) {readODS::read_ods(f, sheet=x, ...)})
+
+    if (length(unique(sapply(sheets, ncol))) != 1) {
+        warning('Not all worksheets in file "', f, '" have the same number of columns.')
+    }
+
+    docs <- data.table::rbindlist(sheets, fill=TRUE)
+    text_field <- get_numeric_textfield(text_field, docs, path=f)
+
+    data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
+               stringsAsFactors = FALSE)
+}

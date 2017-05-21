@@ -19,11 +19,12 @@ Imports:
     httr,
     antiword,
     pdftools,
-    readxl,
     tibble,
     jsonlite (>= 0.9.10),
     streamR,
-    XML
+    XML,
+    readxl,
+    readODS
 Suggests:
     quanteda (>= 0.9.9.24),
     knitr,
