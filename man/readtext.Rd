@@ -38,10 +38,7 @@ package.}
 \item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
 Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
 or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
-\item{\code{doc, docx}}{Microsoft Word formatted files, converted through 
-\code{antiword}.  
-Requires that \code{antiword} be installed, either through \code{brew install antiword} (macOS) 
-or from \url{http://www.winfield.demon.nl} (Windows).}
+\item{\code{doc, docx}}{Microsoft Word formatted files.}
 
 \strong{Reading multiple files and file types:} 
 
@@ -66,8 +63,8 @@ pattern that matches no files.}
 
 \item{text_field}{a variable (column) name or column number indicating where 
 to find the texts that form the documents for the corpus.  This must be 
-specified for file types \code{.csv} and \code{.json}. For XML files
-an XPath expression can be specified.}
+specified for file types \code{.csv}, \code{.json}, and \code{.xls}/\code{.xlsx} 
+files.  For XML files, an XPath expression can be specified.}
 
 \item{docvarsfrom}{used to specify that docvars should be taken from the 
 filenames, when the \code{readtext} inputs are filenames and the elements 
@@ -75,7 +72,7 @@ of the filenames are document variables, separated by a delimiter
 (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
 or from meta-data embedded in the text file header (\code{headers}).
-If \code{docvarsfrom} is set to "filepaths", consider the full path to the
+If \code{docvarsfrom} is set to \code{"filepaths"}, consider the full path to the
 file, not just the filename.}
 
 \item{dvsep}{separator (a regular expression character string) used in 
