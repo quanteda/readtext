@@ -19,7 +19,6 @@ Imports:
     httr,
     antiword,
     pdftools,
-    readxl,
     tibble,
     jsonlite (>= 0.9.10),
     streamR,
