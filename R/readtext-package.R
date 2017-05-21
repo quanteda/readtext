@@ -1,8 +1,8 @@
 #' Import and handling for plain and formatted text files
 #' 
 #' A set of functions for  importing and handling text files and formatted text 
-#' files with additional meta-data, such including .csv, .tab, .json, .xml, and 
-#' others.
+#' files with additional meta-data, such including .csv, .tab, .json, .xml, .xls,
+#' .xlsx, and others.
 #' 
 #' \pkg{readtext} makes it easy to import text files in various formats, 
 #' including using operating system filemasks to load in groups of files based 
