@@ -43,8 +43,9 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   into docvars.  The correct format for each JSON file is automatically detected.}}
 #'   \item{\code{csv,tab,tsv}}{comma- or tab-separated values}
 #'   \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
-#'   kind supported by the function xmlToDataFrame function of the \strong{XML} 
-#'   package.}
+#'   kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
+#'   argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
+#'   appending different text elements together.}
 #'   \item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
 #'   Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
 #'   or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
