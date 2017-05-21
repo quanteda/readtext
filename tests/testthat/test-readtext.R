@@ -267,15 +267,10 @@ test_that("test xml files with XPath", {
     actual <- readtext('../data/xml/tei.xml', collapse='P',
                       text_field='/tei:TEI//*/text()',
                       namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
-    expect_equal(unname(texts(actual)), 'Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
+    expect_equal(unname(texts(actual)), 'Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope')
 
 })
 
-
-
-rt <- readtext("http://kenbenoit.net/files/20170426_WDR_Aktuelle_Stunde.zip",
-                              text_field = "//tt:body//*/text()", collapse = ' ')
-substring(rt$text, 1, 200)
 
 test_that("test readtext() with docvarsfrom=filenames", {
     
