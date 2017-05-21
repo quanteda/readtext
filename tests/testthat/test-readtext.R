@@ -901,14 +901,13 @@ test_that("tests for Excel files", {
 
 test_that("tests for ODS files", {
 
-    expect_equal(texts(
-        readtext('../data/ods/test.ods', text_field='text')),
+    expect_equal(unname(texts(
+        readtext('../data/ods/test.ods', text_field='text'))),
         c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
     )
     expect_equal(
         docvars(readtext('../data/ods/test.ods', text_field='text')),
         data.frame(list(
-                        doc_id=c('test.ods.1', 'test.ods.2', 'test.ods.3', 'test.ods.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
                         number=c(0, NA, NA, NA),
                         taste=c(NA, NA, 'sweet', 'umami')
