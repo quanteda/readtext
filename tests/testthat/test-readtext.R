@@ -911,7 +911,7 @@ test_that("tests for ODS files", {
                         doc_id=c('test.ods.1', 'test.ods.2', 'test.ods.3', 'test.ods.4'),
                         colour=c('orange', 'blue', 'pink', 'pink'),
                         number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, 'sweet', 'umami'),
+                        taste=c(NA, NA, 'sweet', 'umami')
                         ), stringsAsFactors=FALSE)
     )
 
