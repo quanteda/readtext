@@ -1,6 +1,6 @@
 ## some globals
-SUPPORTED_FILETYPE_MAPPING <-        c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
-names(SUPPORTED_FILETYPE_MAPPING) <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc')
+SUPPORTED_FILETYPES <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 'tsv', 'html', 'pdf', 'docx', 'doc',
+                         'xls', 'xlsx')
 CHARACTER_CLASS_REPLACEMENTS = list(
                                     '\\p{Dash_Punctuation}' = '-',
                                     '\\p{Space_Separator}' = ' ',
@@ -49,10 +49,7 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   \item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
 #'   Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
 #'   or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
-#'   \item{\code{doc, docx}}{Microsoft Word formatted files, converted through 
-#'   \code{antiword}.  
-#'   Requires that \code{antiword} be installed, either through \code{brew install antiword} (macOS) 
-#'   or from \url{http://www.winfield.demon.nl} (Windows).}
+#'   \item{\code{doc, docx}}{Microsoft Word formatted files.}
 #'   
 #'   \strong{Reading multiple files and file types:} 
 #'   
@@ -70,15 +67,15 @@ CHARACTER_CLASS_REPLACEMENTS = list(
 #'   }
 #' @param text_field a variable (column) name or column number indicating where 
 #'   to find the texts that form the documents for the corpus.  This must be 
-#'   specified for file types \code{.csv} and \code{.json}. For XML files
-#'   an XPath expression can be specified. 
+#'   specified for file types \code{.csv}, \code{.json}, and \code{.xls}/\code{.xlsx} 
+#'   files.  For XML files, an XPath expression can be specified. 
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
 #'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 #'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
 #'   or from meta-data embedded in the text file header (\code{headers}).
-#'   If \code{docvarsfrom} is set to "filepaths", consider the full path to the
+#'   If \code{docvarsfrom} is set to \code{"filepaths"}, consider the full path to the
 #'   file, not just the filename.
 #' @param dvsep separator (a regular expression character string) used in 
 #'  filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
@@ -265,7 +262,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
 
     fileType <- tolower(file_ext(f))
-    if (fileType %in% SUPPORTED_FILETYPE_MAPPING) {
+    if (fileType %in% SUPPORTED_FILETYPES) {
         if (dir.exists(f)) {
             call <- deparse(sys.call(1))
             call <- sub(f, paste0(sub('/$', '', f), '/*'), call, fixed = TRUE)
@@ -289,7 +286,9 @@ getSource <- function(f, text_field, replace_special_characters = FALSE, ...) {
                html = get_html(f, text_field=text_field, ...),
                pdf = get_pdf(f, ...),
                docx = get_docx(f, ...),
-               doc = get_doc(f, ...)
+               doc = get_doc(f, ...),
+               xls = get_excel(f, text_field, ...),
+               xlsx = get_excel(f, text_field, ...)
         )
 
     # assign filename (variants) unique text names

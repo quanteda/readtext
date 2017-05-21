@@ -74,7 +74,7 @@ downloadRemote <- function (i, ignoreMissing) {
     
     # If this is a supported-scheme remote URL
     extension <- tools::file_ext(i)
-    if (!(extension %in% names(SUPPORTED_FILETYPE_MAPPING))) {
+    if (!(extension %in% SUPPORTED_FILETYPES)) {
         stop('Remote URL does not end in known extension. Please download the file manually.')
     }
     localfile <- file.path(mktemp(directory=T), basename(i))
@@ -268,4 +268,17 @@ is_probably_xpath <- function(x) {
     any(
         sapply(invalid_xml_element_chars, function(i) {grepl(i, x, perl=T)})
     )
+}
+
+
+get_numeric_textfield <- function(text_field, docs, path) {
+    if (is.character(text_field)) {
+        text_fieldi <- which(names(docs) == text_field)
+        if (length(text_fieldi) == 0)
+            stop(paste("There is no field called", text_field, "in file", path))
+        text_field <- text_fieldi
+    } else if (is.numeric(text_field) & (text_field > ncol(docs))) {
+        stop(paste0("There is no ", text_field, "th field in file ", path))
+    }
+    text_field
 }

@@ -873,3 +873,37 @@ test_that("readtext called with textfield works with deprecation warning", {
         "textfield is deprecated; use text_field instead"
     )
 })
+
+
+test_that("tests for Excel files", {
+
+    expect_equal(unname(texts(
+        readtext('../data/xls/test.xlsx', text_field='text'))),
+        c('The quick', 'brown fox', 'jumps over', 'the lazy dog.')
+    )
+    expect_that(
+        docvars(readtext('../data/xls/test.xlsx', text_field='text')),
+        equals(data.frame(list(
+                        colour=c('orange', 'blue', 'pink', 'pink'),
+                        number=c(0, NA, NA, NA),
+                        taste=c(NA, NA, 'sweet', 'umami')
+                        ), stringsAsFactors=FALSE))
+    )
+
+
+    expect_equal(
+        texts(readtext('../data/xls/test.xls', text_field='text')),
+        c('test.xls.1'='The quick', 'test.xls.2'='brown fox', 
+          'test.xls.3'='jumps over', 'test.xls.4'='the lazy dog.')
+    )
+    expect_that(
+        docvars(readtext('../data/xls/test.xls', text_field='text')),
+        equals(data.frame(list(
+                        colour=c('orange', 'blue', 'pink', 'pink'),
+                        number=c(0, NA, NA, NA),
+                        taste=c(NA, NA, 'sweet', 'umami')
+                        ), stringsAsFactors=FALSE))
+    )
+
+
+})

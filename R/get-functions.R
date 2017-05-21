@@ -34,14 +34,8 @@ get_csv <- function(path, text_field, ...) {
     }
     docs <- do.call(data.table::fread, args)
 
-    if (is.character(text_field)) {
-        text_fieldi <- which(names(docs) == text_field)
-        if (length(text_fieldi) == 0)
-            stop(paste("There is no field called", text_field, "in file", path))
-        text_field <- text_fieldi
-    } else if (is.numeric(text_field) & (text_field > ncol(docs))) {
-        stop(paste0("There is no ", text_field, "th field in file ", path))
-    }
+    text_field <- get_numeric_textfield(text_field, docs, path)
+
     data.frame(text = docs[, text_field], docs[, -text_field, drop = FALSE],
                stringsAsFactors = FALSE)
 }
@@ -74,8 +68,8 @@ get_json <- function(path, text_field, encoding, ...) {
 
 ## Twitter json
 get_json_tweets <- function(path, source="twitter", ...) {
-    if (!requireNamespace("streamR", quietly = TRUE))
-        stop("You must have streamR installed to read Twitter json files.")
+    # if (!requireNamespace("streamR", quietly = TRUE))
+    #     stop("You must have streamR installed to read Twitter json files.")
     
     # read raw json data
     txt <- readLines(path, warn = FALSE, ...)
@@ -88,8 +82,8 @@ get_json_tweets <- function(path, source="twitter", ...) {
 ## general json
 #' @importFrom data.table setDT
 get_json_object <- function(path, text_field, ...) {
-    if (!requireNamespace("jsonlite", quietly = TRUE))
-        stop("You must have jsonlite installed to read json files.")
+    # if (!requireNamespace("jsonlite", quietly = TRUE))
+    #     stop("You must have jsonlite installed to read json files.")
     if (is.numeric(text_field)) {
         stop('Cannot use numeric text_field with json file')
     }
@@ -106,8 +100,8 @@ get_json_object <- function(path, text_field, ...) {
 
 #' @importFrom data.table rbindlist
 get_json_lines <- function(path, text_field, ...) {
-    if (!requireNamespace("jsonlite", quietly = TRUE))
-        stop("You must have jsonlite installed to read json files.")
+    # if (!requireNamespace("jsonlite", quietly = TRUE))
+    #     stop("You must have jsonlite installed to read json files.")
     if (is.numeric(text_field)) {
         stop('Cannot use numeric text_field with json file')
     }
@@ -131,8 +125,8 @@ get_json_lines <- function(path, text_field, ...) {
 ## flat xml format
 get_xml <- function(path, text_field, encoding, collapse = "", ...) {
     # TODO: encoding param is ignored
-    if (!requireNamespace("XML", quietly = TRUE))
-        stop("You must have XML installed to read XML files.")
+    # if (!requireNamespace("XML", quietly = TRUE))
+    #     stop("You must have XML installed to read XML files.")
     
     if (is_probably_xpath(text_field))  {
         xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
@@ -237,3 +231,20 @@ get_doc <- function(f, ...) {
     txt <- trimws(txt)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
+
+
+get_excel <- function(f, text_field, ...) {
+    sheet_names <- readxl::excel_sheets(f)
+    sheets <- lapply(sheet_names, function(x, ...) {readxl::read_excel(f, sheet=x, ...)})
+
+    if (length(unique(sapply(sheets, ncol))) != 1) {
+        warning('Not all worksheets in file "', f, '" have the same number of columns.')
+    }
+
+    docs <- data.table::rbindlist(sheets, fill=TRUE)
+    text_field <- get_numeric_textfield(text_field, docs, f)
+
+    data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
+               stringsAsFactors = FALSE)
+}
+
