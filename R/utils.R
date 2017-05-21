@@ -167,9 +167,9 @@ extractArchive <- function(i, ignoreMissing) {
 listMatchingFile <- function(x, ignoreMissing, lastRound) {
     filenames <- c()
     #  Remove 'file' scheme
-    i <- stringi::stri_replace(x, replacement ='', regex='^file://')
+    i <- stringi::stri_replace_first_regex(x, "^file://", "")
     
-    scheme <- stringi::stri_match(i, regex='^([a-z][a-z+.-]*):')[, 2]
+    scheme <- stringi::stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
@@ -185,7 +185,7 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
         tools::file_ext(i) == 'tar' ||
         tools::file_ext(i) == 'bz' 
     ) {
-        if (getOption("readtext_verbosity") >=3 ) 
+        if (getOption("readtext_verbosity") >= 3) 
             message(", unpacking .", tools::file_ext(i), " archive", appendLF = FALSE)
         archiveFiles <- extractArchive(i, ignoreMissing=ignoreMissing)
         return(listMatchingFiles(archiveFiles, ignoreMissing=ignoreMissing))
