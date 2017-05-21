@@ -242,7 +242,7 @@ get_excel <- function(f, text_field, ...) {
     }
 
     docs <- data.table::rbindlist(sheets, fill=TRUE)
-    text_field <- get_numeric_textfield(text_field, docs, path)
+    text_field <- get_numeric_textfield(text_field, docs, path=f)
 
     data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
                stringsAsFactors = FALSE)
@@ -258,7 +258,7 @@ get_ods <- function(f, text_field, ...) {
     }
 
     docs <- data.table::rbindlist(sheets, fill=TRUE)
-    text_field <- get_numeric_textfield(text_field, docs)
+    text_field <- get_numeric_textfield(text_field, docs, path=f)
 
     data.frame(text = docs[,text_field, with=F], docs[, -text_field, with=FALSE],
                stringsAsFactors = FALSE)
