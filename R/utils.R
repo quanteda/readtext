@@ -125,8 +125,6 @@ listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
     #  extension, because '/path/to/*.zip' is a glob expression with a 'zip'
     #  extension.
     
-    print(ignoreMissing)
-
     if (!(ignoreMissing || (length(x) > 0))) {
         stop("File '", x, "' does not exist.")
     }
@@ -273,7 +271,7 @@ is_probably_xpath <- function(x) {
 }
 
 
-get_numeric_textfield <- function(text_field, docs) {
+get_numeric_textfield <- function(text_field, docs, path) {
     if (is.character(text_field)) {
         text_fieldi <- which(names(docs) == text_field)
         if (length(text_fieldi) == 0)
