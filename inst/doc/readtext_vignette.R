@@ -12,7 +12,7 @@ DATA_DIR <- system.file("extdata/", package = "readtext")
 
 ## ------------------------------------------------------------------------
 # Read in all files from a folder
-readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 
 ## ------------------------------------------------------------------------
 # Manifestos with docvars from filenames
@@ -129,7 +129,7 @@ notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
 fileencodings[notAvailableIndex]
 
 ## ------------------------------------------------------------------------
-txts <- readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip"), 
+txts <- readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip"), 
                  encoding = fileencodings,
                  docvarsfrom = "filenames", 
                  docvarnames = c("document", "language", "input_encoding"))

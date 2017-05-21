@@ -45,7 +45,7 @@ The folder "txt" contains a subfolder named UDHR with .txt files of the Universa
 
 ```{r}
 # Read in all files from a folder
-readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ```
 
 We can specify document-level metadata (`docvars`) based on the file names or on a separate data.frame. Below we take the docvars from the filenames (`docvarsfrom = "filenames"`) and set the names for each variable (`docvarnames = c("unit", "context", "year", "language", "party")`). The command `dvsep = "_"` determines the separator (a regular expression character string) included in the filenames to delimit the `docvar` elements. 
@@ -239,7 +239,7 @@ If we read the text files without specifying the encoding, we get erroneously fo
 
 We can also add `docvars` based on the filenames.
 ```{r}
-txts <- readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip"), 
+txts <- readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip"), 
                  encoding = fileencodings,
                  docvarsfrom = "filenames", 
                  docvarnames = c("document", "language", "input_encoding"))

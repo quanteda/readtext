@@ -106,7 +106,7 @@ DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 <h2>2.1 Plain text files (.txt)</h2>
 <p>The folder “txt” contains a subfolder named UDHR with .txt files of the Universal Declaration of Human Rights in 13 languages.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in all files from a folder</span>
-<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;txt/UDHR/*&quot;</span>))
+<span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/txt/UDHR/*&quot;</span>))
 ## readtext object consisting of 13 documents and 0 docvars.
 ## # data.frame [13 × 2]
 ##              doc_id                      text
@@ -262,7 +262,7 @@ corpus_csv &lt;-<span class="st"> </span><span class="kw">corpus</span>(rt_csv)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Thu May 18 10:04:05 2017
+## Created: Sun May 21 20:24:55 2017
 ## Notes:</code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -345,7 +345,7 @@ fileencodings[notAvailableIndex]
 ## [1] &quot;UTF-8-BOM&quot;</code></pre></div>
 <p>If we read the text files without specifying the encoding, we get erroneously formatted text. To avoid this, we determine the <code>encoding</code> using the character object <code>fileencoding</code> created above.</p>
 <p>We can also add <code>docvars</code> based on the filenames.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txts &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;data_files_encodedtexts.zip&quot;</span>), 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txts &lt;-<span class="st"> </span><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/data_files_encodedtexts.zip&quot;</span>), 
                  <span class="dt">encoding =</span> fileencodings,
                  <span class="dt">docvarsfrom =</span> <span class="st">&quot;filenames&quot;</span>, 
                  <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">&quot;document&quot;</span>, <span class="st">&quot;language&quot;</span>, <span class="st">&quot;input_encoding&quot;</span>))
@@ -411,7 +411,7 @@ fileencodings[notAvailableIndex]
 ##    Arabic   WINDOWS-1256
 ## 
 ## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit
-## Created: Thu May 18 10:04:05 2017
+## Created: Sun May 21 20:24:55 2017
 ## Notes:</code></pre></div>
 </div>
 </div>
