@@ -68,8 +68,8 @@ get_json <- function(path, text_field, encoding, ...) {
 
 ## Twitter json
 get_json_tweets <- function(path, source="twitter", ...) {
-    if (!requireNamespace("streamR", quietly = TRUE))
-        stop("You must have streamR installed to read Twitter json files.")
+    # if (!requireNamespace("streamR", quietly = TRUE))
+    #     stop("You must have streamR installed to read Twitter json files.")
     
     # read raw json data
     txt <- readLines(path, warn = FALSE, ...)
@@ -82,8 +82,8 @@ get_json_tweets <- function(path, source="twitter", ...) {
 ## general json
 #' @importFrom data.table setDT
 get_json_object <- function(path, text_field, ...) {
-    if (!requireNamespace("jsonlite", quietly = TRUE))
-        stop("You must have jsonlite installed to read json files.")
+    # if (!requireNamespace("jsonlite", quietly = TRUE))
+    #     stop("You must have jsonlite installed to read json files.")
     if (is.numeric(text_field)) {
         stop('Cannot use numeric text_field with json file')
     }
@@ -100,8 +100,8 @@ get_json_object <- function(path, text_field, ...) {
 
 #' @importFrom data.table rbindlist
 get_json_lines <- function(path, text_field, ...) {
-    if (!requireNamespace("jsonlite", quietly = TRUE))
-        stop("You must have jsonlite installed to read json files.")
+    # if (!requireNamespace("jsonlite", quietly = TRUE))
+    #     stop("You must have jsonlite installed to read json files.")
     if (is.numeric(text_field)) {
         stop('Cannot use numeric text_field with json file')
     }
@@ -123,15 +123,15 @@ get_json_lines <- function(path, text_field, ...) {
 
 
 ## flat xml format
-get_xml <- function(path, text_field, encoding,...) {
+get_xml <- function(path, text_field, encoding, collapse = "", ...) {
     # TODO: encoding param is ignored
-    if (!requireNamespace("XML", quietly = TRUE))
-        stop("You must have XML installed to read XML files.")
+    # if (!requireNamespace("XML", quietly = TRUE))
+    #     stop("You must have XML installed to read XML files.")
     
     if (is_probably_xpath(text_field))  {
         xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
         txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
-        txt <- paste0(txt, collapse='')
+        txt <- paste0(txt, collapse = collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
     }
     else {

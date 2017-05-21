@@ -6,8 +6,8 @@
 \title{Import and handling for plain and formatted text files}
 \description{
 A set of functions for  importing and handling text files and formatted text 
-files with additional meta-data, such including .csv, .tab, .json, .xml, and 
-others.
+files with additional meta-data, such including .csv, .tab, .json, .xml, .xls,
+.xlsx, and others.
 }
 \details{
 \pkg{readtext} makes it easy to import text files in various formats, 

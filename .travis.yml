@@ -2,6 +2,7 @@ r_packages:
     - covr
     - pdftools
 language: r
+warnings_are_errors: true
 sudo: true
 dist: trusty
 addons:
