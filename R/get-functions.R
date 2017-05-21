@@ -250,7 +250,7 @@ get_excel <- function(f, text_field, ...) {
 
 
 get_ods <- function(f, text_field, ...) {
-    sheet_names <- readxl::ods_sheets(f)
+    sheet_names <- readODS::ods_sheets(f)
     sheets <- lapply(sheet_names, function(x, ...) {readODS::read_ODS(f, sheet=x, ...)})
 
     if (length(unique(sapply(sheets, ncol))) != 1) {
