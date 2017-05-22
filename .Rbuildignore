@@ -9,3 +9,6 @@ __MACOSX
 ^vignettes/figure
 ^\.httr-oauth$
 ^appveyor\.yml$
+^tests/data/encoding
+^tests/testthat/test-readtext-encodedfiles.R
+
