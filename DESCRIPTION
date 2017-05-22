@@ -5,7 +5,8 @@ Title: Import and Handling for Plain and Formatted Text Files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
     c("aut", "cre", "cph")), 
     person("Adam", "Obeng", email = "quanteda@binaryeagle.com", role = "aut"),
-    person("Paul", "Nulty", email = "paul.nulty@gmail.com", role = "aut") )
+    person("Paul", "Nulty", email = "paul.nulty@gmail.com", role = "ctb"),
+    person("Stefan", "Müller", email = "mullers@tcd.ie", role = "ctb"))
 Description: Functions for importing and handling text files and formatted text
     files with additional meta-data, such including '.csv', '.tab', '.json', '.xml',
     '.pdf', '.doc', '.docx', '.xls', '.xlsx', and others.
