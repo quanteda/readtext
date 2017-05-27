@@ -31,6 +31,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
+SystemRequirements: pdftotext, antiword
 URL: http://github.com/kbenoit/readtext
 Encoding: UTF-8
 BugReports: https://github.com/kbenoit/readtext/issues
