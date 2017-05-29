@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 [1]: https://codecov.io/gh/kbenoit/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, and Paul Nulty.
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
 
 ## Introduction
 
@@ -33,7 +33,7 @@ An R package for reading text files in all their various formats, by Ken Benoit,
 
 **readtext** accepts filemasks, so that you can specify a pattern to load multiple texts, and these texts can even be of multiple types.  **readtext** is smart enough to process them correctly, returning a data.frame with a primary field "text" containing a character vector of the texts, and additional columns of the data.frame as found in the document variables from the source files.
 
-As encoding can also be a challenging issue for those reading in texts, we include functions for diagnosing encodings on a file-by-file basis, and allow you to specify vectorized input encodings to read in file types with individually set (and different) encodings.  (All ecnoding functions are handled by the **stringi** package.)
+As encoding can also be a challenging issue for those reading in texts, we include functions for diagnosing encodings on a file-by-file basis, and allow you to specify vectorized input encodings to read in file types with individually set (and different) encodings.  (All encoding functions are handled by the **stringi** package.)
 
 ## How to Install
 
@@ -46,68 +46,43 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 
 2.  From CRAN
 
-    (coming soon)
+    ```{r, eval = FALSE}
+    install.packages("readtext")
+    ```
+
+
+## Demonstration: Reading one or more text files
+
+**readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx). **readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).
+
+Usually, you do not have to determine the format of the files explicitly - readtext takes this information from the file ending.
+
+    ```{r, eval = FALSE}
+    # get the data directory from readtext
+    DATA_DIR <- system.file("extdata/", package = "readtext")
+    
+    # read in all files from a folder
+    readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
+    
+    # read in comma-separated values and specify text field
+    readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
+    ```
 
 ## Inter-operability with **quanteda**
 
-**readtext** was originally developed in early versions of the [**quanteda**](https://github.com/kbenoit/quanteda) package for the quantitative analysis of textual data.  It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**.  Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
+**readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. Because quanteda's corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
 
-```{r}
-require(readtext)
-require(quanteda)
+    ```{r, eval = FALSE}
+    require(quanteda)
+    
+    # read in comma-separated values with readtext
+    rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
+    
+    # create quanteda corpus
+    corpus_csv <- corpus(rt_csv)
+    summary(corpus_csv, 5)
+    ```
 
-# set verbosity level to 2
-options(readtext_verbosity = 2)
-
-FILEDIR <- tempdir()
-unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
-
-# get encoding from filename
-filenames <- list.files(FILEDIR, "\\.txt$")
-# strip the extension
-filenames <- gsub(".txt$", "", filenames)
-parts <- strsplit(filenames, "_")
-fileencodings <- sapply(parts, "[", 3)
-fileencodings
-
-# find out which conversions are unavailable (through iconv())
-cat("Encoding conversions not available for this platform:")
-notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
-fileencodings[notAvailableIndex]
-
-# read in some text files
-# try readtext
-txts <- readtext(paste0(FILEDIR, "/", "*.txt"))
-# substring(texts(txts)[1], 1, 80)  # gibberish
-# substring(texts(txts)[4], 1, 80)  # hex
-# substring(texts(txts)[40], 1, 80) # hex
-
-# read them in again
-txts <- readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings)
-substring(texts(txts)[1], 1, 80)  # English
-substring(texts(txts)[4], 1, 80)  # Arabic, looking good 
-substring(texts(txts)[40], 1, 80) # Cyrillic, looking good
-substring(texts(txts)[7], 1, 80)  # Chinese, looking good
-substring(texts(txts)[26], 1, 80) # Hindi, looking good
-
-txts <- readtext(paste0(FILEDIR, "/", "*.txt"), 
-                 encoding = fileencodings,
-                 docvarsfrom = "filenames", 
-                 docvarnames = c("document", "language", "inputEncoding"))
-encodingCorpus <- corpus(txts, textField = "texts", 
-                         source = "Created by encoding-tests.R") 
-summary(encodingCorpus)
-```
-
-Piping works too:
-```{r}
-require(magrittr)
-readtext(paste0(FILEDIR,  "/", "*.txt"), encoding = fileencodings) %>%
-    corpus(textField = "texts") %>% 
-        summary
-```
-
-
-
+The **readtext** [vignette](https://github.com/kbenoit/readtext/blob/master/inst/doc/readtext_vignette.Rmd) explains in more detail how to use the package. 
 
 
