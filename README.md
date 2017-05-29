@@ -18,17 +18,17 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 How to Install
 --------------
 
-1.  From GitHub
+1.  From CRAN
+
+    ``` r
+    install.packages("readtext")
+    ```
+
+2.  From GitHub, if you want the latest development version.
 
     ``` r
     # devtools packaged required to install readtext from Github 
     devtools::install_github("kbenoit/readtext") 
-    ```
-
-2.  From CRAN
-
-    ``` r
-    install.packages("readtext")
     ```
 
 Demonstration: Reading one or more text files
@@ -36,33 +36,57 @@ Demonstration: Reading one or more text files
 
 **readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx). **readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).
 
-Usually, you do not have to determine the format of the files explicitly - readtext takes this information from the file ending.
+The file formats are determined automatically by the filename extensions. If a file has no extension or is unknown, **readtext** will assume that it is plain text. The following command, for instance, will load in all of the files from the subdirectory `txt/UDHR/`:
 
-    ```r
-    # get the data directory from readtext
-    DATA_DIR <- system.file("extdata/", package = "readtext")
+``` r
+require(readtext)
+## Loading required package: readtext
+# get the data directory from readtext
+DATA_DIR <- system.file("extdata/", package = "readtext")
 
-    # read in all files from a folder
-    readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
+# read in all files from a folder
+readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
+## readtext object consisting of 13 documents and 0 docvars.
+## # data.frame [13 x 2]
+##              doc_id                          text
+##               <chr>                         <chr>
+## 1  UDHR_chinese.txt "\"世界人权宣言\n联合国\"..."
+## 2    UDHR_czech.txt           "\"VŠEOBECNÁ \"..."
+## 3   UDHR_danish.txt           "\"Den 10. de\"..."
+## 4  UDHR_english.txt           "\"Universal \"..."
+## 5   UDHR_french.txt           "\"Déclaratio\"..."
+## 6 UDHR_georgian.txt           "\"FLFVBFYBC \"..."
+## # ... with 7 more rows
+```
 
-    # read in comma-separated values and specify text field
-    readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
-    ```
+For files that contain multiple documents, such as comma-separated-value documents, you will need to specify the column name containing the texts, using the `text_field` argument:
+
+``` r
+# read in comma-separated values and specify text field
+readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
+## readtext object consisting of 5 documents and 3 docvars.
+## # data.frame [5 x 5]
+##              doc_id                text  Year  President FirstName
+##               <chr>               <chr> <int>      <chr>     <chr>
+## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington    George
+## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington    George
+## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797      Adams      John
+## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801  Jefferson    Thomas
+## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805  Jefferson    Thomas
+```
+
+For a more complete demonstration, see the package [vignette](http://cdn.rawgit.com/kbenoit/readtext/master/inst/doc/readtext_vignette.html).
 
 Inter-operability with **quanteda**
 -----------------------------------
 
-**readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. Because quanteda's corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
+**readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
 
-    ```r
-    require(quanteda)
-
-    # read in comma-separated values with readtext
-    rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
-
-    # create quanteda corpus
-    corpus_csv <- corpus(rt_csv)
-    summary(corpus_csv, 5)
-    ```
-
-The **readtext** [vignette](https://github.com/kbenoit/readtext/blob/master/inst/doc/readtext_vignette.Rmd) explains in more detail how to use the package.
+``` r
+require(quanteda)
+# read in comma-separated values with readtext
+rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
+# create quanteda corpus
+corpus_csv <- corpus(rt_csv)
+summary(corpus_csv, 5)
+```
