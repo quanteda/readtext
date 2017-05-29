@@ -1,5 +1,5 @@
 
-readtext 0.3.0
+readtext 0.5.0
 ==============
 
 First CRAN release.
