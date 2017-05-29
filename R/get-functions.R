@@ -177,21 +177,7 @@ get_html <- function(f, ...) {
 
 get_pdf <- function(f, ...) {
     args <- list(...)
-
     txt <- pdftools::pdf_text(as.character(f))
-
-    # tryCatch({
-    #     txt <- system2("pdftotext", c(shQuote(f), "-enc UTF-8", "-nopgbrk", "-"), 
-    #                stdout = TRUE)
-    # },
-    # error = function(e) {
-    #     if (grepl('error in running command', e)) {
-    #         stop(e, 'Please check whether pdftotext is installed. You can download it as part of Xpdf from http://www.foolabs.com/xpdf/home.html')
-    #     } else {
-    #     stop(e)
-    #     }
-    # })
-
     txt <- paste0(txt, collapse='\n')
     Encoding(txt) <- "UTF-8"
     data.frame(text = txt, stringsAsFactors = FALSE)

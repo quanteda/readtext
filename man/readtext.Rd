@@ -36,9 +36,7 @@ into docvars.  The correct format for each JSON file is automatically detected.}
 kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
 argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
 appending different text elements together.}
-\item{\code{pdf}}{pdf formatted files, converted through \code{pdftotext}.  
-Requires that xpdf be installed, either through \code{brew install xpdf} (macOS) 
-or from \url{http://www.foolabs.com/xpdf/home.html} (Windows).}
+\item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
 \item{\code{doc, docx}}{Microsoft Word formatted files.}
 
 \strong{Reading multiple files and file types:} 
