@@ -77,22 +77,43 @@ readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 
 For a more complete demonstration, see the package [vignette](http://cdn.rawgit.com/kbenoit/readtext/master/inst/doc/readtext_vignette.html).
 
-Inter-operability with **quanteda**
------------------------------------
+Inter-operability with other packages
+-------------------------------------
+
+### With **quanteda**
 
 **readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
 
 ``` r
 require(quanteda)
+## Loading required package: quanteda
+## quanteda version 0.9.9.65
+## Using 7 of 8 cores for parallel computing
+## 
+## Attaching package: 'quanteda'
+## The following object is masked from 'package:utils':
+## 
+##     View
 # read in comma-separated values with readtext
 rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)
 summary(corpus_csv, 5)
+## Corpus consisting of 5 documents.
+## 
+##               Text Types Tokens Sentences Year  President FirstName
+##  inaugCorpus.csv.1   626   1542        23 1789 Washington    George
+##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
+##  inaugCorpus.csv.3   826   2584        37 1797      Adams      John
+##  inaugCorpus.csv.4   716   1935        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
+## 
+## Source:  /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/* on x86_64 by kbenoit
+## Created: Mon May 29 20:24:51 2017
+## Notes:
 ```
 
-Inter-operability with other packages
--------------------------------------
+### Text Interchange Format compatibility
 
 **readtext** returns a data.frame that is formatted as per the corpus structure of the [Text Interchange Format](https://github.com/ropensci/tif), it can easily be used by other packages that can accept a corpus in data.frame format.
 
