@@ -90,3 +90,10 @@ rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts
 corpus_csv <- corpus(rt_csv)
 summary(corpus_csv, 5)
 ```
+
+Inter-operability with other packages
+-------------------------------------
+
+**readtext** returns a data.frame that is formatted as per the corpus structure of the [Text Interchange Format](https://github.com/ropensci/tif), it can easily be used by other packages that can accept a corpus in data.frame format.
+
+If you only want a named `character` object, **readtext** also defines an `as.character()` method that inputs its data.frame and returns just the named character vector of texts, conforming to the TIF definition of the character version of a corpus.
