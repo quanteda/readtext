@@ -31,9 +31,9 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
-URL: http://github.com/kbenoit/readtext
+URL: http://github.com/quanteda/readtext
 Encoding: UTF-8
-BugReports: https://github.com/kbenoit/readtext/issues
+BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

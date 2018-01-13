@@ -18,12 +18,12 @@ knitr::opts_chunk$set(
 
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 ![Downloads](http://cranlogs.r-pkg.org/badges/readtext)
-[![Travis-CI Build Status](https://travis-ci.org/kbenoit/readtext.svg?branch=master)](https://travis-ci.org/kbenoit/readtext)
-[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/kbenoit/readtext)
-[![codecov.io](https://codecov.io/github/kbenoit/readtext/coverage.svg?branch=master)][1]
+[![Travis-CI Build Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
+[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/quanteda/readtext)
+[![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)][1]
 
 
-[1]: https://codecov.io/gh/kbenoit/readtext/branch/master
+[1]: https://codecov.io/gh/quanteda/readtext/branch/master
 
 An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
 
@@ -48,7 +48,7 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 
     ```{r, eval = FALSE}
     # devtools packaged required to install readtext from Github 
-    devtools::install_github("kbenoit/readtext") 
+    devtools::install_github("quanteda/readtext") 
     ```
 
 
@@ -74,13 +74,13 @@ For files that contain multiple documents, such as comma-separated-value documen
 readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ```
 
-For a more complete demonstration, see the package [vignette](http://cdn.rawgit.com/kbenoit/readtext/master/inst/doc/readtext_vignette.html).
+For a more complete demonstration, see the package [vignette](http://cdn.rawgit.com/quanteda/readtext/master/inst/doc/readtext_vignette.html).
 
 ## Inter-operability with other packages
 
 ### With **quanteda**
 
-**readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/kbenoit/quanteda) package for the quantitative analysis of textual data. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
+**readtext** was originally developed in early versions of the [**quanteda**](http:/github.com/quanteda/quanteda) package for the quantitative analysis of textual data. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
 
 ```{r}
 require(quanteda)
