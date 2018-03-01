@@ -45,19 +45,18 @@ mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
 
     alphanumeric <- c(0:9, LETTERS, letters)
 
-    filename <- paste0(sample(alphanumeric, 10, replace=T), collapse='')
+    filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse='')
     filename <- paste0(prefix, filename)
     filename <- file.path(base_path, filename)
     while (file.exists(filename) || dir.exists(filename)) {
-        filename <- paste0(sample(alphanumeric, 10, replace=T), collapse='')
+        filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse='')
         filename <- paste0(prefix, filename)
         filename <- file.path(base_path, filename)
     }
 
     if (directory) {
         dir.create(filename)
-    }
-    else {
+    } else {
         file.create(filename)
     }
 
@@ -67,7 +66,7 @@ mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
 
 downloadRemote <- function (i, ignoreMissing) {
     # First, check that this is not a URL with an unsupported scheme
-    scheme <- stringi::stri_match(i, regex='^([a-z][a-z+.-]*):')[, 2]
+    scheme <- stri_match(i, regex='^([a-z][a-z+.-]*):')[, 2]
     if (!(scheme %in% c('http', 'https', 'ftp'))) {
         stop(paste('Unsupported URL scheme', scheme))
     }
@@ -88,43 +87,42 @@ downloadRemote <- function (i, ignoreMissing) {
     localfile
 }
 
+#  The implementation of listMatchingFiles and listMatchingFile might seem very
+#  complex, but it was arrived at after a lot of toil. The main design decision
+#  made here is that the user should be able to pass many different types of
+#  string to listMatchingFiles and get a consistent result: a list of local
+#  filenames. (One additional wrinkle is that there are two functions,
+#  listMatchingFiles and listMatchingFile. This is to ensure that
+#  listMatchingFile is only ever called with a length 1 argument, even though it
+#  can return multiple filenames. For the purposes of this explanation, this
+#  distinction is elided).
+#  There are four possible types of values for x
+#     - a simple filename
+#     - a remote URL
+#     - a glob pattern
+#     - a vector of some combination of the above
+#  listMatchingFiles has a recursive design, because  some of these arguments
+#  can resolve to arguments which need further processing: e.g. a remote URL
+#  could resolve to a zip file which needs to be extracted. The termination
+#  condition for the recursion is when the argument passed is a local filepath
+#  which refers to a single file and needs no further processing, e.g. something
+#  like '/path/to/text.tsv'. However, it is not possible to determine if a given
+#  argument is a path to a single file or a glob pattern which matches multiple
+#  files, without actually trying the match. This matters because if it's the
+#  result of a globbing expression, then it could potentially need further
+#  processing, but if it's not, it the recursion needs to end. We can't know
+#  beforehand because the rules for globbing are implementation-dependent
+#  (systems might treat '/path/to/file\*.tsv' as either a filename or a path
+#  depending on  whether they support escaping of glob wildcards. We could have
+#  tested the return value from Sys.glob to see whether the system treats a
+#  given string as a glob pattern or a simple filename. Unfortunately,
+#  Sys.glob() will return character(0) for either a glob pattern which matches
+#  no files, or a non-glob filename for a file that doesn't exist, so that
+#  doesn't work either. We also can't test whether a pattern is a regular file
+#  by looking at the extension, because '/path/to/*.zip' is a glob expression
+#  with a 'zip' extension.
 listMatchingFiles <- function(x, ignoreMissing = FALSE, lastRound = FALSE) {
-    #  The implementation of listMatchingFiles and listMatchingFile might seem
-    #  very complex, but it was arrived at after a lot of toil. The main design
-    #  decision made here is that the user should be able to pass many
-    #  different types of string to listMatchingFiles and get a consistent result:
-    #  a list of local filenames. (One additional wrinkle is that there are two
-    #  functions, listMatchingFiles and listMatchingFile. This is to ensure that
-    #  listMatchingFile is only ever called with a length 1 argument, even though
-    #  it can return multiple filenames. For the purposes of this explanation, 
-    #  this distinction is elided).
-    #  There are four possible types of values for x
-    #     - a simple filename
-    #     - a remote URL
-    #     - a glob pattern
-    #     - a vector of some combination of the above
-    #  listMatchingFiles has a recursive design, because  some of these 
-    #  arguments can resolve to arguments which need further processing: e.g.
-    #  a remote URL could resolve to a zip file which needs to be extracted.
-    #  The termination condition for the recursion is when the argument passed
-    #  is a local filepath which refers to a single file and needs no further
-    #  processing, e.g. something like '/path/to/text.tsv'. However, it is not
-    #  possible to determine if a given argument is a path to a single file 
-    #  or a glob pattern which matches multiple files, without actually trying
-    #  the match. This matters because if it's the result of a globbing expression,
-    #  then it could potentially need further processing, but if it's not, it the recursion
-    #  needs to end. We can't know beforehand because the rules for globbing are 
-    #  implementation-dependent (systems might treat '/path/to/file\*.tsv' as
-    #  either a filename or a path depending on  whether they support escaping
-    #  of glob wildcards. We could have tested the return value from Sys.glob
-    #  to see whether the system treats a given string as a glob pattern or a 
-    #  simple filename. Unfortunately, Sys.glob() will return character(0)
-    #  for either a glob pattern which matches no files, or a non-glob filename
-    #  for a file that doesn't exist, so that doesn't work either.
-    #  We also can't test whether a pattern is a regular file by looking at the
-    #  extension, because '/path/to/*.zip' is a glob expression with a 'zip'
-    #  extension.
-    
+
     if (!(ignoreMissing || (length(x) > 0))) {
         stop("File '", x, "' does not exist.")
     }
@@ -162,14 +160,13 @@ extractArchive <- function(i, ignoreMissing) {
     file.path(td, '*')
 }
 
-#' @importFrom stringi stri_match
-#' @importFrom stringi stri_replace
+#' @import stringi
 listMatchingFile <- function(x, ignoreMissing, lastRound) {
     filenames <- c()
     #  Remove 'file' scheme
-    i <- stringi::stri_replace_first_regex(x, "^file://", "")
+    i <- stri_replace_first_regex(x, "^file://", "")
     
-    scheme <- stringi::stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
+    scheme <- stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
@@ -213,72 +210,72 @@ listMatchingFile <- function(x, ignoreMissing, lastRound) {
         if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
         i <- Sys.glob(i)
         return(
-            listMatchingFiles(i, ignoreMissing=ignoreMissing, lastRound=T)
+            listMatchingFiles(i, ignoreMissing = ignoreMissing, lastRound = T)
         )
     }
     
 }
 
-## KB
-##
-## return basenames that are unique
-##   pathonly if TRUE, just return the unique part of the path
-##
-## Examples:
-##
-## files <- c("../data/glob/subdir1/test.txt", "../data/glob/subdir2/test.txt")
-## basename_unique(files)
-## # [1] "subdir1/test.txt" "subdir2/test.txt"
-## basename_unique(files, pathonly = TRUE)
-## # [1] "subdir1" "subdir2"
-## basename_unique(c("../data/test1.txt", "../data/test2.txt"))
-## # [1] "test1.txt" "test2.txt"
-basename_unique <- function(x, pathonly = FALSE) {
-    # make a data.frame with the parts
-    df <- data.frame(do.call(rbind, strsplit(x, "/")))
-    
-    # get the level of the pathname that makes it unique
-    elements <- apply(df, 2, function(x) ifelse(length(unique(x)) == 1, TRUE, FALSE))
-
-    # trap the case where pathonly is TRUE and all path elements are equal
-    if (all(elements[-length(elements)]) & pathonly==TRUE) return("")
-    
-    first_different_element <- min(which(!elements))
-    last_element <- ifelse(pathonly, ncol(df) - 1, ncol(df))
-    bnames <- apply(df[, first_different_element : last_element, drop = FALSE], 1, 
-                    paste, collapse = "/")
-    return(bnames)
+#' Return basenames that are unique
+#' @param x file pathes
+#' @param path_only if \code{TRUE}, only return the unique part of the path
+#' @keywords internal
+#' @examples
+#' files <- c("../data/glob/subdir1/test.txt", "../data/glob/subdir2/test.txt")
+#' readtext:::basename_unique(files)
+#' # [1] "subdir1/test.txt" "subdir2/test.txt"
+#' readtext:::basename_unique(files, path_only = TRUE)
+#' # [1] "subdir1" "subdir2"
+#' readtext:::basename_unique(c("../data/test1.txt", "../data/test2.txt"))
+#' # [1] "test1.txt" "test2.txt"
+basename_unique <- function(x, path_only = FALSE) {
+    temp <- as.data.frame(strsplit(x, "/"), fix.empty.names = FALSE)
+    if (path_only)
+        temp <- temp[length(temp) * -1,,drop = FALSE]
+    is_uniform <- apply(temp, 1, function(x) length(unique(x)) == 1)
+    if (all(is_uniform)) {
+        index <- integer()
+    } else {
+        index <- seq(min(which(!is_uniform)), max(which(!is_uniform)))
+    }
+    temp <- temp[index,,drop = FALSE]
+    sapply(temp, paste0, collapse = "/")
 }
 
 
 ## impute the variable types, just like read.csv
 ## needed when the files read in tend to make everything character 
-imputeDocvarsTypes <- function(docv) {
-    if (nrow(docv) == 0) return(docv)
+impute_types <- function(x) {
+    if (nrow(x) == 0) return(x)
     # Impute types of columns, just like read.table
-    docv[] <- lapply(docv, function(x) type.convert(as.character(x), as.is=T))
+    x <- lapply(x, function(x) type.convert(as.character(x), as.is = TRUE))
     # And convert columns which have been made into factors into strings
-    factor_cols <- vapply(docv, is.factor, FUN.VALUE=c(T))
-    docv[factor_cols] <- lapply(docv[factor_cols], as.character)
-    data.frame(docv)
+    is_factor <- sapply(x, is.factor)
+    x[is_factor] <- lapply(x[is_factor], as.character)
+    return(x)
 }
 
 is_probably_xpath <- function(x) {
     invalid_xml_element_chars <- c('/', '@')
     any(
-        sapply(invalid_xml_element_chars, function(i) {grepl(i, x, perl=T)})
+        sapply(invalid_xml_element_chars, function(i) grepl(i, x, perl = TRUE))
     )
 }
 
-
-get_numeric_textfield <- function(text_field, docs, path) {
-    if (is.character(text_field)) {
-        text_fieldi <- which(names(docs) == text_field)
-        if (length(text_fieldi) == 0)
-            stop(paste("There is no field called", text_field, "in file", path))
-        text_field <- text_fieldi
-    } else if (is.numeric(text_field) & (text_field > ncol(docs))) {
-        stop(paste0("There is no ", text_field, "th field in file ", path))
+sort_fields <- function(x, text_field, impute_types = FALSE) {
+    index <- seq(ncol(x))
+    flag <- FALSE
+    if (is.numeric(text_field)) {
+        flag <- index == text_field
+    } else if (is.character(text_field)) {
+        flag <- names(x) == text_field
     }
-    text_field
+    stopifnot(sum(flag) == 1)
+    x <- x[c(index[flag], index[!flag])]
+    names(x)[1] <- 'text' 
+    if (impute_types) {
+        return(impute_types(x))
+    } else {
+        return(x)
+    }
 }

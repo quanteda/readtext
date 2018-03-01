@@ -6,7 +6,7 @@
 \usage{
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL,
+  docvarnames = NULL, encoding = NULL, source = NULL,
   verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
@@ -84,6 +84,9 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
+
+\item{source}{specify souce of JSON or HTML files. Currentlly it only supports
+\code{twitter} for JSON and \code{nexis} for HTML.}
 
 \item{verbosity}{\itemize{
   \item 0: output errors only
