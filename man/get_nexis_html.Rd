@@ -23,12 +23,15 @@ This extract headings, body texts and meta data (date, byline, length,
 secotion, edntion) from items in HTML files downloaded by the scraper.
 }
 \examples{
+\dontrun{
 irt <- readtext:::get_nexis_html('tests/data/nexis/irish-times_1995-06-12_0001.html')
 afp <- readtext:::get_nexis_html('tests/data/nexis/afp_2013-03-12_0501.html')
 gur <- readtext:::get_nexis_html('tests/data/nexis/guardian_1986-01-01_0001.html')
 sun <- readtext:::get_nexis_html('tests/data/nexis/sun_2000-11-01_0001.html')
-spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', language_date = 'german')
+spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', 
+                                  language_date = 'german')
 
 all <- readtext('tests/data/nexis', souce = 'nexis')
 all <- readtext('tests/data/nexis', souce = 'nexis')
+}
 }

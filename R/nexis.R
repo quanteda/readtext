@@ -6,55 +6,20 @@
 #' @param paragraph_separator a character to sperarate paragrahphs in body texts.
 #' @param language_date a character to specify langauge-dependent date format.
 #' @param raw_date return date of publication without parsing if \code{TRUE}.
-#' @export
-#' @examples
-#' irt <- import_nexis('tests/html/irish-times_1995-06-12_0001.html')
-#' afp <- import_nexis('tests/html/afp_2013-03-12_0501.html')
-#' gur <- import_nexis('tests/html/guardian_1986-01-01_0001.html')
-#' sun <- import_nexis('tests/html/sun_2000-11-01_0001.html')
-#' spg <- import_nexis('tests/html/spiegel_2012-02-01_0001.html', language_date = 'german')
-#' all <- import_nexis('tests/html', raw_date = TRUE)
-import_nexis <- function(path, paragraph_separator = '|', language_date = c('english', 'german'), raw_date = FALSE){
-
-    language_date <- match.arg(language_date)
-
-    if (dir.exists(path)) {
-        dir <- path
-        file <- list.files(dir, full.names = TRUE, recursive = TRUE)
-        data <- data.frame()
-        for(f in file){
-            #print(file)
-            if(stri_detect_regex(f, '\\.html$|\\.htm$|\\.xhtml$', ignore.case = TRUE)){
-                data <- rbind(data, import_html(f, paragraph_separator, language_date, raw_date))
-            }
-        }
-    } else if (file.exists(path)) {
-        data <- import_html(path, paragraph_separator, language_date, raw_date)
-    } else {
-        stop(path, " does not exist")
-    }
-    return(data)
-}
-
-#' extract texts and meta data from Nexis HTML files
-#'
-#' This extract headings, body texts and meta data (date, byline, length,
-#' secotion, edntion) from items in HTML files downloaded by the scraper.
-#' @param path either path to a HTML file or a directory that containe HTML files
-#' @param paragraph_separator a character to sperarate paragrahphs in body texts.
-#' @param language_date a character to specify langauge-dependent date format.
-#' @param raw_date return date of publication without parsing if \code{TRUE}.
 #' @param ... only to trap extra aguments
 #' @import stringi XML
 #' @examples
+#' \dontrun{
 #' irt <- readtext:::get_nexis_html('tests/data/nexis/irish-times_1995-06-12_0001.html')
 #' afp <- readtext:::get_nexis_html('tests/data/nexis/afp_2013-03-12_0501.html')
 #' gur <- readtext:::get_nexis_html('tests/data/nexis/guardian_1986-01-01_0001.html')
 #' sun <- readtext:::get_nexis_html('tests/data/nexis/sun_2000-11-01_0001.html')
-#' spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', language_date = 'german')
+#' spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', 
+#'                                   language_date = 'german')
 #' 
 #' all <- readtext('tests/data/nexis', souce = 'nexis')
 #' all <- readtext('tests/data/nexis', souce = 'nexis')
+#' }
 get_nexis_html <- function(path, paragraph_separator = '\n\n', 
                            language_date = c('english', 'german'), raw_date = TRUE,
                            verbosity, ...){
@@ -111,23 +76,24 @@ extract_attrs <- function(node, paragraph_separator, language_date, raw_date) {
         if (i == 2) {
             attrs$pub <- stri_trim(str)
         } else if (i == 3) {
-            if (raw_date) {
-                attrs$date <- stri_trim(str)
-            } else {
-                m <- stri_match_first_regex(str, regex)
-                if (all(!is.na(m[1,2:4]))) {
-                    date <- paste0(m[1,2:4], collapse = ' ')
-                    if (language_date == 'german') {
-                        datetime <- stri_datetime_parse(date, 'd MMMM y', locale = 'de_DE')
-                    } else {
-                        datetime <- stri_datetime_parse(date, 'MMMM d y', locale = 'en_EN')
-                    }
-                    attrs$date <- stri_datetime_format(datetime, 'yyyy-MM-dd')
-                }
-                if (!is.na(m[1,8])) {
-                    attrs$edition <- stri_trim(m[1,8])
-                }
-            }
+            attrs$date <- stri_trim(str)
+            # if (raw_date) {
+            #     attrs$date <- stri_trim(str)
+            # } else {
+            #     m <- stri_match_first_regex(str, regex)
+            #     if (all(!is.na(m[1,2:4]))) {
+            #         date <- paste0(m[1,2:4], collapse = ' ')
+            #         if (language_date == 'german') {
+            #             datetime <- stri_datetime_parse(date, 'd MMMM y', locale = 'de_DE')
+            #         } else {
+            #             datetime <- stri_datetime_parse(date, 'MMMM d y', locale = 'en_EN')
+            #         }
+            #         attrs$date <- stri_datetime_format(datetime, 'yyyy-MM-dd')
+            #     }
+            #     if (!is.na(m[1,8])) {
+            #         attrs$edition <- stri_trim(m[1,8])
+            #     }
+            # }
         } else if (i == 4) {
             attrs$head <- stri_trim(str)
         } else if (i >= 5) {
