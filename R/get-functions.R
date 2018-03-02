@@ -35,11 +35,9 @@ get_csv <- function(path, text_field, encoding, source, ...) {
 #  it looks like a twitter json file
 get_json <- function(path, text_field, encoding, source, verbosity, ...) {
     
-    args <- list(...)
-    
     if (source == 'twitter') {
         tryCatch({
-            return(get_json_object(path, text_field, ...))
+            return(get_json_tweets(path, ...))
         }, 
         error = function(e) {
             if (verbosity >= 1) 
@@ -58,7 +56,7 @@ get_json <- function(path, text_field, encoding, source, verbosity, ...) {
         }, 
         error = function(e) {
             if (verbosity >= 1) 
-                stop("Cannot read the JSON file.")
+                stop("This JSON file format is not supported.")
         })
     }
 }
@@ -70,12 +68,11 @@ get_json_tweets <- function(path, ...) {
     
     # read raw json data
     txt <- readLines(path, warn = FALSE, ...)
-    result <- streamR::parseTweets(txt, verbose = FALSE, ...)
     tryCatch({
-        return(sort_fields(result, text_field))
+        streamR::parseTweets(txt, verbose = FALSE, ...)
     }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
+        error = function(e) {
+        stop("Faild to parse JSON file.")
     })
 }
 
@@ -88,7 +85,7 @@ get_json_object <- function(path, text_field, ...) {
         stop('Cannot use numeric text_field with json file')
     
     result <- jsonlite::fromJSON(path, flatten=TRUE, ...)
-    result <- data.table::setDT(docs)
+    result <- data.table::setDT(result)
     tryCatch({
         return(sort_fields(result, text_field))
     }, 
@@ -132,7 +129,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
     }
     else {
         result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
-        if (is.numeric(text_field) & (text_field > ncol(docs))) {
+        if (is.numeric(text_field) & (text_field > ncol(result))) {
             stop(paste0("There is no ", text_field, "th field in file ", path))
         } else {
             if (verbosity >= 1) {

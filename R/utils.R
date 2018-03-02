@@ -239,7 +239,7 @@ basename_unique <- function(x, path_only = FALSE) {
         index <- seq(min(which(!is_uniform)), max(which(!is_uniform)))
     }
     temp <- temp[index,,drop = FALSE]
-    sapply(temp, paste0, collapse = "/")
+    sapply(temp, paste0, collapse = "/", USE.NAMES = FALSE)
 }
 
 

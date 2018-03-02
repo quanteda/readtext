@@ -181,7 +181,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         encoding <- rep(encoding, length(files))
     } else {
         if (length(encoding) != length(files))
-            stop('encoding parameter must be length 1, or as long as the number of files')
+            stop('Encoding parameter must be length 1, or as long as the number of files')
     }
     sources <- mapply(function(x, e) {
         get_source(x, text_field = text_field, encoding = e, source = source, verbosity = verbosity, ...)
