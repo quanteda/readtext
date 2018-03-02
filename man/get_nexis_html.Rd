@@ -4,17 +4,19 @@
 \alias{get_nexis_html}
 \title{extract texts and meta data from Nexis HTML files}
 \usage{
-get_nexis_html(path, paragraph_separator = "\\n\\n",
-  language_date = c("english", "german"), raw_date = TRUE, verbosity, ...)
+get_nexis_html(path, paragraph_separator = "\\n\\n", verbosity, ...)
 }
 \arguments{
 \item{path}{either path to a HTML file or a directory that containe HTML files}
 
 \item{paragraph_separator}{a character to sperarate paragrahphs in body texts.}
 
-\item{language_date}{a character to specify langauge-dependent date format.}
-
-\item{raw_date}{return date of publication without parsing if \code{TRUE}.}
+\item{verbosity}{\itemize{
+  \item 0: output errors only
+  \item 1: output errors and warnings (default)
+  \item 2: output a brief summary message
+  \item 3: output detailed file-related messages
+}}
 
 \item{...}{only to trap extra aguments}
 }
