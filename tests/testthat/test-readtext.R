@@ -66,15 +66,11 @@ test_that("test readtext with glob-style mask", {
 
 test_that("test structured readtext with glob-style mask", {
     expect_equal(
-        length(texts(readtext(
-            '../data/csv/*.csv', text_field='text'
-        ))),
+        nrow(readtext('../data/csv/*.csv', text_field='text')),
         6
     )
     expect_equal(
-        nrow(docvars(readtext(
-            '../data/csv/*.csv', text_field='text'
-        ))),
+        nrow(readtext('../data/csv/*.csv', text_field='text')),
         6
     )
 })
@@ -123,19 +119,19 @@ test_that("test non-implemented functions", {
 })
 
 test_that("test warning for unrecognized filetype", {
-    expect_that(
+    expect_warning(
         readtext('../data/empty/empty.nonesuch'),
-        gives_warning('Unsupported extension " nonesuch " of file')
+        paste0('Unsupported extension ', sQuote('nonesuch'), ' of file *')
     )
 
     # But test that it still loads
-    expect_that(
+    expect_warning(
         readtext('../data/unknown/unknown'),
-        gives_warning('Unsupported extension "  " of file *')
+        paste0('Unsupported extension ', sQuote(''), ' of file *')
     )
     expect_equal(
-        readtext('../data/unknown/unknown')$text,
-        c("The quick brown fox jumps over the lazy dog.")
+        readtext('../data/unknown/unknown', verbosity = 0)$text,
+        "The quick brown fox jumps over the lazy dog."
     )
 
 })
@@ -223,9 +219,9 @@ test_that("test xml files", {
         equals(c("test.xml.1", "test.xml.2"))
     )
 
-    expect_that(
+    expect_warning(
         readtext('../data/xml/test.xml', text_field=1),
-        gives_warning('You should specify text_field by name.*')
+        'You should specify text_field by name.*'
     )
     expect_that(
         unname(texts(readtext('../data/xml/test.xml', text_field=1))),
@@ -310,11 +306,11 @@ test_that("test readtext() with docvarsfrom=filenames", {
                           colour=c('red', 'orange'), stringsAsFactors=F))
     )
 
-    expect_that(
+    expect_warning(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
                          docvarnames=c('id', 'fruit')
         )),
-        gives_warning('Fewer docnames supplied than existing docvars - last 1 docvar given generic names.')
+        'Fewer docnames supplied than existing docvars - last 1 docvar given generic names.'
     )
     expect_that(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
@@ -324,11 +320,11 @@ test_that("test readtext() with docvarsfrom=filenames", {
                           docvar3=c('red', 'orange'), stringsAsFactors = FALSE))
     )
     
-    expect_that(
+    expect_warning(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
                          docvarnames=c('id')
         )),
-        gives_warning('Fewer docnames supplied than existing docvars - last 2 docvars given generic names.')
+        'Fewer docnames supplied than existing docvars - last 2 docvars given generic names.'
     )
     
     #TODO: What happens if you supply more docnames?
@@ -424,27 +420,30 @@ context("Tests of new readtext internals. If these fail, it doesn't necessarily 
 context("Tests for list_files")
 
 test_that("Test function to list files", {
+    
     expect_error(
         readtext:::list_files('nonesuch://example.org/test.txt'),
         'Unsupported URL scheme'
     )
     
     testExistingFile <- readtext:::mktemp()
-    expect_equal(readtext:::list_files(testExistingFile), testExistingFile)
-    expect_equal(readtext:::list_files(paste0('file://', testExistingFile)), testExistingFile)
+    expect_equal(readtext:::list_files(testExistingFile), 
+                 testExistingFile)
+    expect_equal(readtext:::list_files(paste0('file://', testExistingFile)), 
+                 testExistingFile)
     
     
     # Test vector of filenames
     testExistingFile2 <- readtext:::mktemp()
     expect_equal(
         readtext:::list_files(c(testExistingFile, testExistingFile2)),
-        c(testExistingFile, testExistingFile2)
+        sort(c(testExistingFile, testExistingFile2))
     )
     
     # TODO: Test vector of filename and URL
     expect_equal(
         readtext:::list_files(c(testExistingFile, testExistingFile2)),
-        c(testExistingFile, testExistingFile2)
+        sort(c(testExistingFile, testExistingFile2))
     )
     
     file.remove(testExistingFile)
@@ -459,32 +458,32 @@ test_that("Test function to list files", {
     
     
     #Test globbing
-    tempdir <- mktemp(directory=T)
+    tempdir <- readtext:::mktemp(directory = TRUE)
     
     file.create(file.path(tempdir, '1.tsv'))
     file.create(file.path(tempdir, '2.tsv'))
     file.create(file.path(tempdir, '10.tsv'))
     
     expect_equal(
-        length(list_files(paste0(tempdir, '/', '*.tsv' ))),
+        length(readtext:::list_files(paste0(tempdir, '/', '*.tsv' ))),
         3
     )
     
     expect_equal(
-        length(list_files(paste0(tempdir, '/', '?.tsv' ))),
+        length(readtext:::list_files(paste0(tempdir, '/', '?.tsv' ))),
         2
     )
     
     expect_error(
-        length(list_files(paste0(tempdir, '/', '?.txt' ))),
+        length(readtext:::list_files(paste0(tempdir, '/', '?.txt' ))),
         "File '' does not exist"
     )
     
     
     # Test globbing subdir
     
-    tempsubdir1 <- mktemp(base_path=tempdir, directory=T)
-    tempsubdir2 <- mktemp(base_path=tempdir, directory=T)
+    tempsubdir1 <- readtext:::mktemp(base_path=tempdir, directory=T)
+    tempsubdir2 <- readtext:::mktemp(base_path=tempdir, directory=T)
     
     file.create(file.path(tempsubdir1, '1.tsv'))
     file.create(file.path(tempsubdir1, '2.tsv'))
@@ -520,43 +519,38 @@ test_that("Test function to list files with remote sources", {
 test_that("text vectors have names of the files they come from by default (bug 221)", {
 
         expect_equal(
-            names(texts(readtext(
-                '../data/fox/fox.txt'
-            ))),
+            names(texts(readtext('../data/fox/fox.txt'))),
             'fox.txt'
         )
 
         actual_names <- names(texts(readtext(
             '../data/csv/*.csv', text_field='text'
         )))
-        expect_equal(
-            setdiff(
-                c('test.csv.1', 'test.csv.2', 'test2.csv.1', 'test2.csv.2'),
+        expect_true(
+            setequal(
+                c('test.csv.1', 'test.csv.2', 'test2.csv.1', 'test2.csv.2', 'test3.csv.1', 'test3.csv.2'),
                 actual_names
-            ),
-            character(0)
+            )
         )
 
         actual_names <- names(texts(readtext(
             '../data/glob/*.txt'
         )))
-        expect_equal(
-            setdiff(
+        expect_true(
+            setequal(
                 c('1.txt', '2.txt', '3.txt', '4.txt', '10.txt'),
                 actual_names
-            ),
-            character(0)
+            )
         )
 
         actual_names <- names(texts(readtext(
             '../data/tar/test.tar'
         )))
-        expect_equal(
-            setdiff(
+        expect_true(
+            setequal(
                 c('test.txt', 'test2.txt', 'test3.txt', 'test4.txt'),
                 actual_names
-            ),
-            character(0)
+            )
         )
 
 }) 
@@ -670,7 +664,7 @@ test_that("test json files", {
     
     
     # Twitter json files
-    tweetSource <- readtext('../data/tweets/stream.json')
+    tweetSource <- readtext('../data/tweets/stream.json', source = 'twitter')
     
     expect_equal(
         texts(tweetSource),
@@ -736,19 +730,19 @@ context('Tests for verbosity argument')
 test_that("test warning for unrecognized filetype", {
        expect_warning(
            readtext('../data/empty/empty.nonesuch'),
-           'Unsupported extension " nonesuch " of file'
+           paste0('Unsupported extension ', sQuote('nonesuch'), ' of file')
        )
        expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=3),
-           'Unsupported extension " nonesuch " of file'
+           paste0('Unsupported extension ', sQuote('nonesuch'), ' of file')
        )
        expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=2),
-           'Unsupported extension " nonesuch " of file'
+           paste0('Unsupported extension ', sQuote('nonesuch'), ' of file')
        )
        expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=1),
-           'Unsupported extension " nonesuch " of file'
+           paste0('Unsupported extension ', sQuote('nonesuch'), ' of file')
        )
        expect_silent(
            readtext('../data/empty/empty.nonesuch', verbosity=0)
@@ -768,28 +762,22 @@ test_that("messages from list_file",{
     )
     expect_message(
         readtext('../data/zip/inauguralTopLevel.zip', verbosity=3),
-        "reading \\(txt\\) file: 1789-Washington\\.txt"
+        "reading \\(txt\\) file: .*1789-Washington\\.txt"
     )
 })
 
 test_that("readtext called with textfield works with deprecation warning", {
     expect_equal(
-        length(texts(readtext(
-            '../data/csv/*.csv', textfield='text'
-        ))),
-        4
+        nrow(readtext('../data/csv/*.csv', textfield='text')),
+        6
     )
     expect_equal(
-        nrow(docvars(readtext(
-            '../data/csv/*.csv', textfield='text'
-        ))),
-        4
+        nrow(docvars(readtext('../data/csv/*.csv', textfield='text'))),
+        6
     )
     expect_equal(
-        length(texts(readtext(
-            '../data/csv/*.csv', textfield='text'
-        ))),
-        4
+        length(texts(readtext('../data/csv/*.csv', textfield='text'))),
+        6
     )
     expect_warning(
         readtext('../data/csv/*.csv', textfield='text'),

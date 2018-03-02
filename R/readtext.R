@@ -175,6 +175,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         encoding <- getOption("encoding")
     if (is.null(source))
         source <- ''
+    if (verbosity >= 2)
+        message("Reading texts from ", file)
     
     files <- list_files(file, ignore_missing = ignore_missing_files)
     if (length(encoding) == 1) {
@@ -217,14 +219,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     result$doc_id <- id
     rownames(result) <- NULL
     
-    if (verbosity >= 2) {
-        pad <- ""
-        if (verbosity == 2) 
-            pad <- " ... "
-        if (verbosity == 2 && nchar(msg) > 70) 
-            pad <- paste0("\n", pad)
-        message(pad, "read ", nrow(result), " document",  if (nrow(result) == 1) "" else "s.")
-    }
+    if (verbosity >= 2)
+        message(" ... read ", nrow(result), " document",  if (nrow(result) == 1) "" else "s.")
 
     class(result) <- c("readtext", "data.frame")
     result
@@ -232,10 +228,9 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
 ## Read each file as appropriate, calling the get_* functions for recognized
 ## file types
-get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity, ...) {
-    
-    if (verbosity >= 2)
-        message(paste0("Reading ", path))
+get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity, ...,
+                       # deprecated arguments
+                       textfield) {
     
     ext <- tolower(file_ext(path))
     if (ext %in% extensions()) {
@@ -243,15 +238,16 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity,
             call <- deparse(sys.call(1))
             call <- sub(path, paste0(sub('/$', '', path), '/*'), call, fixed = TRUE)
             stop("File '", path, "' does not exist, but a directory of this name does exist. ",
-                 "To read all files in a directory, you must pass a glob expression like ", call, "."
-            )
+                 "To read all files in a directory, you must pass a glob expression like ", call, ".")
         }
     } else {
         if (verbosity >= 1) 
-            warning(paste('Unsupported extension "', ext, '" of file', path, 
-                          'treating as plain text.'))
+            warning('Unsupported extension ', sQuote(ext), ' of file ', path , ' treating as plain text.')
         ext <- 'txt'
     }
+    
+    if (verbosity >= 3)
+        message(" ... reading (", ext, ") file: ", path)
     
     result <- switch(ext, 
                txt = get_txt(path, ...),

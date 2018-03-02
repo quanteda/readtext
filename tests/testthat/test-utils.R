@@ -44,7 +44,8 @@ test_that("Test readtext:::get_docvars_filenames for parsing filenames", {
                    "~/tmp/documents/China_red_dragon.txt",
                    "~/tmp/spaced words/Ireland_black_bear.txt")
     df <- readtext:::get_docvars_filenames(filenames, 
-                                           docvarnames = c("country", "color", "animal"))
+                                           docvarnames = c("country", "color", "animal"),
+                                           verbosity = 2)
     expect_equal(df$animal,
                  c("horse", "dog", "dragon", "bear"))
     
