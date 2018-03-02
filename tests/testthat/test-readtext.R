@@ -69,13 +69,13 @@ test_that("test structured readtext with glob-style mask", {
         length(texts(readtext(
             '../data/csv/*.csv', text_field='text'
         ))),
-        4
+        6
     )
     expect_equal(
         nrow(docvars(readtext(
             '../data/csv/*.csv', text_field='text'
         ))),
-        4
+        6
     )
 })
 
@@ -144,7 +144,7 @@ test_that("test warning for unrecognized filetype", {
 # TODO: Refactor this to loop over filetypes
 test_that("test csv files", {
     # Test corpus object
-    testcorpus <- readtext('../data/csv/test.csv', text_field='text')
+    testcorpus <- readtext('../data/csv/test.csv', text_field = 'text')
     expect_that(
         docvars(testcorpus),
         equals(data.frame(list(colour = c('green', 'red'), number = c(42, 99)), 
@@ -235,12 +235,12 @@ test_that("test xml files", {
         docnames(testcorpus),
         equals(c("test.xml.1", "test.xml.2"))
     )
-
     
     expect_that(
         docvars(readtext('../data/xml/*', text_field='nonesuch')),
-        throws_error("There is no node called")
+        throws_error("There is no field called")
     )
+    
     expect_that(
         docvars(readtext('../data/xml/*', text_field=9000)),
         throws_error("There is no 9000th field")
@@ -293,15 +293,14 @@ test_that("test readtext() with docvarsfrom=filenames", {
                           stringsAsFactors = FALSE))
     )
     
-    expect_that(
-        docvars(readtext('../data/docvars/two/*json', text_field = 'nonesuch', 
-                        docvarsfrom = 'filenames')),
-        throws_error("There is no field called")
+    expect_error(
+        readtext('../data/docvars/two/*json', text_field = 'nonesuch', docvarsfrom = 'filenames'),
+                "There is no field called"
     )
     
-    expect_that(
-        docvars(readtext('../data/docvars/unequal/*', docvarsfrom='filenames')),
-        throws_error("Filename elements are not equal in length.")
+    expect_error(
+        readtext('../data/docvars/unequal/*', docvarsfrom='filenames'),
+        "Filename elements are not equal in length."
     )
     
     expect_that(
@@ -324,7 +323,6 @@ test_that("test readtext() with docvarsfrom=filenames", {
         equals(data.frame(list(id=c(1,2), fruit=c('apple', 'orange')), 
                           docvar3=c('red', 'orange'), stringsAsFactors = FALSE))
     )
-    
     
     expect_that(
         docvars(readtext('../data/docvars/two/*txt', docvarsfrom='filenames',
@@ -371,12 +369,12 @@ test_that("test docvars.readtext warning with field!=NULL", {
 
 
 test_that("test that readtext encoding argument must be either length 1 or same length as the number of files", {
-    expect_that(
+    expect_error(
         readtext(
             c('../data/fox/fox.txt', '../data/fox/fox.txt', '../data/fox/fox.txt', '../data/fox/fox.txt'),
             encoding=c('utf-8', 'utf-8')
         ),
-        throws_error('encoding parameter must be length 1, or as long as the number of files')
+        'Encoding parameter must be length 1, or as long as the number of files'
     )
 })
 
@@ -401,22 +399,22 @@ test_that("An empty tar.gz file raises an error",{
 test_that("test reading structured text files with different columns", {
     testcorpus <- readtext(
         "../data/fruits/*.csv",
-        text_field='text'
+        text_field = 'text'
     )
     
-    expect_that(
+    expect_equal(
         docvars(testcorpus),
-        equals(data.frame(list(
-            color=c('green', 'orange', NA, NA), 
-            shape=c(NA, NA, 'round', 'long')
+        data.frame(list(
+            color = c('green', 'orange', NA, NA), 
+            shape = c(NA, NA, 'round', 'long')
         ),
-        stringsAsFactors=F))
+        stringsAsFactors = FALSE)
     )
     expected_texts <- c('apple', 'orange', 'apple', 'banana')
     names(expected_texts) <- c('1.csv.1', '1.csv.2', '2.csv.1', '2.csv.2')
-    expect_that(
+    expect_equal(
         texts(testcorpus),
-        equals(expected_texts)
+        expected_texts
     )
 })
 
@@ -425,39 +423,39 @@ test_that("test reading structured text files with different columns", {
 
 context("Tests of new readtext internals. If these fail, it doesn't necessarily affect the exposed API")
 
-context("Tests for listMatchingFiles")
+context("Tests for list_files")
 
 test_that("Test function to list files", {
     expect_that(
-        readtext:::listMatchingFiles('nonesuch://example.org/test.txt'),
+        readtext:::list_files('nonesuch://example.org/test.txt'),
         throws_error('Unsupported URL scheme')
     )           
     
     testExistingFile <- mktemp()
-    expect_equal(readtext:::listMatchingFiles(testExistingFile), testExistingFile)
-    expect_equal(readtext:::listMatchingFiles(paste0('file://', testExistingFile)), testExistingFile)
+    expect_equal(readtext:::list_files(testExistingFile), testExistingFile)
+    expect_equal(readtext:::list_files(paste0('file://', testExistingFile)), testExistingFile)
     
     
     # Test vector of filenames
     testExistingFile2 <- mktemp()
     expect_equal(
-        readtext:::listMatchingFiles(c(testExistingFile, testExistingFile2)),
+        readtext:::list_files(c(testExistingFile, testExistingFile2)),
         c(testExistingFile, testExistingFile2)
     )
     
     # TODO: Test vector of filename and URL
     expect_equal(
-        readtext:::listMatchingFiles(c(testExistingFile, testExistingFile2)),
+        readtext:::list_files(c(testExistingFile, testExistingFile2)),
         c(testExistingFile, testExistingFile2)
     )
     
     file.remove(testExistingFile)
     expect_that(
-        readtext:::listMatchingFiles(testExistingFile),
+        readtext:::list_files(testExistingFile),
         throws_error("File '' does not exist")
     )
     expect_equal(
-        readtext:::listMatchingFiles(testExistingFile, ignoreMissing=T),
+        readtext:::list_files(testExistingFile, ignore_missing = TRUE),
         character(0)
     )
     
@@ -470,17 +468,17 @@ test_that("Test function to list files", {
     file.create(file.path(tempdir, '10.tsv'))
     
     expect_equal(
-        length(listMatchingFiles(paste0(tempdir, '/', '*.tsv' ))),
+        length(list_files(paste0(tempdir, '/', '*.tsv' ))),
         3
     )
     
     expect_equal(
-        length(listMatchingFiles(paste0(tempdir, '/', '?.tsv' ))),
+        length(list_files(paste0(tempdir, '/', '?.tsv' ))),
         2
     )
     
     expect_that(
-        length(listMatchingFiles(paste0(tempdir, '/', '?.txt' ))),
+        length(list_files(paste0(tempdir, '/', '?.txt' ))),
         throws_error("File '' does not exist")
     )
     
@@ -495,13 +493,13 @@ test_that("Test function to list files", {
     file.create(file.path(tempsubdir2, '1.tsv'))
     
     expect_equal(
-        length(readtext:::listMatchingFiles(paste0(tempdir, '/', '*/', '?.tsv' ))),
+        length(readtext:::list_files(paste0(tempdir, '/', '*/', '?.tsv' ))),
         3
     )
     
     
     expect_that(
-        readtext:::listMatchingFiles('http://example.org/test.nonesuch'),
+        readtext:::list_files('http://example.org/test.nonesuch'),
         throws_error('Remote URL does not end in known extension.')
     )
     
@@ -510,7 +508,7 @@ test_that("Test function to list files", {
 test_that("Test function to list files with remote sources", {
     skip_on_cran()
     expect_error(
-      readtext:::listMatchingFiles('http://www.google.com/404.txt'),
+      readtext:::list_files('http://www.google.com/404.txt'),
       ".*404.*"
     )
     
@@ -760,7 +758,7 @@ test_that("test warning for unrecognized filetype", {
        )
 })
 
-test_that("messages from listMatchingFile",{
+test_that("messages from list_file",{
     expect_silent(
         readtext('../data/zip/inauguralTopLevel.zip', verbosity=0)
     )
