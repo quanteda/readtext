@@ -10,7 +10,7 @@ test_that("Test readtext:::mktemp function for test dirs",{
     expect_true(dir.exists(dirname))
     
     # test prefix parameter
-    filename <- readtext:::mktemp(prefix='testprefix')
+    filename <- readtext:::mktemp(prefix = 'testprefix')
     expect_equal(
         substr(basename(filename), 1, 10),
         'testprefix'
@@ -37,14 +37,14 @@ test_that("Test is_probably_xpath",{
 
 
 
-test_that("Test readtext:::getdocvarsFromFilenames for parsing filenames", {
+test_that("Test readtext:::get_docvars_filenames for parsing filenames", {
     
     filenames <- c("~/tmp/documents/USA_blue_horse.txt",
                    "~/tmp/documents/France_green_dog.txt",
                    "~/tmp/documents/China_red_dragon.txt",
                    "~/tmp/spaced words/Ireland_black_bear.txt")
-    df <- readtext:::getdocvarsFromFilenames(filenames, 
-                                             docvarnames = c("country", "color", "animal"))
+    df <- readtext:::get_docvars_filenames(filenames, 
+                                           docvarnames = c("country", "color", "animal"))
     expect_equal(df$animal,
                  c("horse", "dog", "dragon", "bear"))
     
@@ -67,7 +67,7 @@ test_that("file_ext returns expected extensions", {
 test_that("Test downloadRemote",{
 
     expect_error(
-        downloadRemote('http://www.google.com/404.txt', ignoreMissing=F)
+        downloadRemote('http://www.google.com/404.txt', ignore_missing = FALSE)
     )
 
 })

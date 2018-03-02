@@ -26,7 +26,7 @@ test_that("test print.readtext", {
 
 
 test_that("test as.character.readtext", {
-    tmp <- readtext('../data/csv/test.csv', text_field='text')
+    tmp <- readtext('../data/csv/test.csv', text_field = 'text')
     expect_equal(
         as.character(tmp),
         c(test.csv.1 = "Lorem ipsum.", test.csv.2 = "Dolor sit")
