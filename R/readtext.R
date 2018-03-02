@@ -269,10 +269,11 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
 
     # assign filename (variants) unique text names
     len <- nrow(result)
+    # TODO: stop using row.names as it errors when duplicated
     if (len > 1) {
-        row.names(result) <- paste(basename_unique(path), seq_len(len), sep = ".")
+        row.names(result) <- paste(basename(path), seq_len(len), sep = ".")
     } else {
-        row.names(result) <- basename_unique(path)
+        row.names(result) <- basename(path)
     }
 
     if (replace_specialchar)
