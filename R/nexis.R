@@ -4,8 +4,7 @@
 #' secotion, edntion) from items in HTML files downloaded by the scraper.
 #' @param path either path to a HTML file or a directory that containe HTML files
 #' @param paragraph_separator a character to sperarate paragrahphs in body texts.
-#' @param language_date a character to specify langauge-dependent date format.
-#' @param raw_date return date of publication without parsing if \code{TRUE}.
+#' @inheritParams readtext
 #' @param ... only to trap extra aguments
 #' @import stringi XML
 #' @examples
@@ -21,10 +20,9 @@
 #' all <- readtext('tests/data/nexis', souce = 'nexis')
 #' }
 get_nexis_html <- function(path, paragraph_separator = '\n\n', 
-                           language_date = c('english', 'german'), raw_date = TRUE,
                            verbosity, ...){
     
-    language_date <- match.arg(language_date)
+    #language_date <- match.arg(language_date)
 
     line <- readLines(path, warn = FALSE, encoding = "UTF-8")
     html <- paste0(fix_html(line), collapse = "\n")
@@ -33,7 +31,7 @@ get_nexis_html <- function(path, paragraph_separator = '\n\n',
     dom <- htmlParse(html, encoding = "UTF-8")
     data <- data.frame()
     for(doc in getNodeSet(dom, '//doc')){
-        data <- rbind(data, extract_attrs(doc, paragraph_separator, language_date, raw_date))
+        data <- rbind(data, extract_attrs(doc, paragraph_separator, verbosity))
     }
     colnames(data) <- c('pub', 'edition', 'date', 'byline', 'length', 'section', 'head', 'body')
     data$file <- basename(path)
@@ -42,23 +40,24 @@ get_nexis_html <- function(path, paragraph_separator = '\n\n',
 }
 
 #' @import stringi XML
-extract_attrs <- function(node, paragraph_separator, language_date, raw_date) {
+extract_attrs <- function(node, paragraph_separator, verbosity) {
 
-    attrs <- list(pub = '', edition = '', date = '', byline = '', length = '', section = '', head = '', body = '')
+    attrs <- list(pub = '', edition = '', date = '', byline = '', 
+                  length = '', section = '', head = '', body = '')
 
-    if (language_date == 'german') {
-        regex <- paste0(c('([0-9]{1,2})',
-                          '[. ]+(Januar|Februar|März|Maerz|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)',
-                          '[ ]+([0-9]{4})',
-                          '([ ]+(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag))?',
-                          '([, ]+(.+))?'), collapse = '')
-    } else {
-        regex <- paste0(c('(January|February|March|April|May|June|July|August|September|October|November|December)',
-                          '[, ]+([0-9]{1,2})',
-                          '[, ]+([0-9]{4})',
-                          '([,; ]+(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))?',
-                          '([, ]+(.+))?'), collapse = '')
-    }
+    # if (language_date == 'german') {
+    #     regex <- paste0(c('([0-9]{1,2})',
+    #                       '[. ]+(Januar|Februar|März|Maerz|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)',
+    #                       '[ ]+([0-9]{4})',
+    #                       '([ ]+(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag))?',
+    #                       '([, ]+(.+))?'), collapse = '')
+    # } else {
+    #     regex <- paste0(c('(January|February|March|April|May|June|July|August|September|October|November|December)',
+    #                       '[, ]+([0-9]{1,2})',
+    #                       '[, ]+([0-9]{4})',
+    #                       '([,; ]+(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))?',
+    #                       '([, ]+(.+))?'), collapse = '')
+    # }
 
     n_max <- 0;
     i <- 1
@@ -113,10 +112,16 @@ extract_attrs <- function(node, paragraph_separator, language_date, raw_date) {
         }
         i <- i + 1
     }
-    if (attrs$pub[1] == '' || is.na(attrs$pub[1])) warning('Failed to extract publication name')
-    if (attrs$date[1] == '' || is.na(attrs$date[1])) warning('Failed to extract date')
-    if (attrs$head[1] == '' || is.na(attrs$head[1])) warning('Failed to extract heading')
-    if (attrs$body[1] == '' || is.na(attrs$body[1])) warning('Failed to extract body text')
+    if (verbosity <= 1) {
+        if (attrs$pub[1] == '' || is.na(attrs$pub[1])) 
+            warning('Failed to extract publication name')
+        if (attrs$date[1] == '' || is.na(attrs$date[1])) 
+            warning('Failed to extract date')
+        if (attrs$head[1] == '' || is.na(attrs$head[1])) 
+            warning('Failed to extract heading')
+        if (attrs$body[1] == '' || is.na(attrs$body[1])) 
+            warning('Failed to extract body text')
+    }
     return(as.data.frame(attrs, stringsAsFactors = FALSE))
 }
 
