@@ -23,12 +23,7 @@ get_csv <- function(path, text_field, encoding, source, ...) {
     } else {
         result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, ...)
     }
-    tryCatch({
-        return(sort_fields(result, text_field))
-    }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
-    })
+    sort_fields(result, path, text_field)
 }
 
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
@@ -44,15 +39,18 @@ get_json <- function(path, text_field, encoding, source, verbosity, ...) {
                 stop("Doesn't look like Tweets JSON file, trying general JSON.")
         })
     } else {
+        if (is.numeric(text_field))
+            stop('Cannot use numeric text_field with json file')
+        
         tryCatch({
-            return(get_json_object(path, text_field, ...))
+            return(sort_fields(get_json_object(path, ...), path, text_field))
         }, 
         error = function(e) {
             if (verbosity >= 1) 
                 message("File doesn't contain a single valid JSON object.")
         })
         tryCatch({
-            return(get_json_lines(path, text_field, ...))   
+            return(sort_fields(get_json_lines(path, ...), path, text_field))
         }, 
         error = function(e) {
             if (verbosity >= 1) 
@@ -78,40 +76,23 @@ get_json_tweets <- function(path, ...) {
 
 ## general json
 #' @importFrom data.table setDT
-get_json_object <- function(path, text_field, ...) {
+get_json_object <- function(path, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
-    if (is.numeric(text_field))
-        stop('Cannot use numeric text_field with json file')
-    
-    result <- jsonlite::fromJSON(path, flatten=TRUE, ...)
-    result <- data.table::setDT(result)
-    tryCatch({
-        return(sort_fields(result, text_field))
-    }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
-    })
+    #as.data.frame(jsonlite::fromJSON(path, flatten = TRUE, ...), stringsAsFactors = FALSE)
+    data.table::setDT(jsonlite::read_json(path, simplifyVector = TRUE))
 }
 
 #' @importFrom data.table rbindlist
-get_json_lines <- function(path, text_field, ...) {
+get_json_lines <- function(path, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
-    if (is.numeric(text_field))
-        stop('Cannot use numeric text_field with json file')
-
     lines <- readLines(path, warn = FALSE)
-    result <- data.table::rbindlist(
-        lapply(lines, function(x) jsonlite::fromJSON(x, flatten = TRUE, ...)),
+    jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
+    data.table::rbindlist(
+        lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
         use.names = TRUE, fill = TRUE
     )
-    tryCatch({
-        return(sort_fields(result, text_field))
-    }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
-    })
 }
 
 
@@ -140,23 +121,15 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         
         # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
         # ourselves, to match get_csv's behaviour
-        tryCatch({
-            return(sort_fields(result, text_field, impute_types = TRUE))
-        }, 
-        error = function(e) {
-            stop(paste("There is no field called", text_field, "in file", path))
-        })
+        sort_fields(result, path, text_field, impute_types = TRUE)
     }
 }
 
 
 get_html <- function(path, encoding, source, verbosity, ...) {
     
-    if (verbosity >= 2)
-        message(paste0("Reading ", path))
-    
     if (source == 'nexis') {
-        return(get_nexis_html(path, ...))
+        return(get_nexis_html(path, verbosity = verbosity, ...))
         tryCatch({
             #return(get_nexis_html(path, ...))
         }, 
@@ -187,7 +160,7 @@ get_pdf <- function(path, source, ...) {
 
 get_docx <- function(path, source, ...) {
     
-    path <- extractArchive(path, ignoreMissing = FALSE)
+    path <- extract_archive(path, ignore_missing = FALSE)
     path <- sub('/\\*$', '', path)
     path <- file.path(path, 'word', 'document.xml')
 
@@ -230,12 +203,7 @@ get_excel <- function(path, text_field, source, ...) {
     }
 
     result <- data.table::rbindlist(sheets, fill=TRUE)
-    tryCatch({
-        return(sort_fields(result, text_field, impute_types = TRUE))
-    }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
-    })
+    sort_fields(result, path, text_field, impute_types = TRUE)
 }
 
 
@@ -247,10 +215,5 @@ get_ods <- function(path, text_field, source, ...) {
         warning('Not all worksheets in file "', path, '" have the same number of columns.')
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
-    tryCatch({
-        return(sort_fields(result, text_field, impute_types = TRUE))
-    }, 
-    error = function(e) {
-        stop(paste("There is no field called", text_field, "in file", path))
-    })
+    sort_fields(result, path, text_field, impute_types = TRUE)
 }
