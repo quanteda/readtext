@@ -26,73 +26,80 @@ get_csv <- function(path, text_field, encoding, source, ...) {
     sort_fields(result, path, text_field)
 }
 
+
+
+    
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
 #  it looks like a twitter json file
 get_json <- function(path, text_field, encoding, source, verbosity, ...) {
     
     if (source == 'twitter') {
-        tryCatch({
-            return(get_json_tweets(path, ...))
-        }, 
-        error = function(e) {
-            if (verbosity >= 1) 
-                stop("Doesn't look like Tweets JSON file, trying general JSON.")
-        })
+        return(get_json_tweets(path, verbosity, ...))
     } else {
         if (is.numeric(text_field))
             stop('Cannot use numeric text_field with json file')
         
-        tryCatch({
-            return(sort_fields(get_json_object(path, ...), path, text_field))
-        }, 
-        error = function(e) {
-            if (verbosity >= 1) 
-                message("File doesn't contain a single valid JSON object.")
-        })
-        tryCatch({
-            return(sort_fields(get_json_lines(path, ...), path, text_field))
-        }, 
-        error = function(e) {
-            if (verbosity >= 1) 
-                stop("This JSON file format is not supported.")
-        })
+        result <- get_json_object(path, verbosity, ...)
+        if (!is.null(result))
+            return(sort_fields(result, path, text_field))
+        
+        result <- get_json_lines(path, verbosity, ...)
+        if (!is.null(result))
+            return(sort_fields(result, path, text_field))
+        stop("This JSON file format is not supported.", call. = FALSE)
     }
 }
 
 ## Twitter json
-get_json_tweets <- function(path, ...) {
+get_json_tweets <- function(path, verbosity, ...) {
     # if (!requireNamespace("streamR", quietly = TRUE))
     #     stop("You must have streamR installed to read Twitter json files.")
-    
     # read raw json data
     txt <- readLines(path, warn = FALSE, ...)
     tryCatch({
         streamR::parseTweets(txt, verbose = FALSE, ...)
     }, 
         error = function(e) {
-        stop("Faild to parse JSON file.")
+        if (verbosity >= 1)     
+            stop("Doesn't look like Tweets JSON file, trying general JSON.")
+        return(NULL)
     })
 }
 
 ## general json
 #' @importFrom data.table setDT
-get_json_object <- function(path, ...) {
+get_json_object <- function(path, verbosity, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
     #as.data.frame(jsonlite::fromJSON(path, flatten = TRUE, ...), stringsAsFactors = FALSE)
-    data.table::setDT(jsonlite::read_json(path, simplifyVector = TRUE))
+    tryCatch({
+        data.table::setDT(jsonlite::read_json(path, simplifyVector = TRUE))
+        #return(get_json_object(path, ...))
+    }, 
+    error = function(e) {
+        if (verbosity >= 1) 
+            message("File doesn't contain a single valid JSON object.")
+        return(NULL)
+    })
 }
 
 #' @importFrom data.table rbindlist
-get_json_lines <- function(path, ...) {
+get_json_lines <- function(path, verbosity, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
-    lines <- readLines(path, warn = FALSE)
-    jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
-    data.table::rbindlist(
-        lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
-        use.names = TRUE, fill = TRUE
-    )
+    
+    tryCatch({
+        lines <- readLines(path, warn = FALSE)
+        jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
+        data.table::rbindlist(
+            lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
+            use.names = TRUE, fill = TRUE
+        )
+    }, 
+    error = function(e) {
+        if (verbosity >= 1) 
+            stop("This JSON file format is not supported.", call. = FALSE)
+    })
 }
 
 
