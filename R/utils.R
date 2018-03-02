@@ -125,12 +125,12 @@ downloadRemote <- function (i, ignore_missing) {
 #  doesn't work either. We also can't test whether a pattern is a regular file
 #  by looking at the extension, because '/path/to/*.zip' is a glob expression
 #  with a 'zip' extension.
-list_files <- function(x, ignore_missing = FALSE, last_round = FALSE) {
+list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, verbosity = 1) {
 
     if (!(ignore_missing || (length(x) > 0)))
         stop("File '", x, "' does not exist.")
     
-    file <- unlist(lapply(x, function (x) list_file(x, ignore_missing, last_round)))
+    file <- unlist(lapply(x, function (x) list_file(x, ignore_missing, last_round, verbosity)))
     
     if (is.null(file)) 
         return(character(0))
@@ -155,7 +155,7 @@ extract_archive <- function(i, ignore_missing) {
 }
 
 #' @import stringi
-list_file <- function(x, ignore_missing, last_round) {
+list_file <- function(x, ignore_missing, last_round, verbosity) {
     filenames <- c()
     #  Remove 'file' scheme
     i <- stri_replace_first_regex(x, "^file://", "")
@@ -163,20 +163,20 @@ list_file <- function(x, ignore_missing, last_round) {
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
-        if (getOption("readtext_verbosity") >=3 ) 
+        if (verbosity >=3 ) 
             message(', reading remote file', appendLF = FALSE)
         #  If there is a non-'file' scheme, treat it as remote
         localfile <- downloadRemote(i, ignore_missing = ignore_missing)
-        return(list_files(localfile, ignore_missing = ignore_missing))
+        return(list_files(localfile, ignore_missing, FALSE, verbosity))
     }
     
     # Now, special local files
     ext <- tools::file_ext(i)
     if (ext %in% c('zip', 'gz', 'tar', 'bz')) {
-        if (getOption("readtext_verbosity") >= 3) 
+        if (verbosity >= 3) 
             message(", unpacking .", ext, " archive", appendLF = FALSE)
-        archiveFiles <- extract_archive(i, ignore_missing = ignore_missing)
-        return(list_files(archiveFiles, ignore_missing = ignore_missing))
+        archives <- extract_archive(i, ignore_missing = ignore_missing)
+        return(list_files(archives, ignore_missing, FALSE, verbosity))
     }
     
     #  At this point, it may be a simple local file or a glob pattern, but as
@@ -187,7 +187,7 @@ list_file <- function(x, ignore_missing, last_round) {
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
         if (dir.exists(i))
-            return(list_files(ignore_missing=ignore_missing, file.path(i, '*')))
+            return(list_files(file.path(i, '*'), ignore_missing, FALSE, verbosity))
         
         if (!(ignore_missing || file.exists(i)))
             stop("File '", i, "' does not exist.")
@@ -200,7 +200,7 @@ list_file <- function(x, ignore_missing, last_round) {
         if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
         i <- Sys.glob(i)
         return(
-            list_files(i, ignore_missing = ignore_missing, last_round = TRUE)
+            list_files(i, ignore_missing, TRUE, verbosity)
         )
     }
     

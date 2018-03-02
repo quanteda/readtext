@@ -178,7 +178,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     if (verbosity >= 2)
         message("Reading texts from ", file)
     
-    files <- list_files(file, ignore_missing = ignore_missing_files)
+    files <- list_files(file, ignore_missing_files, FALSE, verbosity)
     if (length(encoding) == 1) {
         encoding <- rep(encoding, length(files))
     } else {
@@ -228,7 +228,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
 ## Read each file as appropriate, calling the get_* functions for recognized
 ## file types
-get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity, ...,
+get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity = 1, ...,
                        # deprecated arguments
                        textfield) {
     

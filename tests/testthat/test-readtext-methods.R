@@ -18,9 +18,9 @@ test_that("test print.readtext", {
         prints_text('readtext object consisting of 2 documents and 0 docvars.')
     )
     
-    expect_that(
+    expect_output(
         print(readtext('../data/csv/test.csv', text_field='text')),
-        prints_text('readtext object consisting of 2 documents and 2 docvars.')
+        'readtext object consisting of 2 documents and 2 docvars.'
     )
 })
 

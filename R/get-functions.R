@@ -12,7 +12,7 @@ get_csv <- function(path, text_field, encoding, source, ...) {
     # Replace native.enc with UTF-8 if that's what it is
     # http://r.789695.n4.nabble.com/Find-out-what-quot-native-enc-quot-corresponds-to-td4639208.html
     if (encoding == 'native.enc')
-        encoding = strsplit(Sys.getlocale("LC_CTYPE"), '\\.')[[1]][2]
+        encoding <- strsplit(Sys.getlocale("LC_CTYPE"), '\\.')[[1]][2]
     if (!encoding %in% c('Latin-1', 'UTF-8')) { 
         # If the encoding is not one fread supports, open the file using R's native function
         #  Use the encoding arg to open the file, pass all other args to fread
@@ -31,7 +31,7 @@ get_csv <- function(path, text_field, encoding, source, ...) {
     
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
 #  it looks like a twitter json file
-get_json <- function(path, text_field, encoding, source, verbosity, ...) {
+get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
     
     if (source == 'twitter') {
         return(get_json_tweets(path, verbosity, ...))
@@ -51,7 +51,7 @@ get_json <- function(path, text_field, encoding, source, verbosity, ...) {
 }
 
 ## Twitter json
-get_json_tweets <- function(path, verbosity, ...) {
+get_json_tweets <- function(path, verbosity = 1, ...) {
     # if (!requireNamespace("streamR", quietly = TRUE))
     #     stop("You must have streamR installed to read Twitter json files.")
     # read raw json data
@@ -68,13 +68,12 @@ get_json_tweets <- function(path, verbosity, ...) {
 
 ## general json
 #' @importFrom data.table setDT
-get_json_object <- function(path, verbosity, ...) {
+get_json_object <- function(path, verbosity = 1, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
     #as.data.frame(jsonlite::fromJSON(path, flatten = TRUE, ...), stringsAsFactors = FALSE)
     tryCatch({
         data.table::setDT(jsonlite::read_json(path, simplifyVector = TRUE))
-        #return(get_json_object(path, ...))
     }, 
     error = function(e) {
         if (verbosity >= 1) 
@@ -84,7 +83,7 @@ get_json_object <- function(path, verbosity, ...) {
 }
 
 #' @importFrom data.table rbindlist
-get_json_lines <- function(path, verbosity, ...) {
+get_json_lines <- function(path, verbosity = 1, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
     
@@ -104,7 +103,7 @@ get_json_lines <- function(path, verbosity, ...) {
 
 
 ## flat xml format
-get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity, ...) {
+get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, ...) {
     # TODO: encoding param is ignored
     # if (!requireNamespace("XML", quietly = TRUE))
     #     stop("You must have XML installed to read XML files.")
@@ -114,8 +113,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
         txt <- paste0(txt, collapse = collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
-    }
-    else {
+    } else {
         result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
         if (is.numeric(text_field) & (text_field > ncol(result))) {
             stop(paste0("There is no ", text_field, "th field in file ", path))
@@ -133,7 +131,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
 }
 
 
-get_html <- function(path, encoding, source, verbosity, ...) {
+get_html <- function(path, encoding, source, verbosity = 1, ...) {
     
     if (source == 'nexis') {
         return(get_nexis_html(path, verbosity = verbosity, ...))
@@ -216,7 +214,7 @@ get_excel <- function(path, text_field, source, ...) {
 
 get_ods <- function(path, text_field, source, ...) {
     sheet_names <- readODS::ods_sheets(path)
-    sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet=x, ...))
+    sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet = x, ...))
 
     if (length(unique(sapply(sheets, ncol))) != 1)
         warning('Not all worksheets in file "', path, '" have the same number of columns.')
