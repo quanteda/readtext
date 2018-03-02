@@ -155,14 +155,14 @@ test_that("test csv files", {
         c(test.csv.1 = 'Lorem ipsum.', test.csv.2 = 'Dolor sit')
     )
     
-    expect_that(
-        docvars(readtext('../data/csv/*', text_field='nonesuch')),
-        throws_error("There is no field called")
+    expect_error(
+        readtext('../data/csv/*', text_field='nonesuch'),
+        "There is no field called"
     )
     
-    expect_that(
-        docvars(readtext('../data/csv/*', text_field = 9000)),
-        throws_error("There is no 9000th field")
+    expect_error(
+        readtext('../data/csv/*', text_field = 9000),
+        "There is no 9000th field"
     )
     
 })
@@ -179,9 +179,9 @@ test_that("test tab files", {
         equals(c(test.tab.1='Lorem ipsum.', test.tab.2='Dolor sit'))
     )
     
-    expect_that(
+    expect_error(
         readtext('../data/tab/test.tab', text_field='nonexistant'),
-        throws_error('There is no field called nonexistant')
+                 'There is no field called nonexistant'
     )
     
 })
@@ -198,9 +198,9 @@ test_that("test tsv files", {
         equals(c(test.tsv.1='Lorem ipsum.', test.tsv.2='Dolor sit'))
     )
     
-    expect_that(
+    expect_error(
         readtext('../data/tsv/test.tsv', text_field='nonexistant'),
-        throws_error('There is no field called nonexistant')
+                 'There is no field called nonexistant'
     )
     
 })
@@ -236,14 +236,14 @@ test_that("test xml files", {
         equals(c("test.xml.1", "test.xml.2"))
     )
     
-    expect_that(
-        docvars(readtext('../data/xml/*', text_field='nonesuch')),
-        throws_error("There is no field called")
+    expect_error(
+        readtext('../data/xml/*', text_field='nonesuch'),
+        "There is no field called"
     )
     
-    expect_that(
-        docvars(readtext('../data/xml/*', text_field=9000)),
-        throws_error("There is no 9000th field")
+    expect_error(
+        readtext('../data/xml/*', text_field=9000),
+        "There is no 9000th field"
     )
 })
 
@@ -354,16 +354,14 @@ test_that("test readtext() with docvarsfrom=filenames", {
 
 
 test_that("test texts.readtext error with groups!=NULL", {
-    expect_that(
-        texts(readtext('../data/fox/fox.txt'), groups='anything'),
-        throws_error()
+    expect_error(
+        texts(readtext('../data/fox/fox.txt'), groups='anything')
     )
 })
 
 test_that("test docvars.readtext warning with field!=NULL", {
-    expect_that(
-        docvars(readtext('../data/fox/fox.txt'), field='anything'),
-        gives_warning()
+    expect_warning(
+        docvars(readtext('../data/fox/fox.txt'), field='anything')
     )
 })
 
@@ -389,9 +387,9 @@ test_that("A single-level zip file containing txt files can be loaded",{
 
 context('Loading an empty gzipped tar archive')
 test_that("An empty tar.gz file raises an error",{
-    expect_that(
+    expect_error(
         readtext('../data/empty/test.tar.gz'),
-        throws_error("File '../data/empty/test.tar.gz' does not exist")
+        "File '../data/empty/test.tar.gz' does not exist"
     )
 })
 
@@ -426,18 +424,18 @@ context("Tests of new readtext internals. If these fail, it doesn't necessarily 
 context("Tests for list_files")
 
 test_that("Test function to list files", {
-    expect_that(
+    expect_error(
         readtext:::list_files('nonesuch://example.org/test.txt'),
-        throws_error('Unsupported URL scheme')
-    )           
+        'Unsupported URL scheme'
+    )
     
-    testExistingFile <- mktemp()
+    testExistingFile <- readtext:::mktemp()
     expect_equal(readtext:::list_files(testExistingFile), testExistingFile)
     expect_equal(readtext:::list_files(paste0('file://', testExistingFile)), testExistingFile)
     
     
     # Test vector of filenames
-    testExistingFile2 <- mktemp()
+    testExistingFile2 <- readtext:::mktemp()
     expect_equal(
         readtext:::list_files(c(testExistingFile, testExistingFile2)),
         c(testExistingFile, testExistingFile2)
@@ -450,9 +448,9 @@ test_that("Test function to list files", {
     )
     
     file.remove(testExistingFile)
-    expect_that(
+    expect_error(
         readtext:::list_files(testExistingFile),
-        throws_error("File '' does not exist")
+        "File '' does not exist"
     )
     expect_equal(
         readtext:::list_files(testExistingFile, ignore_missing = TRUE),
@@ -477,9 +475,9 @@ test_that("Test function to list files", {
         2
     )
     
-    expect_that(
+    expect_error(
         length(list_files(paste0(tempdir, '/', '?.txt' ))),
-        throws_error("File '' does not exist")
+        "File '' does not exist"
     )
     
     
@@ -498,9 +496,9 @@ test_that("Test function to list files", {
     )
     
     
-    expect_that(
+    expect_error(
         readtext:::list_files('http://example.org/test.nonesuch'),
-        throws_error('Remote URL does not end in known extension.')
+        'Remote URL does not end in known extension.'
     )
     
 })
@@ -660,14 +658,14 @@ test_that("test json files", {
         expected_docvars
     )
     
-    expect_that(
-        texts(readtext('../data/json/*json', text_field=1)),
-        throws_error('Cannot use numeric text_field with json file')
+    expect_error(
+        readtext('../data/json/*json', text_field=1),
+        'Cannot use numeric text_field with json file'
     )
     
-    expect_that(
-        texts(readtext('../data/json/test3.json', text_field='nonesuch')),
-        throws_error('There is no field called nonesuch in file')
+    expect_error(
+        readtext('../data/json/test3.json', text_field='nonesuch'),
+        'There is no field called nonesuch in file'
     )
     
     
@@ -736,25 +734,24 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
 
 context('Tests for verbosity argument')
 test_that("test warning for unrecognized filetype", {
-       expect_that(
+       expect_warning(
            readtext('../data/empty/empty.nonesuch'),
-           gives_warning('Unsupported extension " nonesuch " of file')
+           'Unsupported extension " nonesuch " of file'
        )
-       expect_that(
+       expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=3),
-           gives_warning('Unsupported extension " nonesuch " of file')
+           'Unsupported extension " nonesuch " of file'
        )
-       expect_that(
+       expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=2),
-           gives_warning('Unsupported extension " nonesuch " of file')
+           'Unsupported extension " nonesuch " of file'
        )
-       expect_that(
+       expect_warning(
            readtext('../data/empty/empty.nonesuch', verbosity=1),
-           gives_warning('Unsupported extension " nonesuch " of file')
+           'Unsupported extension " nonesuch " of file'
        )
-       expect_that(
-           readtext('../data/empty/empty.nonesuch', verbosity=0),
-           not(gives_warning())
+       expect_silent(
+           readtext('../data/empty/empty.nonesuch', verbosity=0)
        )
 })
 

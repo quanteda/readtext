@@ -18,7 +18,7 @@ texts.readtext <- function(x, groups = NULL, ...) {
 docvars.readtext <- function(x, field = NULL) {
     if (!is.null(field))
         warning("field argument not used for docvars on a readtext object", noBreaks. = TRUE)
-    as.data.frame(x[, -which(names(x) %in% c("doc_id", "text")), drop = FALSE])
+    as.data.frame(x[, !names(x) %in% c("doc_id", "text"), drop = FALSE])
 }
 
 docnames.readtext <- function(x) {
