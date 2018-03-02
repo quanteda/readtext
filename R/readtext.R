@@ -176,7 +176,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     if (is.null(source))
         source <- ''
     
-    files <- listMatchingFiles(file, ignoreMissing = ignore_missing_files)
+    files <- list_files(file, ignore_missing = ignore_missing_files)
     if (length(encoding) == 1) {
         encoding <- rep(encoding, length(files))
     } else {
@@ -194,25 +194,27 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
     # this is in case some smart-alec (like AO) globs different directories 
     # for identical filenames
-    uniqueparts <- basename_unique(files, path_only = TRUE)
-    if (!identical(uniqueparts, "")) {
-        row.names(result) <- paste(uniqueparts, as.character(unlist(sapply(sources, row.names))), sep = "/")
-    } else {
-        row.names(result) <- as.character(unlist(sapply(sources, row.names)))
+    ids <- lapply(sources, row.names)
+    id <- unlist(ids, use.names = FALSE)
+    if (any(duplicated(id))) {
+        prefix <- rep(basename_unique(files, path_only = TRUE), lengths(ids))
+        #if (lengths(prefix) > 1)
+        id <- paste(prefix, id, sep = '/')
     }
-
-    if ("filenames" %in% docvarsfrom) {
-        filenameDocvars <- getdocvarsFromFilenames(files, dvsep = dvsep, 
-                                                   docvarnames = docvarnames, include_path=FALSE)
-        result <- cbind(result, impute_types(filenameDocvars))
-    } else if ("filepaths" %in% docvarsfrom) {
-        filenameDocvars <- getdocvarsFromFilenames(files, dvsep = dvsep, 
-                                                   docvarnames = docvarnames, include_path=TRUE)
-        result <- cbind(result, impute_types(filenameDocvars))
+    
+    # if (identical(uniqueparts, "")) {
+    #     row.names(result) <- as.character(unlist(sapply(sources, row.names)))
+    # } else {
+    #     row.names(result) <- paste(uniqueparts, as.character(unlist(sapply(sources, row.names))), sep = "/")
+    # }
+    
+    if (docvarsfrom %in% c("filepaths", "filenames")) {
+        docvar <- get_docvars_filenames(files, dvsep, docvarnames, docvarsfrom == "filepaths", verbosity)
+        result <- cbind(result, impute_types(docvar))
     }
     
     # change rownames to doc_id 
-    result$doc_id <- rownames(result)
+    result$doc_id <- id
     rownames(result) <- NULL
     
     if (verbosity >= 2) {
@@ -228,26 +230,26 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     result
 }
 
-## read each file as appropriate, calling the get_* functions for recognized
+## Read each file as appropriate, calling the get_* functions for recognized
 ## file types
-get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity = verbosity, ...) {
+get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity, ...) {
     
-    ext_supported <- c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 
-                       'tsv', 'html', 'pdf', 'docx', 'doc', 'xls', 'xlsx', 'ods')
+    if (verbosity >= 2)
+        message(paste0("Reading ", path))
     
     ext <- tolower(file_ext(path))
-    if (ext %in% ext_supported) {
+    if (ext %in% extensions()) {
         if (dir.exists(path)) {
             call <- deparse(sys.call(1))
             call <- sub(path, paste0(sub('/$', '', path), '/*'), call, fixed = TRUE)
             stop("File '", path, "' does not exist, but a directory of this name does exist. ",
-                 "To read all files in a directory, you must pass a glob expression like ", call
+                 "To read all files in a directory, you must pass a glob expression like ", call, "."
             )
         }
     } else {
-        if (getOption("readtext_verbosity") >= 1) 
+        if (verbosity >= 1) 
             warning(paste('Unsupported extension "', ext, '" of file', path, 
-                          'treating as plain text'))
+                          'treating as plain text.'))
         ext <- 'txt'
     }
     
