@@ -851,7 +851,7 @@ test_that("rases error when source is not valid", {
     
     expect_error(
         readtext('../data/tweets/stream.json', source = 'something'),
-        "'twitter' is the only source type available for JSON."
+        "'twitter' is the only source type available for json"
     )
     
     expect_silent(
