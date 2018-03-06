@@ -1,7 +1,7 @@
 # Returns supported file extensions
 extensions <- function() {
-    c('csv', 'txt', 'json', 'zip', 'gz', 'tar', 'xml', 'tab', 
-      'tsv', 'html', 'pdf', 'docx', 'doc', 'xls', 'xlsx', 'ods')
+    c("csv", "txt", "json", "zip", "gz", "tar", "xml", "tab", 
+      "tsv", "html", "pdf", "docx", "doc", "xls", "xlsx", "ods")
 }
 
 ## from the tools package
@@ -51,11 +51,11 @@ mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
 
     alphanumeric <- c(0:9, LETTERS, letters)
 
-    filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse='')
+    filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse = "")
     filename <- paste0(prefix, filename)
     filename <- file.path(base_path, filename)
     while (file.exists(filename) || dir.exists(filename)) {
-        filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse = '')
+        filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse = "")
         filename <- paste0(prefix, filename)
         filename <- file.path(base_path, filename)
     }
@@ -72,14 +72,14 @@ mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
 
 downloadRemote <- function (i, ignore_missing) {
     # First, check that this is not a URL with an unsupported scheme
-    scheme <- stri_match(i, regex='^([a-z][a-z+.-]*):')[, 2]
-    if (!scheme %in% c('http', 'https', 'ftp'))
-        stop(paste('Unsupported URL scheme', scheme))
+    scheme <- stri_match(i, regex = "^([a-z][a-z+.-]*):")[, 2]
+    if (!scheme %in% c("http", "https", "ftp"))
+        stop(paste("Unsupported URL scheme", scheme))
     
     # If this is a supported-scheme remote URL
     ext <- tools::file_ext(i)
     if (!ext %in% extensions())
-        stop('Remote URL does not end in known extension. Please download the file manually.')
+        stop("Remote URL does not end in known extension. Please download the file manually.")
     
     localfile <- file.path(mktemp(directory = TRUE), basename(i))
     r <- httr::GET(i, httr::write_disk(localfile))
@@ -143,36 +143,36 @@ extract_archive <- function(i, ignore_missing) {
     
     td <- mktemp(directory = TRUE)
     ext <- tools::file_ext(i)
-    if (ext %in% c('zip', 'docx')) {
+    if (ext %in% c("zip", "docx")) {
         utils::unzip(i, exdir = td)
-    } else if (ext %in% c('gz', 'tar', 'bz')) {
+    } else if (ext %in% c("gz", "tar", "bz")) {
         utils::untar(i, exdir = td)
     } else { 
         stop("Archive extension '", tools::file_ext(i), "' unrecognised.")
     }
     # Create a glob that matches all the files in the archive
-    file.path(td, '*')
+    file.path(td, "*")
 }
 
 #' @import stringi
 list_file <- function(x, ignore_missing, last_round, verbosity) {
     filenames <- c()
-    #  Remove 'file' scheme
+    #  Remove "file" scheme
     i <- stri_replace_first_regex(x, "^file://", "")
     scheme <- stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
     
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
         if (verbosity >=3 ) 
-            message(', reading remote file', appendLF = FALSE)
-        #  If there is a non-'file' scheme, treat it as remote
+            message(", reading remote file", appendLF = FALSE)
+        #  If there is a non-"file" scheme, treat it as remote
         localfile <- downloadRemote(i, ignore_missing = ignore_missing)
         return(list_files(localfile, ignore_missing, FALSE, verbosity))
     }
     
     # Now, special local files
     ext <- tools::file_ext(i)
-    if (ext %in% c('zip', 'gz', 'tar', 'bz')) {
+    if (ext %in% c("zip", "gz", "tar", "bz")) {
         if (verbosity >= 3) 
             message(", unpacking .", ext, " archive", appendLF = FALSE)
         archives <- extract_archive(i, ignore_missing = ignore_missing)
@@ -187,12 +187,12 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
         if (dir.exists(i))
-            return(list_files(file.path(i, '*'), ignore_missing, FALSE, verbosity))
-        
+            return(list_files(file.path(i, "*"), ignore_missing, FALSE, verbosity))
+
         if (!(ignore_missing || file.exists(i)))
             stop("File '", i, "' does not exist.")
-        
-        if (getOption("readtext_verbosity") >= 3) 
+
+        if (getOption("readtext_verbosity") >= 3)
             message("... reading (", tools::file_ext(i), ") file: ", basename(i))
         return(i)
     } else {
@@ -221,14 +221,14 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
 basename_unique <- function(x, path_only = FALSE) {
     temp <- as.data.frame(strsplit(x, "/"), fix.empty.names = FALSE)
     if (path_only)
-        temp <- temp[length(temp) * -1,,drop = FALSE]
+        temp <- temp[length(temp) * -1, , drop = FALSE]
     is_uniform <- apply(temp, 1, function(x) length(unique(x)) == 1)
     if (all(is_uniform)) {
         index <- integer()
     } else {
         index <- seq(min(which(!is_uniform)), max(which(!is_uniform)))
     }
-    temp <- temp[index,,drop = FALSE]
+    temp <- temp[index, , drop = FALSE]
     unlist(lapply(temp, paste0, collapse = "/"), use.names = FALSE)
 }
 
@@ -251,7 +251,7 @@ impute_types <- function(x) {
 }
 
 is_probably_xpath <- function(x) {
-    invalid_xml_element_chars <- c('/', '@')
+    invalid_xml_element_chars <- c("/", "@")
     any(
         sapply(invalid_xml_element_chars, function(i) grepl(i, x, perl = TRUE))
     )
@@ -281,8 +281,8 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
             stop(sprintf("There is more than one field called %s in file %s.", text_field, path))
         }
     }
-    x <- x[,c(index[flag], index[!flag])]
-    names(x)[1] <- 'text' 
+    x <- x[, c(index[flag], index[!flag])]
+    names(x)[1] <- "text"
     if (impute_types) {
         return(impute_types(x))
     } else {

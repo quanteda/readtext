@@ -12,7 +12,7 @@ readtext(file, ignore_missing_files = FALSE, text_field = NULL,
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
 automagically handle a number of common scenarios, so the value can be a
-"glob"-type'  wildcard value.  Currently available filetypes are: 
+"glob"-type wildcard value.  Currently available filetypes are: 
 
 \strong{Single file formats:}
 

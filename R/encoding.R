@@ -35,18 +35,19 @@ encoding.character <- function(x, verbose = TRUE, ...) {
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
-        if (getOption("readtext_verbosity") >= 1) warning("Argument", ifelse(length(addedArgs)>1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
+        if (getOption("readtext_verbosity") >= 1)
+            warning("Argument", ifelse(length(addedArgs) > 1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
 
     encoding <- confidence <- conf <- NULL
     n <- 1
 
     # assign names if none
-    if (is.null(names(x))) 
-        names(x) <- paste("text", 1:length(x), sep="")
+    if (is.null(names(x)))
+        names(x) <- paste("text", 1:length(x), sep = "")
     
     # detect encoding
     detectedEncodings <- stringi::stri_enc_detect(x, ...)
-    dt <- data.table(text = rep(names(x), each=n),
+    dt <- data.table(text = rep(names(x), each = n),
                      encoding = unlist(lapply(detectedEncodings, function(x) x$Encoding[1:n])),
                      rank = rep(1:n, length(x)),
                      confidence = unlist(lapply(detectedEncodings, function(x) x$Confidence[1:n])))
@@ -54,24 +55,24 @@ encoding.character <- function(x, verbose = TRUE, ...) {
     conftable <- dt[, mean(confidence), by = encoding]
     conftable <- conftable[!is.na(encoding)]
     setnames(conftable, "V1", "conf")
-    conftable[, conf := conf/sum(conf)]
+    conftable[, conf := conf / sum(conf)]
     conftable <- conftable[order(-conf)]
     
     # what are the top encodings
-    topEncodingsTable <- dt[rank==1, mean(confidence), by = encoding]
+    topEncodingsTable <- dt[rank == 1, mean(confidence), by = encoding]
     topEncodingsTable <- topEncodingsTable[!is.na(encoding)]
     setnames(topEncodingsTable, "V1", "conf")
-    topEncodingsTable[, conf := conf/sum(conf)]
+    topEncodingsTable[, conf := conf / sum(conf)]
     topEncodingsTable <- topEncodingsTable[order(-conf)]
         
-    if (verbose) 
+    if (verbose)
         message("Probable encoding: ", topEncodingsTable[1, encoding], sep = "", appendLF = FALSE)
     if (nrow(topEncodingsTable) == 1 & topEncodingsTable[1, encoding] == "ISO-8859-1")
-        if (verbose) 
+        if (verbose)
             message("\n  (but note: detector often reports ISO-8859-1 when encoding is actually UTF-8.)",
                     appendLF = FALSE)
     if (nrow(topEncodingsTable) > 1) {
-        if (verbose) 
+        if (verbose)
             message("   (but ", "other encodings",
             # paste(topEncodingsTable[2:nrow(topEncodingsTable), encoding], collapse = ", "),
             " also detected)\n", sep = "", appendLF = FALSE)
@@ -79,8 +80,8 @@ encoding.character <- function(x, verbose = TRUE, ...) {
         proportions <- round(topEncodingsTable$conf * barsize)
         plotsymbols <- c("*", "-", ".", "~", letters[1:5])
         if (verbose) message("  Encoding proportions: ", appendLF = FALSE)
-        if (verbose) message("[", rep(plotsymbols[1:nrow(topEncodingsTable)], 
-                                      proportions[1:nrow(topEncodingsTable)]), "]", 
+        if (verbose) message("[", rep(plotsymbols[1:nrow(topEncodingsTable)],
+                                      proportions[1:nrow(topEncodingsTable)]), "]",
                              appendLF = FALSE)
         if (verbose) {
             message("\n  Samples of the first text as:")
@@ -90,10 +91,10 @@ encoding.character <- function(x, verbose = TRUE, ...) {
                         stri_sub(suppressWarnings(stri_encode(x[1], topEncodingsTable$encoding[i])), length = 60))
             }
         }
-    } else 
+    } else
         if (verbose) message("")
 
-    invisible(list(probably = topEncodingsTable[1, encoding], 
+    invisible(list(probably = topEncodingsTable[1, encoding],
                    all = sapply(detectedEncodings, function(x) x$Encoding[1])))
 }
 
@@ -102,7 +103,5 @@ encoding.character <- function(x, verbose = TRUE, ...) {
 #' @export
 encoding.readtext <- function(x, verbose = TRUE, ...) {
     if (verbose) print(x)
-    encoding(as.character(x), ...)    
+    encoding(as.character(x), ...)
 }
-
-

@@ -1,4 +1,3 @@
-
 #' read a text file(s)
 #' 
 #' Read texts and (if any) associated document-level meta-data from one or more source files. 
@@ -8,7 +7,7 @@
 #' @param file the complete filename(s) to be read. This is designed to 
 #'   automagically handle a number of common scenarios, so the value can be a
 #    single filename, a vector of file names a remote URL, or a file "mask" using a 
-#'   "glob"-type'  wildcard value.  Currently available filetypes are: 
+#'   "glob"-type wildcard value.  Currently available filetypes are: 
 #'   
 #'   \strong{Single file formats:}
 #'   
@@ -146,31 +145,31 @@
 #' (rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
 #'                   docvarsfrom = "filepaths", dvsep = "[/_.]"))
 #' }
-readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL, 
-                    docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_", 
+readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
+                    docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
                     docvarnames = NULL, encoding = NULL, source = NULL,
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
-    
+
     args <- list(...)
-    if ('textfield' %in% names(args)) {
+    if ("textfield" %in% names(args)) {
         warning("textfield is deprecated; use text_field instead.")
-        text_field <- args[['textfield']]
+        text_field <- args[["textfield"]]
     }
-    
-    # in case the function was called without attaching the package, 
+
+    # in case the function was called without attaching the package,
     # in which case the option is never set
-    if (is.null(verbosity)) 
+    if (is.null(verbosity))
         verbosity <- 1
-    if (!verbosity %in% 0:3) 
+    if (!verbosity %in% 0:3)
         stop("verbosity must be one of 0, 1, 2, 3.")
     if (!is.character(file))
         stop("file must be a character (specifying file location(s)).")
-    
+
     docvarsfrom <- match.arg(docvarsfrom)
     # # just use the first, if both are specified?
     # if (is.missing(docvarsfrom))
-    #     
+    #    
     # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
     #     stop("illegal docvarsfrom value")
     if (is.null(text_field)) 
@@ -178,51 +177,51 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     if (is.null(encoding))
         encoding <- getOption("encoding")
     if (is.null(source))
-        source <- ''
+        source <- ""
     if (verbosity >= 2)
         message("Reading texts from ", file)
-    
+
     files <- list_files(file, ignore_missing_files, FALSE, verbosity)
     if (length(encoding) == 1) {
         encoding <- rep(encoding, length(files))
     } else {
         if (length(encoding) != length(files))
-            stop('Encoding parameter must be length 1, or as long as the number of files')
+            stop("Encoding parameter must be length 1, or as long as the number of files")
     }
     sources <- mapply(function(x, e) {
         get_source(x, text_field = text_field, encoding = e, source = source, verbosity = verbosity, ...)
     }, files, encoding, SIMPLIFY = FALSE)
 
     # combine all of the data.frames returned
-    result <- data.frame(doc_id = "", 
+    result <- data.frame(doc_id = "",
                          data.table::rbindlist(sources, use.names = TRUE, fill = TRUE),
                          stringsAsFactors = FALSE)
 
-    # this is in case some smart-alec (like AO) globs different directories 
+    # this is in case some smart-alec (like AO) globs different directories
     # for identical filenames
     ids <- lapply(sources, row.names)
     id <- unlist(ids, use.names = FALSE)
     if (any(duplicated(id))) {
         prefix <- rep(basename_unique(files, path_only = TRUE), lengths(ids))
         #if (lengths(prefix) > 1)
-        id <- paste(prefix, id, sep = '/')
+        id <- paste(prefix, id, sep = "/")
     }
-    
+
     # if (identical(uniqueparts, "")) {
     #     row.names(result) <- as.character(unlist(sapply(sources, row.names)))
     # } else {
     #     row.names(result) <- paste(uniqueparts, as.character(unlist(sapply(sources, row.names))), sep = "/")
     # }
-    
+
     if (docvarsfrom %in% c("filepaths", "filenames")) {
         docvar <- get_docvars_filenames(files, dvsep, docvarnames, docvarsfrom == "filepaths", verbosity)
         result <- cbind(result, impute_types(docvar))
     }
-    
+
     # change rownames to doc_id 
     result$doc_id <- id
     rownames(result) <- NULL
-    
+
     if (verbosity >= 2)
         message(" ... read ", nrow(result), " document",  if (nrow(result) == 1) "" else "s.")
 
@@ -235,29 +234,29 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity = 1, ...,
                        # deprecated arguments
                        textfield) {
-    
+
     ext <- tolower(file_ext(path))
     if (ext %in% extensions()) {
         if (dir.exists(path)) {
             call <- deparse(sys.call(1))
-            call <- sub(path, paste0(sub('/$', '', path), '/*'), call, fixed = TRUE)
+            call <- sub(path, paste0(sub("/$", "", path), "/*"), call, fixed = TRUE)
             stop("File '", path, "' does not exist, but a directory of this name does exist. ",
                  "To read all files in a directory, you must pass a glob expression like ", call, ".")
         }
     } else {
         if (verbosity >= 1) 
-            warning('Unsupported extension ', sQuote(ext), ' of file ', path , ' treating as plain text.')
-        ext <- 'txt'
+            warning("Unsupported extension ", sQuote(ext), " of file ", path , " treating as plain text.")
+        ext <- "txt"
     }
-    
+
     if (verbosity >= 3)
         message(" ... reading (", ext, ") file: ", path)
-    
-    result <- switch(ext, 
+
+    result <- switch(ext,
                txt = get_txt(path, ...),
-               csv = get_csv(path, text_field, sep = ',', ...),
-               tsv = get_csv(path, text_field, sep = '\t', ...),
-               tab = get_csv(path, text_field, sep = '\t', ...),
+               csv = get_csv(path, text_field, sep = ",", ...),
+               tsv = get_csv(path, text_field, sep = "\t", ...),
+               tab = get_csv(path, text_field, sep = "\t", ...),
                json = get_json(path, text_field, verbosity = verbosity, ...),
                xml = get_xml(path, text_field, verbosity = verbosity, ...),
                html = get_html(path, verbosity = verbosity, ...),
@@ -285,16 +284,16 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
 }
 
 replace_charclass <- function (text) {
-    
+
     mapping <- c(
-        '\\p{Dash_Punctuation}' = '-',
-        '\\p{Space_Separator}' = ' ',
-        '\\p{Initial_Punctuation}' = "'",
-        '\\p{Final_Punctuation}' = "'",
-        '\\p{Private_Use}' = "",
-        '\\p{Unassigned}' = ""
+        "\\p{Dash_Punctuation}" = "-",
+        "\\p{Space_Separator}" = " ",
+        "\\p{Initial_Punctuation}" = "'",
+        "\\p{Final_Punctuation}" = "'",
+        "\\p{Private_Use}" = "",
+        "\\p{Unassigned}" = ""
     )
-    
+
     for (i in seq_along(mapping))
         text <- stri_replace_all(text, names(mapping[i]), regex = mapping[i])
     return(text)

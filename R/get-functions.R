@@ -11,9 +11,9 @@ get_csv <- function(path, text_field, encoding, source, ...) {
 
     # Replace native.enc with UTF-8 if that's what it is
     # http://r.789695.n4.nabble.com/Find-out-what-quot-native-enc-quot-corresponds-to-td4639208.html
-    if (encoding == 'native.enc')
-        encoding <- strsplit(Sys.getlocale("LC_CTYPE"), '\\.')[[1]][2]
-    if (!encoding %in% c('Latin-1', 'UTF-8')) { 
+    if (encoding == "native.enc")
+        encoding <- strsplit(Sys.getlocale("LC_CTYPE"), "\\.")[[1]][2]
+    if (!encoding %in% c("Latin-1", "UTF-8")) {
         # If the encoding is not one fread supports, open the file using R's native function
         #  Use the encoding arg to open the file, pass all other args to fread
         con <- file(path)
@@ -32,17 +32,16 @@ get_csv <- function(path, text_field, encoding, source, ...) {
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
 #  it looks like a twitter json file
 get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
-    
-    if (source == 'twitter') {
+    if (source == "twitter") {
         return(get_json_tweets(path, verbosity, ...))
     } else {
         if (is.numeric(text_field))
-            stop('Cannot use numeric text_field with json file')
-        
+            stop("Cannot use numeric text_field with json file")
+
         result <- get_json_object(path, verbosity, ...)
         if (!is.null(result))
             return(sort_fields(result, path, text_field))
-        
+
         result <- get_json_lines(path, verbosity, ...)
         if (!is.null(result))
             return(sort_fields(result, path, text_field))
@@ -58,9 +57,9 @@ get_json_tweets <- function(path, verbosity = 1, ...) {
     txt <- readLines(path, warn = FALSE, ...)
     tryCatch({
         streamR::parseTweets(txt, verbose = FALSE, ...)
-    }, 
+    },
         error = function(e) {
-        if (verbosity >= 1)     
+        if (verbosity >= 1)
             stop("Doesn't look like Tweets JSON file, trying general JSON.")
         return(NULL)
     })
@@ -74,9 +73,9 @@ get_json_object <- function(path, verbosity = 1, ...) {
     #as.data.frame(jsonlite::fromJSON(path, flatten = TRUE, ...), stringsAsFactors = FALSE)
     tryCatch({
         data.table::setDT(jsonlite::read_json(path, simplifyVector = TRUE))
-    }, 
+    },
     error = function(e) {
-        if (verbosity >= 1) 
+        if (verbosity >= 1)
             message("File doesn't contain a single valid JSON object.")
         return(NULL)
     })
@@ -94,9 +93,9 @@ get_json_lines <- function(path, verbosity = 1, ...) {
             lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
             use.names = TRUE, fill = TRUE
         )
-    }, 
+    },
     error = function(e) {
-        if (verbosity >= 1) 
+        if (verbosity >= 1)
             stop("This JSON file format is not supported.", call. = FALSE)
     })
 }
@@ -107,7 +106,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
     # TODO: encoding param is ignored
     # if (!requireNamespace("XML", quietly = TRUE))
     #     stop("You must have XML installed to read XML files.")
-    
+
     if (is_probably_xpath(text_field)) {
         xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
         txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
@@ -123,7 +122,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
                               "you're certain that your XML file's fields are always in the same order."))
             }
         }
-        
+
         # Because XML::xmlToDataFrame doesn't impute column types, we have to do it
         # ourselves, to match get_csv's behaviour
         sort_fields(result, path, text_field, impute_types = TRUE)
@@ -132,12 +131,11 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
 
 
 get_html <- function(path, encoding, source, verbosity = 1, ...) {
-    
-    if (source == 'nexis') {
+    if (source == "nexis") {
         return(get_nexis_html(path, verbosity = verbosity, ...))
         tryCatch({
             #return(get_nexis_html(path, ...))
-        }, 
+        },
         error = function(e) {
             if (verbosity >= 1) 
                 stop("Doesn't look like Nexis HTML file")
@@ -145,10 +143,10 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
     } else {
         # http://stackoverflow.com/a/3195926
         html <- XML::htmlTreeParse(path, useInternal = TRUE)
-        txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]", 
+        txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]",
                                XML::xmlValue)
-        txt <- txt[stri_trim(txt) != '']
-        txt <- paste0(txt, collapse='\n')
+        txt <- txt[stri_trim(txt) != ""]
+        txt <- paste0(txt, collapse = "\n")
     
         data.frame(text = txt, stringsAsFactors = FALSE)
     }
@@ -158,20 +156,19 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
 get_pdf <- function(path, source, ...) {
 
     txt <- pdftools::pdf_text(as.character(path))
-    txt <- paste0(txt, collapse='\n')
+    txt <- paste0(txt, collapse = "\n")
     Encoding(txt) <- "UTF-8"
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
 get_docx <- function(path, source, ...) {
-    
     path <- extract_archive(path, ignore_missing = FALSE)
-    path <- sub('/\\*$', '', path)
-    path <- file.path(path, 'word', 'document.xml')
+    path <- sub("/\\*$", "", path)
+    path <- file.path(path, "word", "document.xml")
 
     xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
     txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
-    txt <- txt[!grepl('^\\s*$', txt)] # Remove text which is just whitespace
+    txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse = "\n")
 
     data.frame(text = txt, stringsAsFactors = FALSE)
@@ -186,8 +183,8 @@ get_doc <- function(path, source, ...) {
     #     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
     # },
     # error = function(e) {
-    #     if (grepl('error in running command', e)) {
-    #         stop(e, 'Please check whether antiword is installed. You can download it from http://www.winfield.demon.nl/')
+    #     if (grepl("error in running command", e)) {
+    #         stop(e, "Please check whether antiword is installed. You can download it from http://www.winfield.demon.nl/")
     #     } else {
     #     stop(e)
     #     }
@@ -199,12 +196,12 @@ get_doc <- function(path, source, ...) {
 
 
 get_excel <- function(path, text_field, source, ...) {
-    
+
     sheet_names <- readxl::excel_sheets(path)
     sheets <- lapply(sheet_names, function(x, ...) readxl::read_excel(path, sheet = x, ...))
 
     if (length(unique(sapply(sheets, ncol))) != 1) {
-        warning('Not all worksheets in file "', path, '" have the same number of columns.')
+        warning("Not all worksheets in file \"", path, "\" have the same number of columns.")
     }
 
     result <- data.table::rbindlist(sheets, fill=TRUE)
@@ -217,7 +214,7 @@ get_ods <- function(path, text_field, source, ...) {
     sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet = x, ...))
 
     if (length(unique(sapply(sheets, ncol))) != 1)
-        warning('Not all worksheets in file "', path, '" have the same number of columns.')
+        warning("Not all worksheets in file \"", path, "\" have the same number of columns.")
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
     sort_fields(result, path, text_field, impute_types = TRUE)
