@@ -44,27 +44,27 @@ encoding.character <- function(x, verbose = TRUE, ...) {
     # assign names if none
     if (is.null(names(x)))
         names(x) <- paste("text", 1:length(x), sep = "")
-    
+
     # detect encoding
     detectedEncodings <- stringi::stri_enc_detect(x, ...)
     dt <- data.table(text = rep(names(x), each = n),
                      encoding = unlist(lapply(detectedEncodings, function(x) x$Encoding[1:n])),
                      rank = rep(1:n, length(x)),
                      confidence = unlist(lapply(detectedEncodings, function(x) x$Confidence[1:n])))
-    
+
     conftable <- dt[, mean(confidence), by = encoding]
     conftable <- conftable[!is.na(encoding)]
     setnames(conftable, "V1", "conf")
     conftable[, conf := conf / sum(conf)]
     conftable <- conftable[order(-conf)]
-    
+
     # what are the top encodings
     topEncodingsTable <- dt[rank == 1, mean(confidence), by = encoding]
     topEncodingsTable <- topEncodingsTable[!is.na(encoding)]
     setnames(topEncodingsTable, "V1", "conf")
     topEncodingsTable[, conf := conf / sum(conf)]
     topEncodingsTable <- topEncodingsTable[order(-conf)]
-        
+
     if (verbose)
         message("Probable encoding: ", topEncodingsTable[1, encoding], sep = "", appendLF = FALSE)
     if (nrow(topEncodingsTable) == 1 & topEncodingsTable[1, encoding] == "ISO-8859-1")

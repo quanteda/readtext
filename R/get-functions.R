@@ -85,7 +85,7 @@ get_json_object <- function(path, verbosity = 1, ...) {
 get_json_lines <- function(path, verbosity = 1, ...) {
     # if (!requireNamespace("jsonlite", quietly = TRUE))
     #     stop("You must have jsonlite installed to read json files.")
-    
+
     tryCatch({
         lines <- readLines(path, warn = FALSE)
         jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
@@ -137,8 +137,7 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
             #return(get_nexis_html(path, ...))
         },
         error = function(e) {
-            if (verbosity >= 1) 
-                stop("Doesn't look like Nexis HTML file")
+            if (verbosity >= 1) stop("Doesn't look like Nexis HTML file")
         })
     } else {
         # http://stackoverflow.com/a/3195926
@@ -147,7 +146,7 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
                                XML::xmlValue)
         txt <- txt[stri_trim(txt) != ""]
         txt <- paste0(txt, collapse = "\n")
-    
+
         data.frame(text = txt, stringsAsFactors = FALSE)
     }
 }
@@ -175,10 +174,10 @@ get_docx <- function(path, source, ...) {
 }
 
 get_doc <- function(path, source, ...) {
-    
+
     path <- normalizePath(path)
     txt <- antiword::antiword(as.character(path))
-    
+
     # tryCatch({
     #     txt <- system2("antiword", shQuote(normalizePath(f)), stdout = TRUE)
     # },
@@ -204,7 +203,7 @@ get_excel <- function(path, text_field, source, ...) {
         warning("Not all worksheets in file \"", path, "\" have the same number of columns.")
     }
 
-    result <- data.table::rbindlist(sheets, fill=TRUE)
+    result <- data.table::rbindlist(sheets, fill = TRUE)
     sort_fields(result, path, text_field, impute_types = TRUE)
 }
 

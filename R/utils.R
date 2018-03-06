@@ -1,6 +1,6 @@
 # Returns supported file extensions
 extensions <- function() {
-    c("csv", "txt", "json", "zip", "gz", "tar", "xml", "tab", 
+    c("csv", "txt", "json", "zip", "gz", "tar", "xml", "tab",
       "tsv", "html", "pdf", "docx", "doc", "xls", "xlsx", "ods")
 }
 
@@ -11,9 +11,9 @@ file_ext <- function (x) {
 }
 
 #' @importFrom tools file_path_sans_ext
-get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL, 
+get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
                                   include_path = FALSE, verbosity) {
-    
+
     if (include_path) {
         name <- path
     } else {
@@ -22,11 +22,11 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
     parts <- strsplit(name, dvsep)
     if (any(length(parts[[1]]) != lengths(parts)))
         stop("Filename elements are not equal in length.")
-    
-    docvar <-  data.frame(matrix(unlist(parts), nrow = length(parts), byrow = TRUE), 
+
+    docvar <-  data.frame(matrix(unlist(parts), nrow = length(parts), byrow = TRUE),
                          stringsAsFactors = FALSE)
     # assign default names in any case
-    names(docvar) <- paste("docvar", seq(ncol(docvar)), sep="")  
+    names(docvar) <- paste("docvar", seq(ncol(docvar)), sep = "")
     if (!is.null(docvarnames)) {
         names(docvar)[seq_along(docvarnames)] <- docvarnames
         if (verbosity >= 1 && length(docvarnames) != ncol(docvar)) {
@@ -34,7 +34,7 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
                     ncol(docvar) - length(docvarnames), " docvar",
                     if (ncol(docvar) - length(docvarnames) == 1) "" else "s",
                     " given generic names.")
-            
+
         }
     }
     return(docvar)
@@ -75,12 +75,12 @@ downloadRemote <- function (i, ignore_missing) {
     scheme <- stri_match(i, regex = "^([a-z][a-z+.-]*):")[, 2]
     if (!scheme %in% c("http", "https", "ftp"))
         stop(paste("Unsupported URL scheme", scheme))
-    
+
     # If this is a supported-scheme remote URL
     ext <- tools::file_ext(i)
     if (!ext %in% extensions())
         stop("Remote URL does not end in known extension. Please download the file manually.")
-    
+
     localfile <- file.path(mktemp(directory = TRUE), basename(i))
     r <- httr::GET(i, httr::write_disk(localfile))
     if (ignore_missing) {
@@ -129,10 +129,10 @@ list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, verbosity 
 
     if (!(ignore_missing || (length(x) > 0)))
         stop("File '", x, "' does not exist.")
-    
+
     file <- unlist(lapply(x, function (x) list_file(x, ignore_missing, last_round, verbosity)))
-    
-    if (is.null(file)) 
+
+    if (is.null(file))
         return(character(0))
     sort(file)
 }
@@ -140,14 +140,14 @@ list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, verbosity 
 extract_archive <- function(i, ignore_missing) {
     if (!(ignore_missing || file.exists(i)))
         stop("File '", i, "' does not exist.")
-    
+
     td <- mktemp(directory = TRUE)
     ext <- tools::file_ext(i)
     if (ext %in% c("zip", "docx")) {
         utils::unzip(i, exdir = td)
     } else if (ext %in% c("gz", "tar", "bz")) {
         utils::untar(i, exdir = td)
-    } else { 
+    } else {
         stop("Archive extension '", tools::file_ext(i), "' unrecognised.")
     }
     # Create a glob that matches all the files in the archive
@@ -156,29 +156,28 @@ extract_archive <- function(i, ignore_missing) {
 
 #' @import stringi
 list_file <- function(x, ignore_missing, last_round, verbosity) {
-    filenames <- c()
     #  Remove "file" scheme
     i <- stri_replace_first_regex(x, "^file://", "")
     scheme <- stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
-    
+
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
-        if (verbosity >=3 ) 
+        if (verbosity >= 3)
             message(", reading remote file", appendLF = FALSE)
         #  If there is a non-"file" scheme, treat it as remote
         localfile <- downloadRemote(i, ignore_missing = ignore_missing)
         return(list_files(localfile, ignore_missing, FALSE, verbosity))
     }
-    
+
     # Now, special local files
     ext <- tools::file_ext(i)
     if (ext %in% c("zip", "gz", "tar", "bz")) {
-        if (verbosity >= 3) 
+        if (verbosity >= 3)
             message(", unpacking .", ext, " archive", appendLF = FALSE)
         archives <- extract_archive(i, ignore_missing = ignore_missing)
         return(list_files(archives, ignore_missing, FALSE, verbosity))
     }
-    
+
     #  At this point, it may be a simple local file or a glob pattern, but as
     #  above, we have no way of telling a priori whether this is the case
     if (last_round) {
@@ -203,7 +202,6 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
             list_files(i, ignore_missing, TRUE, verbosity)
         )
     }
-    
 }
 
 #' Return basenames that are unique

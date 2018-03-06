@@ -31,15 +31,14 @@ test_that("test readtext with glob-style mask", {
         ))),
         5
     )
-    
+
     expect_equal(
         length(texts(readtext(
             "../data/glob/?.txt"
         ))),
         4
     )
-    
-    
+
     # Glob in non-last part of filename
     expect_equal(
         length(texts(readtext(
@@ -47,8 +46,8 @@ test_that("test readtext with glob-style mask", {
         ))),
         2
     )
-    
-    # It would be nice to be able to test that escaped glob doesn"t special 
+
+    # It would be nice to be able to test that escaped glob doesn"t special
     # characters in filename, but R check won"t allow a file of this name to
     # exist in the package... This should still pass if run the test manually
     # (having created the file, supposing your platform supports it)
@@ -58,17 +57,15 @@ test_that("test readtext with glob-style mask", {
     #      ))),
     #      1
     #  )
-    
-    
 })
 
 test_that("test structured readtext with glob-style mask", {
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", text_field="text")),
+        nrow(readtext("../data/csv/*.csv", text_field = "text")),
         6
     )
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", text_field="text")),
+        nrow(readtext("../data/csv/*.csv", text_field = "text")),
         6
     )
 })
@@ -77,20 +74,20 @@ test_that("test structured readtext with glob-style mask", {
 test_that("test remote text file", {
     expect_equal(
         texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt")),
-        c(fox.txt="The quick brown fox jumps over the lazy dog.")
+        c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
     # ignore_missing_files with an existing file should make no difference
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt", 
+        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt",
                        ignore_missing_files = TRUE)),
-        c(fox.txt="The quick brown fox jumps over the lazy dog.")
+        c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
 })
 
 
 test_that("test remote csv file", {
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", text_field="text")),
+        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", text_field = "text")),
         c(test.csv.1 = "Lorem ipsum.", test.csv.2 = "Dolor sit")
     )
 })
@@ -113,7 +110,7 @@ test_that("test zip file", {
 
 
 test_that("test non-implemented functions", {
-    # 100% code coverage of non-existent functions! 
+    # 100% code coverage of non-existent functions!
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -141,59 +138,58 @@ test_that("test csv files", {
     testcorpus <- readtext("../data/csv/test.csv", text_field = "text")
     expect_that(
         docvars(testcorpus),
-        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
+        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)),
                           stringsAsFactors = FALSE))
     )
     expect_equal(
         texts(testcorpus),
         c(test.csv.1 = "Lorem ipsum.", test.csv.2 = "Dolor sit")
     )
-    
+
     expect_error(
-        readtext("../data/csv/*", text_field="nonesuch"),
+        readtext("../data/csv/*", text_field = "nonesuch"),
         "There is no field called"
     )
-    
+
     expect_error(
         readtext("../data/csv/*", text_field = 9000),
         "There is no 9000th field"
     )
-    
 })
 
 test_that("test tab files", {
     testreadtext <- readtext("../data/tab/test.tab", text_field = "text")
     expect_that(
         docvars(testreadtext),
-        equals(data.frame(list(colour=c("green", "red"), number=c(42, 99)), 
+        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
                           stringsAsFactors = FALSE))
     )
     expect_that(
         texts(testreadtext),
-        equals(c(test.tab.1="Lorem ipsum.", test.tab.2="Dolor sit"))
+        equals(c(test.tab.1 = "Lorem ipsum.", test.tab.2 = "Dolor sit"))
     )
     
     expect_error(
-        readtext("../data/tab/test.tab", text_field="nonexistant"),
+        readtext("../data/tab/test.tab", text_field = "nonexistant"),
                  "There is no field called nonexistant"
     )
     
 })
 
 test_that("test tsv files", {
-    testreadtext <- readtext("../data/tsv/test.tsv", text_field="text")
+    testreadtext <- readtext("../data/tsv/test.tsv", text_field = "text")
     expect_that(
         docvars(testreadtext),
-        equals(data.frame(list(colour=c("green", "red"), number=c(42, 99)), 
+        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
                           stringsAsFactors = FALSE))
     )
     expect_that(
         texts(testreadtext),
-        equals(c(test.tsv.1="Lorem ipsum.", test.tsv.2="Dolor sit"))
+        equals(c(test.tsv.1 = "Lorem ipsum.", test.tsv.2 = "Dolor sit"))
     )
     
     expect_error(
-        readtext("../data/tsv/test.tsv", text_field="nonexistant"),
+        readtext("../data/tsv/test.tsv", text_field = "nonexistant"),
                  "There is no field called nonexistant"
     )
     
@@ -202,10 +198,10 @@ test_that("test tsv files", {
 
 test_that("test xml files", {
     # Test corpus object
-    testcorpus <- readtext("../data/xml/test.xml", text_field="text")
+    testcorpus <- readtext("../data/xml/test.xml", text_field = "text")
     expect_that(
-        data.frame(testcorpus[,-c(1,2)]),
-        equals(data.frame(list(colour=c("green", "red"), number=c(42, 99)), 
+        data.frame(testcorpus[, -c(1, 2)]),
+        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
                           stringsAsFactors = FALSE))
     )
     expect_that(
@@ -218,11 +214,11 @@ test_that("test xml files", {
     )
 
     expect_warning(
-        readtext("../data/xml/test.xml", text_field=1),
+        readtext("../data/xml/test.xml", text_field = 1),
         "You should specify text_field by name.*"
     )
     expect_that(
-        unname(texts(readtext("../data/xml/test.xml", text_field=1))),
+        unname(texts(readtext("../data/xml/test.xml", text_field = 1))),
         equals(c("Lorem ipsum.", "Dolor sit"))
     )
     expect_that(
@@ -231,12 +227,12 @@ test_that("test xml files", {
     )
     
     expect_error(
-        readtext("../data/xml/*", text_field="nonesuch"),
+        readtext("../data/xml/*", text_field = "nonesuch"),
         "There is no field called"
     )
     
     expect_error(
-        readtext("../data/xml/*", text_field=9000),
+        readtext("../data/xml/*", text_field = 9000),
         "There is no 9000th field"
     )
 })
@@ -248,42 +244,42 @@ test_that("test xml files with XPath", {
     names(expected) <- "tei.xml"
 
     actual <- readtext("../data/xml/tei.xml",
-                      text_field="/tei:TEI/tei:text/tei:body//tei:p",
-                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+                      text_field = "/tei:TEI/tei:text/tei:body//tei:p",
+                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(texts(actual), expected)
 
 
-    actual <- readtext("../data/xml/tei.xml", collapse="P",
-                      text_field="/tei:TEI/tei:text/tei:body//tei:p",
-                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+    actual <- readtext("../data/xml/tei.xml", collapse = "P",
+                      text_field = "/tei:TEI/tei:text/tei:body//tei:p",
+                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "The Pquick Pbrown Pfox")
 
-    actual <- readtext("../data/xml/tei.xml", collapse="P",
-                      text_field="/tei:TEI//*/text()",
-                      namespaces=c(tei = "http://www.tei-c.org/ns/1.0"))
+    actual <- readtext("../data/xml/tei.xml", collapse = "P",
+                      text_field = "/tei:TEI//*/text()",
+                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
 
 })
 
 
-test_that("test readtext() with docvarsfrom=filenames", {
+test_that("test readtext() with docvarsfrom = filenames", {
     
     expect_that(
-        docvars(readtext("../data/docvars/one/*", docvarsfrom="filenames")),
-        equals(data.frame(list(docvar1=c(1L, 2L), docvar2=c("apple", "orange")), 
+        docvars(readtext("../data/docvars/one/*", docvarsfrom = "filenames")),
+        equals(data.frame(list(docvar1 = c(1L, 2L), docvar2 = c("apple", "orange")), 
                           stringsAsFactors = FALSE))
     )
     
     expect_that(
-        docvars(readtext("../data/docvars/dash/*", docvarsfrom="filenames", dvsep="-")),
-        equals(data.frame(list(docvar1=c(1,2), docvar2=c("apple", "orange")), 
+        docvars(readtext("../data/docvars/dash/*", docvarsfrom = "filenames", dvsep = "-")),
+        equals(data.frame(list(docvar1 = c(1,2), docvar2 = c("apple", "orange")), 
                           stringsAsFactors = FALSE))
     )
     
     
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="filenames")),
-        equals(data.frame(list(docvar1=c(1,2), docvar2=c("apple", "orange")), docvar3=c("red", "orange"), 
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames")),
+        equals(data.frame(list(docvar1 = c(1,2), docvar2 = c("apple", "orange")), docvar3 = c("red", "orange"), 
                           stringsAsFactors = FALSE))
     )
     
@@ -293,34 +289,34 @@ test_that("test readtext() with docvarsfrom=filenames", {
     )
     
     expect_error(
-        readtext("../data/docvars/unequal/*", docvarsfrom="filenames"),
+        readtext("../data/docvars/unequal/*", docvarsfrom = "filenames"),
         "Filename elements are not equal in length."
     )
     
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="filenames",
-                         docvarnames=c("id", "fruit", "colour"))),
-        equals(data.frame(list(id=c(1,2), fruit=c("apple", "orange")), 
-                          colour=c("red", "orange"), stringsAsFactors=F))
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+                         docvarnames = c("id", "fruit", "colour"))),
+        equals(data.frame(list(id = c(1,2), fruit = c("apple", "orange")), 
+                          colour = c("red", "orange"), stringsAsFactors = FALSE))
     )
 
     expect_warning(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="filenames",
-                         docvarnames=c("id", "fruit")
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+                         docvarnames = c("id", "fruit")
         )),
         "Fewer docnames supplied than existing docvars - last 1 docvar given generic names."
     )
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="filenames",
-                         docvarnames=c("id", "fruit")
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+                         docvarnames = c("id", "fruit")
         )),
-        equals(data.frame(list(id=c(1,2), fruit=c("apple", "orange")), 
-                          docvar3=c("red", "orange"), stringsAsFactors = FALSE))
+        equals(data.frame(list(id = c(1,2), fruit = c("apple", "orange")), 
+                          docvar3 = c("red", "orange"), stringsAsFactors = FALSE))
     )
     
     expect_warning(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="filenames",
-                         docvarnames=c("id")
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+                         docvarnames = c("id")
         )),
         "Fewer docnames supplied than existing docvars - last 2 docvars given generic names."
     )
@@ -328,34 +324,34 @@ test_that("test readtext() with docvarsfrom=filenames", {
     #TODO: What happens if you supply more docnames?
     
     expect_error(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom="nonesuch"))
+        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "nonesuch"))
     )
     
     #  Docvars from both metadata and filename
     expect_equal(
-        docvars(readtext("../data/docvars/csv/*", docvarsfrom=c("filenames"), docvarnames=c("id", "fruit"), text_field="text")),
-        data.frame(list(shape=c("round", NA), texture=c(NA, "rough"), id=c(1, 2), fruit=c("apple", "orange")), 
+        docvars(readtext("../data/docvars/csv/*", docvarsfrom = c("filenames"), docvarnames = c("id", "fruit"), text_field = "text")),
+        data.frame(list(shape = c("round", NA), texture = c(NA, "rough"), id = c(1, 2), fruit = c("apple", "orange")), 
                    stringsAsFactors = FALSE)
     )
     
     # #  Docvars from both metadata and filename
     # expect_equal(
-    #     docvars(readtext("../data/docvars/json/*", docvarsfrom=c("filenames", "metadata"), docvarnames=c("id", "fruit"), text_field="text")),
-    #     data.frame(list(id=c(1, 2), fruit=c("apple", "orange"), shape=c("round", NA), texture=c(NA, "rough")), stringsAsFactors=FALSE)
+    #     docvars(readtext("../data/docvars/json/*", docvarsfrom = c("filenames", "metadata"), docvarnames = c("id", "fruit"), text_field = "text")),
+    #     data.frame(list(id = c(1, 2), fruit = c("apple", "orange"), shape = c("round", NA), texture = c(NA, "rough")), stringsAsFactors = FALSE)
     # )
     
 })
 
 
-test_that("test texts.readtext error with groups!=NULL", {
+test_that("test texts.readtext error with groups != NULL", {
     expect_error(
-        texts(readtext("../data/fox/fox.txt"), groups="anything")
+        texts(readtext("../data/fox/fox.txt"), groups = "anything")
     )
 })
 
-test_that("test docvars.readtext warning with field!=NULL", {
+test_that("test docvars.readtext warning with field != NULL", {
     expect_warning(
-        docvars(readtext("../data/fox/fox.txt"), field="anything")
+        docvars(readtext("../data/fox/fox.txt"), field = "anything")
     )
 })
 
@@ -364,7 +360,7 @@ test_that("test that readtext encoding argument must be either length 1 or same 
     expect_error(
         readtext(
             c("../data/fox/fox.txt", "../data/fox/fox.txt", "../data/fox/fox.txt", "../data/fox/fox.txt"),
-            encoding=c("utf-8", "utf-8")
+            encoding = c("utf-8", "utf-8")
         ),
         "Encoding parameter must be length 1, or as long as the number of files"
     )
@@ -480,8 +476,8 @@ test_that("Test function to list files", {
     
     # Test globbing subdir
     
-    tempsubdir1 <- readtext:::mktemp(base_path=tempdir, directory=T)
-    tempsubdir2 <- readtext:::mktemp(base_path=tempdir, directory=T)
+    tempsubdir1 <- readtext:::mktemp(base_path = tempdir, directory = TRUE)
+    tempsubdir2 <- readtext:::mktemp(base_path = tempdir, directory = TRUE)
     
     file.create(file.path(tempsubdir1, "1.tsv"))
     file.create(file.path(tempsubdir1, "2.tsv"))
@@ -522,7 +518,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
         )
 
         actual_names <- names(texts(readtext(
-            "../data/csv/*.csv", text_field="text"
+            "../data/csv/*.csv", text_field = "text"
         )))
         expect_true(
             setequal(
@@ -610,7 +606,7 @@ test_that("test for docx file", {
 
 test_that("test for doc file", {
     skip_on_os("windows")  
-    expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse =" ")
+    expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse = " ")
     names(expected) <- "test.doc"
 
     txts <- texts(readtext("../data/doc/test.doc"))
@@ -628,19 +624,19 @@ test_that("test json files", {
     skip_on_cran()
     skip_on_travis()
     expect_equal(
-        unname(texts(readtext("../data/json/*json", text_field="text"))),
+        unname(texts(readtext("../data/json/*json", text_field = "text"))),
         c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
     )
     
     #  test.json and test2.json are newline-delimited json
     #  test3.json is a single json object
     expected_docvars <- data.frame(list(
-        colour=c("green", "red", "orange", "blue", NA), 
-        number=c(42, 99, 0, NA, 3)),
+        colour = c("green", "red", "orange", "blue", NA), 
+        number = c(42, 99, 0, NA, 3)),
         stringsAsFactors = FALSE)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
-    actual_docvars <- docvars(readtext("../data/json/*json", text_field="text"))
+    actual_docvars <- docvars(readtext("../data/json/*json", text_field = "text"))
     actual_docvars <- actual_docvars[order(actual_docvars$number),]
     row.names(actual_docvars) <- NULL
     row.names(actual_docvars)
@@ -651,12 +647,12 @@ test_that("test json files", {
     )
     
     expect_error(
-        readtext("../data/json/*json", text_field=1),
+        readtext("../data/json/*json", text_field = 1),
         "Cannot use numeric text_field with json file"
     )
     
     expect_error(
-        readtext("../data/json/test3.json", text_field="nonesuch"),
+        readtext("../data/json/test3.json", text_field = "nonesuch"),
         "There is no field called nonesuch in file"
     )
     
@@ -666,7 +662,7 @@ test_that("test json files", {
     
     expect_equal(
         texts(tweetSource),
-        c(stream.json.1="I jumped over the lazy @dog", stream.json.2="Yawn")
+        c(stream.json.1 = "I jumped over the lazy @dog", stream.json.2 = "Yawn")
     )
     
     expect_equal(
@@ -731,54 +727,54 @@ test_that("test warning for unrecognized filetype", {
            paste0("Unsupported extension ", sQuote("nonesuch"), " of file")
        )
        expect_warning(
-           readtext("../data/empty/empty.nonesuch", verbosity=3),
+           readtext("../data/empty/empty.nonesuch", verbosity = 3),
            paste0("Unsupported extension ", sQuote("nonesuch"), " of file")
        )
        expect_warning(
-           readtext("../data/empty/empty.nonesuch", verbosity=2),
+           readtext("../data/empty/empty.nonesuch", verbosity = 2),
            paste0("Unsupported extension ", sQuote("nonesuch"), " of file")
        )
        expect_warning(
-           readtext("../data/empty/empty.nonesuch", verbosity=1),
+           readtext("../data/empty/empty.nonesuch", verbosity = 1),
            paste0("Unsupported extension ", sQuote("nonesuch"), " of file")
        )
        expect_silent(
-           readtext("../data/empty/empty.nonesuch", verbosity=0)
+           readtext("../data/empty/empty.nonesuch", verbosity = 0)
        )
 })
 
 test_that("messages from list_file",{
     expect_silent(
-        readtext("../data/zip/inauguralTopLevel.zip", verbosity=0)
+        readtext("../data/zip/inauguralTopLevel.zip", verbosity = 0)
     )
     expect_silent(
-        readtext("../data/zip/inauguralTopLevel.zip", verbosity=1)
+        readtext("../data/zip/inauguralTopLevel.zip", verbosity = 1)
     )
     expect_message(
-        readtext("../data/zip/inauguralTopLevel.zip", verbosity=2),
+        readtext("../data/zip/inauguralTopLevel.zip", verbosity = 2),
         "Reading texts from \\.\\./data/zip/inauguralTopLevel\\.zip"
     )
     expect_message(
-        readtext("../data/zip/inauguralTopLevel.zip", verbosity=3),
+        readtext("../data/zip/inauguralTopLevel.zip", verbosity = 3),
         "reading \\(txt\\) file: .*1789-Washington\\.txt"
     )
 })
 
 test_that("readtext called with textfield works with deprecation warning", {
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", textfield="text")),
+        nrow(readtext("../data/csv/*.csv", textfield = "text")),
         6
     )
     expect_equal(
-        nrow(docvars(readtext("../data/csv/*.csv", textfield="text"))),
+        nrow(docvars(readtext("../data/csv/*.csv", textfield = "text"))),
         6
     )
     expect_equal(
-        length(texts(readtext("../data/csv/*.csv", textfield="text"))),
+        length(texts(readtext("../data/csv/*.csv", textfield = "text"))),
         6
     )
     expect_warning(
-        readtext("../data/csv/*.csv", textfield="text"),
+        readtext("../data/csv/*.csv", textfield = "text"),
         "textfield is deprecated; use text_field instead"
     )
 })
@@ -787,31 +783,31 @@ test_that("readtext called with textfield works with deprecation warning", {
 test_that("tests for Excel files", {
 
     expect_equal(unname(texts(
-        readtext("../data/xls/test.xlsx", text_field="text"))),
+        readtext("../data/xls/test.xlsx", text_field = "text"))),
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
     expect_that(
-        docvars(readtext("../data/xls/test.xlsx", text_field="text")),
+        docvars(readtext("../data/xls/test.xlsx", text_field = "text")),
         equals(data.frame(list(
-                        colour=c("orange", "blue", "pink", "pink"),
-                        number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, "sweet", "umami")
-                        ), stringsAsFactors=FALSE))
+                        colour = c("orange", "blue", "pink", "pink"),
+                        number = c(0, NA, NA, NA),
+                        taste = c(NA, NA, "sweet", "umami")
+                        ), stringsAsFactors = FALSE))
     )
 
 
     expect_equal(
-        texts(readtext("../data/xls/test.xls", text_field="text")),
-        c("test.xls.1"="The quick", "test.xls.2"="brown fox", 
-          "test.xls.3"="jumps over", "test.xls.4"="the lazy dog.")
+        texts(readtext("../data/xls/test.xls", text_field = "text")),
+        c("test.xls.1" = "The quick", "test.xls.2" = "brown fox", 
+          "test.xls.3" = "jumps over", "test.xls.4" = "the lazy dog.")
     )
     expect_that(
-        docvars(readtext("../data/xls/test.xls", text_field="text")),
+        docvars(readtext("../data/xls/test.xls", text_field = "text")),
         equals(data.frame(list(
-                        colour=c("orange", "blue", "pink", "pink"),
-                        number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, "sweet", "umami")
-                        ), stringsAsFactors=FALSE))
+                        colour = c("orange", "blue", "pink", "pink"),
+                        number = c(0, NA, NA, NA),
+                        taste = c(NA, NA, "sweet", "umami")
+                        ), stringsAsFactors = FALSE))
     )
 
 
@@ -819,15 +815,15 @@ test_that("tests for Excel files", {
 
 test_that("tests for ODS files", {
     expect_equal(unname(texts(
-        readtext("../data/ods/test.ods", text_field="text"))),
+        readtext("../data/ods/test.ods", text_field = "text"))),
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
     expect_equal(
-        docvars(readtext("../data/ods/test.ods", text_field="text")),
+        docvars(readtext("../data/ods/test.ods", text_field = "text")),
         data.frame(list(
-                        colour=c("orange", "blue", "pink", "pink"),
-                        number=c(0, NA, NA, NA),
-                        taste=c(NA, NA, "sweet", "umami")
+                        colour = c("orange", "blue", "pink", "pink"),
+                        number = c(0, NA, NA, NA),
+                        taste = c(NA, NA, "sweet", "umami")
                         ), stringsAsFactors = FALSE)
     )
 

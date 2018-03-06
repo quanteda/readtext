@@ -169,10 +169,10 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     docvarsfrom <- match.arg(docvarsfrom)
     # # just use the first, if both are specified?
     # if (is.missing(docvarsfrom))
-    #    
+    #  
     # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
     #     stop("illegal docvarsfrom value")
-    if (is.null(text_field)) 
+    if (is.null(text_field))
         text_field <- 1
     if (is.null(encoding))
         encoding <- getOption("encoding")
@@ -218,7 +218,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         result <- cbind(result, impute_types(docvar))
     }
 
-    # change rownames to doc_id 
+    # change rownames to doc_id
     result$doc_id <- id
     rownames(result) <- NULL
 
@@ -244,7 +244,7 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
                  "To read all files in a directory, you must pass a glob expression like ", call, ".")
         }
     } else {
-        if (verbosity >= 1) 
+        if (verbosity >= 1)
             warning("Unsupported extension ", sQuote(ext), " of file ", path , " treating as plain text.")
         ext <- "txt"
     }
