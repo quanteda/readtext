@@ -28,6 +28,9 @@
 #'   This type of file has special handling which simplifies the Twitter format
 #'   into docvars.  The correct format for each JSON file is automatically detected.}}
 #'   \item{\code{csv,tab,tsv}}{comma- or tab-separated values}
+#'   \item{\code{html}}{HTML documents, including specialized formats from known
+#'   sources, such as Nexis-formatted HTML.  See the \code{source} parameter
+#'   below.}
 #'   \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
 #'   kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
 #'   argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
@@ -74,8 +77,9 @@
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
-#' @param source specify source of JSON or HTML files. Currently it only supports
-#'   \code{"twitter"} for JSON and \code{"nexis"} for HTML.
+#' @param source used to specify specific formats of some input file types, such
+#'   as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
+#'   \code{"nexis"} for HTML.
 #' @param verbosity \itemize{
 #'   \item 0: output errors only
 #'   \item 1: output errors and warnings (default)

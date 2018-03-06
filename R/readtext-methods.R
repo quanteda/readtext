@@ -9,6 +9,7 @@
 #' @importFrom utils head
 #' @importFrom tibble trunc_mat
 #' @importFrom stringi stri_sub
+#' @keywords internal
 #' @export
 print.readtext <- function(x, n = 6L, text_width = 10L, ...) {
     cat("readtext object consisting of ", nrow(x), 

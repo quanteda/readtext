@@ -7,6 +7,7 @@
 #' @inheritParams readtext
 #' @param ... only to trap extra arguments
 #' @import stringi XML
+#' @keywords internal
 #' @examples
 #' \dontrun{
 #' irt <- readtext:::get_nexis_html('tests/data/nexis/irish-times_1995-06-12_0001.html')
@@ -62,7 +63,7 @@ extract_attrs <- function(node, paragraph_separator, verbosity) {
     n_max <- 0;
     i <- 1
     #print(node)
-    for(div in getNodeSet(node, './/div')){
+    for (div in getNodeSet(node, './/div')) {
 
         str <- xmlValue(div, './/text()')
         str <- clean_text(str)

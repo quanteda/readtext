@@ -37,3 +37,4 @@ all <- readtext('tests/data/nexis', source = 'nexis')
 all <- readtext('tests/data/nexis', source = 'nexis')
 }
 }
+\keyword{internal}
