@@ -85,8 +85,8 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
 
-\item{source}{specify souce of JSON or HTML files. Currentlly it only supports
-\code{twitter} for JSON and \code{nexis} for HTML.}
+\item{source}{specify source of JSON or HTML files. Currently it only supports
+\code{"twitter"} for JSON and \code{"nexis"} for HTML.}
 
 \item{verbosity}{\itemize{
   \item 0: output errors only

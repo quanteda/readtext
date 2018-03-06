@@ -207,7 +207,7 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
 }
 
 #' Return basenames that are unique
-#' @param x character vector; file pathes
+#' @param x character vector; file paths
 #' @param path_only logical; if \code{TRUE}, only return the unique part of the path
 #' @keywords internal
 #' @examples
@@ -237,7 +237,7 @@ basename_unique <- function(x, path_only = FALSE) {
 #' 
 #' Detect and set variable types in a similar way as \code{read.csv()} does.
 #' Should be used when imported data.frame is all characters.
-#' @param x data.frame; colums are all characters vectors
+#' @param x data.frame; columns are all characters vectors
 #' @keywords internal
 impute_types <- function(x) {
     if (nrow(x) == 0) return(x)

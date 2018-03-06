@@ -74,8 +74,8 @@
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
-#' @param source specify souce of JSON or HTML files. Currentlly it only supports
-#'   \code{twitter} for JSON and \code{nexis} for HTML.
+#' @param source specify source of JSON or HTML files. Currently it only supports
+#'   \code{"twitter"} for JSON and \code{"nexis"} for HTML.
 #' @param verbosity \itemize{
 #'   \item 0: output errors only
 #'   \item 1: output errors and warnings (default)

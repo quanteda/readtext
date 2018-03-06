@@ -7,7 +7,7 @@
 impute_types(x)
 }
 \arguments{
-\item{x}{data.frame; colums are all characters vectors}
+\item{x}{data.frame; columns are all characters vectors}
 }
 \description{
 Detect and set variable types in a similar way as \code{read.csv()} does.

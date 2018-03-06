@@ -1,11 +1,11 @@
 #' extract texts and meta data from Nexis HTML files
 #'
 #' This extract headings, body texts and meta data (date, byline, length,
-#' secotion, edntion) from items in HTML files downloaded by the scraper.
+#' section, edition) from items in HTML files downloaded by the scraper.
 #' @param path either path to a HTML file or a directory that containe HTML files
-#' @param paragraph_separator a character to sperarate paragrahphs in body texts.
+#' @param paragraph_separator a character to separate paragraphs in body texts
 #' @inheritParams readtext
-#' @param ... only to trap extra aguments
+#' @param ... only to trap extra arguments
 #' @import stringi XML
 #' @examples
 #' \dontrun{
@@ -16,8 +16,8 @@
 #' spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', 
 #'                                   language_date = 'german')
 #' 
-#' all <- readtext('tests/data/nexis', souce = 'nexis')
-#' all <- readtext('tests/data/nexis', souce = 'nexis')
+#' all <- readtext('tests/data/nexis', source = 'nexis')
+#' all <- readtext('tests/data/nexis', source = 'nexis')
 #' }
 get_nexis_html <- function(path, paragraph_separator = '\n\n', 
                            verbosity, ...){
