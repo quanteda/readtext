@@ -7,7 +7,7 @@
 basename_unique(x, path_only = FALSE)
 }
 \arguments{
-\item{x}{character vector; file pathes}
+\item{x}{character vector; file paths}
 
 \item{path_only}{logical; if \code{TRUE}, only return the unique part of the path}
 }

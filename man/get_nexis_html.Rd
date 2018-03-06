@@ -9,7 +9,7 @@ get_nexis_html(path, paragraph_separator = "\\n\\n", verbosity, ...)
 \arguments{
 \item{path}{either path to a HTML file or a directory that containe HTML files}
 
-\item{paragraph_separator}{a character to sperarate paragrahphs in body texts.}
+\item{paragraph_separator}{a character to separate paragraphs in body texts}
 
 \item{verbosity}{\itemize{
   \item 0: output errors only
@@ -18,11 +18,11 @@ get_nexis_html(path, paragraph_separator = "\\n\\n", verbosity, ...)
   \item 3: output detailed file-related messages
 }}
 
-\item{...}{only to trap extra aguments}
+\item{...}{only to trap extra arguments}
 }
 \description{
 This extract headings, body texts and meta data (date, byline, length,
-secotion, edntion) from items in HTML files downloaded by the scraper.
+section, edition) from items in HTML files downloaded by the scraper.
 }
 \examples{
 \dontrun{
@@ -33,7 +33,8 @@ sun <- readtext:::get_nexis_html('tests/data/nexis/sun_2000-11-01_0001.html')
 spg <- readtext:::get_nexis_html('tests/data/nexis/spiegel_2012-02-01_0001.html', 
                                   language_date = 'german')
 
-all <- readtext('tests/data/nexis', souce = 'nexis')
-all <- readtext('tests/data/nexis', souce = 'nexis')
+all <- readtext('tests/data/nexis', source = 'nexis')
+all <- readtext('tests/data/nexis', source = 'nexis')
 }
 }
+\keyword{internal}

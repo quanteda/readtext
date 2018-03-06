@@ -58,4 +58,3 @@ NULL
 #' data.frame(labelled = names(data_char_encodedtexts), 
 #'            detected = encoding(data_char_encodedtexts)$all)
 "data_char_encodedtexts"
-

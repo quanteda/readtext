@@ -18,3 +18,4 @@
 \description{
 Print a readtext object in a nicely formatted way.
 }
+\keyword{internal}

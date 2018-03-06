@@ -19,5 +19,3 @@
 #' @docType package
 #' @name readtext-package
 NULL
-
-
