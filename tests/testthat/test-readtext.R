@@ -836,3 +836,34 @@ test_that("tests for ODS files", {
     )
 
 })
+
+
+test_that("rases error when source is not valid", {
+    
+    expect_error(
+        readtext('../data/nexis/sun_2000-11-01_0001.html', source = 1),
+        'source must be a character'
+    )
+    expect_error(
+        readtext('../data/nexis/sun_2000-11-01_0001.html', source = 'something'),
+        "'nexis' is the only source type available for HTML."
+    )
+    expect_silent(
+        readtext('../data/nexis/sun_2000-11-01_0001.html', source = 'nexis')
+    )
+    
+    expect_error(
+        readtext('../data/tweets/stream.json', source = 1),
+        'source must be a character'
+    )
+    
+    expect_error(
+        readtext('../data/tweets/stream.json', source = 'something'),
+        "'twitter' is the only source type available for JSON."
+    )
+    
+    expect_silent(
+        readtext('../data/tweets/stream.json', source = 'twitter')
+    )
+    
+})

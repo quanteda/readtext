@@ -33,11 +33,14 @@ get_csv <- function(path, text_field, encoding, source, ...) {
 #  it looks like a twitter json file
 get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
     
-    if (source == 'twitter') {
+    if (!source %in% c("auto", "twitter"))
+        stop("'twitter' is the only source type available for JSON.")
+    
+    if (source == "twitter") {
         return(get_json_tweets(path, verbosity, ...))
     } else {
         if (is.numeric(text_field))
-            stop('Cannot use numeric text_field with json file')
+            stop("Cannot use numeric text_field with json file.")
         
         result <- get_json_object(path, verbosity, ...)
         if (!is.null(result))
@@ -133,14 +136,17 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
 
 get_html <- function(path, encoding, source, verbosity = 1, ...) {
     
-    if (source == 'nexis') {
+    if (!source %in% c("auto", "nexis"))
+        stop("'nexis' is the only source type available for HTML.")
+    
+    if (source == "nexis") {
         return(get_nexis_html(path, verbosity = verbosity, ...))
         tryCatch({
             #return(get_nexis_html(path, ...))
         }, 
         error = function(e) {
             if (verbosity >= 1) 
-                stop("Doesn't look like Nexis HTML file")
+                stop("Doesn't look like Nexis HTML file.")
         })
     } else {
         # http://stackoverflow.com/a/3195926

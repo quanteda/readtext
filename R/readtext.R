@@ -162,7 +162,9 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         stop("verbosity must be one of 0, 1, 2, 3.")
     if (!is.character(file))
         stop("file must be a character (specifying file location(s)).")
-    
+    if (!is.null(source) && !is.character(source))
+        stop("source must be a character.")
+        
     docvarsfrom <- match.arg(docvarsfrom)
     # # just use the first, if both are specified?
     # if (is.missing(docvarsfrom))
@@ -174,7 +176,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     if (is.null(encoding))
         encoding <- getOption("encoding")
     if (is.null(source))
-        source <- ''
+        source <- "auto"
     if (verbosity >= 2)
         message("Reading texts from ", file)
     
@@ -203,12 +205,6 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         #if (lengths(prefix) > 1)
         id <- paste(prefix, id, sep = '/')
     }
-    
-    # if (identical(uniqueparts, "")) {
-    #     row.names(result) <- as.character(unlist(sapply(sources, row.names)))
-    # } else {
-    #     row.names(result) <- paste(uniqueparts, as.character(unlist(sapply(sources, row.names))), sep = "/")
-    # }
     
     if (docvarsfrom %in% c("filepaths", "filenames")) {
         docvar <- get_docvars_filenames(files, dvsep, docvarnames, docvarsfrom == "filepaths", verbosity)
