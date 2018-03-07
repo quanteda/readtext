@@ -6,13 +6,13 @@
 \usage{
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL,
+  docvarnames = NULL, encoding = NULL, source = NULL,
   verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 
 automagically handle a number of common scenarios, so the value can be a
-"glob"-type'  wildcard value.  Currently available filetypes are: 
+"glob"-type wildcard value.  Currently available filetypes are: 
 
 \strong{Single file formats:}
 
@@ -32,6 +32,9 @@ The supported formats are:
 This type of file has special handling which simplifies the Twitter format
 into docvars.  The correct format for each JSON file is automatically detected.}}
 \item{\code{csv,tab,tsv}}{comma- or tab-separated values}
+\item{\code{html}}{HTML documents, including specialized formats from known
+sources, such as Nexis-formatted HTML.  See the \code{source} parameter
+below.}
 \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
 kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
 argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
@@ -84,6 +87,10 @@ docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
 for each files}
+
+\item{source}{used to specify specific formats of some input file types, such
+as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
+\code{"nexis"} for HTML.}
 
 \item{verbosity}{\itemize{
   \item 0: output errors only

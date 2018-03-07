@@ -9,12 +9,13 @@
 #' @importFrom utils head
 #' @importFrom tibble trunc_mat
 #' @importFrom stringi stri_sub
+#' @keywords internal
 #' @export
 print.readtext <- function(x, n = 6L, text_width = 10L, ...) {
-    cat("readtext object consisting of ", nrow(x), 
-        " document", ifelse(nrow(x) == 1, "", "s"), " and ", 
-        ncol(x)-2, " docvar", ifelse((ncol(x)-2) == 1, "", "s"), 
-        ".\n", sep="")
+    cat("readtext object consisting of ", nrow(x),
+        " document", ifelse(nrow(x) == 1, "", "s"), " and ",
+        ncol(x) - 2, " docvar", ifelse((ncol(x) - 2) == 1, "", "s"),
+        ".\n", sep = "")
     x$text <- paste0("\"", stringi::stri_sub(x$text, length = text_width), "\"...")
     # x <- cbind(data.frame(doc_id = rownames(x), stringsAsFactors = FALSE), x)
     class(x) <- "data.frame"
@@ -34,4 +35,3 @@ as.character.readtext <- function(x, ...) {
     names(result) <- x[["doc_id"]]
     result
 }
-
