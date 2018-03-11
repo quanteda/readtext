@@ -1,7 +1,10 @@
 context("test encoding function")
 
 test_that("test encoding function on simple text files", {
-    cat("This is UTF-8 aęiíoõuü 日本語", file = (tempf <- tempfile(fileext = ".txt")))
+  skip_on_appveyor()
+  skip_on_os("windows")
+  skip_on_cran()
+  cat("This is UTF-8 aęiíoõuü 日本語", file = (tempf <- tempfile(fileext = ".txt")))
     rt <- readtext(tempf)
     enc <- encoding(rt, verbose = FALSE)
     expect_equal(
