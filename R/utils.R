@@ -40,56 +40,37 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
     return(docvar)
 }
 
-# @rdname mktemp
-# make temporary files and directories in a more reasonable way than tempfile()
-# or tempdir(): here, the filename is different each time you call mktemp()
-mktemp <- function(prefix = "tmp.", base_path = NULL, directory = FALSE) {
-    #  Create a randomly-named temporary file or directory, sort of like
-    #  https://www.mktemp.org/manual.html
-    if (is.null(base_path))
-        base_path <- tempdir()
-
-    alphanumeric <- c(0:9, LETTERS, letters)
-
-    filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse = "")
-    filename <- paste0(prefix, filename)
-    filename <- file.path(base_path, filename)
-    while (file.exists(filename) || dir.exists(filename)) {
-        filename <- paste0(sample(alphanumeric, 10, replace = TRUE), collapse = "")
-        filename <- paste0(prefix, filename)
-        filename <- file.path(base_path, filename)
+#' Get path to temporary file or directory
+#' 
+#' @param prefix a string appended to random file or directory names.
+#' @param temp_dir a path to temporary directory. If \code{NULL}, value from \code{tempdir()} will be used.
+#' @param directory If \code{TRUE}, temporary directory wil be created.
+#' @param seed  a seed value for \code{digest::digest}. If code{NULL}, a random value will be used.
+#' @keywords internal
+get_temp <- function(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL) {
+    if (is.null(temp_dir))
+        temp_dir <- tempdir()
+    if (is.null(seed))
+        seed <- stats::rnorm(1)
+    path <- NULL
+    while (is.null(path)) {
+        f <- paste0(prefix, digest::digest(seed))
+        if (.Platform$OS.type == 'windows') {
+            path <- paste0(temp_dir, '\\', f)
+        } else {
+            path <- paste0(temp_dir, '/', f)
+        }
+        if (is.null(seed) && file.exists(path)) {
+            path <- NULL
+            seed <- stats::rnorm(1)
+        }
     }
-
-    if (directory) {
-        dir.create(filename)
-    } else {
-        file.create(filename)
-    }
-
-    return(filename)
+    if (!file.exists(path) && directory)
+        dir.create(path, showWarnings = FALSE)
+    return(path)
 }
 
 
-downloadRemote <- function (i, ignore_missing) {
-    # First, check that this is not a URL with an unsupported scheme
-    scheme <- stri_match(i, regex = "^([a-z][a-z+.-]*):")[, 2]
-    if (!scheme %in% c("http", "https", "ftp"))
-        stop(paste("Unsupported URL scheme", scheme))
-
-    # If this is a supported-scheme remote URL
-    ext <- tools::file_ext(i)
-    if (!ext %in% extensions())
-        stop("Remote URL does not end in known extension. Please download the file manually.")
-
-    localfile <- file.path(mktemp(directory = TRUE), basename(i))
-    r <- httr::GET(i, httr::write_disk(localfile))
-    if (ignore_missing) {
-        httr::warn_for_status(r)
-    } else {
-        httr::stop_for_status(r)
-    }
-    localfile
-}
 
 #  The implementation of list_files and list_file might seem very
 #  complex, but it was arrived at after a lot of toil. The main design decision
@@ -125,59 +106,40 @@ downloadRemote <- function (i, ignore_missing) {
 #  doesn't work either. We also can't test whether a pattern is a regular file
 #  by looking at the extension, because '/path/to/*.zip' is a glob expression
 #  with a 'zip' extension.
-list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, verbosity = 1) {
+list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, list_file = TRUE, verbosity = 1) {
 
     if (!(ignore_missing || (length(x) > 0)))
         stop("File '", x, "' does not exist.")
 
-    file <- unlist(lapply(x, function (x) list_file(x, ignore_missing, last_round, verbosity)))
+    file <- unlist(lapply(x, function (x) list_file(x, ignore_missing, last_round, list_file, verbosity)))
 
     if (is.null(file))
         return(character(0))
     sort(file)
 }
 
-extract_archive <- function(i, ignore_missing) {
-    if (!(ignore_missing || file.exists(i)))
-        stop("File '", i, "' does not exist.")
-
-    td <- mktemp(directory = TRUE)
-    ext <- tools::file_ext(i)
-    if (ext %in% c("zip", "docx")) {
-        utils::unzip(i, exdir = td)
-    } else if (ext %in% c("gz", "tar", "bz")) {
-        utils::untar(i, exdir = td)
-    } else {
-        stop("Archive extension '", tools::file_ext(i), "' unrecognised.")
-    }
-    # Create a glob that matches all the files in the archive
-    file.path(td, "*")
-}
 
 #' @import stringi
-list_file <- function(x, ignore_missing, last_round, verbosity) {
+list_file <- function(file, ignore_missing, last_round, cache, verbosity = 1) {
     #  Remove "file" scheme
-    i <- stri_replace_first_regex(x, "^file://", "")
-    scheme <- stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
-
+    file <- stri_replace_first_regex(file, "^file://", "")
+    scheme <- stri_match_first_regex(file, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
+    
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
-        if (verbosity >= 3)
-            message(", reading remote file", appendLF = FALSE)
-        #  If there is a non-"file" scheme, treat it as remote
-        localfile <- downloadRemote(i, ignore_missing = ignore_missing)
-        return(list_files(localfile, ignore_missing, FALSE, verbosity))
+        return(list_files(download_remote(file, ignore_missing, cache, verbosity),
+                          ignore_missing, FALSE, verbosity))
     }
-
+    
     # Now, special local files
-    ext <- tools::file_ext(i)
+    ext <- tools::file_ext(file)
     if (ext %in% c("zip", "gz", "tar", "bz")) {
         if (verbosity >= 3)
             message(", unpacking .", ext, " archive", appendLF = FALSE)
-        archives <- extract_archive(i, ignore_missing = ignore_missing)
-        return(list_files(archives, ignore_missing, FALSE, verbosity))
+        return(list_files(extract_archive(file, ignore_missing = ignore_missing), 
+                          ignore_missing, FALSE, verbosity))
     }
-
+    
     #  At this point, it may be a simple local file or a glob pattern, but as
     #  above, we have no way of telling a priori whether this is the case
     if (last_round) {
@@ -185,23 +147,102 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
         #  special treatment (zip, remote, etc.) and it was treated as a glob
         #  pattern, which means that it is definitely not a glob pattern this
         #  time
-        if (dir.exists(i))
-            return(list_files(file.path(i, "*"), ignore_missing, FALSE, verbosity))
-
-        if (!(ignore_missing || file.exists(i)))
-            stop("File '", i, "' does not exist.")
-
+        if (dir.exists(file))
+            return(list_files(file.path(file, "*"), ignore_missing, FALSE, verbosity))
+        
+        if (!(ignore_missing || file.exists(file)))
+            stop("File '", file, "' does not exist.")
+        
         if (getOption("readtext_verbosity") >= 3)
-            message("... reading (", tools::file_ext(i), ") file: ", basename(i))
-        return(i)
+            message("... reading (", tools::file_ext(file), ") file: ", basename(file))
+        return(file)
     } else {
         #  If it wasn't a glob pattern last time, then it may be this time
         if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
-        i <- Sys.glob(i)
+        file <- Sys.glob(file)
         return(
-            list_files(i, ignore_missing, TRUE, verbosity)
+            list_files(file, ignore_missing, TRUE, verbosity)
         )
     }
+}
+
+
+extract_archive <- function(file, ignore_missing) {
+    if (!(ignore_missing || file.exists(file)))
+        stop("File '", file, "' does not exist.")
+
+    path <- get_temp(directory = TRUE)
+    ext <- tools::file_ext(file)
+    if (ext %in% c("zip", "docx")) {
+        utils::unzip(file, exdir = path)
+    } else if (ext %in% c("gz", "tar", "bz")) {
+        utils::untar(file, exdir = path)
+    } else {
+        stop("Archive extension '", tools::file_ext(file), "' unrecognised.")
+    }
+    # Create a glob that matches all the files in the archive
+    file.path(path, "*")
+}
+
+
+download_remote <- function (url, ignore_missing, cache, verbosity = 1) {
+    # First, check that this is not a URL with an unsupported scheme
+    scheme <- stri_match(url, regex = "^([a-z][a-z+.-]*):")[, 2]
+    if (!scheme %in% c("http", "https", "ftp"))
+        stop(paste("Unsupported URL scheme", scheme))
+    
+    # If this is a supported-scheme remote URL
+    name <- stri_replace_last_regex(basename(url), "\\?.*$", "") # remove parameters in URL
+    ext <- tools::file_ext(name)
+    if (!ext %in% extensions())
+        stop("Remote URL does not end in known extension. Please download the file manually.")
+    path <- cache_remote(url, ignore_missing, cache, name, verbosity)
+    return(path)
+}
+
+#' Internal function to cache remote file
+#' @param url location of a remote file
+#' @param ignore_missing if \code{TRUE}, warns for download status
+#' @param cache \code{TRUE}, save file in system's temporary folder and load it
+#'   from the next time
+#' @param basename name of temporary file to preserve file extensions. If
+#'   \code{NULL}, random string will be used.
+#' @inheritParams readtext
+#' @import  httr
+#' @keywords internal
+cache_remote <- function(url, ignore_missing, cache, basename = NULL, verbosity = 1) {
+    
+    if (!is.null(basename)) {
+        path <- file.path(get_temp(directory = TRUE, seed = url))
+        if (.Platform$OS.type == 'windows') {
+            path <- paste(path, basename, sep = "\\")
+        } else {
+            path <- paste(path, basename, sep = "/")
+        }
+    } else {
+        path <- file.path(get_temp(directory = FALSE, seed = url))
+    }
+    
+    download = TRUE
+    if (cache && file.exists(path))
+        download = FALSE
+    if (download) {
+        if (verbosity >= 3) {
+            message("Downloading from ", url)
+            r <- GET(url, write_disk(path, overwrite = TRUE), progress())
+        } else {
+            r <- GET(url, write_disk(path, overwrite = TRUE))
+        }
+        if (ignore_missing) {
+            warn_for_status(r)
+        } else {
+            stop_for_status(r)
+        }
+    } else {
+        if (verbosity >= 3)
+            message("Use cache for ", url)
+    }
+    return(path)
 }
 
 #' Return basenames that are unique

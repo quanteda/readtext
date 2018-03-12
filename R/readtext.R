@@ -79,6 +79,8 @@
 #' @param source used to specify specific formats of some input file types, such
 #'   as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
 #'   \code{"nexis"} for HTML.
+#' @param cache if \code{TRUE}, save remote file to a temporary folder. Only used
+#'   when \code{file} is a URL.
 #' @param verbosity \itemize{
 #'   \item 0: output errors only
 #'   \item 1: output errors and warnings (default)
@@ -147,7 +149,7 @@
 #' }
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-                    docvarnames = NULL, encoding = NULL, source = NULL,
+                    docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
                     verbosity = getOption("readtext_verbosity"),
                     ...) {
 
@@ -182,14 +184,18 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         source <- "auto"
     if (verbosity >= 2)
         message("Reading texts from ", file)
-
-    files <- list_files(file, ignore_missing_files, FALSE, verbosity)
+    
+    # TODO: files need to be imported as they are discovered. Currently
+    # list_files() uses a lot of storage space for temporary files when there
+    # are a lot of archives.
+    files <- list_files(file, ignore_missing_files, FALSE, cache, verbosity)
     if (length(encoding) == 1) {
         encoding <- rep(encoding, length(files))
     } else {
         if (length(encoding) != length(files))
             stop("Encoding parameter must be length 1, or as long as the number of files")
     }
+    
     sources <- mapply(function(x, e) {
         get_source(x, text_field = text_field, encoding = e, source = source, verbosity = verbosity, ...)
     }, files, encoding, SIMPLIFY = FALSE)

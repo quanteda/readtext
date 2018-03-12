@@ -26,7 +26,8 @@ Imports:
     streamR,
     XML,
     readxl,
-    readODS
+    readODS,
+    digest
 Suggests:
     quanteda (>= 0.9.9.24),
     knitr,

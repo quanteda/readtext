@@ -82,6 +82,15 @@ test_that("test remote text file", {
                        ignore_missing_files = TRUE)),
         c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
+    
+    # ingores parameters in URL
+    expect_equal(
+        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt?x=1&y=2",
+                       ignore_missing_files = TRUE)),
+        c(fox.txt = "The quick brown fox jumps over the lazy dog.")
+    )
+
+    
 })
 
 
@@ -420,7 +429,8 @@ test_that("Test function to list files", {
         "Unsupported URL scheme"
     )
     
-    testExistingFile <- readtext:::mktemp()
+    testExistingFile <- readtext:::get_temp()
+    file.create(testExistingFile)
     expect_equal(readtext:::list_files(testExistingFile), 
                  testExistingFile)
     expect_equal(readtext:::list_files(paste0('file://', testExistingFile)), 
@@ -428,7 +438,8 @@ test_that("Test function to list files", {
     
     
     # Test vector of filenames
-    testExistingFile2 <- readtext:::mktemp()
+    testExistingFile2 <- readtext:::get_temp()
+    file.create(testExistingFile2)
     expect_equal(
         readtext:::list_files(c(testExistingFile, testExistingFile2)),
         sort(c(testExistingFile, testExistingFile2))
@@ -452,7 +463,7 @@ test_that("Test function to list files", {
     
     
     #Test globbing
-    tempdir <- readtext:::mktemp(directory = TRUE)
+    tempdir <- readtext:::get_temp(directory = TRUE)
     
     file.create(file.path(tempdir, "1.tsv"))
     file.create(file.path(tempdir, "2.tsv"))
@@ -476,8 +487,8 @@ test_that("Test function to list files", {
     
     # Test globbing subdir
     
-    tempsubdir1 <- readtext:::mktemp(base_path = tempdir, directory = TRUE)
-    tempsubdir2 <- readtext:::mktemp(base_path = tempdir, directory = TRUE)
+    tempsubdir1 <- readtext:::get_temp(temp_dir = tempdir, directory = TRUE)
+    tempsubdir2 <- readtext:::get_temp(temp_dir = tempdir, directory = TRUE)
     
     file.create(file.path(tempsubdir1, "1.tsv"))
     file.create(file.path(tempsubdir1, "2.tsv"))
@@ -858,4 +869,12 @@ test_that("rases error when source is not valid", {
         readtext('../data/tweets/stream.json', source = 'twitter')
     )
     
+})
+
+test_that("download is working", {
+    dropbox = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1"
+    corp <- readRDS(download(dropbox, verbosity = 3))
+    expect_equal(quanteda::ndoc(corp), 10000)
+    expect_message(download(dropbox, verbosity = 3),
+                   'Use cache for.*')
 })
