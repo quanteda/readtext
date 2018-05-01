@@ -232,7 +232,7 @@ test_that("test xml files", {
     )
     
     expect_error(
-        readtext("../data/xml/*", text_field = 9000),
+        readtext("../data/xml/test.xml", text_field = 9000),
         "There is no 9000th field"
     )
 })

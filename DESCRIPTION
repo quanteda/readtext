@@ -25,6 +25,7 @@ Imports:
     jsonlite (>= 0.9.10),
     streamR,
     XML,
+    xml2,
     readxl,
     readODS
 Suggests:

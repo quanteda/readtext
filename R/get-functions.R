@@ -105,18 +105,30 @@ get_json_lines <- function(path, verbosity = 1, ...) {
 
 
 ## flat xml format
-get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, ...) {
+get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, 
+                    use_xml2 = TRUE, ...) {
     # TODO: encoding param is ignored
     # if (!requireNamespace("XML", quietly = TRUE))
     #     stop("You must have XML installed to read XML files.")
 
     if (is_probably_xpath(text_field)) {
-        xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
-        txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
+        if(!is.null(use_xml2) && use_xml2 == TRUE) {
+            xml <- xml2::read_html(path)
+            ## need to resolve NS 
+            txt <- xml2::xml_text(xml2::xml_find_all(xml), ...)
+        } else {
+            xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+            txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
+        }
         txt <- paste0(txt, collapse = collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
     } else {
-        result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
+        if(!is.null(use_xml2) && use_xml2 == TRUE) {
+            xml <- xml2::read_xml(path)
+            result <- xml2_to_dataframe(xml)
+        } else {
+            result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
+        }
         if (is.numeric(text_field) & (text_field > ncol(result))) {
             stop(paste0("There is no ", text_field, "th field in file ", path))
         } else {
@@ -131,7 +143,6 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         sort_fields(result, path, text_field, impute_types = TRUE)
     }
 }
-
 
 get_html <- function(path, encoding, source, verbosity = 1, ...) {
 
@@ -224,4 +235,24 @@ get_ods <- function(path, text_field, source, ...) {
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
     sort_fields(result, path, text_field, impute_types = TRUE)
+}
+
+
+xml2_to_dataframe <- function(xml) {
+    xml_list <- xml2::as_list(xml)
+    depth_check <- function(this, thisdepth = 0){
+        if(!is.list(this)){
+            return(thisdepth)
+        } else if (thisdepth > 3) {
+            return(thisdepth)
+        } else {
+            return(max(unlist(lapply(this, depth_check, thisdepth = thisdepth + 1))))    
+        }
+    }
+    if(depth_check(xml_list) != 3) {
+        stop("The xml format does not fit for the extraxtion without xPath\n  Use xPath method instead")
+    }
+    ret <- data.table::rbindlist(xml_list, fill = TRUE)
+    data.table::setDF(ret)
+    return(ret)
 }
