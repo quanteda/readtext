@@ -159,9 +159,11 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
         })
     } else {
         # http://stackoverflow.com/a/3195926
-        html <- XML::htmlTreeParse(path, useInternal = TRUE)
-        txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]",
-                               XML::xmlValue)
+        # html <- XML::htmlTreeParse(path, useInternal = TRUE)
+        # txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]",
+        #                        XML::xmlValue)
+        html <- xml2::read_html(path)
+        txt <- xml2::xml_text(xml2::xml_find_all(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]"))
         txt <- txt[stri_trim(txt) != ""]
         txt <- paste0(txt, collapse = "\n")
 
