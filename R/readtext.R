@@ -254,7 +254,7 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
                tsv = get_csv(path, text_field, sep = "\t", ...),
                tab = get_csv(path, text_field, sep = "\t", ...),
                json = get_json(path, text_field, verbosity = verbosity, ...),
-               xml = get_xml(path, text_field, verbosity = verbosity, use_xml2 = TRUE, ...), ## this is temporal
+               xml = get_xml(path, text_field, verbosity = verbosity, ...), 
                html = get_html(path, verbosity = verbosity, ...),
                pdf = get_pdf(path, ...),
                docx = get_docx(path, ...),

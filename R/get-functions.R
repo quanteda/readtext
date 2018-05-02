@@ -106,28 +106,19 @@ get_json_lines <- function(path, verbosity = 1, ...) {
 
 ## flat xml format
 get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, 
-                    use_xml2 = TRUE, ...) {
+                    ...) {
     # TODO: encoding param is ignored
     # if (!requireNamespace("XML", quietly = TRUE))
     #     stop("You must have XML installed to read XML files.")
 
     if (is_probably_xpath(text_field)) {
-        if(!is.null(use_xml2) && use_xml2 == TRUE) {
-            xml <- xml2::read_xml(path)
-            txt <- xml2::xml_text(xml2::xml_find_all(xml, text_field), ...)
-        } else {
-            xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
-            txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
-        }
+        xml <- xml2::read_xml(path)
+        txt <- xml2::xml_text(xml2::xml_find_all(xml, text_field), ...)
         txt <- paste0(txt, collapse = collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
     } else {
-        if(!is.null(use_xml2) && use_xml2 == TRUE) {
-            xml <- xml2::read_xml(path)
-            result <- xml2_to_dataframe(xml)
-        } else {
-            result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
-        }
+        xml <- xml2::read_xml(path)
+        result <- xml2_to_dataframe(xml)
         if (is.numeric(text_field)) {
             if(text_field > ncol(result)) 
                 stop(paste0("There is no ", text_field, "th field in file ", path))
