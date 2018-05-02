@@ -113,9 +113,8 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
 
     if (is_probably_xpath(text_field)) {
         if(!is.null(use_xml2) && use_xml2 == TRUE) {
-            xml <- xml2::read_html(path)
-            ## need to resolve NS 
-            txt <- xml2::xml_text(xml2::xml_find_all(xml), ...)
+            xml <- xml2::read_xml(path)
+            txt <- xml2::xml_text(xml2::xml_find_all(xml, text_field), ...)
         } else {
             xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
             txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
@@ -129,9 +128,9 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         } else {
             result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
         }
-        if (is.numeric(text_field) & (text_field > ncol(result))) {
-            stop(paste0("There is no ", text_field, "th field in file ", path))
-        } else {
+        if (is.numeric(text_field)) {
+            if(text_field > ncol(result)) 
+                stop(paste0("There is no ", text_field, "th field in file ", path))
             if (verbosity >= 1) {
                 warning(paste("You should specify text_field by name rather than by index, unless",
                               "you're certain that your XML file's fields are always in the same order."))
