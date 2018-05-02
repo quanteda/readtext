@@ -175,8 +175,11 @@ get_docx <- function(path, source, ...) {
     path <- sub("/\\*$", "", path)
     path <- file.path(path, "word", "document.xml")
 
-    xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
-    txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
+    xml <- xml2::read_xml(path)
+    txt <- xml2::xml_text(xml2::xml_find_all(xml, "//w:p"))
+    
+    # xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+    # txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
     txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse = "\n")
 
@@ -241,10 +244,10 @@ xml2_to_dataframe <- function(xml) {
             return(max(unlist(lapply(this, depth_check, thisdepth = thisdepth + 1))))    
         }
     }
-    if(depth_check(xml_list) != 3) {
+    if(depth_check(xml_list[[1]]) != 3) {
         stop("The xml format does not fit for the extraxtion without xPath\n  Use xPath method instead")
     }
-    ret <- data.table::rbindlist(xml_list, fill = TRUE)
+    ret <- data.table::rbindlist(xml_list[[1]], fill = TRUE)
     data.table::setDF(ret)
     return(ret)
 }
