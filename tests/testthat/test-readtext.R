@@ -101,7 +101,7 @@ test_that("test zip file", {
     skip_on_os("windows")
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
-        length(texts(readtext(paste0(DATA_DIR, "data_files_encodedtexts.zip")))),
+        length(texts(readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip")))),
         36
     )
 })
@@ -227,7 +227,7 @@ test_that("test xml files", {
     )
     
     expect_error(
-        readtext("../data/xml/*", text_field = "nonesuch"),
+        readtext("../data/xml/test.xml", text_field = "nonesuch"),
         "There is no field called"
     )
     
@@ -244,19 +244,19 @@ test_that("test xml files with XPath", {
     names(expected) <- "tei.xml"
 
     actual <- readtext("../data/xml/tei.xml",
-                      text_field = "/tei:TEI/tei:text/tei:body//tei:p",
-                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                      text_field = "/d1:TEI/d1:text/d1:body//d1:p")#,
+                      # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(texts(actual), expected)
 
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
-                      text_field = "/tei:TEI/tei:text/tei:body//tei:p",
-                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                       text_field = "/d1:TEI/d1:text/d1:body//d1:p")
+                       # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "The Pquick Pbrown Pfox")
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
-                      text_field = "/tei:TEI//*/text()",
-                      namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                      text_field = "/d1:TEI//*/text()")#,
+                      # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
 
 })
