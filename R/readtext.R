@@ -158,6 +158,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         warning("textfield is deprecated; use text_field instead.")
         text_field <- args[["textfield"]]
     }
+    
 
     # in case the function was called without attaching the package,
     # in which case the option is never set
@@ -260,7 +261,7 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
                tsv = get_csv(path, text_field, sep = "\t", ...),
                tab = get_csv(path, text_field, sep = "\t", ...),
                json = get_json(path, text_field, verbosity = verbosity, ...),
-               xml = get_xml(path, text_field, verbosity = verbosity, ...),
+               xml = get_xml(path, text_field, verbosity = verbosity, ...), 
                html = get_html(path, verbosity = verbosity, ...),
                pdf = get_pdf(path, ...),
                docx = get_docx(path, ...),

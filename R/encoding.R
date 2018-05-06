@@ -32,10 +32,11 @@ encoding <- function(x, verbose = TRUE, ...) {
 #' @export
 #' @import data.table stringi
 encoding.character <- function(x, verbose = TRUE, ...) {
+    verbosity <- ifelse(is.null(getOption("readtext_verbosity")), 1, getOption("readtext_verbosity"))
 
     addedArgs <- names(list(...))
     if (length(addedArgs) && any(!(addedArgs %in% names(formals(stringi::stri_enc_detect)))))
-        if (getOption("readtext_verbosity") >= 1)
+        if (verbosity >= 1)
             warning("Argument", ifelse(length(addedArgs) > 1, "s ", " "), addedArgs, " not used.", sep = "", noBreaks. = TRUE)
 
     encoding <- confidence <- conf <- NULL
