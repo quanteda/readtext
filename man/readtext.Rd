@@ -6,7 +6,7 @@
 \usage{
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, source = NULL,
+  docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
   verbosity = getOption("readtext_verbosity"), ...)
 }
 \arguments{
@@ -91,6 +91,9 @@ for each files}
 \item{source}{used to specify specific formats of some input file types, such
 as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
 \code{"nexis"} for HTML.}
+
+\item{cache}{if \code{TRUE}, save remote file to a temporary folder. Only used
+when \code{file} is a URL.}
 
 \item{verbosity}{\itemize{
   \item 0: output errors only

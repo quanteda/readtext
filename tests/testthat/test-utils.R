@@ -1,29 +1,28 @@
-test_that("Test readtext:::mktemp function for test dirs", {
-    filename <- readtext:::mktemp()
-    expect_true(file.exists(filename))
-    filename2 <- readtext:::mktemp()
-    expect_true(file.exists(filename2))
+test_that("Test readtext:::get_temp function for test dirs", {
+    filename <- readtext:::get_temp()
+    filename2 <- readtext:::get_temp()
     expect_false(filename == filename2)
-
+    
     # test directory parameter
-    dirname <- readtext:::mktemp(directory = TRUE)
+    dirname <- readtext:::get_temp(directory = TRUE)
     expect_true(dir.exists(dirname))
 
     # test prefix parameter
-    filename <- readtext:::mktemp(prefix = "testprefix")
+    filename <- readtext:::get_temp(prefix = "testprefix")
     expect_equal(
         substr(basename(filename), 1, 10),
         "testprefix"
     )
 
     # test that a new filename will be given if the original already exists
-    set.seed(0)
-    original_filename <- readtext:::mktemp()
-    set.seed(0)
-    new_filename <- readtext:::mktemp()
-    expect_false(original_filename == new_filename)
-    expect_true(file.exists(original_filename))
-    expect_true(file.exists(new_filename))
+    org_filename <- readtext:::get_temp()
+    new_filename <- readtext:::get_temp()
+    expect_false(org_filename == new_filename)
+    
+    # file names are the same when seed is given
+    org_filename2 <- readtext:::get_temp(seed = 'xyz')
+    new_filename2 <- readtext:::get_temp(seed = 'xyz')
+    expect_true(org_filename2 == new_filename2)
 })
 
 test_that("Test is_probably_xpath", {
@@ -59,9 +58,9 @@ test_that("file_ext returns expected extensions", {
 })
 
 
-test_that("Test downloadRemote", {
+test_that("Test download_remote", {
     expect_error(
-        downloadRemote("http://www.google.com/404.txt", ignore_missing = FALSE)
+        download_remote("http://www.google.com/404.txt", ignore_missing = FALSE)
     )
 
 })
