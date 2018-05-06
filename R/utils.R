@@ -107,7 +107,6 @@ get_temp <- function(prefix = "readtext-", temp_dir = NULL, directory = FALSE, s
 #  by looking at the extension, because '/path/to/*.zip' is a glob expression
 #  with a 'zip' extension.
 list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, list_file = TRUE, verbosity = 1) {
-
     if (!(ignore_missing || (length(x) > 0)))
         stop("File '", x, "' does not exist.")
 

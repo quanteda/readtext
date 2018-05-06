@@ -105,21 +105,23 @@ get_json_lines <- function(path, verbosity = 1, ...) {
 
 
 ## flat xml format
-get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, ...) {
+get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity = 1, 
+                    ...) {
     # TODO: encoding param is ignored
     # if (!requireNamespace("XML", quietly = TRUE))
     #     stop("You must have XML installed to read XML files.")
 
     if (is_probably_xpath(text_field)) {
-        xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
-        txt <- XML::xpathApply(xml, text_field, XML::xmlValue, ...)
+        xml <- xml2::read_xml(path)
+        txt <- xml2::xml_text(xml2::xml_find_all(xml, text_field), ...)
         txt <- paste0(txt, collapse = collapse)
         return(data.frame(text = txt, stringsAsFactors = FALSE))
     } else {
-        result <- XML::xmlToDataFrame(path, stringsAsFactors = FALSE, ...)
-        if (is.numeric(text_field) & (text_field > ncol(result))) {
-            stop(paste0("There is no ", text_field, "th field in file ", path))
-        } else {
+        xml <- xml2::read_xml(path)
+        result <- xml2_to_dataframe(xml)
+        if (is.numeric(text_field)) {
+            if(text_field > ncol(result)) 
+                stop(paste0("There is no ", text_field, "th field in file ", path))
             if (verbosity >= 1) {
                 warning(paste("You should specify text_field by name rather than by index, unless",
                               "you're certain that your XML file's fields are always in the same order."))
@@ -131,7 +133,6 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         sort_fields(result, path, text_field, impute_types = TRUE)
     }
 }
-
 
 get_html <- function(path, encoding, source, verbosity = 1, ...) {
 
@@ -148,9 +149,11 @@ get_html <- function(path, encoding, source, verbosity = 1, ...) {
         })
     } else {
         # http://stackoverflow.com/a/3195926
-        html <- XML::htmlTreeParse(path, useInternal = TRUE)
-        txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]",
-                               XML::xmlValue)
+        # html <- XML::htmlTreeParse(path, useInternal = TRUE)
+        # txt <- XML::xpathApply(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]",
+        #                        XML::xmlValue)
+        html <- xml2::read_html(path)
+        txt <- xml2::xml_text(xml2::xml_find_all(html, "//body//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)]"))
         txt <- txt[stri_trim(txt) != ""]
         txt <- paste0(txt, collapse = "\n")
 
@@ -172,8 +175,11 @@ get_docx <- function(path, source, ...) {
     path <- sub("/\\*$", "", path)
     path <- file.path(path, "word", "document.xml")
 
-    xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
-    txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
+    xml <- xml2::read_xml(path)
+    txt <- xml2::xml_text(xml2::xml_find_all(xml, "//w:p"))
+    
+    # xml <- XML::xmlTreeParse(path, useInternalNodes = TRUE)
+    # txt <- XML::xpathApply(xml, "//w:p", XML::xmlValue)
     txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse = "\n")
 
@@ -224,4 +230,24 @@ get_ods <- function(path, text_field, source, ...) {
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
     sort_fields(result, path, text_field, impute_types = TRUE)
+}
+
+
+xml2_to_dataframe <- function(xml) {
+    xml_list <- xml2::as_list(xml)
+    depth_check <- function(this, thisdepth = 0){
+        if(!is.list(this)){
+            return(thisdepth)
+        } else if (thisdepth > 3) {
+            return(thisdepth)
+        } else {
+            return(max(unlist(lapply(this, depth_check, thisdepth = thisdepth + 1))))    
+        }
+    }
+    if(depth_check(xml_list[[1]]) != 3) {
+        stop("The xml format does not fit for the extraxtion without xPath\n  Use xPath method instead")
+    }
+    ret <- data.table::rbindlist(xml_list[[1]], fill = TRUE)
+    data.table::setDF(ret)
+    return(ret)
 }
