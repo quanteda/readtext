@@ -2,7 +2,7 @@
 % Please edit documentation in R/download.R
 \name{download}
 \alias{download}
-\title{Download remote file and save as a temporary file}
+\title{[Experimental] Download remote file and save as a temporary file}
 \usage{
 download(url, cache = TRUE, verbosity = getOption("readtext_verbosity"))
 }
@@ -23,5 +23,7 @@ load it from the next time}
 path to a temporary file
 }
 \description{
-Download remote file and save as a temporary file
+[Experimental] Download remote file and save as a temporary file
 }
+\keyword{experimental}
+\keyword{internal}
