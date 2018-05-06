@@ -6,7 +6,7 @@
 #' @param paragraph_separator a character to separate paragraphs in body texts
 #' @inheritParams readtext
 #' @param ... only to trap extra arguments
-#' @import stringi XML
+#' @import stringi
 #' @keywords internal
 #' @examples
 #' \dontrun{
@@ -29,9 +29,10 @@ get_nexis_html <- function(path, paragraph_separator = "\n\n",
     html <- paste0(fix_html(line), collapse = "\n")
 
     #Load as DOM object
-    dom <- htmlParse(html, encoding = "UTF-8")
+    # dom <- htmlParse(html, encoding = "UTF-8")
+    dom <- xml2::read_html(html)
     data <- data.frame()
-    for (doc in getNodeSet(dom, "//doc")) {
+    for (doc in xml2::xml_find_all(dom, "//doc")) {
         data <- rbind(data, extract_attrs(doc, paragraph_separator, verbosity))
     }
     colnames(data) <- c("pub", "edition", "date", "byline", "length", "section", "head", "body")
@@ -40,7 +41,7 @@ get_nexis_html <- function(path, paragraph_separator = "\n\n",
     return(data)
 }
 
-#' @import stringi XML
+#' @import stringi
 extract_attrs <- function(node, paragraph_separator, verbosity) {
 
     attrs <- list(pub = "", edition = "", date = "", byline = "",
@@ -63,9 +64,10 @@ extract_attrs <- function(node, paragraph_separator, verbosity) {
     n_max <- 0;
     i <- 1
     #print(node)
-    for (div in getNodeSet(node, ".//div")) {
+    for (div in xml2::xml_find_all(node, ".//div")) {
 
-        str <- xmlValue(div, ".//text()")
+        #str <- xmlValue(div, ".//text()")
+        str <- xml2::xml_text(div)
         str <- clean_text(str)
         n <- stri_length(str);
         if (is.na(n)) next
@@ -105,8 +107,8 @@ extract_attrs <- function(node, paragraph_separator, verbosity) {
                 attrs$length <- stri_trim(stri_replace_all_regex(str, "[^0-9]", ""))
             } else if (!is.null(attrs$length) && n > n_max &&
                        !stri_detect_regex(str, "^(BYLINE|URL|LOAD-DATE|LANGUAGE|GRAPHIC|PUBLICATION-TYPE|JOURNAL-CODE): ")){
-                ps <- getNodeSet(div, ".//p")
-                p <- sapply(ps, xmlValue)
+                ps <- xml2::xml_find_all(div, ".//p")
+                p <- sapply(ps, xml2::xml_text)
                 attrs$body <- stri_trim(paste0(p, collapse = paste0(" ", paragraph_separator, " ")))
                 n_max <- n
             }
