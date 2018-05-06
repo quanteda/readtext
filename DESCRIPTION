@@ -29,7 +29,7 @@ Imports:
     readODS,
     digest
 Suggests:
-    quanteda (>= 0.9.9.24),
+    quanteda (>= 1.1.0),
     knitr,
     rmarkdown,
     testthat
