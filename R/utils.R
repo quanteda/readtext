@@ -126,7 +126,6 @@ downloadRemote <- function (i, ignore_missing) {
 #  by looking at the extension, because '/path/to/*.zip' is a glob expression
 #  with a 'zip' extension.
 list_files <- function(x, ignore_missing = FALSE, last_round = FALSE, verbosity = 1) {
-
     if (!(ignore_missing || (length(x) > 0)))
         stop("File '", x, "' does not exist.")
 
@@ -159,7 +158,7 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
     #  Remove "file" scheme
     i <- stri_replace_first_regex(x, "^file://", "")
     scheme <- stri_match_first_regex(i, "^([A-Za-z][A-Za-z0-9+.-]+)://")[, 2]
-
+    
     # If not a URL (or a file:// URL) , treat it as a local file
     if (!is.na(scheme)) {
         if (verbosity >= 3)
@@ -191,12 +190,12 @@ list_file <- function(x, ignore_missing, last_round, verbosity) {
         if (!(ignore_missing || file.exists(i)))
             stop("File '", i, "' does not exist.")
 
-        if (getOption("readtext_verbosity") >= 3)
+        if (verbosity >= 3)
             message("... reading (", tools::file_ext(i), ") file: ", basename(i))
         return(i)
     } else {
         #  If it wasn't a glob pattern last time, then it may be this time
-        if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
+        if (verbosity >= 3) message(", using glob pattern")
         i <- Sys.glob(i)
         return(
             list_files(i, ignore_missing, TRUE, verbosity)

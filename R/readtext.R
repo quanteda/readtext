@@ -156,6 +156,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         warning("textfield is deprecated; use text_field instead.")
         text_field <- args[["textfield"]]
     }
+    
 
     # in case the function was called without attaching the package,
     # in which case the option is never set
@@ -182,7 +183,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         source <- "auto"
     if (verbosity >= 2)
         message("Reading texts from ", file)
-
+    
     files <- list_files(file, ignore_missing_files, FALSE, verbosity)
     if (length(encoding) == 1) {
         encoding <- rep(encoding, length(files))
