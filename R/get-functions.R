@@ -120,7 +120,7 @@ get_xml <- function(path, text_field, encoding, source, collapse = "", verbosity
         xml <- xml2::read_xml(path)
         result <- xml2_to_dataframe(xml)
         if (is.numeric(text_field)) {
-            if(text_field > ncol(result)) 
+            if (text_field > ncol(result)) 
                 stop(paste0("There is no ", text_field, "th field in file ", path))
             if (verbosity >= 1) {
                 warning(paste("You should specify text_field by name rather than by index, unless",
@@ -235,8 +235,8 @@ get_ods <- function(path, text_field, source, ...) {
 
 xml2_to_dataframe <- function(xml) {
     xml_list <- xml2::as_list(xml)
-    depth_check <- function(this, thisdepth = 0){
-        if(!is.list(this)){
+    depth_check <- function(this, thisdepth = 0) {
+        if (!is.list(this)) {
             return(thisdepth)
         } else if (thisdepth > 3) {
             return(thisdepth)
@@ -244,7 +244,7 @@ xml2_to_dataframe <- function(xml) {
             return(max(unlist(lapply(this, depth_check, thisdepth = thisdepth + 1))))    
         }
     }
-    if(depth_check(xml_list[[1]]) != 3) {
+    if (depth_check(xml_list[[1]]) != 3) {
         stop("The xml format does not fit for the extraxtion without xPath\n  Use xPath method instead")
     }
     ret <- data.table::rbindlist(xml_list[[1]], fill = TRUE)

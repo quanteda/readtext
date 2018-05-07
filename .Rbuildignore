@@ -11,4 +11,5 @@ __MACOSX
 ^appveyor\.yml$
 ^tests/data/encoding
 ^tests/testthat/test-readtext-encodedfiles.R
-
+^revdep
+^cran-comments\.md$
