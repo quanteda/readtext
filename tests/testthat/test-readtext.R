@@ -870,11 +870,3 @@ test_that("rases error when source is not valid", {
     )
     
 })
-
-test_that("download is working", {
-    dropbox = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1"
-    corp <- readRDS(download(dropbox, verbosity = 3))
-    expect_equal(quanteda::ndoc(corp), 10000)
-    expect_message(download(dropbox, verbosity = 3),
-                   'Use cache for.*')
-})
