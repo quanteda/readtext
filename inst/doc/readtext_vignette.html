@@ -409,14 +409,14 @@ color: #b44;
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/txt/movie_reviews/*&quot;</span>))</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">## readtext object consisting of 10 documents and 0 docvars.</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">## # data.frame [10 × 2]</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">##   doc_id              text                </a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">##   &lt;chr&gt;               &lt;chr&gt;               </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## 1 neg_cv000_29416.txt &quot;\&quot;plot : two\&quot;...&quot; </a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## 2 neg_cv001_19502.txt &quot;\&quot;the happy \&quot;...&quot; </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## 3 neg_cv002_17424.txt &quot;\&quot;it is movi\&quot;...&quot; </a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## 4 neg_cv003_12683.txt &quot;\&quot; \&quot; quest f\&quot;...&quot;</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## 5 neg_cv004_12641.txt &quot;\&quot;synopsis :\&quot;...&quot; </a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## 6 pos_cv000_29590.txt &quot;\&quot;films adap\&quot;...&quot; </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">##   doc_id                  text                </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">##   &lt;chr&gt;                   &lt;chr&gt;               </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">## 1 neg/neg_cv000_29416.txt &quot;\&quot;plot : two\&quot;...&quot; </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">## 2 neg/neg_cv001_19502.txt &quot;\&quot;the happy \&quot;...&quot; </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">## 3 neg/neg_cv002_17424.txt &quot;\&quot;it is movi\&quot;...&quot; </a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">## 4 neg/neg_cv003_12683.txt &quot;\&quot; \&quot; quest f\&quot;...&quot;</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">## 5 neg/neg_cv004_12641.txt &quot;\&quot;synopsis :\&quot;...&quot; </a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">## 6 pos/pos_cv000_29590.txt &quot;\&quot;films adap\&quot;...&quot; </a>
 <a class="sourceLine" id="cb5-13" data-line-number="13">## # ... with 4 more rows</a></code></pre></div>
 </div>
 <div id="comma--or-tab-separated-values-.csv-.tab-.tsv" class="section level2">
@@ -454,13 +454,15 @@ color: #b44;
 <p>You can also read .json data. Again you need to specify the <code>text_field</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">## Read in JSON data</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">readtext</span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">&quot;/json/inaugural_sample.json&quot;</span>), <span class="dt">text_field =</span> <span class="st">&quot;texts&quot;</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">## readtext object consisting of 3 documents and 3 docvars.</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">## # data.frame [3 × 5]</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">##   doc_id                  text                 Year President  FirstName</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">##   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 1 inaugural_sample.json.1 &quot;\&quot;Fellow-Cit\&quot;...&quot;  1789 Washington George   </a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 2 inaugural_sample.json.2 &quot;\&quot;Fellow cit\&quot;...&quot;  1793 Washington George   </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## 3 inaugural_sample.json.3 &quot;\&quot;When it wa\&quot;...&quot;  1797 Adams      John</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3">## Warning in doTryCatch(return(expr), name, parentenv, handler): Doesn't look</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">## like Tweets json file, trying general JSON</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">## readtext object consisting of 3 documents and 3 docvars.</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">## # data.frame [3 × 5]</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">##   doc_id                  text                 Year President  FirstName</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">##   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">## 1 inaugural_sample.json.1 &quot;\&quot;Fellow-Cit\&quot;...&quot;  1789 Washington George   </a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">## 2 inaugural_sample.json.2 &quot;\&quot;Fellow cit\&quot;...&quot;  1793 Washington George   </a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">## 3 inaugural_sample.json.3 &quot;\&quot;When it wa\&quot;...&quot;  1797 Adams      John</a></code></pre></div>
 </div>
 <div id="pdf-files" class="section level2">
 <h2>2.4 PDF files</h2>
@@ -528,7 +530,7 @@ color: #b44;
 <a class="sourceLine" id="cb14-14" data-line-number="14">##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas</a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">## Created: Mon May  7 21:31:17 2018</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">## Created: Wed May  9 21:06:48 2018</a>
 <a class="sourceLine" id="cb14-18" data-line-number="18">## Notes:</a></code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -675,7 +677,7 @@ color: #b44;
 <a class="sourceLine" id="cb21-16" data-line-number="16">##    Arabic   WINDOWS-1256</a>
 <a class="sourceLine" id="cb21-17" data-line-number="17">## </a>
 <a class="sourceLine" id="cb21-18" data-line-number="18">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb21-19" data-line-number="19">## Created: Mon May  7 21:31:17 2018</a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">## Created: Wed May  9 21:06:50 2018</a>
 <a class="sourceLine" id="cb21-20" data-line-number="20">## Notes:</a></code></pre></div>
 </div>
 </div>

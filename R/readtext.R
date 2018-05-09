@@ -166,7 +166,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         verbosity <- 1
     if (!verbosity %in% 0:3)
         stop("verbosity must be one of 0, 1, 2, 3.")
-    if (!is.character(file))
+    if (!all(is.character(file)))
         stop("file must be a character (specifying file location(s)).")
     if (!is.null(source) && !is.character(source))
         stop("source must be a character.")
@@ -179,7 +179,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     #     stop("illegal docvarsfrom value")
     if (is.null(text_field))
         text_field <- 1
-    if (is.null(encoding))
+    if (length(encoding) < 2 && is.null(encoding))
         encoding <- getOption("encoding")
     if (is.null(source))
         source <- "auto"
