@@ -1,10 +1,10 @@
-## Resubmission
+## Purpose: Bug fix in v0.70
 
-We fixed the errors from a previous submission.
+As soon as v0.70 was on CRAN, Jeroen Oooms reported that we had broken some of the tests in the **cld2** package.  We have fixed this comprehensively now and are resubmitting for this reason.
 
-## Purpose
+While not noted in the notes with v0.70, that version also fixed a problem when the environment variable `_R_CHECK_LENGTH_1_CONDITION_` was set to `TRUE`. This version also fixes that.
 
-Improve functionality by moving from XML to xml2 package; minor bug fixes.
+Both conditions are now part of the unit tests.
 
 ## Test environments
 
