@@ -152,12 +152,12 @@ list_file <- function(file, ignore_missing, last_round, cache, verbosity = 1) {
         if (!(ignore_missing || file.exists(file)))
             stop("File '", file, "' does not exist.")
         
-        if (getOption("readtext_verbosity") >= 3)
+        if (verbosity >= 3)
             message("... reading (", tools::file_ext(file), ") file: ", basename(file))
         return(file)
     } else {
         #  If it wasn't a glob pattern last time, then it may be this time
-        if (getOption("readtext_verbosity") >= 3) message(", using glob pattern")
+        if (verbosity >= 3) message(", usigit glob pattern")
         file <- Sys.glob(file)
         return(
             list_files(file, ignore_missing, TRUE, verbosity)
