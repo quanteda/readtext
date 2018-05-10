@@ -7,7 +7,7 @@
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
   docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
   docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
-  verbosity = getOption("readtext_verbosity"), ...)
+  verbosity = readtext_options("verbosity"), ...)
 }
 \arguments{
 \item{file}{the complete filename(s) to be read. This is designed to 

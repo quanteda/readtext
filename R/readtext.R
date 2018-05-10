@@ -150,7 +150,7 @@
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
                     docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
-                    verbosity = getOption("readtext_verbosity"),
+                    verbosity = readtext_options("verbosity"),
                     ...) {
 
     args <- list(...)
@@ -160,10 +160,10 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     }
     
 
-    # in case the function was called without attaching the package,
-    # in which case the option is never set
-    if (is.null(verbosity))
-        verbosity <- 1
+    # # in case the function was called without attaching the package,
+    # # in which case the option is never set
+    # if (is.null(verbosity))
+    #     verbosity <- 1
     if (!verbosity %in% 0:3)
         stop("verbosity must be one of 0, 1, 2, 3.")
     if (!all(is.character(file)))
@@ -287,7 +287,6 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
 }
 
 replace_charclass <- function (text) {
-
     mapping <- c(
         "\\p{Dash_Punctuation}" = "-",
         "\\p{Space_Separator}" = " ",

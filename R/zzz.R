@@ -1,4 +1,4 @@
 .onAttach <- function(...) {
     # set user options
-    options(readtext_verbosity = 1)
+    readtext_options(initialize = TRUE)
 }
