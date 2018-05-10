@@ -1,3 +1,9 @@
+readtext 0.7.1
+==============
+
+*  Added `readtext_options()`, fixes #123.
+
+
 readtext 0.7.0
 ==============
 
