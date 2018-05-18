@@ -13,3 +13,10 @@ __MACOSX
 ^tests/testthat/test-readtext-encodedfiles.R
 ^revdep
 ^cran-comments\.md$
+^_pkgdown\.yml$
+^css/
+^vignettes/pkgdown/
+^CNAME$
+^pkgdown$
+^index.html$
+^index.Rmd$
