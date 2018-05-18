@@ -1,0 +1,6 @@
+pandoc: 2.1.2
+pkgdown: 1.0.0
+pkgdown_sha: ~
+articles:
+  readtext_vignette: readtext_vignette.html
+
