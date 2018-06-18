@@ -13,3 +13,7 @@ __MACOSX
 ^tests/testthat/test-readtext-encodedfiles.R
 ^revdep
 ^cran-comments\.md$
+^CNAME$
+^_pkgdown\.yml$
+^css/
+^docs/

@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-readtext: Import and handling for plain and formatted text files
-================================================================
+
+# readtext: Import and handling for plain and formatted text files
 
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
@@ -14,8 +14,7 @@ status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/mast
 An R package for reading text files in all their various formats, by Ken
 Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
 
-Introduction
-------------
+## Introduction
 
 **readtext** is a one-function package that does exactly what it says on
 the tin: It reads files containing text, along with any associated
@@ -36,24 +35,31 @@ and allow you to specify vectorized input encodings to read in file
 types with individually set (and different) encodings. (All encoding
 functions are handled by the **stringi** package.)
 
-How to Install
---------------
+## How to Install
 
 1.  From CRAN
-
+    
     ``` r
     install.packages("readtext")
     ```
 
 2.  From GitHub, if you want the latest development version.
-
+    
     ``` r
     # devtools packaged required to install readtext from Github 
     devtools::install_github("quanteda/readtext") 
     ```
 
-Demonstration: Reading one or more text files
----------------------------------------------
+Linux note: There are a couple of dependencies that may not be available
+on linux systems. On Debian/Ubuntu try installing these packages by
+running these commands at the command line:
+
+``` bash
+sudo apt-get install libpoppler-cpp-dev   # for antiwar
+sudo apt-get install libapparmor-dev      # for unrtf
+```
+
+## Demonstration: Reading one or more text files
 
 **readtext** supports plain text files (.txt), data in some form of
 JavaScript Object Notation (.json), comma-or tab-separated values (.csv,
@@ -109,8 +115,7 @@ readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 For a more complete demonstration, see the package
 [vignette](http://cdn.rawgit.com/quanteda/readtext/master/inst/doc/readtext_vignette.html).
 
-Inter-operability with other packages
--------------------------------------
+## Inter-operability with other packages
 
 ### With **quanteda**
 
@@ -124,8 +129,8 @@ all docvars and other meta-data.
 ``` r
 require(quanteda)
 ## Loading required package: quanteda
-## Package version: 1.1.2
-## Parallel computing: 2 of 8 threads used.
+## Package version: 1.3.0
+## Parallel computing: 4 of 8 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
 ## Attaching package: 'quanteda'
@@ -139,15 +144,15 @@ corpus_csv <- corpus(rt_csv)
 summary(corpus_csv, 5)
 ## Corpus consisting of 5 documents, showing 5 documents:
 ## 
-##   Text Types Tokens Sentences            doc_id Year  President FirstName
-##  text1   625   1540        23 inaugCorpus.csv.1 1789 Washington    George
-##  text2    96    147         4 inaugCorpus.csv.2 1793 Washington    George
-##  text3   826   2578        37 inaugCorpus.csv.3 1797      Adams      John
-##  text4   717   1927        41 inaugCorpus.csv.4 1801  Jefferson    Thomas
-##  text5   804   2381        45 inaugCorpus.csv.5 1805  Jefferson    Thomas
+##               Text Types Tokens Sentences Year  President FirstName
+##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
+##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
+##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
-## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/readtext/* on x86_64 by kbenoit
-## Created: Sun Mar 11 14:56:13 2018
+## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit
+## Created: Mon Jun 18 07:53:59 2018
 ## Notes:
 ```
 

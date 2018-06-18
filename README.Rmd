@@ -1,7 +1,7 @@
 ---
 output:
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -51,6 +51,12 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
     devtools::install_github("quanteda/readtext") 
     ```
 
+Linux note: There are a couple of dependencies that may not be available on linux systems. On Debian/Ubuntu try installing these packages by running these commands at the command line:
+
+```{bash, eval = FALSE}
+sudo apt-get install libpoppler-cpp-dev   # for antiwar
+sudo apt-get install libapparmor-dev      # for unrtf
+```
 
 ## Demonstration: Reading one or more text files
 
