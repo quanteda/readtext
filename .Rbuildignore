@@ -16,3 +16,4 @@ __MACOSX
 ^CNAME$
 ^_pkgdown\.yml$
 ^css/
+^docs/
