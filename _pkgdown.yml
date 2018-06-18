@@ -1,0 +1,12 @@
+url: http://readtext.quanteda.io
+template:
+  params:
+    bootswatch: readable
+navbar:
+  title: "Stopwords"
+  type: inverse
+  left:
+    - text: "How to use"
+      href: articles/readtext_vignette.html
+    - text: "Reference"
+      href: reference/index.html
