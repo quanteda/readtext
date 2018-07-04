@@ -5,15 +5,19 @@ language: r
 warnings_are_errors: true
 sudo: true
 dist: trusty
+
+script:
+  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
+  - gcc --version
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
+      - gcc-5
+      - g++-5
       - libapparmor-dev
       - libpoppler-cpp-dev
-before_install:
-  #https://gist.github.com/cotsog/3ce84675af0d74438d91
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
 
 env:
     global:
