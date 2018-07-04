@@ -10,6 +10,11 @@ addons:
     packages:
       - libapparmor-dev
       - libpoppler-cpp-dev
+before_install:
+  #https://gist.github.com/cotsog/3ce84675af0d74438d91
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
 env:
     global:
     - R_CHECK_ARGS="--no-build-vignettes"
