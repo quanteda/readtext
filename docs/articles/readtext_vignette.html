@@ -113,14 +113,14 @@
 <a class="sourceLine" id="cb4-6" data-line-number="6">         <span class="dt">encoding =</span> <span class="st">"ISO-8859-1"</span>)</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">## readtext object consisting of 17 documents and 5 docvars.</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">## # data.frame [17 × 7]</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">##   doc_id                  text          unit  context  year language party</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">##   &lt;chr&gt;                   &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## 1 EU_euro_2004_de_PSE.txt "\"PES · PSE… EU    euro     2004 de       PSE  </a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## 2 EU_euro_2004_de_V.txt   "\"Gemeinsam… EU    euro     2004 de       V    </a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 3 EU_euro_2004_en_PSE.txt "\"PES · PSE… EU    euro     2004 en       PSE  </a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## 4 EU_euro_2004_en_V.txt   "\"Manifesto… EU    euro     2004 en       V    </a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## 5 EU_euro_2004_es_PSE.txt "\"PES · PSE… EU    euro     2004 es       PSE  </a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## 6 EU_euro_2004_es_V.txt   "\"Manifesto… EU    euro     2004 es       V    </a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">##   doc_id               text             unit  context  year language party</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">##   &lt;chr&gt;                &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">## 1 EU_euro_2004_de_PSE… "\"PES · PSE \"… EU    euro     2004 de       PSE  </a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">## 2 EU_euro_2004_de_V.t… "\"Gemeinsame\"… EU    euro     2004 de       V    </a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">## 3 EU_euro_2004_en_PSE… "\"PES · PSE \"… EU    euro     2004 en       PSE  </a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">## 4 EU_euro_2004_en_V.t… "\"Manifesto\n\… EU    euro     2004 en       V    </a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">## 5 EU_euro_2004_es_PSE… "\"PES · PSE \"… EU    euro     2004 es       PSE  </a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">## 6 EU_euro_2004_es_V.t… "\"Manifesto\n\… EU    euro     2004 es       V    </a>
 <a class="sourceLine" id="cb4-17" data-line-number="17">## # ... with 11 more rows</a></code></pre></div>
 <p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Recurse through subdirectories</span></a>
@@ -157,14 +157,14 @@
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/tsv/dailsample.tsv"</span>), <span class="dt">text_field =</span> <span class="st">"speech"</span>)</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">## readtext object consisting of 33 documents and 9 docvars.</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">## # data.frame [33 × 11]</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">##   doc_id  text   speechID memberID partyID constID title date  member_name</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">##   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      </a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## 1 dailsa… "\"Mo…        1      977      22     158 1. C… 1919… Count Geor…</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 2 dailsa… "\"Is…        2     1603      22     103 1. C… 1919… Mr. Pádrai…</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## 3 dailsa… "\"' …        3      116      22     178 1. C… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## 4 dailsa… "\"Tá…        4      116      22     178 2. C… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">## 5 dailsa… "\"Lé…        5      116      22     178 3. A… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">## 6 dailsa… "\"-B…        6      116      22     178 3. A… 1919… Mr. Cathal…</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">##   doc_id text  speechID memberID partyID constID title date  member_name</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">##   &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">## 1 dails… "\"M…        1      977      22     158 1. C… 1919… Count Geor…</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">## 2 dails… "\"I…        2     1603      22     103 1. C… 1919… Mr. Pádrai…</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">## 3 dails… "\"'…        3      116      22     178 1. C… 1919… Mr. Cathal…</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">## 4 dails… "\"T…        4      116      22     178 2. C… 1919… Mr. Cathal…</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">## 5 dails… "\"L…        5      116      22     178 3. A… 1919… Mr. Cathal…</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">## 6 dails… "\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">## # ... with 27 more rows, and 2 more variables: party_name &lt;chr&gt;,</a>
 <a class="sourceLine" id="cb7-14" data-line-number="14">## #   const_name &lt;chr&gt;</a></code></pre></div>
 </div>
@@ -253,7 +253,7 @@
 <a class="sourceLine" id="cb14-14" data-line-number="14">##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas</a>
 <a class="sourceLine" id="cb14-15" data-line-number="15">## </a>
 <a class="sourceLine" id="cb14-16" data-line-number="16">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">## Created: Mon Jun 18 08:11:30 2018</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">## Created: Mon Jul 30 17:13:41 2018</a>
 <a class="sourceLine" id="cb14-18" data-line-number="18">## Notes:</a></code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -403,7 +403,7 @@
 <a class="sourceLine" id="cb21-16" data-line-number="16">##    Arabic   WINDOWS-1256</a>
 <a class="sourceLine" id="cb21-17" data-line-number="17">## </a>
 <a class="sourceLine" id="cb21-18" data-line-number="18">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb21-19" data-line-number="19">## Created: Mon Jun 18 08:11:31 2018</a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">## Created: Mon Jul 30 17:13:41 2018</a>
 <a class="sourceLine" id="cb21-20" data-line-number="20">## Notes:</a></code></pre></div>
 </div>
 </div>
