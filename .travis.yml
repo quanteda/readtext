@@ -28,6 +28,8 @@ matrix:
 
 before_install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100
+  - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-7 100
   - mkdir -p ~/.R
   - echo "VkVSPS03CkNDPWdjYyQoVkVSKSAtc3RkPWMxMSAKQ1hYPWcrKyQoVkVSKQpTSExJQl9DWFhMRD1nKyskKFZFUikKRkM9Z2ZvcnRyYW4KRjc3PWdmb3J0cmFuCg==" | base64 -d > ~/.R/Makevars
   - cat ~/.R/Makevars
