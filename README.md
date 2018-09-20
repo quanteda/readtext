@@ -20,7 +20,7 @@ output:
 
 [1]: https://codecov.io/gh/quanteda/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, Aki Matsuo, Kohei Watanabe, and Stefan Müller.
 
 ## Introduction
 
@@ -126,7 +126,7 @@ summary(corpus_csv, 5)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source: /Users/akitaka/Dropbox/KB_Projects/r_package_development/readtext/* on x86_64 by akitaka
-## Created: Thu Sep 20 14:51:56 2018
+## Created: Thu Sep 20 14:58:12 2018
 ## Notes:
 ```
 

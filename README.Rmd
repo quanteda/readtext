@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 [1]: https://codecov.io/gh/quanteda/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, Aki Matsuo, Kohei Watanabe, and Stefan Müller.
 
 ## Introduction
 
