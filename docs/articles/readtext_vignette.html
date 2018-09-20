@@ -72,16 +72,16 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Load readtext package</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(readtext)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load readtext package</span>
+<span class="kw">library</span>(readtext)</code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>1. Introduction</h1>
 <p>The vignette walks you through importing a variety of different text files into R using the <strong>readtext</strong> package. Currently, <strong>readtext</strong> supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx).</p>
 <p><strong>readtext</strong> also handles multiple files and file types using for instance a “glob” expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly - <strong>readtext</strong> takes this information from the file ending.</p>
 <p>The <strong>readtext</strong> package comes with a data directory called <code>extdata</code> that contains examples of all files listed above. In the vignette, we use this data directory.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Get the data directory from readtext</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the data directory from readtext</span>
+DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>)</code></pre></div>
 <p>The <code>extdata</code> directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The <code>paste0</code> command is used to concatenate the <code>extdata</code> folder from the <strong>readtext</strong> package with the subfolders. When reading in custom text files, you will need to determine your own data directory (see <code>?setwd()</code>).</p>
 </div>
 <div id="reading-one-or-more-text-files" class="section level1">
@@ -91,170 +91,170 @@
 <h2 class="hasAnchor">
 <a href="#plain-text-files--txt" class="anchor"></a>2.1 Plain text files (.txt)</h2>
 <p>The folder “txt” contains a subfolder named UDHR with .txt files of the Universal Declaration of Human Rights in 13 languages.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Read in all files from a folder</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/UDHR/*"</span>))</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">## readtext object consisting of 13 documents and 0 docvars.</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">## # data.frame [13 × 2]</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">##   doc_id            text                         </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">##   &lt;chr&gt;             &lt;chr&gt;                        </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">## 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          </a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">## 3 UDHR_danish.txt   "\"Den 10. de\"..."          </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">## 4 UDHR_english.txt  "\"Universal \"..."          </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">## 5 UDHR_french.txt   "\"Déclaratio\"..."          </a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">## # ... with 7 more rows</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in all files from a folder</span>
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/UDHR/*"</span>))
+## readtext object consisting of 13 documents and 0 docvars.
+## # data.frame [13 × 2]
+##   doc_id            text                         
+##   &lt;chr&gt;             &lt;chr&gt;                        
+## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
+## 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          
+## 3 UDHR_danish.txt   "\"Den 10. de\"..."          
+## 4 UDHR_english.txt  "\"Universal \"..."          
+## 5 UDHR_french.txt   "\"Déclaratio\"..."          
+## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
+## # ... with 7 more rows</code></pre></div>
 <p>We can specify document-level metadata (<code>docvars</code>) based on the file names or on a separate data.frame. Below we take the docvars from the filenames (<code>docvarsfrom = "filenames"</code>) and set the names for each variable (<code>docvarnames = c("unit", "context", "year", "language", "party")</code>). The command <code>dvsep = "_"</code> determines the separator (a regular expression character string) included in the filenames to delimit the <code>docvar</code> elements.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Manifestos with docvars from filenames</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/EU_manifestos/*.txt"</span>),</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">         <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">         <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span>),</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">         <span class="dt">dvsep =</span> <span class="st">"_"</span>, </a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">         <span class="dt">encoding =</span> <span class="st">"ISO-8859-1"</span>)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">## readtext object consisting of 17 documents and 5 docvars.</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">## # data.frame [17 × 7]</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">##   doc_id               text             unit  context  year language party</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">##   &lt;chr&gt;                &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">## 1 EU_euro_2004_de_PSE… "\"PES · PSE \"… EU    euro     2004 de       PSE  </a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">## 2 EU_euro_2004_de_V.t… "\"Gemeinsame\"… EU    euro     2004 de       V    </a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">## 3 EU_euro_2004_en_PSE… "\"PES · PSE \"… EU    euro     2004 en       PSE  </a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">## 4 EU_euro_2004_en_V.t… "\"Manifesto\n\… EU    euro     2004 en       V    </a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">## 5 EU_euro_2004_es_PSE… "\"PES · PSE \"… EU    euro     2004 es       PSE  </a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">## 6 EU_euro_2004_es_V.t… "\"Manifesto\n\… EU    euro     2004 es       V    </a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">## # ... with 11 more rows</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Manifestos with docvars from filenames</span>
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/EU_manifestos/*.txt"</span>),
+         <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, 
+         <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span>),
+         <span class="dt">dvsep =</span> <span class="st">"_"</span>, 
+         <span class="dt">encoding =</span> <span class="st">"ISO-8859-1"</span>)
+## readtext object consisting of 17 documents and 5 docvars.
+## # data.frame [17 × 7]
+##   doc_id                  text          unit  context  year language party
+##   &lt;chr&gt;                   &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;
+## 1 EU_euro_2004_de_PSE.txt "\"PES · PSE… EU    euro     2004 de       PSE  
+## 2 EU_euro_2004_de_V.txt   "\"Gemeinsam… EU    euro     2004 de       V    
+## 3 EU_euro_2004_en_PSE.txt "\"PES · PSE… EU    euro     2004 en       PSE  
+## 4 EU_euro_2004_en_V.txt   "\"Manifesto… EU    euro     2004 en       V    
+## 5 EU_euro_2004_es_PSE.txt "\"PES · PSE… EU    euro     2004 es       PSE  
+## 6 EU_euro_2004_es_V.txt   "\"Manifesto… EU    euro     2004 es       V    
+## # ... with 11 more rows</code></pre></div>
 <p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Recurse through subdirectories</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/movie_reviews/*"</span>))</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">## readtext object consisting of 10 documents and 0 docvars.</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">## # data.frame [10 × 2]</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">##   doc_id              text                </a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">##   &lt;chr&gt;               &lt;chr&gt;               </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">## 1 neg_cv000_29416.txt "\"plot : two\"..." </a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">## 2 neg_cv001_19502.txt "\"the happy \"..." </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">## 3 neg_cv002_17424.txt "\"it is movi\"..." </a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">## 4 neg_cv003_12683.txt "\" \" quest f\"..."</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">## 5 neg_cv004_12641.txt "\"synopsis :\"..." </a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">## 6 pos_cv000_29590.txt "\"films adap\"..." </a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">## # ... with 4 more rows</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Recurse through subdirectories</span>
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/movie_reviews/*"</span>))
+## readtext object consisting of 10 documents and 0 docvars.
+## # data.frame [10 × 2]
+##   doc_id              text                
+##   &lt;chr&gt;               &lt;chr&gt;               
+## 1 neg_cv000_29416.txt "\"plot : two\"..." 
+## 2 neg_cv001_19502.txt "\"the happy \"..." 
+## 3 neg_cv002_17424.txt "\"it is movi\"..." 
+## 4 neg_cv003_12683.txt "\" \" quest f\"..."
+## 5 neg_cv004_12641.txt "\"synopsis :\"..." 
+## 6 pos_cv000_29590.txt "\"films adap\"..." 
+## # ... with 4 more rows</code></pre></div>
 </div>
 <div id="comma--or-tab-separated-values--csv--tab--tsv" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comma--or-tab-separated-values--csv--tab--tsv" class="anchor"></a>2.2 Comma- or tab-separated values (.csv, .tab, .tsv)</h2>
 <p>Read in comma separted values (.csv files) that contain textual data. We determine the <code>texts</code> variable in our .csv file as the <code>text_field</code>. This is the column that contains the actual text. The other columns of the original csv file (<code>Year</code>, <code>President</code>, <code>FirstName</code>) are by default treated as document-level variables.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Read in comma-separated values</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">## readtext object consisting of 5 documents and 3 docvars.</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">## # data.frame [5 × 5]</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">##   doc_id            text                 Year President  FirstName</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">##   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   </a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   </a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   </a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in comma-separated values</span>
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)
+## readtext object consisting of 5 documents and 3 docvars.
+## # data.frame [5 × 5]
+##   doc_id            text                 Year President  FirstName
+##   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    
+## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
+## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   
+## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     
+## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   
+## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas</code></pre></div>
 <p>The same procedure applies to tab-separated values.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Read in tab-separated values</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/tsv/dailsample.tsv"</span>), <span class="dt">text_field =</span> <span class="st">"speech"</span>)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">## readtext object consisting of 33 documents and 9 docvars.</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">## # data.frame [33 × 11]</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">##   doc_id text  speechID memberID partyID constID title date  member_name</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">##   &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      </a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">## 1 dails… "\"M…        1      977      22     158 1. C… 1919… Count Geor…</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">## 2 dails… "\"I…        2     1603      22     103 1. C… 1919… Mr. Pádrai…</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">## 3 dails… "\"'…        3      116      22     178 1. C… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">## 4 dails… "\"T…        4      116      22     178 2. C… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">## 5 dails… "\"L…        5      116      22     178 3. A… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">## 6 dails… "\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">## # ... with 27 more rows, and 2 more variables: party_name &lt;chr&gt;,</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">## #   const_name &lt;chr&gt;</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in tab-separated values</span>
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/tsv/dailsample.tsv"</span>), <span class="dt">text_field =</span> <span class="st">"speech"</span>)
+## readtext object consisting of 33 documents and 9 docvars.
+## # data.frame [33 × 11]
+##   doc_id  text   speechID memberID partyID constID title date  member_name
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      
+## 1 dailsa… "\"Mo…        1      977      22     158 1. C… 1919… Count Geor…
+## 2 dailsa… "\"Is…        2     1603      22     103 1. C… 1919… Mr. Pádrai…
+## 3 dailsa… "\"' …        3      116      22     178 1. C… 1919… Mr. Cathal…
+## 4 dailsa… "\"Tá…        4      116      22     178 2. C… 1919… Mr. Cathal…
+## 5 dailsa… "\"Lé…        5      116      22     178 3. A… 1919… Mr. Cathal…
+## 6 dailsa… "\"-B…        6      116      22     178 3. A… 1919… Mr. Cathal…
+## # ... with 27 more rows, and 2 more variables: party_name &lt;chr&gt;,
+## #   const_name &lt;chr&gt;</code></pre></div>
 </div>
 <div id="json-data--json" class="section level2">
 <h2 class="hasAnchor">
 <a href="#json-data--json" class="anchor"></a>2.3 JSON data (.json)</h2>
 <p>You can also read .json data. Again you need to specify the <code>text_field</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">## Read in JSON data</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/json/inaugural_sample.json"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">## readtext object consisting of 3 documents and 3 docvars.</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">## # data.frame [3 × 5]</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">##   doc_id                  text                 Year President  FirstName</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">##   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">## 1 inaugural_sample.json.1 "\"Fellow-Cit\"..."  1789 Washington George   </a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">## 2 inaugural_sample.json.2 "\"Fellow cit\"..."  1793 Washington George   </a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">## 3 inaugural_sample.json.3 "\"When it wa\"..."  1797 Adams      John</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in JSON data
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/json/inaugural_sample.json"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)
+## readtext object consisting of 3 documents and 3 docvars.
+## # data.frame [3 × 5]
+##   doc_id                  text                 Year President  FirstName
+##   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    
+## 1 inaugural_sample.json.1 "\"Fellow-Cit\"..."  1789 Washington George   
+## 2 inaugural_sample.json.2 "\"Fellow cit\"..."  1793 Washington George   
+## 3 inaugural_sample.json.3 "\"When it wa\"..."  1797 Adams      John</code></pre></div>
 </div>
 <div id="pdf-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pdf-files" class="anchor"></a>2.4 PDF files</h2>
 <p><strong>readtext</strong> can also read in and convert .pdf files.</p>
 <p>In the example below we load all .pdf files stored in the <code>UDHR</code> folder, and determine that the <code>docvars</code> shall be taken from the filenames. We call the document-level variables <code>document</code> and <code>language</code>, and specify the delimiter (<code>dvsep</code>).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">## Read in Universal Declaration of Human Rights pdf files</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">(rt_pdf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/pdf/UDHR/*.pdf"</span>), </a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">                    <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">                    <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>),</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">                    <span class="dt">sep =</span> <span class="st">"_"</span>))</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">## readtext object consisting of 11 documents and 2 docvars.</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">## # data.frame [11 × 4]</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">##   doc_id           text                          document language</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">##   &lt;chr&gt;            &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt;   </a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">## 1 UDHR_chinese.pdf "\"世界人权宣言\n联合国\"..." UDHR     chinese </a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">## 2 UDHR_czech.pdf   "\"VŠEOBECNÁ \"..."           UDHR     czech   </a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">## 3 UDHR_danish.pdf  "\"Den 10. de\"..."           UDHR     danish  </a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">## 4 UDHR_english.pdf "\"Universal \"..."           UDHR     english </a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">## 5 UDHR_french.pdf  "\"Déclaratio\"..."           UDHR     french  </a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">## 6 UDHR_greek.pdf   "\"ΟΙΚΟΥΜΕΝΙΚ\"..."           UDHR     greek   </a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">## # ... with 5 more rows</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Universal Declaration of Human Rights pdf files
+(rt_pdf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/pdf/UDHR/*.pdf"</span>), 
+                    <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, 
+                    <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>),
+                    <span class="dt">sep =</span> <span class="st">"_"</span>))
+## readtext object consisting of 11 documents and 2 docvars.
+## # data.frame [11 × 4]
+##   doc_id           text                          document language
+##   &lt;chr&gt;            &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt;   
+## 1 UDHR_chinese.pdf "\"世界人权宣言\n联合国\"..." UDHR     chinese 
+## 2 UDHR_czech.pdf   "\"VŠEOBECNÁ \"..."           UDHR     czech   
+## 3 UDHR_danish.pdf  "\"Den 10. de\"..."           UDHR     danish  
+## 4 UDHR_english.pdf "\"Universal \"..."           UDHR     english 
+## 5 UDHR_french.pdf  "\"Déclaratio\"..."           UDHR     french  
+## 6 UDHR_greek.pdf   "\"ΟΙΚΟΥΜΕΝΙΚ\"..."           UDHR     greek   
+## # ... with 5 more rows</code></pre></div>
 </div>
 <div id="microsoft-word-files--doc--docx" class="section level2">
 <h2 class="hasAnchor">
 <a href="#microsoft-word-files--doc--docx" class="anchor"></a>2.5 Microsoft Word files (.doc, .docx)</h2>
 <p>Microsoft Word formatted files are converted through the package <strong>antiword</strong> for older <code>.doc</code> files, and using <strong>XML</strong> for newer <code>.docx</code> files.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">## Read in Word data (.docx)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/word/*.docx"</span>))</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">## readtext object consisting of 2 documents and 0 docvars.</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">## # data.frame [2 × 2]</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">##   doc_id                      text               </a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">##   &lt;chr&gt;                       &lt;chr&gt;              </a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">## 1 UK_2015_EccentricParty.docx "\"The Eccent\"..."</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">## 2 UK_2015_LoonyParty.docx     "\"The Offici\"..."</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Read in Word data (.docx)
+<span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/word/*.docx"</span>))
+## readtext object consisting of 2 documents and 0 docvars.
+## # data.frame [2 × 2]
+##   doc_id                      text               
+##   &lt;chr&gt;                       &lt;chr&gt;              
+## 1 UK_2015_EccentricParty.docx "\"The Eccent\"..."
+## 2 UK_2015_LoonyParty.docx     "\"The Offici\"..."</code></pre></div>
 </div>
 <div id="text-from-urls" class="section level2">
 <h2 class="hasAnchor">
 <a href="#text-from-urls" class="anchor"></a>2.6 Text from URLs</h2>
 <p>You can also read in text directly from a URL.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Note: Example required: which URL should we use?</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Note: Example required: which URL should we use?</span></code></pre></div>
 </div>
 <div id="text-from-archive-files--zip--tar--tar-gz--tar-bz" class="section level2">
 <h2 class="hasAnchor">
 <a href="#text-from-archive-files--zip--tar--tar-gz--tar-bz" class="anchor"></a>2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)</h2>
 <p>Finally, it is possible to inclue text from archives.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Note: Archive file required. The only zip archive included in readtext has </span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># different encodings and is difficult to import (see section 4.2).</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Note: Archive file required. The only zip archive included in readtext has </span>
+<span class="co"># different encodings and is difficult to import (see section 4.2).</span></code></pre></div>
 </div>
 </div>
 <div id="inter-operability-with-quanteda" class="section level1">
 <h1 class="hasAnchor">
 <a href="#inter-operability-with-quanteda" class="anchor"></a>3. Inter-operability with quanteda</h1>
 <p><strong>readtext</strong> was originally developed in early versions of the <a href="http://github.com/quanteda/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. It was spawned from the <code>textfile()</code> function from that package, and now lives exclusively in <strong>readtext</strong>. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code><a href="../reference/readtext.html">readtext()</a></code>, it can construct a corpus directly from a <code>readtext</code> object, preserving all docvars and other meta-data.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">require</span>(quanteda)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(quanteda)</code></pre></div>
 <p>You can easily contruct a corpus from a <strong>readtext</strong> object.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># read in comma-separated values with readtext</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co"># create quanteda corpus</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">corpus_csv &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/quanteda/topics/corpus">corpus</a></span>(rt_csv)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="kw">summary</span>(corpus_csv, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">## Corpus consisting of 5 documents, showing 5 documents:</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">## </a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">##               Text Types Tokens Sentences Year  President FirstName</a>
-<a class="sourceLine" id="cb14-10" data-line-number="10">##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">##  inaugCorpus.csv.2    96    147         4 1793 Washington    George</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas</a>
-<a class="sourceLine" id="cb14-14" data-line-number="14">##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas</a>
-<a class="sourceLine" id="cb14-15" data-line-number="15">## </a>
-<a class="sourceLine" id="cb14-16" data-line-number="16">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">## Created: Mon Jul 30 17:13:41 2018</a>
-<a class="sourceLine" id="cb14-18" data-line-number="18">## Notes:</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in comma-separated values with readtext</span>
+rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)
+
+<span class="co"># create quanteda corpus</span>
+corpus_csv &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/quanteda/topics/corpus">corpus</a></span>(rt_csv)
+<span class="kw">summary</span>(corpus_csv, <span class="dv">5</span>)
+## Corpus consisting of 5 documents, showing 5 documents:
+## 
+##               Text Types Tokens Sentences Year  President FirstName
+##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
+##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
+##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
+## 
+## Source: /Users/akitaka/Dropbox/KB_Projects/r_package_development/readtext/vignettes/* on x86_64 by akitaka
+## Created: Thu Sep 20 14:56:18 2018
+## Notes:</code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
 <h1 class="hasAnchor">
@@ -264,147 +264,147 @@
 <a href="#remove-page-numbers-using-regular-expressions" class="anchor"></a>4.1 Remove page numbers using regular expressions</h2>
 <p>When a document contains page numbers, they are imported as well. If you want to remove them, you can use a regular expression. We strongly recommend using the <a href="http://github.com/gagolews/stringi"><strong>stringi</strong></a> package. For the most common regular expressions you can look at this <a href="http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf">cheatsheet</a>.</p>
 <p>You first need to check in the original file in which format the page numbers occur (e.g., “1”, “-1-”, “page 1” etc.). We can make use of the fact that page numbers are almost always preceded and followed by a linebreak (<code>\n</code>). After loading the text with <strong>readtext</strong>, you can replace the page numbers.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Load stringi package</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">require</span>(stringi)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load stringi package</span>
+<span class="kw">require</span>(stringi)</code></pre></div>
 <p>In the first example, the page numbers have the format “page X”.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Make some text with page numbers</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">sample_text_a &lt;-<span class="st"> "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, </span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">page 1 </span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">with the newspaper from a boy named quick Seamus, in his mouth.</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">page 2</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">sample_text_a</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, \npage 1 \nwith the newspaper from a boy named quick Seamus, in his mouth.\npage 2\nThe quicker brown fox jumped over 2 lazy dogs."</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co"># Remove "page" and respective digit</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">sample_text_a2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_split">stri_split_fixed</a></span>(sample_text_a, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-13" data-line-number="13">sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_replace">stri_replace_all_regex</a></span>(sample_text_a2, <span class="st">"page </span><span class="ch">\\</span><span class="st">d*"</span>, <span class="st">""</span>)</a>
-<a class="sourceLine" id="cb16-14" data-line-number="14">sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_trim">stri_trim_both</a></span>(sample_text_a2)</a>
-<a class="sourceLine" id="cb16-15" data-line-number="15">sample_text_a2 &lt;-<span class="st"> </span>sample_text_a2[sample_text_a2 <span class="op">!=</span><span class="st"> ''</span>]</a>
-<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_join">stri_paste</a></span>(sample_text_a2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb16-17" data-line-number="17">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus,\nwith the newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make some text with page numbers</span>
+sample_text_a &lt;-<span class="st"> "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, </span>
+<span class="st">page 1 </span>
+<span class="st">with the newspaper from a boy named quick Seamus, in his mouth.</span>
+<span class="st">page 2</span>
+<span class="st">The quicker brown fox jumped over 2 lazy dogs."</span>
+
+sample_text_a
+## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, \npage 1 \nwith the newspaper from a boy named quick Seamus, in his mouth.\npage 2\nThe quicker brown fox jumped over 2 lazy dogs."
+
+<span class="co"># Remove "page" and respective digit</span>
+sample_text_a2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_split">stri_split_fixed</a></span>(sample_text_a, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)
+sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_replace">stri_replace_all_regex</a></span>(sample_text_a2, <span class="st">"page </span><span class="ch">\\</span><span class="st">d*"</span>, <span class="st">""</span>)
+sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_trim">stri_trim_both</a></span>(sample_text_a2)
+sample_text_a2 &lt;-<span class="st"> </span>sample_text_a2[sample_text_a2 <span class="op">!=</span><span class="st"> ''</span>]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_join">stri_paste</a></span>(sample_text_a2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)
+## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus,\nwith the newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</code></pre></div>
 <p>In the second example we remove page numbers which have the format “- X -”.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">sample_text_b &lt;-<span class="st"> "The quick brown fox named Seamus </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">- 1 - </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">jumps over the lazy dog also named Seamus, with </span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">- 2 - </span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">the newspaper from a boy named quick Seamus, in his mouth. </span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">- 33 - </span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">sample_text_b</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">## [1] "The quick brown fox named Seamus \n- 1 - \njumps over the lazy dog also named Seamus, with \n- 2 - \nthe newspaper from a boy named quick Seamus, in his mouth. \n- 33 - \nThe quicker brown fox jumped over 2 lazy dogs."</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">sample_text_b2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_split">stri_split_fixed</a></span>(sample_text_b, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_replace">stri_replace_all_regex</a></span>(sample_text_b2, <span class="st">"[-] </span><span class="ch">\\</span><span class="st">d* [-]"</span>, <span class="st">""</span>)</a>
-<a class="sourceLine" id="cb17-14" data-line-number="14">sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_trim">stri_trim_both</a></span>(sample_text_b2)</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15">sample_text_b2 &lt;-<span class="st"> </span>sample_text_b2[sample_text_b2 <span class="op">!=</span><span class="st"> ''</span>]</a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_join">stri_paste</a></span>(sample_text_b2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb17-17" data-line-number="17">## [1] "The quick brown fox named Seamus\njumps over the lazy dog also named Seamus, with\nthe newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_text_b &lt;-<span class="st"> "The quick brown fox named Seamus </span>
+<span class="st">- 1 - </span>
+<span class="st">jumps over the lazy dog also named Seamus, with </span>
+<span class="st">- 2 - </span>
+<span class="st">the newspaper from a boy named quick Seamus, in his mouth. </span>
+<span class="st">- 33 - </span>
+<span class="st">The quicker brown fox jumped over 2 lazy dogs."</span>
+
+sample_text_b
+## [1] "The quick brown fox named Seamus \n- 1 - \njumps over the lazy dog also named Seamus, with \n- 2 - \nthe newspaper from a boy named quick Seamus, in his mouth. \n- 33 - \nThe quicker brown fox jumped over 2 lazy dogs."
+
+sample_text_b2 &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_split">stri_split_fixed</a></span>(sample_text_b, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)
+sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_replace">stri_replace_all_regex</a></span>(sample_text_b2, <span class="st">"[-] </span><span class="ch">\\</span><span class="st">d* [-]"</span>, <span class="st">""</span>)
+sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_trim">stri_trim_both</a></span>(sample_text_b2)
+sample_text_b2 &lt;-<span class="st"> </span>sample_text_b2[sample_text_b2 <span class="op">!=</span><span class="st"> ''</span>]
+<span class="kw"><a href="http://www.rdocumentation.org/packages/stringi/topics/stri_join">stri_paste</a></span>(sample_text_b2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)
+## [1] "The quick brown fox named Seamus\njumps over the lazy dog also named Seamus, with\nthe newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</code></pre></div>
 <p>Such <strong>stringi</strong> functions can also be applied to <strong>readtext</strong> objects.</p>
 </div>
 <div id="read-files-with-different-encodings" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-files-with-different-encodings" class="anchor"></a>4.2 Read files with different encodings</h2>
 <p>Sometimes files of the same type have different encodings. If the encoding of a file is included in the file name, we can extract this information and import the texts correctly.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># create a temporary directory to extract the .zip file</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">FILEDIR &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># unzip file</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="kw">unzip</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"data_files_encodedtexts.zip"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>), <span class="dt">exdir =</span> FILEDIR)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a temporary directory to extract the .zip file</span>
+FILEDIR &lt;-<span class="st"> </span><span class="kw">tempdir</span>()
+<span class="co"># unzip file</span>
+<span class="kw">unzip</span>(<span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"data_files_encodedtexts.zip"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>), <span class="dt">exdir =</span> FILEDIR)</code></pre></div>
 <p>Here, we will get the encoding from the filenames themselves.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># get encoding from filename</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">filenames &lt;-<span class="st"> </span><span class="kw">list.files</span>(FILEDIR, <span class="st">"^(Indian|UDHR_).*</span><span class="ch">\\</span><span class="st">.txt$"</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw">head</span>(filenames)</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">## [1] "IndianTreaty_English_UTF-16LE.txt" </a>
-<a class="sourceLine" id="cb19-6" data-line-number="6">## [2] "IndianTreaty_English_UTF-8-BOM.txt"</a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">## [3] "UDHR_Arabic_ISO-8859-6.txt"        </a>
-<a class="sourceLine" id="cb19-8" data-line-number="8">## [4] "UDHR_Arabic_UTF-8.txt"             </a>
-<a class="sourceLine" id="cb19-9" data-line-number="9">## [5] "UDHR_Arabic_WINDOWS-1256.txt"      </a>
-<a class="sourceLine" id="cb19-10" data-line-number="10">## [6] "UDHR_Chinese_GB2312.txt"</a>
-<a class="sourceLine" id="cb19-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="co"># Strip the extension</span></a>
-<a class="sourceLine" id="cb19-13" data-line-number="13">filenames &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">".txt$"</span>, <span class="st">""</span>, filenames)</a>
-<a class="sourceLine" id="cb19-14" data-line-number="14">parts &lt;-<span class="st"> </span><span class="kw">strsplit</span>(filenames, <span class="st">"_"</span>)</a>
-<a class="sourceLine" id="cb19-15" data-line-number="15">fileencodings &lt;-<span class="st"> </span><span class="kw">sapply</span>(parts, <span class="st">"["</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb19-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb19-17" data-line-number="17"><span class="kw">head</span>(fileencodings)</a>
-<a class="sourceLine" id="cb19-18" data-line-number="18">## [1] "UTF-16LE"     "UTF-8-BOM"    "ISO-8859-6"   "UTF-8"       </a>
-<a class="sourceLine" id="cb19-19" data-line-number="19">## [5] "WINDOWS-1256" "GB2312"</a>
-<a class="sourceLine" id="cb19-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb19-21" data-line-number="21"><span class="co"># Check whether certain file encodings are not supported</span></a>
-<a class="sourceLine" id="cb19-22" data-line-number="22">notAvailableIndex &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span>(fileencodings <span class="op">%in%</span><span class="st"> </span><span class="kw">iconvlist</span>()))</a>
-<a class="sourceLine" id="cb19-23" data-line-number="23">fileencodings[notAvailableIndex]</a>
-<a class="sourceLine" id="cb19-24" data-line-number="24">## [1] "UTF-8-BOM"</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get encoding from filename</span>
+filenames &lt;-<span class="st"> </span><span class="kw">list.files</span>(FILEDIR, <span class="st">"^(Indian|UDHR_).*</span><span class="ch">\\</span><span class="st">.txt$"</span>)
+
+<span class="kw">head</span>(filenames)
+## [1] "IndianTreaty_English_UTF-16LE.txt" 
+## [2] "IndianTreaty_English_UTF-8-BOM.txt"
+## [3] "UDHR_Arabic_ISO-8859-6.txt"        
+## [4] "UDHR_Arabic_UTF-8.txt"             
+## [5] "UDHR_Arabic_WINDOWS-1256.txt"      
+## [6] "UDHR_Chinese_GB2312.txt"
+
+<span class="co"># Strip the extension</span>
+filenames &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">".txt$"</span>, <span class="st">""</span>, filenames)
+parts &lt;-<span class="st"> </span><span class="kw">strsplit</span>(filenames, <span class="st">"_"</span>)
+fileencodings &lt;-<span class="st"> </span><span class="kw">sapply</span>(parts, <span class="st">"["</span>, <span class="dv">3</span>)
+
+<span class="kw">head</span>(fileencodings)
+## [1] "UTF-16LE"     "UTF-8-BOM"    "ISO-8859-6"   "UTF-8"       
+## [5] "WINDOWS-1256" "GB2312"
+
+<span class="co"># Check whether certain file encodings are not supported</span>
+notAvailableIndex &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span>(fileencodings <span class="op">%in%</span><span class="st"> </span><span class="kw">iconvlist</span>()))
+fileencodings[notAvailableIndex]
+## [1] "UTF-8-BOM"</code></pre></div>
 <p>If we read the text files without specifying the encoding, we get erroneously formatted text. To avoid this, we determine the <code>encoding</code> using the character object <code>fileencoding</code> created above.</p>
 <p>We can also add <code>docvars</code> based on the filenames.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">txts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/data_files_encodedtexts.zip"</span>), </a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">                 <span class="dt">encoding =</span> fileencodings,</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">                 <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">                 <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>, <span class="st">"input_encoding"</span>))</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="kw">print</span>(txts, <span class="dt">n =</span> <span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">## readtext object consisting of 36 documents and 3 docvars.</a>
-<a class="sourceLine" id="cb20-7" data-line-number="7">## # data.frame [36 × 5]</a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">##    doc_id              text             document   language input_encoding</a>
-<a class="sourceLine" id="cb20-9" data-line-number="9">##    &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;         </a>
-<a class="sourceLine" id="cb20-10" data-line-number="10">##  1 IndianTreaty_Engli… "\"WHEREAS, t\"… IndianTre… English  UTF-16LE      </a>
-<a class="sourceLine" id="cb20-11" data-line-number="11">##  2 IndianTreaty_Engli… "\"ARTICLE 1.\"… IndianTre… English  UTF-8-BOM     </a>
-<a class="sourceLine" id="cb20-12" data-line-number="12">##  3 UDHR_Arabic_ISO-88… "\"الديباجة\nل\… UDHR       Arabic   ISO-8859-6    </a>
-<a class="sourceLine" id="cb20-13" data-line-number="13">##  4 UDHR_Arabic_UTF-8.… "\"الديباجة\nل\… UDHR       Arabic   UTF-8         </a>
-<a class="sourceLine" id="cb20-14" data-line-number="14">##  5 UDHR_Arabic_WINDOW… "\"الديباجة\nل\… UDHR       Arabic   WINDOWS-1256  </a>
-<a class="sourceLine" id="cb20-15" data-line-number="15">##  6 UDHR_Chinese_GB231… "\"世界人权宣言\n联合国\… UDHR       Chinese  GB2312        </a>
-<a class="sourceLine" id="cb20-16" data-line-number="16">##  7 UDHR_Chinese_GBK.t… "\"世界人权宣言\n联合国\… UDHR       Chinese  GBK           </a>
-<a class="sourceLine" id="cb20-17" data-line-number="17">##  8 UDHR_Chinese_UTF-8… "\"世界人权宣言\n联合国\… UDHR       Chinese  UTF-8         </a>
-<a class="sourceLine" id="cb20-18" data-line-number="18">##  9 UDHR_English_UTF-1… "\"Universal \"… UDHR       English  UTF-16BE      </a>
-<a class="sourceLine" id="cb20-19" data-line-number="19">## 10 UDHR_English_UTF-1… "\"Universal \"… UDHR       English  UTF-16LE      </a>
-<a class="sourceLine" id="cb20-20" data-line-number="20">## 11 UDHR_English_UTF-8… "\"Universal \"… UDHR       English  UTF-8         </a>
-<a class="sourceLine" id="cb20-21" data-line-number="21">## 12 UDHR_English_WINDO… "\"Universal \"… UDHR       English  WINDOWS-1252  </a>
-<a class="sourceLine" id="cb20-22" data-line-number="22">## 13 UDHR_French_ISO-88… "\"Déclaratio\"… UDHR       French   ISO-8859-1    </a>
-<a class="sourceLine" id="cb20-23" data-line-number="23">## 14 UDHR_French_UTF-8.… "\"Déclaratio\"… UDHR       French   UTF-8         </a>
-<a class="sourceLine" id="cb20-24" data-line-number="24">## 15 UDHR_French_WINDOW… "\"Déclaratio\"… UDHR       French   WINDOWS-1252  </a>
-<a class="sourceLine" id="cb20-25" data-line-number="25">## 16 UDHR_German_ISO-88… "\"Die Allgem\"… UDHR       German   ISO-8859-1    </a>
-<a class="sourceLine" id="cb20-26" data-line-number="26">## 17 UDHR_German_UTF-8.… "\"Die Allgem\"… UDHR       German   UTF-8         </a>
-<a class="sourceLine" id="cb20-27" data-line-number="27">## 18 UDHR_German_WINDOW… "\"Die Allgem\"… UDHR       German   WINDOWS-1252  </a>
-<a class="sourceLine" id="cb20-28" data-line-number="28">## 19 UDHR_Greek_CP1253.… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    CP1253        </a>
-<a class="sourceLine" id="cb20-29" data-line-number="29">## 20 UDHR_Greek_ISO-885… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    ISO-8859-7    </a>
-<a class="sourceLine" id="cb20-30" data-line-number="30">## 21 UDHR_Greek_UTF-8.t… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    UTF-8         </a>
-<a class="sourceLine" id="cb20-31" data-line-number="31">## 22 UDHR_Hindi_UTF-8.t… "\"मानव अधिका\"… UDHR       Hindi    UTF-8         </a>
-<a class="sourceLine" id="cb20-32" data-line-number="32">## 23 UDHR_Icelandic_ISO… "\"Mannréttin\"… UDHR       Iceland… ISO-8859-1    </a>
-<a class="sourceLine" id="cb20-33" data-line-number="33">## 24 UDHR_Icelandic_UTF… "\"Mannréttin\"… UDHR       Iceland… UTF-8         </a>
-<a class="sourceLine" id="cb20-34" data-line-number="34">## 25 UDHR_Icelandic_WIN… "\"Mannréttin\"… UDHR       Iceland… WINDOWS-1252  </a>
-<a class="sourceLine" id="cb20-35" data-line-number="35">## 26 UDHR_Japanese_CP93… "\"『世界人権宣言』\n \… UDHR       Japanese CP932         </a>
-<a class="sourceLine" id="cb20-36" data-line-number="36">## 27 UDHR_Japanese_ISO-… "\"『世界人権宣言』\n \… UDHR       Japanese ISO-2022-JP   </a>
-<a class="sourceLine" id="cb20-37" data-line-number="37">## 28 UDHR_Japanese_UTF-… "\"『世界人権宣言』\n \… UDHR       Japanese UTF-8         </a>
-<a class="sourceLine" id="cb20-38" data-line-number="38">## 29 UDHR_Japanese_WIND… "\"『世界人権宣言』\n \… UDHR       Japanese WINDOWS-936   </a>
-<a class="sourceLine" id="cb20-39" data-line-number="39">## 30 UDHR_Korean_ISO-20… "\"세 계 인 권 선 \"… UDHR       Korean   ISO-2022-KR   </a>
-<a class="sourceLine" id="cb20-40" data-line-number="40">## 31 UDHR_Korean_UTF-8.… "\"세 계 인 권 선 \"… UDHR       Korean   UTF-8         </a>
-<a class="sourceLine" id="cb20-41" data-line-number="41">## 32 UDHR_Russian_ISO-8… "\"Всеобщая д\"… UDHR       Russian  ISO-8859-5    </a>
-<a class="sourceLine" id="cb20-42" data-line-number="42">## 33 UDHR_Russian_KOI8-… "\"Всеобщая д\"… UDHR       Russian  KOI8-R        </a>
-<a class="sourceLine" id="cb20-43" data-line-number="43">## 34 UDHR_Russian_UTF-8… "\"Всеобщая д\"… UDHR       Russian  UTF-8         </a>
-<a class="sourceLine" id="cb20-44" data-line-number="44">## 35 UDHR_Russian_WINDO… "\"Всеобщая д\"… UDHR       Russian  WINDOWS-1251  </a>
-<a class="sourceLine" id="cb20-45" data-line-number="45">## 36 UDHR_Thai_UTF-8.txt "\"ปฏิญญาสากล\"…  UDHR       Thai     UTF-8</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">txts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/data_files_encodedtexts.zip"</span>), 
+                 <span class="dt">encoding =</span> fileencodings,
+                 <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, 
+                 <span class="dt">docvarnames =</span> <span class="kw">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>, <span class="st">"input_encoding"</span>))
+<span class="kw">print</span>(txts, <span class="dt">n =</span> <span class="dv">50</span>)
+## readtext object consisting of 36 documents and 3 docvars.
+## # data.frame [36 × 5]
+##    doc_id              text             document   language input_encoding
+##    &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;         
+##  1 IndianTreaty_Engli… "\"WHEREAS, t\"… IndianTre… English  UTF-16LE      
+##  2 IndianTreaty_Engli… "\"ARTICLE 1.\"… IndianTre… English  UTF-8-BOM     
+##  3 UDHR_Arabic_ISO-88… "\"الديباجة\nل\… UDHR       Arabic   ISO-8859-6    
+##  4 UDHR_Arabic_UTF-8.… "\"الديباجة\nل\… UDHR       Arabic   UTF-8         
+##  5 UDHR_Arabic_WINDOW… "\"الديباجة\nل\… UDHR       Arabic   WINDOWS-1256  
+##  6 UDHR_Chinese_GB231… "\"世界人权宣言\n联合国\… UDHR       Chinese  GB2312        
+##  7 UDHR_Chinese_GBK.t… "\"世界人权宣言\n联合国\… UDHR       Chinese  GBK           
+##  8 UDHR_Chinese_UTF-8… "\"世界人权宣言\n联合国\… UDHR       Chinese  UTF-8         
+##  9 UDHR_English_UTF-1… "\"Universal \"… UDHR       English  UTF-16BE      
+## 10 UDHR_English_UTF-1… "\"Universal \"… UDHR       English  UTF-16LE      
+## 11 UDHR_English_UTF-8… "\"Universal \"… UDHR       English  UTF-8         
+## 12 UDHR_English_WINDO… "\"Universal \"… UDHR       English  WINDOWS-1252  
+## 13 UDHR_French_ISO-88… "\"Déclaratio\"… UDHR       French   ISO-8859-1    
+## 14 UDHR_French_UTF-8.… "\"Déclaratio\"… UDHR       French   UTF-8         
+## 15 UDHR_French_WINDOW… "\"Déclaratio\"… UDHR       French   WINDOWS-1252  
+## 16 UDHR_German_ISO-88… "\"Die Allgem\"… UDHR       German   ISO-8859-1    
+## 17 UDHR_German_UTF-8.… "\"Die Allgem\"… UDHR       German   UTF-8         
+## 18 UDHR_German_WINDOW… "\"Die Allgem\"… UDHR       German   WINDOWS-1252  
+## 19 UDHR_Greek_CP1253.… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    CP1253        
+## 20 UDHR_Greek_ISO-885… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    ISO-8859-7    
+## 21 UDHR_Greek_UTF-8.t… "\"ΟΙΚΟΥΜΕΝΙΚ\"… UDHR       Greek    UTF-8         
+## 22 UDHR_Hindi_UTF-8.t… "\"मानव अधिका\"… UDHR       Hindi    UTF-8         
+## 23 UDHR_Icelandic_ISO… "\"Mannréttin\"… UDHR       Iceland… ISO-8859-1    
+## 24 UDHR_Icelandic_UTF… "\"Mannréttin\"… UDHR       Iceland… UTF-8         
+## 25 UDHR_Icelandic_WIN… "\"Mannréttin\"… UDHR       Iceland… WINDOWS-1252  
+## 26 UDHR_Japanese_CP93… "\"『世界人権宣言』\n \… UDHR       Japanese CP932         
+## 27 UDHR_Japanese_ISO-… "\"『世界人権宣言』\n \… UDHR       Japanese ISO-2022-JP   
+## 28 UDHR_Japanese_UTF-… "\"『世界人権宣言』\n \… UDHR       Japanese UTF-8         
+## 29 UDHR_Japanese_WIND… "\"『世界人権宣言』\n \… UDHR       Japanese WINDOWS-936   
+## 30 UDHR_Korean_ISO-20… "\"세 계 인 권 선 \"… UDHR       Korean   ISO-2022-KR   
+## 31 UDHR_Korean_UTF-8.… "\"세 계 인 권 선 \"… UDHR       Korean   UTF-8         
+## 32 UDHR_Russian_ISO-8… "\"Всеобщая д\"… UDHR       Russian  ISO-8859-5    
+## 33 UDHR_Russian_KOI8-… "\"Всеобщая д\"… UDHR       Russian  KOI8-R        
+## 34 UDHR_Russian_UTF-8… "\"Всеобщая д\"… UDHR       Russian  UTF-8         
+## 35 UDHR_Russian_WINDO… "\"Всеобщая д\"… UDHR       Russian  WINDOWS-1251  
+## 36 UDHR_Thai_UTF-8.txt "\"ปฏิญญาสากล\"…  UDHR       Thai     UTF-8</code></pre></div>
 <p>From this file we can easily create a <strong>quanteda</strong> <code>corpus</code> object.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">corpus_txts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/quanteda/topics/corpus">corpus</a></span>(txts)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">summary</span>(corpus_txts, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">## Corpus consisting of 36 documents, showing 5 documents:</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">## </a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">##                                Text Types Tokens Sentences     document</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">##   IndianTreaty_English_UTF-16LE.txt   618   2578       155 IndianTreaty</a>
-<a class="sourceLine" id="cb21-7" data-line-number="7">##  IndianTreaty_English_UTF-8-BOM.txt   646   3090       154 IndianTreaty</a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">##          UDHR_Arabic_ISO-8859-6.txt   753   1555        86         UDHR</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">##               UDHR_Arabic_UTF-8.txt   753   1555        86         UDHR</a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">##        UDHR_Arabic_WINDOWS-1256.txt   753   1555        86         UDHR</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11">##  language input_encoding</a>
-<a class="sourceLine" id="cb21-12" data-line-number="12">##   English       UTF-16LE</a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">##   English      UTF-8-BOM</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14">##    Arabic     ISO-8859-6</a>
-<a class="sourceLine" id="cb21-15" data-line-number="15">##    Arabic          UTF-8</a>
-<a class="sourceLine" id="cb21-16" data-line-number="16">##    Arabic   WINDOWS-1256</a>
-<a class="sourceLine" id="cb21-17" data-line-number="17">## </a>
-<a class="sourceLine" id="cb21-18" data-line-number="18">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</a>
-<a class="sourceLine" id="cb21-19" data-line-number="19">## Created: Mon Jul 30 17:13:41 2018</a>
-<a class="sourceLine" id="cb21-20" data-line-number="20">## Notes:</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus_txts &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/quanteda/topics/corpus">corpus</a></span>(txts)
+<span class="kw">summary</span>(corpus_txts, <span class="dv">5</span>)
+## Corpus consisting of 36 documents, showing 5 documents:
+## 
+##                                Text Types Tokens Sentences     document
+##   IndianTreaty_English_UTF-16LE.txt   618   2578       155 IndianTreaty
+##  IndianTreaty_English_UTF-8-BOM.txt   646   3090       154 IndianTreaty
+##          UDHR_Arabic_ISO-8859-6.txt   753   1555        86         UDHR
+##               UDHR_Arabic_UTF-8.txt   753   1555        86         UDHR
+##        UDHR_Arabic_WINDOWS-1256.txt   753   1555        86         UDHR
+##  language input_encoding
+##   English       UTF-16LE
+##   English      UTF-8-BOM
+##    Arabic     ISO-8859-6
+##    Arabic          UTF-8
+##    Arabic   WINDOWS-1256
+## 
+## Source: /Users/akitaka/Dropbox/KB_Projects/r_package_development/readtext/vignettes/* on x86_64 by akitaka
+## Created: Thu Sep 20 14:56:18 2018
+## Notes:</code></pre></div>
 </div>
 </div>
   </div>

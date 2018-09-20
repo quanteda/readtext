@@ -39,4 +39,4 @@ Encoding: UTF-8
 BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
