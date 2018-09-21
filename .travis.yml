@@ -6,12 +6,12 @@ warnings_are_errors: true
 sudo: true
 dist: trusty
 
-addons:
-  apt:
-    packages:
-      - libapparmor-dev
-      - libpoppler-cpp-dev
-      - libssh2-1-dev
+#addons:
+#  apt:
+#    packages:
+#      - libapparmor-dev
+#      - libpoppler-cpp-dev
+#      - libssh2-1-dev
 
 matrix:
   include:
@@ -20,7 +20,11 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-7']
+          packages: 
+            - g++-7
+            - libapparmor-dev
+            - libpoppler-cpp-dev
+            - libssh2-1-dev
       env:
         - COMPILER=g++-7
         - CC=gcc-7
