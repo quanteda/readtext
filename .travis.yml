@@ -30,6 +30,7 @@ matrix:
             - libapparmor-dev
             - libpoppler-cpp-dev
             - libssh2-1-dev
+            - libgit2-dev
       env:
         - CXX_COMPILER='g++-7'
         - C_COMPILER='gcc-7'
