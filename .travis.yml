@@ -4,7 +4,7 @@ r_packages:
 language: r
 warnings_are_errors: true
 sudo: true
-dist: trusty
+#dist: trusty
 
 #addons:
 #  apt:
@@ -17,32 +17,31 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      addons: &gcc6
+      addons: &gcc7
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
             - cmake3
-            - g++-6
-            - gcc-6
-            - gfortran-6
+            - g++-7
+            - gcc-7
+            - gfortran-7
             - swig
             - libapparmor-dev
             - libpoppler-cpp-dev
             - libssh2-1-dev
-            - libgit2-dev
       env:
-        - CXX_COMPILER='g++-6'
-        - C_COMPILER='gcc-6'
-        - Fortran_COMPILER='gfortran-6'
-        - COMPILER='g++-6'
-        - CC='gcc-6'
-        - CXX='g++-6'
+        - CXX_COMPILER='g++-7'
+        - C_COMPILER='gcc-7'
+        - Fortran_COMPILER='gfortran-7'
+        - COMPILER='g++-7'
+        - CC='gcc-7'
+        - CXX='g++-7'
         - BUILD_TYPE='Release'
         - COVERAGE=OFF
         
 before_install:
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 500
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 500
   - mkdir -p ~/.R
   - echo "VkVSPS03CkNDPWdjYyQoVkVSKSAtc3RkPWMxMSAKQ1hYPWcrKyQoVkVSKQpTSExJQl9DWFhMRD1nKyskKFZFUikKRkM9Z2ZvcnRyYW4KRjc3PWdmb3J0cmFuCg==" | base64 -d > ~/.R/Makevars
   - cat ~/.R/Makevars
