@@ -27,6 +27,9 @@ matrix:
             - gcc-7
             - gfortran-7
             - swig
+            - libapparmor-dev
+            - libpoppler-cpp-dev
+            - libssh2-1-dev
       env:
         - CXX_COMPILER='g++-7'
         - C_COMPILER='gcc-7'
