@@ -4,46 +4,31 @@ r_packages:
 language: r
 warnings_are_errors: true
 sudo: true
-#dist: trusty
+dist: trusty
 
-#addons:
-#  apt:
-#    packages:
-#      - libapparmor-dev
-#      - libpoppler-cpp-dev
-#      - libssh2-1-dev
+apt_packages:
+  - libssh2-1-dev
+  - libapparmor-dev
+  - libpoppler-cpp-dev
 
 matrix:
   include:
     - os: linux
       compiler: gcc
-      addons: &gcc7
+      addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake3
-            - g++-7
-            - gcc-7
-            - gfortran-7
-            - swig
-            - libapparmor-dev
-            - libpoppler-cpp-dev
-            - libssh2-1-dev
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['g++-6']
       env:
-        - CXX_COMPILER='g++-7'
-        - C_COMPILER='gcc-7'
-        - Fortran_COMPILER='gfortran-7'
-        - COMPILER='g++-7'
-        - CC='gcc-7'
-        - CXX='g++-7'
-        - BUILD_TYPE='Release'
-        - COVERAGE=OFF
+        - COMPILER=g++-6
+        - CC=gcc-6
+        - CXX=g++-6
         
 before_install:
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 500
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 500
   - mkdir -p ~/.R
-  - echo "VkVSPS03CkNDPWdjYyQoVkVSKSAtc3RkPWMxMSAKQ1hYPWcrKyQoVkVSKQpTSExJQl9DWFhMRD1nKyskKFZFUikKRkM9Z2ZvcnRyYW4KRjc3PWdmb3J0cmFuCg==" | base64 -d > ~/.R/Makevars
+  - echo "VER=-6" > ~/.R/Makevars
+  - echo "Q0M9Z2NjJChWRVIpIC1zdGQ9YzExIApDWFg9ZysrJChWRVIpClNITElCX0NYWExEPWcrKyQoVkVSKQpGQz1nZm9ydHJhbgpGNzc9Z2ZvcnRyYW4K" | base64 -d > ~/.R/Makevars
   - cat ~/.R/Makevars
 
 # before_install:
