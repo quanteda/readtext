@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readtext</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.71</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.72</span>
       </span>
     </div>
 
@@ -141,22 +141,22 @@
 <span class='co'># try readtext</span>
 <span class='fu'>require</span>(<span class='no'>quanteda</span>)
 <span class='no'>txts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='readtext.html'>readtext</a></span>(<span class='fu'>paste0</span>(<span class='no'>FILEDIR</span>, <span class='st'>"/"</span>, <span class='st'>"*.txt"</span>))
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>1</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># gibberish</span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>4</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># hex</span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>40</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># hex</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>1</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># gibberish</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>4</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># hex</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>40</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># hex</span>
 
 <span class='co'># read them in again</span>
 <span class='no'>txts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='readtext.html'>readtext</a></span>(<span class='fu'>paste0</span>(<span class='no'>FILEDIR</span>,  <span class='st'>"/"</span>, <span class='st'>"*.txt"</span>), <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='no'>fileencodings</span>)
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>1</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># English</span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>4</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># Arabic, looking good </span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>40</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># Cyrillic, looking good</span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>7</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># Chinese, looking good</span>
-<span class='fu'>substring</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/texts'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>26</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># Hindi, looking good</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>1</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># English</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>4</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># Arabic, looking good </span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>40</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># Cyrillic, looking good</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>7</span>], <span class='fl'>1</span>, <span class='fl'>80</span>)  <span class='co'># Chinese, looking good</span>
+<span class='fu'>substring</span>(<span class='fu'><a href='https://quanteda.io/reference/texts.html'>texts</a></span>(<span class='no'>txts</span>)[<span class='fl'>26</span>], <span class='fl'>1</span>, <span class='fl'>80</span>) <span class='co'># Hindi, looking good</span>
 
 <span class='no'>txts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='readtext.html'>readtext</a></span>(<span class='fu'>paste0</span>(<span class='no'>FILEDIR</span>, <span class='st'>"/"</span>, <span class='st'>"*.txt"</span>), <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='no'>fileencodings</span>,
                   <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
                   <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>, <span class='st'>"inputEncoding"</span>))
-<span class='no'>encodingCorpus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/quanteda/topics/corpus'>corpus</a></span>(<span class='no'>txts</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"Created by encoding-tests.R"</span>)
+<span class='no'>encodingCorpus</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://quanteda.io/reference/corpus.html'>corpus</a></span>(<span class='no'>txts</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"Created by encoding-tests.R"</span>)
 <span class='fu'>summary</span>(<span class='no'>encodingCorpus</span>)
 <span class='co'># }</span></pre>
   </div>

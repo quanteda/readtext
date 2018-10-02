@@ -319,7 +319,7 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
             stop(sprintf("There is more than one field called %s in file %s.", text_field, path))
         }
     }
-    x <- x[, c(index[flag], index[!flag])]
+    x <- x[, c(index[flag], index[!flag]), drop = FALSE]
     names(x)[1] <- "text"
     if (impute_types) {
         return(impute_types(x))

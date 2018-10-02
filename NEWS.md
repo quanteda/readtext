@@ -1,6 +1,12 @@
 readtext 0.7.1
 ==============
 
+* Fixed #138, which caused single-column .csv-type files not to load correctly.
+
+
+readtext 0.7.1
+==============
+
 *  Added `readtext_options()`, fixes #123.
 
 
