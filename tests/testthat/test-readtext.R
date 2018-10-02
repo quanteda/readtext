@@ -61,11 +61,11 @@ test_that("test readtext with glob-style mask", {
 
 test_that("test structured readtext with glob-style mask", {
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", text_field = "text")),
+        nrow(readtext("../data/csv/test*.csv", text_field = "text")),
         6
     )
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", text_field = "text")),
+        nrow(readtext("../data/csv/test*.csv", text_field = "text")),
         6
     )
 })
@@ -227,7 +227,7 @@ test_that("test xml files", {
         "You should specify text_field by name.*"
     )
     expect_that(
-        unname(texts(readtext("../data/xml/test.xml", text_field = 1))),
+        unname(texts(suppressWarnings(readtext("../data/xml/test.xml", text_field = 1)))),
         equals(c("Lorem ipsum.", "Dolor sit"))
     )
     expect_that(
@@ -316,9 +316,8 @@ test_that("test readtext() with docvarsfrom = filenames", {
         "Fewer docnames supplied than existing docvars - last 1 docvar given generic names."
     )
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
-                         docvarnames = c("id", "fruit")
-        )),
+        docvars(suppressWarnings(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+                         docvarnames = c("id", "fruit")))),
         equals(data.frame(list(id = c(1,2), fruit = c("apple", "orange")), 
                           docvar3 = c("red", "orange"), stringsAsFactors = FALSE))
     )
@@ -529,7 +528,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
         )
 
         actual_names <- names(texts(readtext(
-            "../data/csv/*.csv", text_field = "text"
+            "../data/csv/test*.csv", text_field = "text"
         )))
         expect_true(
             setequal(
@@ -773,19 +772,19 @@ test_that("messages from list_file",{
 
 test_that("readtext called with textfield works with deprecation warning", {
     expect_equal(
-        nrow(readtext("../data/csv/*.csv", textfield = "text")),
+        nrow(readtext("../data/csv/test*.csv", text_field = "text")),
         6
     )
     expect_equal(
-        nrow(docvars(readtext("../data/csv/*.csv", textfield = "text"))),
+        nrow(docvars(readtext("../data/csv/test*.csv", text_field = "text"))),
         6
     )
     expect_equal(
-        length(texts(readtext("../data/csv/*.csv", textfield = "text"))),
+        length(texts(readtext("../data/csv/test*.csv", text_field = "text"))),
         6
     )
     expect_warning(
-        readtext("../data/csv/*.csv", textfield = "text"),
+        readtext("../data/csv/test*.csv", textfield = "text"),
         "textfield is deprecated; use text_field instead"
     )
 })
@@ -869,4 +868,20 @@ test_that("rases error when source is not valid", {
         readtext('../data/tweets/stream.json', source = 'twitter')
     )
     
+})
+
+test_that("readtext works with one-column csv files (#138)", {
+    expect_equivalent(
+        readtext("../data/csv/data_onecol.csv"),
+        data.frame(doc_id = paste("data_onecol.csv", 1:2, sep = "."),
+                   text = c("foo foo foo foo", "bar bar bar bar"),
+                   stringsAsFactors = FALSE)
+    )
+    expect_equivalent(
+        readtext("../data/csv/data_twocol.csv"),
+        data.frame(doc_id = paste("data_twocol.csv", 1:2, sep = "."),
+                   text = c("foo foo foo foo", "bar bar bar bar"),
+                   y = 1:2,
+                   stringsAsFactors = FALSE)
+    )
 })
