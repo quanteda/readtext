@@ -17,15 +17,16 @@ knitr::opts_chunk$set(
 # readtext: Import and handling for plain and formatted text files
 
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-![Downloads](http://cranlogs.r-pkg.org/badges/readtext)
 [![Travis-CI Build Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
 [![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/quanteda/readtext)
 [![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)][1]
+[![Downloads](http://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
 
 
 [1]: https://codecov.io/gh/quanteda/readtext/branch/master
 
-An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, and Stefan Müller.
+An R package for reading text files in all their various formats, by Ken Benoit, Adam Obeng, Paul Nulty, Aki Matsuo, Kohei Watanabe, and Stefan Müller.
 
 ## Introduction
 
