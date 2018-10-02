@@ -17,3 +17,4 @@ __MACOSX
 ^_pkgdown\.yml$
 ^css/
 ^docs/
+^pkgdown/
