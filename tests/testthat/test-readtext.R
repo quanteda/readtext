@@ -870,3 +870,19 @@ test_that("rases error when source is not valid", {
     )
     
 })
+
+test_that("readtext works with one-column csv files (#138)", {
+    expect_equivalent(
+        readtext("../data/csv/data_onecol.csv"),
+        data.frame(doc_id = paste("data_onecol.csv", 1:2, sep = "."),
+                   text = c("foo foo foo foo", "bar bar bar bar"),
+                   stringsAsFactors = FALSE)
+    )
+    expect_equivalent(
+        readtext("../data/csv/data_twocol.csv"),
+        data.frame(doc_id = paste("data_twocol.csv", 1:2, sep = "."),
+                   text = c("foo foo foo foo", "bar bar bar bar"),
+                   y = 1:2,
+                   stringsAsFactors = FALSE)
+    )
+})
