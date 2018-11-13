@@ -7,7 +7,8 @@
 get_nexis_html(path, paragraph_separator = "\\n\\n", verbosity, ...)
 }
 \arguments{
-\item{path}{either path to a HTML file or a directory that containe HTML files}
+\item{path}{either path to a HTML file or a directory that contains HTML
+files}
 
 \item{paragraph_separator}{a character to separate paragraphs in body texts}
 

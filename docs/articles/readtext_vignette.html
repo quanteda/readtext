@@ -226,7 +226,7 @@
 <div id="text-from-archive-files--zip--tar--tar-gz--tar-bz" class="section level2">
 <h2 class="hasAnchor">
 <a href="#text-from-archive-files--zip--tar--tar-gz--tar-bz" class="anchor"></a>2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)</h2>
-<p>Finally, it is possible to inclue text from archives.</p>
+<p>Finally, it is possible to include text from archives.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Note: Archive file required. The only zip archive included in readtext has </span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># different encodings and is difficult to import (see section 4.2).</span></a></code></pre></div>
 </div>
@@ -236,7 +236,7 @@
 <a href="#inter-operability-with-quanteda" class="anchor"></a>3. Inter-operability with quanteda</h1>
 <p><strong>readtext</strong> was originally developed in early versions of the <a href="http://github.com/quanteda/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. It was spawned from the <code>textfile()</code> function from that package, and now lives exclusively in <strong>readtext</strong>. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code><a href="../reference/readtext.html">readtext()</a></code>, it can construct a corpus directly from a <code>readtext</code> object, preserving all docvars and other meta-data.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">require</span>(quanteda)</a></code></pre></div>
-<p>You can easily contruct a corpus from a <strong>readtext</strong> object.</p>
+<p>You can easily construct a corpus from a <strong>readtext</strong> object.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># read in comma-separated values with readtext</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"></a>
@@ -253,7 +253,7 @@
 <a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas</span></a>
 <a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">## </span></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">## Created: Tue Nov 13 10:17:13 2018</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">## Created: Tue Nov 13 10:52:28 2018</span></a>
 <a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">## Notes:</span></a></code></pre></div>
 </div>
 <div id="solving-common-problems" class="section level1">
@@ -403,7 +403,7 @@
 <a class="sourceLine" id="cb21-16" data-line-number="16"><span class="co">##    Arabic   WINDOWS-1256</span></a>
 <a class="sourceLine" id="cb21-17" data-line-number="17"><span class="co">## </span></a>
 <a class="sourceLine" id="cb21-18" data-line-number="18"><span class="co">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/vignettes/* on x86_64 by kbenoit</span></a>
-<a class="sourceLine" id="cb21-19" data-line-number="19"><span class="co">## Created: Tue Nov 13 10:17:14 2018</span></a>
+<a class="sourceLine" id="cb21-19" data-line-number="19"><span class="co">## Created: Tue Nov 13 10:52:28 2018</span></a>
 <a class="sourceLine" id="cb21-20" data-line-number="20"><span class="co">## Notes:</span></a></code></pre></div>
 </div>
 </div>

@@ -2,7 +2,8 @@
 #'
 #' This extract headings, body texts and meta data (date, byline, length,
 #' section, edition) from items in HTML files downloaded by the scraper.
-#' @param path either path to a HTML file or a directory that containe HTML files
+#' @param path either path to a HTML file or a directory that contains HTML
+#'   files
 #' @param paragraph_separator a character to separate paragraphs in body texts
 #' @inheritParams readtext
 #' @param ... only to trap extra arguments

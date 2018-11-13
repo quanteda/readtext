@@ -10,11 +10,14 @@ get_temp(prefix = "readtext-", temp_dir = NULL, directory = FALSE,
 \arguments{
 \item{prefix}{a string appended to random file or directory names.}
 
-\item{temp_dir}{a path to temporary directory. If \code{NULL}, value from \code{tempdir()} will be used.}
+\item{temp_dir}{a path to temporary directory. If \code{NULL}, value from
+\code{tempdir()} will be used.}
 
-\item{directory}{If \code{TRUE}, temporary directory wil be created.}
+\item{directory}{logical; if \code{TRUE}, temporary directory will be
+created.}
 
-\item{seed}{a seed value for \code{digest::digest}. If code{NULL}, a random value will be used.}
+\item{seed}{a seed value for \code{digest::digest}. If code{NULL}, a random
+value will be used.}
 }
 \description{
 Get path to temporary file or directory

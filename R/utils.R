@@ -43,9 +43,12 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
 #' Get path to temporary file or directory
 #' 
 #' @param prefix a string appended to random file or directory names.
-#' @param temp_dir a path to temporary directory. If \code{NULL}, value from \code{tempdir()} will be used.
-#' @param directory If \code{TRUE}, temporary directory wil be created.
-#' @param seed  a seed value for \code{digest::digest}. If code{NULL}, a random value will be used.
+#' @param temp_dir a path to temporary directory. If \code{NULL}, value from
+#'   \code{tempdir()} will be used.
+#' @param directory logical; if \code{TRUE}, temporary directory will be
+#'   created.
+#' @param seed  a seed value for \code{digest::digest}. If code{NULL}, a random
+#'   value will be used.
 #' @keywords internal
 get_temp <- function(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL) {
     if (is.null(temp_dir))

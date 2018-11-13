@@ -68,7 +68,7 @@ readtext(paste0(DATA_DIR, "/txt/movie_reviews/*"))
 
 ## 2.2 Comma- or tab-separated values (.csv, .tab, .tsv)
 
-Read in comma separted values (.csv files) that contain textual data. We determine the `texts` variable in our .csv file as the `text_field`. This is the column that contains the actual text. The other columns of the original csv file (`Year`, `President`, `FirstName`) are by default treated as document-level variables. 
+Read in comma separated values (.csv files) that contain textual data. We determine the `texts` variable in our .csv file as the `text_field`. This is the column that contains the actual text. The other columns of the original csv file (`Year`, `President`, `FirstName`) are by default treated as document-level variables. 
 
 ```{r}
 # Read in comma-separated values
@@ -125,7 +125,7 @@ You can also read in text directly from a URL.
 
 ## 2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)
 
-Finally, it is possible to inclue text from archives.
+Finally, it is possible to include text from archives.
 
 ```{r}
 # Note: Archive file required. The only zip archive included in readtext has 
@@ -140,7 +140,7 @@ Finally, it is possible to inclue text from archives.
 require(quanteda)
 ```
 
-You can easily contruct a corpus from a **readtext** object.
+You can easily construct a corpus from a **readtext** object.
 
 ```{r}
 # read in comma-separated values with readtext
