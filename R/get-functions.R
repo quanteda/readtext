@@ -245,7 +245,7 @@ xml2_to_dataframe <- function(xml) {
         }
     }
     if (depth_check(xml_list[[1]]) != 3) {
-        stop("The xml format does not fit for the extraxtion without xPath\n  Use xPath method instead")
+        stop("The xml format does not fit for the extraction without xPath\n  Use xPath method instead")
     }
     ret <- data.table::rbindlist(xml_list[[1]], fill = TRUE)
     data.table::setDF(ret)
