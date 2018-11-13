@@ -58,7 +58,7 @@ on linux systems. On Debian/Ubuntu try installing these packages by
 running these commands at the command line:
 
 ``` bash
-sudo apt-get install libpoppler-cpp-dev   # for antiwar
+sudo apt-get install libpoppler-cpp-dev   # for antiword
 sudo apt-get install libapparmor-dev      # for unrtf
 ```
 
@@ -155,7 +155,7 @@ summary(corpus_csv, 5)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit
-## Created: Tue Nov 13 10:54:25 2018
+## Created: Tue Nov 13 10:59:45 2018
 ## Notes:
 ```
 
