@@ -81,7 +81,7 @@ For files that contain multiple documents, such as comma-separated-value documen
 readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ```
 
-For a more complete demonstration, see the package [vignette](http://cdn.rawgit.com/quanteda/readtext/master/inst/doc/readtext_vignette.html).
+For a more complete demonstration, see the package [vignette](https://readtext.quanteda.io/articles/readtext_vignette.html).
 
 ## Inter-operability with other packages
 

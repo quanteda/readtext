@@ -116,7 +116,7 @@ readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ```
 
 For a more complete demonstration, see the package
-[vignette](http://cdn.rawgit.com/quanteda/readtext/master/inst/doc/readtext_vignette.html).
+[vignette](https://readtext.quanteda.io/articles/readtext_vignette.html).
 
 ## Inter-operability with other packages
 
@@ -132,7 +132,7 @@ all docvars and other meta-data.
 ``` r
 require(quanteda)
 ## Loading required package: quanteda
-## Package version: 1.3.9
+## Package version: 1.3.14
 ## Parallel computing: 2 of 12 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
@@ -155,7 +155,7 @@ summary(corpus_csv, 5)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit
-## Created: Tue Oct  2 09:58:57 2018
+## Created: Tue Nov 13 10:54:25 2018
 ## Notes:
 ```
 
