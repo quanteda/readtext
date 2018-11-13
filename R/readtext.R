@@ -101,13 +101,14 @@
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' ## get the data directory
-#' DATA_DIR <- system.file("extdata/", package = "readtext")
+#' DATA_DIR <- system.file("extdata/", package = "readtext", mustWork = TRUE)
 #' 
 #' ## read in some text data
 #' # all UDHR files
 #' (rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*")))
+#' (rt1 <- readtext("txt/UDHR/*"))
 #' 
 #' # manifestos with docvars from filenames
 #' (rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),

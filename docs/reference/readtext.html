@@ -252,38 +252,53 @@ file for details.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## get the data directory</span>
-<span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'>## get the data directory</span>
+<span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## read in some text data</span>
 <span class='co'># all UDHR files</span>
-(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/UDHR/*"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/UDHR/*"</span>)))
+(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='st'>"txt/UDHR/*"</span>))
+
 <span class='co'># manifestos with docvars from filenames</span>
 (<span class='no'>rt2</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/EU_manifestos/*.txt"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
                  <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"unit"</span>, <span class='st'>"context"</span>, <span class='st'>"year"</span>, <span class='st'>"language"</span>, <span class='st'>"party"</span>),
-                 <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"LATIN1"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+                 <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"LATIN1"</span>))
+
 <span class='co'># recurse through subdirectories</span>
 (<span class='no'>rt3</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/movie_reviews/*"</span>),
-                 <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='st'>"sentiment"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+                 <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='st'>"sentiment"</span>))
+
 <span class='co'>## read in csv data</span>
-(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"csv/inaugCorpus.csv"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"csv/inaugCorpus.csv"</span>)))
+
 <span class='co'>## read in tab-separated data</span>
-(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))
+
 <span class='co'>## read in JSON data</span>
-(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'>
+(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))
+
 <span class='co'>## read in pdf data</span>
 <span class='co'># UNHDR</span>
 (<span class='no'>rt7</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"pdf/UDHR/*.pdf"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
-                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt7</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; <span class='error'>Error in Encoding(rt7$text): object 'rt7' not found</span></div><div class='input'>
+                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))
+<span class='fu'>Encoding</span>(<span class='no'>rt7</span>$<span class='no'>text</span>)
+
 <span class='co'>## read in Word data (.doc)</span>
-(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.doc"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt8</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; <span class='error'>Error in Encoding(rt8$text): object 'rt8' not found</span></div><div class='input'>
+(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.doc"</span>)))
+<span class='fu'>Encoding</span>(<span class='no'>rt8</span>$<span class='no'>text</span>)
+
 <span class='co'>## read in Word data (.docx)</span>
-(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.docx"</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt9</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; <span class='error'>Error in Encoding(rt9$text): object 'rt9' not found</span></div><div class='input'>
+(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.docx"</span>)))
+<span class='fu'>Encoding</span>(<span class='no'>rt9</span>$<span class='no'>text</span>)
+
 <span class='co'>## use elements of path and filename as docvars</span>
 (<span class='no'>rt10</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"pdf/UDHR/*.pdf"</span>),
-                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"[/_.]"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in list_files(file, ignore_missing, TRUE, verbosity): File '' does not exist.</span></div></pre>
+                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"[/_.]"</span>))
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

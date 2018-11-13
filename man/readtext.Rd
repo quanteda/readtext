@@ -122,13 +122,14 @@ come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.
 }
 \examples{
-\donttest{
+\dontrun{
 ## get the data directory
-DATA_DIR <- system.file("extdata/", package = "readtext")
+DATA_DIR <- system.file("extdata/", package = "readtext", mustWork = TRUE)
 
 ## read in some text data
 # all UDHR files
 (rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*")))
+(rt1 <- readtext("txt/UDHR/*"))
 
 # manifestos with docvars from filenames
 (rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),

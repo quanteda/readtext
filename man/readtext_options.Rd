@@ -41,7 +41,7 @@ Currently available options are: \describe{
 }
 }
 \examples{
-\donttest{
+\dontrun{
 # save the current options
 (opt <- readtext_options())
 
