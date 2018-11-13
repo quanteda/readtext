@@ -157,7 +157,7 @@ list_file <- function(file, ignore_missing, last_round, cache, verbosity = 1) {
         return(file)
     } else {
         #  If it wasn't a glob pattern last time, then it may be this time
-        if (verbosity >= 3) message(", usigit glob pattern")
+        if (verbosity >= 3) message(", using glob pattern")
         file <- Sys.glob(file)
         return(
             list_files(file, ignore_missing, TRUE, verbosity)
