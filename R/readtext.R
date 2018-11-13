@@ -103,7 +103,7 @@
 #' @examples 
 #' \donttest{
 #' ## get the data directory
-#' DATA_DIR <- system.file("extdata/", package = "readtext")
+#' DATA_DIR <- system.file("extdata/", package = "readtext", mustWork = TRUE)
 #' 
 #' ## read in some text data
 #' # all UDHR files
@@ -172,11 +172,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
         stop("source must be a character.")
         
     docvarsfrom <- match.arg(docvarsfrom)
-    # # just use the first, if both are specified?
-    # if (is.missing(docvarsfrom))
-    #  
-    # if (!all(docvarsfrom %in% c( c("metadata", "filenames"))))
-    #     stop("illegal docvarsfrom value")
+
     if (is.null(text_field))
         text_field <- 1
     if (length(encoding) < 2 && is.null(encoding))
@@ -217,10 +213,12 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     }
 
     if (docvarsfrom %in% c("filepaths", "filenames")) {
-        docvar <- get_docvars_filenames(files, dvsep, docvarnames, docvarsfrom == "filepaths", verbosity)
+        docvar <- get_docvars_filenames(files, dvsep, docvarnames, 
+                                        include_path = (docvarsfrom == "filepaths"), 
+                                        verbosity)
         result <- cbind(result, impute_types(docvar))
     }
-
+    
     # change rownames to doc_id
     result$doc_id <- id
     rownames(result) <- NULL

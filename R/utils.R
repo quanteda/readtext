@@ -15,11 +15,11 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
                                   include_path = FALSE, verbosity) {
 
     if (include_path) {
-        name <- path
+        parts <- path
     } else {
-        name <- tools::file_path_sans_ext(basename(path))
+        parts <- strsplit(tools::file_path_sans_ext(basename(path)), dvsep)
     }
-    parts <- strsplit(name, dvsep)
+    
     if (any(length(parts[[1]]) != lengths(parts)))
         stop("Filename elements are not equal in length.")
 

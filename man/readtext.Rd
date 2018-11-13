@@ -124,7 +124,7 @@ metadata ("docvars") come from either the file contents or filenames.
 \examples{
 \donttest{
 ## get the data directory
-DATA_DIR <- system.file("extdata/", package = "readtext")
+DATA_DIR <- system.file("extdata/", package = "readtext", mustWork = TRUE)
 
 ## read in some text data
 # all UDHR files
