@@ -16,24 +16,24 @@ License: GPL-3
 Depends:
     R (>= 3.1)
 Imports:
-    utils,
-    stringi,
-    data.table,
-    httr,
     antiword,
-    pdftools,
-    tibble,
+    data.table,
+    digest,
+    httr,
     jsonlite (>= 0.9.10),
-    streamR,
-    xml2,
-    readxl,
+    pdftools,
     readODS,
-    digest
+    readxl,
+    streamR,
+    stringi,
+    tibble,
+    xml2,
+    utils
 Suggests:
-    quanteda (>= 1.1.0),
     knitr,
     pkgload,
     rmarkdown,
+    quanteda (>= 1.1.0),
     testthat
 URL: http://github.com/quanteda/readtext
 Encoding: UTF-8
