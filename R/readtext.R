@@ -101,51 +101,51 @@
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' ## get the data directory
-#' DATA_DIR <- system.file("extdata/", package = "readtext", mustWork = TRUE)
+#' if (!interactive()) pkgload::load_all()
+#' DATA_DIR <- system.file("extdata/", package = "readtext")
 #' 
 #' ## read in some text data
 #' # all UDHR files
-#' (rt1 <- readtext(paste0(DATA_DIR, "txt/UDHR/*")))
-#' (rt1 <- readtext("txt/UDHR/*"))
+#' (rt1 <- readtext(paste0(DATA_DIR, "/txt/UDHR/*")))
 #' 
 #' # manifestos with docvars from filenames
-#' (rt2 <- readtext(paste0(DATA_DIR, "txt/EU_manifestos/*.txt"),
+#' (rt2 <- readtext(paste0(DATA_DIR, "/txt/EU_manifestos/*.txt"),
 #'                  docvarsfrom = "filenames", 
 #'                  docvarnames = c("unit", "context", "year", "language", "party"),
 #'                  encoding = "LATIN1"))
 #'                  
 #' # recurse through subdirectories
-#' (rt3 <- readtext(paste0(DATA_DIR, "txt/movie_reviews/*"), 
+#' (rt3 <- readtext(paste0(DATA_DIR, "/txt/movie_reviews/*"), 
 #'                  docvarsfrom = "filepaths", docvarnames = "sentiment"))
 #' 
 #' ## read in csv data
-#' (rt4 <- readtext(paste0(DATA_DIR, "csv/inaugCorpus.csv")))
+#' (rt4 <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv")))
 #' 
 #' ## read in tab-separated data
-#' (rt5 <- readtext(paste0(DATA_DIR, "tsv/dailsample.tsv"), text_field = "speech"))
+#' (rt5 <- readtext(paste0(DATA_DIR, "/tsv/dailsample.tsv"), text_field = "speech"))
 #' 
 #' ## read in JSON data
-#' (rt6 <- readtext(paste0(DATA_DIR, "json/inaugural_sample.json"), text_field = "texts"))
+#' (rt6 <- readtext(paste0(DATA_DIR, "/json/inaugural_sample.json"), text_field = "texts"))
 #' 
 #' ## read in pdf data
 #' # UNHDR
-#' (rt7 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+#' (rt7 <- readtext(paste0(DATA_DIR, "/pdf/UDHR/*.pdf"), 
 #'                  docvarsfrom = "filenames", 
 #'                  docvarnames = c("document", "language")))
 #' Encoding(rt7$text)
 #'
 #' ## read in Word data (.doc)
-#' (rt8 <- readtext(paste0(DATA_DIR, "word/*.doc")))
+#' (rt8 <- readtext(paste0(DATA_DIR, "/word/*.doc")))
 #' Encoding(rt8$text)
 #'
 #' ## read in Word data (.docx)
-#' (rt9 <- readtext(paste0(DATA_DIR, "word/*.docx")))
+#' (rt9 <- readtext(paste0(DATA_DIR, "/word/*.docx")))
 #' Encoding(rt9$text)
 #'
 #' ## use elements of path and filename as docvars
-#' (rt10 <- readtext(paste0(DATA_DIR, "pdf/UDHR/*.pdf"), 
+#' (rt10 <- readtext(paste0(DATA_DIR, "/pdf/UDHR/*.pdf"), 
 #'                   docvarsfrom = "filepaths", dvsep = "[/_.]"))
 #' }
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,

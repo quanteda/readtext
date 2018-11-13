@@ -152,20 +152,28 @@ invisibly.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># save the current options</span>
-(<span class='no'>opt</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext_options</span>())
-
+    <pre class="examples"><div class='input'><span class='co'># save the current options</span>
+(<span class='no'>opt</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext_options</span>())</div><div class='output co'>#&gt; $verbosity
+#&gt; [1] 1
+#&gt; </div><div class='input'>
 <span class='co'># set higher verbosity</span>
 <span class='fu'>readtext_options</span>(<span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 
 <span class='co'># read something in here</span>
-<span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
-<span class='fu'><a href='readtext.html'>readtext</a></span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/UDHR/*"</span>))
-
+<span class='kw'>if</span> (!<span class='fu'>interactive</span>()) <span class='kw pkg'>pkgload</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/pkgload/topics/load_all'>load_all</a></span>()</div><div class='output co'>#&gt; <span class='message'>Loading readtext</span></div><div class='input'><span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
+<span class='fu'><a href='readtext.html'>readtext</a></span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/UDHR/*"</span>))</div><div class='output co'>#&gt; <span class='message'>Reading texts from /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/*</span></div><div class='output co'>#&gt; <span class='message'>, usigit glob pattern</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_chinese.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_czech.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_danish.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_english.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_french.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_georgian.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_greek.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_hungarian.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_icelandic.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_irish.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_japanese.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_russian.txt</span></div><div class='output co'>#&gt; <span class='message'> ... reading (txt) file: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/inst/extdata/txt/UDHR/UDHR_vietnamese.txt</span></div><div class='output co'>#&gt; <span class='message'> ... read 13 documents.</span></div><div class='output co'>#&gt; readtext object consisting of 13 documents and 0 docvars.
+#&gt; # data.frame [13 × 2]
+#&gt;   doc_id            text                         
+#&gt;   &lt;chr&gt;             &lt;chr&gt;                        
+#&gt; 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
+#&gt; 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          
+#&gt; 3 UDHR_danish.txt   "\"Den 10. de\"..."          
+#&gt; 4 UDHR_english.txt  "\"Universal \"..."          
+#&gt; 5 UDHR_french.txt   "\"Déclaratio\"..."          
+#&gt; 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
+#&gt; # ... with 7 more rows</div><div class='input'>
 <span class='co'># reset to saved options</span>
-<span class='fu'>readtext_options</span>(<span class='no'>opt</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>readtext_options</span>(<span class='no'>opt</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

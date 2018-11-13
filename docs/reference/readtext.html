@@ -252,53 +252,127 @@ file for details.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>## get the data directory</span>
-<span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>, <span class='kw'>mustWork</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="examples"><div class='input'><span class='co'>## get the data directory</span>
+<span class='kw'>if</span> (!<span class='fu'>interactive</span>()) <span class='kw pkg'>pkgload</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/pkgload/topics/load_all'>load_all</a></span>()</div><div class='output co'>#&gt; <span class='message'>Loading readtext</span></div><div class='input'><span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
 
 <span class='co'>## read in some text data</span>
 <span class='co'># all UDHR files</span>
-(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/UDHR/*"</span>)))
-(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='st'>"txt/UDHR/*"</span>))
-
+(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/UDHR/*"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 13 documents and 0 docvars.
+#&gt; # data.frame [13 × 2]
+#&gt;   doc_id            text                         
+#&gt;   &lt;chr&gt;             &lt;chr&gt;                        
+#&gt; 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
+#&gt; 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          
+#&gt; 3 UDHR_danish.txt   "\"Den 10. de\"..."          
+#&gt; 4 UDHR_english.txt  "\"Universal \"..."          
+#&gt; 5 UDHR_french.txt   "\"Déclaratio\"..."          
+#&gt; 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
+#&gt; # ... with 7 more rows</div><div class='input'>
 <span class='co'># manifestos with docvars from filenames</span>
-(<span class='no'>rt2</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/EU_manifestos/*.txt"</span>),
+(<span class='no'>rt2</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/EU_manifestos/*.txt"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
                  <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"unit"</span>, <span class='st'>"context"</span>, <span class='st'>"year"</span>, <span class='st'>"language"</span>, <span class='st'>"party"</span>),
-                 <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"LATIN1"</span>))
-
+                 <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"LATIN1"</span>))</div><div class='output co'>#&gt; readtext object consisting of 17 documents and 5 docvars.
+#&gt; # data.frame [17 × 7]
+#&gt;   doc_id                 text                unit  context  year language party
+#&gt;   &lt;chr&gt;                  &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;
+#&gt; 1 EU_euro_2004_de_PSE.t… "\"PES · PSE \"..." EU    euro     2004 de       PSE  
+#&gt; 2 EU_euro_2004_de_V.txt  "\"Gemeinsame\"..." EU    euro     2004 de       V    
+#&gt; 3 EU_euro_2004_en_PSE.t… "\"PES · PSE \"..." EU    euro     2004 en       PSE  
+#&gt; 4 EU_euro_2004_en_V.txt  "\"Manifesto\n\"..… EU    euro     2004 en       V    
+#&gt; 5 EU_euro_2004_es_PSE.t… "\"PES · PSE \"..." EU    euro     2004 es       PSE  
+#&gt; 6 EU_euro_2004_es_V.txt  "\"Manifesto\n\"..… EU    euro     2004 es       V    
+#&gt; # ... with 11 more rows</div><div class='input'>
 <span class='co'># recurse through subdirectories</span>
-(<span class='no'>rt3</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"txt/movie_reviews/*"</span>),
-                 <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='st'>"sentiment"</span>))
-
+(<span class='no'>rt3</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/movie_reviews/*"</span>),
+                 <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='st'>"sentiment"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Fewer docnames supplied than existing docvars - last 3 docvars given generic names.</span></div><div class='output co'>#&gt; readtext object consisting of 10 documents and 4 docvars.
+#&gt; # data.frame [10 × 6]
+#&gt;   doc_id     text       sentiment                     docvar2   docvar3 docvar4
+#&gt;   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;                         &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;  
+#&gt; 1 neg_cv000… "\"plot :… /Users/kbenoit/Dropbox (Pers… reviews/… cv000   29416.…
+#&gt; 2 neg_cv001… "\"the ha… /Users/kbenoit/Dropbox (Pers… reviews/… cv001   19502.…
+#&gt; 3 neg_cv002… "\"it is … /Users/kbenoit/Dropbox (Pers… reviews/… cv002   17424.…
+#&gt; 4 neg_cv003… "\" \" qu… /Users/kbenoit/Dropbox (Pers… reviews/… cv003   12683.…
+#&gt; 5 neg_cv004… "\"synops… /Users/kbenoit/Dropbox (Pers… reviews/… cv004   12641.…
+#&gt; 6 pos_cv000… "\"films … /Users/kbenoit/Dropbox (Pers… reviews/… cv000   29590.…
+#&gt; # ... with 4 more rows</div><div class='input'>
 <span class='co'>## read in csv data</span>
-(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"csv/inaugCorpus.csv"</span>)))
-
+(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/csv/inaugCorpus.csv"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 5 documents and 3 docvars.
+#&gt; # data.frame [5 × 5]
+#&gt;   doc_id            text                 Year President  FirstName
+#&gt;   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    
+#&gt; 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
+#&gt; 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   
+#&gt; 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     
+#&gt; 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   
+#&gt; 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas   </div><div class='input'>
 <span class='co'>## read in tab-separated data</span>
-(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))
-
+(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))</div><div class='output co'>#&gt; readtext object consisting of 33 documents and 9 docvars.
+#&gt; # data.frame [33 × 11]
+#&gt;   doc_id text  speechID memberID partyID constID title date  member_name
+#&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      
+#&gt; 1 dails… "\"M…        1      977      22     158 1. C… 1919… Count Geor…
+#&gt; 2 dails… "\"I…        2     1603      22     103 1. C… 1919… Mr. Pádrai…
+#&gt; 3 dails… "\"'…        3      116      22     178 1. C… 1919… Mr. Cathal…
+#&gt; 4 dails… "\"T…        4      116      22     178 2. C… 1919… Mr. Cathal…
+#&gt; 5 dails… "\"L…        5      116      22     178 3. A… 1919… Mr. Cathal…
+#&gt; 6 dails… "\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…
+#&gt; # ... with 27 more rows, and 2 more variables: party_name &lt;chr&gt;,
+#&gt; #   const_name &lt;chr&gt;</div><div class='input'>
 <span class='co'>## read in JSON data</span>
-(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))
-
+(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))</div><div class='output co'>#&gt; readtext object consisting of 3 documents and 3 docvars.
+#&gt; # data.frame [3 × 5]
+#&gt;   doc_id                  text                 Year President  FirstName
+#&gt;   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    
+#&gt; 1 inaugural_sample.json.1 "\"Fellow-Cit\"..."  1789 Washington George   
+#&gt; 2 inaugural_sample.json.2 "\"Fellow cit\"..."  1793 Washington George   
+#&gt; 3 inaugural_sample.json.3 "\"When it wa\"..."  1797 Adams      John     </div><div class='input'>
 <span class='co'>## read in pdf data</span>
 <span class='co'># UNHDR</span>
-(<span class='no'>rt7</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"pdf/UDHR/*.pdf"</span>),
+(<span class='no'>rt7</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
-                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))
-<span class='fu'>Encoding</span>(<span class='no'>rt7</span>$<span class='no'>text</span>)
-
+                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 11 documents and 2 docvars.
+#&gt; # data.frame [11 × 4]
+#&gt;   doc_id           text                          document language
+#&gt;   &lt;chr&gt;            &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 UDHR_chinese.pdf "\"世界人权宣言\n联合国\"..." UDHR     chinese 
+#&gt; 2 UDHR_czech.pdf   "\"VŠEOBECNÁ \"..."           UDHR     czech   
+#&gt; 3 UDHR_danish.pdf  "\"Den 10. de\"..."           UDHR     danish  
+#&gt; 4 UDHR_english.pdf "\"Universal \"..."           UDHR     english 
+#&gt; 5 UDHR_french.pdf  "\"Déclaratio\"..."           UDHR     french  
+#&gt; 6 UDHR_greek.pdf   "\"ΟΙΚΟΥΜΕΝΙΚ\"..."           UDHR     greek   
+#&gt; # ... with 5 more rows</div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt7</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt;  [1] "UTF-8"   "UTF-8"   "UTF-8"   "unknown" "UTF-8"   "UTF-8"   "UTF-8"  
+#&gt;  [8] "UTF-8"   "UTF-8"   "UTF-8"   "UTF-8"  </div><div class='input'>
 <span class='co'>## read in Word data (.doc)</span>
-(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.doc"</span>)))
-<span class='fu'>Encoding</span>(<span class='no'>rt8</span>$<span class='no'>text</span>)
-
+(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.doc"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 4 documents and 0 docvars.
+#&gt; # data.frame [4 × 2]
+#&gt;   doc_id                                 text                
+#&gt;   &lt;chr&gt;                                  &lt;chr&gt;               
+#&gt; 1 21Parti_Socialiste_SUMMARY_2004.doc    "\"[pic]\nRésu\"..."
+#&gt; 2 21vivant2004.doc                       "\"http://www\"..." 
+#&gt; 3 21VLD2004.doc                          "\"http://www\"..." 
+#&gt; 4 32_socialisti_democratici_italiani.doc "\"DIVENTARE \"..." </div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt8</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8" "UTF-8" "UTF-8"</div><div class='input'>
 <span class='co'>## read in Word data (.docx)</span>
-(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"word/*.docx"</span>)))
-<span class='fu'>Encoding</span>(<span class='no'>rt9</span>$<span class='no'>text</span>)
-
+(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.docx"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 2 documents and 0 docvars.
+#&gt; # data.frame [2 × 2]
+#&gt;   doc_id                      text               
+#&gt;   &lt;chr&gt;                       &lt;chr&gt;              
+#&gt; 1 UK_2015_EccentricParty.docx "\"The Eccent\"..."
+#&gt; 2 UK_2015_LoonyParty.docx     "\"The Offici\"..."</div><div class='input'><span class='fu'>Encoding</span>(<span class='no'>rt9</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8"</div><div class='input'>
 <span class='co'>## use elements of path and filename as docvars</span>
-(<span class='no'>rt10</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"pdf/UDHR/*.pdf"</span>),
-                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"[/_.]"</span>))
-<span class='co'># }</span></pre>
+(<span class='no'>rt10</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'>paste0</span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
+                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"[/_.]"</span>))</div><div class='output co'>#&gt; readtext object consisting of 11 documents and 14 docvars.
+#&gt; # data.frame [11 × 16]
+#&gt;   doc_id text  docvar1 docvar2 docvar3 docvar4 docvar5 docvar6 docvar7 docvar8
+#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+#&gt; 1 UDHR_… "\"世… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; 2 UDHR_… "\"V… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; 3 UDHR_… "\"D… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; 4 UDHR_… "\"U… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; 5 UDHR_… "\"D… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; 6 UDHR_… "\"Ο… NA      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
+#&gt; # ... with 5 more rows, and 6 more variables: docvar9 &lt;chr&gt;, docvar10 &lt;chr&gt;,
+#&gt; #   docvar11 &lt;chr&gt;, docvar12 &lt;chr&gt;, docvar13 &lt;chr&gt;, docvar14 &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -26,7 +26,7 @@
 #' invisibly.
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # save the current options
 #' (opt <- readtext_options())
 #'
@@ -34,8 +34,9 @@
 #' readtext_options(verbosity = 3)
 #' 
 #' # read something in here
+#' if (!interactive()) pkgload::load_all()
 #' DATA_DIR <- system.file("extdata/", package = "readtext")
-#' readtext(paste0(DATA_DIR, "txt/UDHR/*"))
+#' readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 #' 
 #' # reset to saved options
 #' readtext_options(opt)
