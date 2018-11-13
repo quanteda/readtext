@@ -4,7 +4,7 @@ r_packages:
 language: r
 warnings_are_errors: true
 sudo: true
-dist: trusty
+dist: xenial
 
 apt_packages:
   - libssh2-1-dev
