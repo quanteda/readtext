@@ -20,7 +20,7 @@
 #'            detected = encoding(data_char_encodedtexts)$all)
 #' 
 #' \dontrun{# Russian text, Windows-1251
-#' myreadtext <- readtext("http://www.kenbenoit.net/files/01_er_5.txt")
+#' myreadtext <- readtext("https://kenbenoit.net/files/01_er_5.txt")
 #' encoding(myreadtext)
 #' }
 #' @export
