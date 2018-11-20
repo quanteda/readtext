@@ -86,53 +86,53 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>From CRAN</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"readtext"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"readtext"</span>)</code></pre></div>
 </li>
 <li>
 <p>From GitHub, if you want the latest development version.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># devtools packaged required to install readtext from Github </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"quanteda/readtext"</span>) </a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># devtools packaged required to install readtext from Github </span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"quanteda/readtext"</span>) </code></pre></div>
 </li>
 </ol>
 <p>Linux note: There are a couple of dependencies that may not be available on linux systems. On Debian/Ubuntu try installing these packages by running these commands at the command line:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">sudo</span> apt-get install libpoppler-cpp-dev   # for antiword</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="fu">sudo</span> apt-get install libapparmor-dev      # for unrtf</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install libpoppler-cpp-dev   # for antiword
+<span class="fu">sudo</span> apt-get install libapparmor-dev      # for unrtf</code></pre></div>
 </div>
 <div id="demonstration-reading-one-or-more-text-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#demonstration-reading-one-or-more-text-files" class="anchor"></a>Demonstration: Reading one or more text files</h2>
 <p><strong>readtext</strong> supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx). <strong>readtext</strong> also handles multiple files and file types using for instance a “glob” expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).</p>
 <p>The file formats are determined automatically by the filename extensions. If a file has no extension or is unknown, <strong>readtext</strong> will assume that it is plain text. The following command, for instance, will load in all of the files from the subdirectory <code>txt/UDHR/</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">require</span>(readtext)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## Loading required package: readtext</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># get the data directory from readtext</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># read in all files from a folder</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/UDHR/*"</span>))</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">## readtext object consisting of 13 documents and 0 docvars.</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## # data.frame [13 × 2]</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">##   doc_id            text                         </span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">##   &lt;chr&gt;             &lt;chr&gt;                        </span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">## 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          </span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## 3 UDHR_danish.txt   "\"Den 10. de\"..."          </span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">## 4 UDHR_english.txt  "\"Universal \"..."          </span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">## 5 UDHR_french.txt   "\"Déclaratio\"..."          </span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          </span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">## # ... with 7 more rows</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(readtext)
+## Loading required package: readtext
+<span class="co"># get the data directory from readtext</span>
+DATA_DIR &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata/"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>)
+
+<span class="co"># read in all files from a folder</span>
+<span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/txt/UDHR/*"</span>))
+## readtext object consisting of 13 documents and 0 docvars.
+## # data.frame [13 × 2]
+##   doc_id            text                         
+##   &lt;chr&gt;             &lt;chr&gt;                        
+## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
+## 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          
+## 3 UDHR_danish.txt   "\"Den 10. de\"..."          
+## 4 UDHR_english.txt  "\"Universal \"..."          
+## 5 UDHR_french.txt   "\"Déclaratio\"..."          
+## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
+## # ... with 7 more rows</code></pre></div>
 <p>For files that contain multiple documents, such as comma-separated-value documents, you will need to specify the column name containing the texts, using the <code>text_field</code> argument:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># read in comma-separated values and specify text field</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## readtext object consisting of 5 documents and 3 docvars.</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## # data.frame [5 × 5]</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##   doc_id            text                 Year President  FirstName</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">##   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in comma-separated values and specify text field</span>
+<span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)
+## readtext object consisting of 5 documents and 3 docvars.
+## # data.frame [5 × 5]
+##   doc_id            text                 Year President  FirstName
+##   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    
+## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
+## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   
+## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     
+## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   
+## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas</code></pre></div>
 <p>For a more complete demonstration, see the package <a href="https://readtext.quanteda.io/articles/readtext_vignette.html">vignette</a>.</p>
 </div>
 <div id="inter-operability-with-other-packages" class="section level2">
@@ -143,33 +143,33 @@
 <a href="#with-quanteda" class="anchor"></a>With <strong>quanteda</strong>
 </h3>
 <p><strong>readtext</strong> was originally developed in early versions of the <a href="http:/github.com/quanteda/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code><a href="reference/readtext.html">readtext()</a></code>, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">require</span>(quanteda)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## Loading required package: quanteda</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## Package version: 1.3.14</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">## Parallel computing: 2 of 12 threads used.</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">## See https://quanteda.io for tutorials and examples.</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">## Attaching package: 'quanteda'</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">## The following object is masked from 'package:utils':</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">##     View</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># read in comma-separated values with readtext</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co"># create quanteda corpus</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">corpus_csv &lt;-<span class="st"> </span><span class="kw"><a href="https://quanteda.io/reference/corpus.html">corpus</a></span>(rt_csv)</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="kw">summary</span>(corpus_csv, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">## Corpus consisting of 5 documents, showing 5 documents:</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">##               Text Types Tokens Sentences Year  President FirstName</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George</span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">##  inaugCorpus.csv.2    96    147         4 1793 Washington    George</span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John</span></a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas</span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas</span></a>
-<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit</span></a>
-<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="co">## Created: Tue Nov 13 11:00:06 2018</span></a>
-<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">## Notes:</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(quanteda)
+## Loading required package: quanteda
+## Package version: 1.3.13
+## Parallel computing: 2 of 4 threads used.
+## See https://quanteda.io for tutorials and examples.
+## 
+## Attaching package: 'quanteda'
+## The following object is masked from 'package:utils':
+## 
+##     View
+<span class="co"># read in comma-separated values with readtext</span>
+rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="reference/readtext.html">readtext</a></span>(<span class="kw">paste0</span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)
+<span class="co"># create quanteda corpus</span>
+corpus_csv &lt;-<span class="st"> </span><span class="kw"><a href="https://quanteda.io/reference/corpus.html">corpus</a></span>(rt_csv)
+<span class="kw">summary</span>(corpus_csv, <span class="dv">5</span>)
+## Corpus consisting of 5 documents, showing 5 documents:
+## 
+##               Text Types Tokens Sentences Year  President FirstName
+##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
+##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
+##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
+## 
+## Source: /Users/stefan/GitHub/readtext/* on x86_64 by stefan
+## Created: Tue Nov 20 20:58:14 2018
+## Notes:</code></pre></div>
 </div>
 <div id="text-interchange-format-compatibility" class="section level3">
 <h3 class="hasAnchor">
