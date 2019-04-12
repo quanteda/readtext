@@ -170,6 +170,20 @@ get_pdf <- function(path, source, ...) {
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
+get_odt <- function(path, source, ...) {
+	path <- extract_archive(path, ignore_missing = FALSE)
+	path <- sub("/\\*$", "", path)
+	path <- file.path(path, "content.xml")
+	
+	xml <- xml2::read_xml(path)
+	txt <- xml2::xml_text(xml2::xml_find_all(xml, "//text:p"))
+	
+	txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
+	txt <- paste0(txt, collapse = "\n")
+	
+	data.frame(text = txt, stringsAsFactors = FALSE)
+}
+
 get_docx <- function(path, source, ...) {
     path <- extract_archive(path, ignore_missing = FALSE)
     path <- sub("/\\*$", "", path)

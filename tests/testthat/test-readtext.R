@@ -601,6 +601,18 @@ test_that("test for pdf file", {
     )
 })
 
+test_that("test for odt file", {
+	expected <- c("The quick brown fox jumps over the lazy dog")
+	names(expected) <- "test.odt"
+	
+	expect_equal(
+		texts(readtext("../data/odt/test.odt")),
+		expected
+	)
+	
+})
+
+
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
     names(expected) <- "test.docx"

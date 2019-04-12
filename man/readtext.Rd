@@ -40,6 +40,7 @@ kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an addition
 argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
 appending different text elements together.}
 \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
+\item{\code{odt}}{Open Document Text formatted files.}
 \item{\code{doc, docx}}{Microsoft Word formatted files.}
 
 \strong{Reading multiple files and file types:} 
