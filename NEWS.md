@@ -1,23 +1,29 @@
-readtext 0.7.1
+readtext v0.7.2
+==============
+
+* Added support for Open Document format (.odt).
+
+
+readtext v0.7.2
 ==============
 
 * Fixed #138, which caused single-column .csv-type files not to load correctly.
 
 
-readtext 0.7.1
+readtext v0.7.1
 ==============
 
 *  Added `readtext_options()`, fixes #123.
 
 
-readtext 0.7.0
+readtext v0.7.0
 ==============
 
 *  Move to **xml2** instead of the older **XML** package.  
 *  Change options settings so that package can be used without loading it first.
 
 
-readtext 0.5.0
+readtext v0.5.0
 ==============
 
 First CRAN release.
