@@ -21,7 +21,7 @@ get_csv <- function(path, text_field, encoding, source, ...) {
         close(con)
         result <- data.table::fread(input = txt, data.table = FALSE, stringsAsFactors = FALSE, ...)
     } else {
-        result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, ...)
+        result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, encoding = encoding, ...)
     }
     sort_fields(result, path, text_field)
 }
