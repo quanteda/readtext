@@ -37,7 +37,8 @@
 #'   \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
 #'   \item{\code{odt}}{Open Document Text formatted files.}
 #'   \item{\code{doc, docx}}{Microsoft Word formatted files.}
-#'   
+#'   \item{\code{rtf}}{Rich Text Files.}
+#'      
 #'   \strong{Reading multiple files and file types:} 
 #'   
 #'   In addition, \code{file} can also not be a path 
@@ -269,6 +270,7 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
                odt = get_odt(path, ...),
                docx = get_docx(path, ...),
                doc = get_doc(path, ...),
+               rtf = get_rtf(path, ...),
                xls = get_excel(path, text_field, ...),
                xlsx = get_excel(path, text_field, ...),
                ods = get_ods(path, text_field, ...)
