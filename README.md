@@ -59,17 +59,17 @@ running these commands at the command line:
 
 ``` bash
 sudo apt-get install libpoppler-cpp-dev   # for antiword
-sudo apt-get install libapparmor-dev      # for unrtf
 ```
 
 ## Demonstration: Reading one or more text files
 
 **readtext** supports plain text files (.txt), data in some form of
 JavaScript Object Notation (.json), comma-or tab-separated values (.csv,
-.tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word
-formatted files (.pdf, .doc, .docx). **readtext** also handles multiple
-files and file types using for instance a “glob” expression, files from
-a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).
+.tab, .tsv), XML documents (.xml), as well as PDF, Microsoft Word
+formatted files and other document formats (.pdf, .doc, .docx, .odt,
+.rtf). **readtext** also handles multiple files and file types using for
+instance a “glob” expression, files from a URL or an archive file (.zip,
+.tar, .tar.gz, .tar.bz).
 
 The file formats are determined automatically by the filename
 extensions. If a file has no extension or is unknown, **readtext** will
@@ -85,7 +85,7 @@ DATA_DIR <- system.file("extdata/", package = "readtext")
 # read in all files from a folder
 readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ## readtext object consisting of 13 documents and 0 docvars.
-## # data.frame [13 × 2]
+## # Description: data.frame [13 × 2]
 ##   doc_id            text                         
 ##   <chr>             <chr>                        
 ## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
@@ -94,7 +94,7 @@ readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ## 4 UDHR_english.txt  "\"Universal \"..."          
 ## 5 UDHR_french.txt   "\"Déclaratio\"..."          
 ## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
-## # ... with 7 more rows
+## # … with 7 more rows
 ```
 
 For files that contain multiple documents, such as comma-separated-value
@@ -105,7 +105,7 @@ texts, using the `text_field` argument:
 # read in comma-separated values and specify text field
 readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ## readtext object consisting of 5 documents and 3 docvars.
-## # data.frame [5 × 5]
+## # Description: data.frame [5 × 5]
 ##   doc_id            text                 Year President  FirstName
 ##   <chr>             <chr>               <int> <chr>      <chr>    
 ## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
@@ -132,7 +132,12 @@ all docvars and other meta-data.
 ``` r
 require(quanteda)
 ## Loading required package: quanteda
-## Package version: 1.3.14
+## Registered S3 methods overwritten by 'ggplot2':
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang
+## Package version: 1.4.4
 ## Parallel computing: 2 of 12 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
@@ -155,7 +160,7 @@ summary(corpus_csv, 5)
 ##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ## 
 ## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit
-## Created: Tue Nov 13 10:59:45 2018
+## Created: Wed May  8 08:00:43 2019
 ## Notes:
 ```
 

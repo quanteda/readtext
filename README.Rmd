@@ -56,12 +56,11 @@ Linux note: There are a couple of dependencies that may not be available on linu
 
 ```{bash, eval = FALSE}
 sudo apt-get install libpoppler-cpp-dev   # for antiword
-sudo apt-get install libapparmor-dev      # for unrtf
 ```
 
 ## Demonstration: Reading one or more text files
 
-**readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx). **readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).
+**readtext** supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF, Microsoft Word formatted files and other document formats (.pdf, .doc, .docx, .odt, .rtf). **readtext** also handles multiple files and file types using for instance a "glob" expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).
 
 The file formats are determined automatically by the filename extensions.  If a file has no extension or is unknown, **readtext** will assume that it is plain text.  The following command, for instance, will load in all of the files from the subdirectory `txt/UDHR/`:
 
