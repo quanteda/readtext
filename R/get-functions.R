@@ -21,7 +21,7 @@ get_csv <- function(path, text_field, encoding, source, ...) {
         close(con)
         result <- data.table::fread(input = txt, data.table = FALSE, stringsAsFactors = FALSE, ...)
     } else {
-        result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, ...)
+        result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, encoding = encoding, ...)
     }
     sort_fields(result, path, text_field)
 }
@@ -220,6 +220,13 @@ get_doc <- function(path, source, ...) {
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
+get_rtf <- function(path, source, ...) {
+    path <- normalizePath(path)
+    txt <- striprtf::read_rtf(as.character(path))
+    txt <- paste0(txt, collapse = "\n")
+    txt <- trimws(txt)
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}
 
 get_excel <- function(path, text_field, source, ...) {
 

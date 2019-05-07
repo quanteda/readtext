@@ -897,3 +897,11 @@ test_that("readtext works with one-column csv files (#138)", {
                    stringsAsFactors = FALSE)
     )
 })
+
+test_that("tests for ODS files", {
+    expect_identical(
+        unname(texts(readtext("../data/rtf/*.rtf"))),
+        c("The quick brown fox jumps over the lazy dog",
+          "This is an example of “rich text” format.")
+    )
+})

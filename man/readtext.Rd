@@ -42,7 +42,8 @@ appending different text elements together.}
 \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
 \item{\code{odt}}{Open Document Text formatted files.}
 \item{\code{doc, docx}}{Microsoft Word formatted files.}
-
+\item{\code{rtf}}{Rich Text Files.}
+   
 \strong{Reading multiple files and file types:} 
 
 In addition, \code{file} can also not be a path 
