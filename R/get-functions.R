@@ -220,6 +220,13 @@ get_doc <- function(path, source, ...) {
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
+get_rtf <- function(path, source, ...) {
+    path <- normalizePath(path)
+    txt <- striprtf::read_rtf(as.character(path))
+    txt <- paste0(txt, collapse = "\n")
+    txt <- trimws(txt)
+    data.frame(text = txt, stringsAsFactors = FALSE)
+}
 
 get_excel <- function(path, text_field, source, ...) {
 

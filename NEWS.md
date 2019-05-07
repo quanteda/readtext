@@ -1,3 +1,9 @@
+readtext v0.74
+==============
+
+* Added support for RTF format (.rtf).
+
+
 readtext v0.7.2
 ==============
 

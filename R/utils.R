@@ -1,6 +1,6 @@
 # Returns supported file extensions
 extensions <- function() {
-    c("csv", "txt", "json", "zip", "gz", "tar", "xml", "tab",
+    c("csv", "txt", "json", "zip", "gz", "tar", "xml", "tab", "rtf",
       "tsv", "html", "pdf", "odt", "docx", "doc", "xls", "xlsx", "ods")
 }
 
