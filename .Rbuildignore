@@ -20,3 +20,4 @@ __MACOSX
 ^css/
 ^docs/
 ^pkgdown/
+^CRAN-RELEASE$
