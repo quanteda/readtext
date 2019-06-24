@@ -1,7 +1,7 @@
 language: r
 warnings_are_errors: true
 sudo: true
-dist: trusty
+dist: xenial
 
 apt_packages:
   - libssh2-1-dev
@@ -12,21 +12,22 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['g++-6']
-      env:
-        - COMPILER=g++-6
-        - CC=gcc-6
-        - CXX=g++-6
+
+#      addons:
+#        apt:
+#          sources: ['ubuntu-toolchain-r-test']
+#          packages: ['g++-6']
+#      env:
+#        - COMPILER=g++-6
+#        - CC=gcc-6
+#        - CXX=g++-6
         
-before_install:
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 500
-  - mkdir -p ~/.R
-  - echo "VER=-6" > ~/.R/Makevars
-  - echo "Q0M9Z2NjJChWRVIpIC1zdGQ9YzExIApDWFg9ZysrJChWRVIpClNITElCX0NYWExEPWcrKyQoVkVSKQpGQz1nZm9ydHJhbgpGNzc9Z2ZvcnRyYW4K" | base64 -d > ~/.R/Makevars
-  - cat ~/.R/Makevars
+#before_install:
+#  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 500
+#  - mkdir -p ~/.R
+#  - echo "VER=-6" > ~/.R/Makevars
+#  - echo "Q0M9Z2NjJChWRVIpIC1zdGQ9YzExIApDWFg9ZysrJChWRVIpClNITElCX0NYWExEPWcrKyQoVkVSKQpGQz1nZm9ydHJhbgpGNzc9Z2ZvcnRyYW4K" | base64 -d > ~/.R/Makevars
+#  - cat ~/.R/Makevars
 
 # before_install:
 #  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
