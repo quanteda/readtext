@@ -57,9 +57,9 @@ get_json_tweets <- function(path, verbosity = 1, ...) {
     # if (!requireNamespace("streamR", quietly = TRUE))
     #     stop("You must have streamR installed to read Twitter json files.")
     # read raw json data
-    txt <- readLines(path, warn = FALSE, ...)
+    #txt <- readLines(path, warn = FALSE, ...)
     tryCatch({
-        streamR::parseTweets(txt, verbose = FALSE, ...)
+        streamR::parseTweets(path, verbose = FALSE, ...)
     },
         error = function(e) {
         if (verbosity >= 1)
