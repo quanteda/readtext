@@ -5,8 +5,9 @@
 \title{read a text file(s)}
 \usage{
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
-  docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
+  docid_field = NULL, docvarsfrom = c("metadata", "filenames",
+  "filepaths"), dvsep = "_", docvarnames = NULL, encoding = NULL,
+  source = NULL, cache = TRUE,
   verbosity = readtext_options("verbosity"), ...)
 }
 \arguments{
@@ -65,10 +66,11 @@ Note that this can happen in a number of ways, including passing a path
 to a file that does not exist, to an empty archive file, or to a glob 
 pattern that matches no files.}
 
-\item{text_field}{a variable (column) name or column number indicating where 
-to find the texts that form the documents for the corpus.  This must be 
-specified for file types \code{.csv}, \code{.json}, and \code{.xls}/\code{.xlsx} 
-files.  For XML files, an XPath expression can be specified.}
+\item{text_field, docid_field}{a variable (column) name or column number
+indicating where to find the texts that form the documents for the corpus
+and their identifiers.  This must be specified for file types \code{.csv},
+\code{.json}, and \code{.xls}/\code{.xlsx} files.  For XML files, an XPath
+expression can be specified.}
 
 \item{docvarsfrom}{used to specify that docvars should be taken from the 
 filenames, when the \code{readtext} inputs are filenames and the elements 

@@ -905,3 +905,30 @@ test_that("tests for ODS files", {
           "This is an example of “rich text” format.")
     )
 })
+
+test_that("tests for files with doc_id", {
+    expect_identical(
+        texts(readtext("../data/csv/withdocid.csv", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_identical(
+        texts(readtext("../data/csv/withdocid.csv", text_field = "text"))[1],
+        c(withdocid.csv.1 = "The quick")
+    )
+    expect_identical(
+        texts(readtext("../data/ods/withdocid.ods", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_identical(
+        texts(readtext("../data/xls/withdocid.xls", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_error(
+        readtext("../data/xls/withdocid.xls", docid_field = "nonesuch"),
+        "There is no field called nonesuch"
+    )
+    expect_error(
+        readtext("../data/xls/withdocid.xls", docid_field = 9000),
+        "There is no 9000th field"
+    )  
+})

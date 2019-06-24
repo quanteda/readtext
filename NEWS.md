@@ -1,3 +1,7 @@
+readtext v0.75
+==============
+* Added docid_field argument for columnar data (#155).
+
 readtext v0.74
 ==============
 
