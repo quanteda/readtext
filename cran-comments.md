@@ -1,6 +1,6 @@
-## Purpose: Adds functionality (.rtf conversion)
+## Purpose: Improves functionality and adds document identifier
 
-Adds conversion for .rtf documents.
+Added docid_field argument for columnar data, and makes parsing large JSON objects more robuist.
 
 ## Test environments
 
