@@ -339,6 +339,11 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
 #' @param impute_types logical; if \code{TRUE}, set types of variables automatically
 #' @keywords internal
 add_docid <- function(x, path, docid_field) {
+    if(is.null(docid_field) && ("doc_id" %in% names(x))) {
+        message("A field called \"doc_id\" exists in the file.",
+                " If you intend to use it as a document identifier,",
+                " use \"docid_field\" option.")
+    }
     if (is.null(docid_field)) {
         return(x)
     }
