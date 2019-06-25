@@ -266,7 +266,7 @@ get_source <- function(path, text_field, docid_field, replace_specialchar = FALS
                csv = get_csv(path, text_field, docid_field, sep = ",", ...),
                tsv = get_csv(path, text_field, docid_field, sep = "\t", ...),
                tab = get_csv(path, text_field, docid_field, sep = "\t", ...),
-               json = get_json(path, text_field, verbosity = verbosity, ...),
+               json = get_json(path, text_field, docid_field, verbosity = verbosity, ...),
                xml = get_xml(path, text_field, verbosity = verbosity, ...), 
                html = get_html(path, verbosity = verbosity, ...),
                pdf = get_pdf(path, ...),

@@ -30,7 +30,7 @@ get_csv <- function(path, text_field, docid_field, encoding, source, ...) {
 
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
 #  it looks like a twitter json file
-get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
+get_json <- function(path, text_field, docid_field, encoding, source, verbosity = 1, ...) {
 
     if (!source %in% c("auto", "twitter"))
         stop("'twitter' is the only source type available for json")
@@ -41,12 +41,14 @@ get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
         if (is.numeric(text_field))
             stop("Cannot use numeric text_field with json file")
         result <- get_json_object(path, verbosity, ...)
-        if (!is.null(result))
-            return(sort_fields(result, path, text_field))
-
-        result <- get_json_lines(path, verbosity, ...)
-        if (!is.null(result))
-            return(sort_fields(result, path, text_field))
+        if (is.null(result)){
+            result <- get_json_lines(path, verbosity, ...)
+        } 
+        if (!is.null(result)){
+            result <- sort_fields(result, path, text_field)
+            result <- add_docid(result, path, docid_field)
+            return(result)
+        }
         stop("This JSON file format is not supported.", call. = FALSE)
     }
 }
@@ -90,7 +92,7 @@ get_json_lines <- function(path, verbosity = 1, ...) {
 
     tryCatch({
         lines <- readLines(path, warn = FALSE)
-        jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
+        #jsonlite::fromJSON(lines[1], flatten = TRUE, ...) # this line seems not doing anything...
         data.table::rbindlist(
             lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
             use.names = TRUE, fill = TRUE
