@@ -2,6 +2,8 @@
 # TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn"t seem to require text_field
 
+library(quanteda)
+
 context("test readtext.R")
 
 test_that("test readtext with single filename", {
@@ -646,7 +648,7 @@ test_that("test json files", {
     skip_on_cran()
     skip_on_travis()
     expect_equal(
-        unname(texts(readtext("../data/json/*json", text_field = "text"))),
+        unname(texts(readtext("../data/json/test*json", text_field = "text"))),
         c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
     )
     
@@ -658,7 +660,7 @@ test_that("test json files", {
         stringsAsFactors = FALSE)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
-    actual_docvars <- docvars(readtext("../data/json/*json", text_field = "text"))
+    actual_docvars <- docvars(readtext("../data/json/test*json", text_field = "text"))
     actual_docvars <- actual_docvars[order(actual_docvars$number),]
     row.names(actual_docvars) <- NULL
     row.names(actual_docvars)
@@ -669,7 +671,7 @@ test_that("test json files", {
     )
     
     expect_error(
-        readtext("../data/json/*json", text_field = 1),
+        readtext("../data/json/test*json", text_field = 1),
         "Cannot use numeric text_field with json file"
     )
     
@@ -904,4 +906,38 @@ test_that("tests for ODS files", {
         c("The quick brown fox jumps over the lazy dog",
           "This is an example of “rich text” format.")
     )
+})
+
+test_that("tests for files with doc_id", {
+    expect_identical(
+        texts(readtext("../data/csv/withdocid.csv", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_identical(
+        texts(readtext("../data/csv/withdocid.csv", text_field = "text"))[1],
+        c(withdocid.csv.1 = "The quick")
+    )
+    expect_identical(
+        texts(readtext("../data/ods/withdocid.ods", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_identical(
+        texts(readtext("../data/xls/withdocid.xls", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
+    )
+    expect_identical(
+        texts(readtext("../data/json/withdocid.json", docid_field = "doc_id", text_field = "text")),
+        c(doc1 = "Lorem ipsum", doc2 = "Dolor sit")
+    )
+    expect_message(
+        readtext("../data/csv/withdocid.csv", text_field = "text"),
+        'A field called "doc_id" exists in the file. If you intend to use it as a document identifier, use "docid_field" option.')
+    expect_error(
+        readtext("../data/xls/withdocid.xls", docid_field = "nonesuch"),
+        "There is no field called nonesuch"
+    )
+    expect_error(
+        readtext("../data/xls/withdocid.xls", docid_field = 9000),
+        "There is no 9000th field"
+    )  
 })

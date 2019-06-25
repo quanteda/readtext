@@ -7,7 +7,7 @@ get_txt <- function(path, source, ...) {
 }
 
 ## csv format
-get_csv <- function(path, text_field, encoding, source, ...) {
+get_csv <- function(path, text_field, docid_field, encoding, source, ...) {
 
     # Replace native.enc with UTF-8 if that's what it is
     # http://r.789695.n4.nabble.com/Find-out-what-quot-native-enc-quot-corresponds-to-td4639208.html
@@ -23,15 +23,14 @@ get_csv <- function(path, text_field, encoding, source, ...) {
     } else {
         result <- data.table::fread(input = path, data.table = FALSE, stringsAsFactors = FALSE, encoding = encoding, ...)
     }
-    sort_fields(result, path, text_field)
+    result <- sort_fields(result, path, text_field)
+    result <- add_docid(result, path, docid_field)
+    return(result)
 }
 
-
-
-    
 #  Dispatch to get_json_object or get_json_tweets depending on whether 
 #  it looks like a twitter json file
-get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
+get_json <- function(path, text_field, docid_field, encoding, source, verbosity = 1, ...) {
 
     if (!source %in% c("auto", "twitter"))
         stop("'twitter' is the only source type available for json")
@@ -42,12 +41,14 @@ get_json <- function(path, text_field, encoding, source, verbosity = 1, ...) {
         if (is.numeric(text_field))
             stop("Cannot use numeric text_field with json file")
         result <- get_json_object(path, verbosity, ...)
-        if (!is.null(result))
-            return(sort_fields(result, path, text_field))
-
-        result <- get_json_lines(path, verbosity, ...)
-        if (!is.null(result))
-            return(sort_fields(result, path, text_field))
+        if (is.null(result)){
+            result <- get_json_lines(path, verbosity, ...)
+        } 
+        if (!is.null(result)){
+            result <- sort_fields(result, path, text_field)
+            result <- add_docid(result, path, docid_field)
+            return(result)
+        }
         stop("This JSON file format is not supported.", call. = FALSE)
     }
 }
@@ -91,7 +92,7 @@ get_json_lines <- function(path, verbosity = 1, ...) {
 
     tryCatch({
         lines <- readLines(path, warn = FALSE)
-        jsonlite::fromJSON(lines[1], flatten = TRUE, ...)
+        #jsonlite::fromJSON(lines[1], flatten = TRUE, ...) # this line seems not doing anything...
         data.table::rbindlist(
             lapply(lines, function(x) jsonlite::fromJSON(stri_trim(x), flatten = TRUE, ...)),
             use.names = TRUE, fill = TRUE
@@ -228,8 +229,7 @@ get_rtf <- function(path, source, ...) {
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
-get_excel <- function(path, text_field, source, ...) {
-
+get_excel <- function(path, text_field, docid_field, source, ...) {
     sheet_names <- readxl::excel_sheets(path)
     sheets <- lapply(sheet_names, function(x, ...) readxl::read_excel(path, sheet = x, ...))
 
@@ -238,19 +238,25 @@ get_excel <- function(path, text_field, source, ...) {
     }
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
-    sort_fields(result, path, text_field, impute_types = TRUE)
+    result <- sort_fields(result, path, text_field, impute_types = TRUE)
+    result <- add_docid(result, path, docid_field)
+    return(result)
 }
 
 
-get_ods <- function(path, text_field, source, ...) {
+get_ods <- function(path, text_field, docid_field, source, ...) {
     sheet_names <- readODS::ods_sheets(path)
-    sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet = x, ...))
+    suppressMessages(
+        sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet = x, ...))
+    )
 
     if (length(unique(sapply(sheets, ncol))) != 1)
         warning("Not all worksheets in file \"", path, "\" have the same number of columns.")
 
     result <- data.table::rbindlist(sheets, fill = TRUE)
-    sort_fields(result, path, text_field, impute_types = TRUE)
+    result <- sort_fields(result, path, text_field, impute_types = TRUE)
+    result <- add_docid(result, path, docid_field)
+    return(result)
 }
 
 

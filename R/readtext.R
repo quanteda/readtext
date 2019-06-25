@@ -30,8 +30,9 @@
 #'   \item{\code{html}}{HTML documents, including specialized formats from known
 #'   sources, such as Nexis-formatted HTML.  See the \code{source} parameter
 #'   below.}
-#'   \item{\code{xml}}{Basic flat XML documents are supported -- those of the 
-#'   kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
+#'   \item{\code{xml}}{XML documents are supported -- those of the 
+#'   kind that can be read by \code{\link[xml2]{read_xml}} and navigated through 
+#'   \code{\link[xml2]{xml_find_all}}. For xml files, an additional
 #'   argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
 #'   appending different text elements together.}
 #'   \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
@@ -53,10 +54,11 @@
 #'   filetypes, so you could have, for example, a remote URL to a zip file which
 #'   contained Twitter JSON files.}
 #'   }
-#' @param text_field a variable (column) name or column number indicating where 
-#'   to find the texts that form the documents for the corpus.  This must be 
-#'   specified for file types \code{.csv}, \code{.json}, and \code{.xls}/\code{.xlsx} 
-#'   files.  For XML files, an XPath expression can be specified. 
+#' @param text_field,docid_field a variable (column) name or column number
+#'   indicating where to find the texts that form the documents for the corpus
+#'   and their identifiers.  This must be specified for file types \code{.csv},
+#'   \code{.json}, and \code{.xls}/\code{.xlsx} files.  For XML files, an XPath
+#'   expression can be specified.
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
 #'   filenames, when the \code{readtext} inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
@@ -151,6 +153,7 @@
 #'                   docvarsfrom = "filepaths", dvsep = "[/_.]"))
 #' }
 readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
+                    docid_field = NULL,
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
                     docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
                     verbosity = readtext_options("verbosity"),
@@ -201,7 +204,8 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     }
     
     sources <- mapply(function(x, e) {
-        get_source(x, text_field = text_field, encoding = e, source = source, verbosity = verbosity, ...)
+        get_source(x, text_field = text_field, docid_field = docid_field, 
+                   encoding = e, source = source, verbosity = verbosity, ...)
     }, files, encoding, SIMPLIFY = FALSE)
 
     # combine all of the data.frames returned
@@ -237,7 +241,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
 ## Read each file as appropriate, calling the get_* functions for recognized
 ## file types
-get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity = 1, ...,
+get_source <- function(path, text_field, docid_field, replace_specialchar = FALSE, verbosity = 1, ...,
                        # deprecated arguments
                        textfield) {
 
@@ -260,10 +264,10 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
 
     result <- switch(ext,
                txt = get_txt(path, ...),
-               csv = get_csv(path, text_field, sep = ",", ...),
-               tsv = get_csv(path, text_field, sep = "\t", ...),
-               tab = get_csv(path, text_field, sep = "\t", ...),
-               json = get_json(path, text_field, verbosity = verbosity, ...),
+               csv = get_csv(path, text_field, docid_field, sep = ",", ...),
+               tsv = get_csv(path, text_field, docid_field, sep = "\t", ...),
+               tab = get_csv(path, text_field, docid_field, sep = "\t", ...),
+               json = get_json(path, text_field, docid_field, verbosity = verbosity, ...),
                xml = get_xml(path, text_field, verbosity = verbosity, ...), 
                html = get_html(path, verbosity = verbosity, ...),
                pdf = get_pdf(path, ...),
@@ -271,16 +275,17 @@ get_source <- function(path, text_field, replace_specialchar = FALSE, verbosity 
                docx = get_docx(path, ...),
                doc = get_doc(path, ...),
                rtf = get_rtf(path, ...),
-               xls = get_excel(path, text_field, ...),
-               xlsx = get_excel(path, text_field, ...),
-               ods = get_ods(path, text_field, ...)
+               xls = get_excel(path, text_field, docid_field, ...),
+               xlsx = get_excel(path, text_field, docid_field, ...),
+               ods = get_ods(path, text_field, docid_field, ...)
         )
 
     # assign filename (variants) unique text names
     len <- nrow(result)
     # TODO: stop using row.names as it errors when duplicated
     if (len > 1) {
-        row.names(result) <- paste(basename(path), seq_len(len), sep = ".")
+        if (is.null(docid_field))
+            row.names(result) <- paste(basename(path), seq_len(len), sep = ".")
     } else {
         row.names(result) <- basename(path)
     }

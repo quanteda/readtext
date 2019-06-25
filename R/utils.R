@@ -301,9 +301,9 @@ is_probably_xpath <- function(x) {
 #' Move text to the first column and set types to document variables
 #' 
 #' @param x data.frame; contains texts and document variables
-#' @param paht character; file path from which \code{x} is created; only use in error message
-#' @param text_filed numeric or character; indicate position of a text column in x
-#' @param inpute_types logical; if \code{TRUE}, set types of variables automatically
+#' @param path character; file path from which \code{x} is created; only use in error message
+#' @param text_field numeric or character; indicate position of a text column in x
+#' @param impute_types logical; if \code{TRUE}, set types of variables automatically
 #' @keywords internal
 sort_fields <- function(x, path, text_field, impute_types = TRUE) {
     x <- as.data.frame(x)
@@ -329,4 +329,45 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
     } else {
         return(x)
     }
+}
+
+#' Set the docid for multi-document objects
+#' 
+#' @param x data.frame; contains texts and document variables
+#' @param path character; file path from which \code{x} is created; only use in error message
+#' @param docid_field numeric or character; indicate position of a text column in x
+#' @param impute_types logical; if \code{TRUE}, set types of variables automatically
+#' @keywords internal
+add_docid <- function(x, path, docid_field) {
+    if(is.null(docid_field) && ("doc_id" %in% names(x))) {
+        message("A field called \"doc_id\" exists in the file.",
+                " If you intend to use it as a document identifier,",
+                " use \"docid_field\" option.")
+    }
+    if (is.null(docid_field)) {
+        return(x)
+    }
+
+    x <- as.data.frame(x)
+    index <- seq(ncol(x))
+    flag <- FALSE
+    docid_field <- docid_field[1]
+    if (is.numeric(docid_field)) {
+        flag <- index == docid_field
+        if (sum(flag) == 0) {
+            stop(sprintf("There is no %dth field in file %s.", docid_field, path))
+            return(x)
+        }
+    } else if (is.character(docid_field)) {
+        flag <- names(x) == docid_field
+        if (sum(flag) == 0) {
+            stop(sprintf("There is no field called %s in file %s.", docid_field, path))
+            return(x)
+        } else if (sum(flag) > 1) {
+            stop(sprintf("There is more than one field called %s in file %s.", docid_field, path))
+        }
+    }
+    row.names(x) <- x[, which(flag)]
+    x <- x[, -which(flag)]
+    return(x)
 }

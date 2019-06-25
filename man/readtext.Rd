@@ -5,8 +5,9 @@
 \title{read a text file(s)}
 \usage{
 readtext(file, ignore_missing_files = FALSE, text_field = NULL,
-  docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
-  docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
+  docid_field = NULL, docvarsfrom = c("metadata", "filenames",
+  "filepaths"), dvsep = "_", docvarnames = NULL, encoding = NULL,
+  source = NULL, cache = TRUE,
   verbosity = readtext_options("verbosity"), ...)
 }
 \arguments{
@@ -35,8 +36,9 @@ into docvars.  The correct format for each JSON file is automatically detected.}
 \item{\code{html}}{HTML documents, including specialized formats from known
 sources, such as Nexis-formatted HTML.  See the \code{source} parameter
 below.}
-\item{\code{xml}}{Basic flat XML documents are supported -- those of the 
-kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
+\item{\code{xml}}{XML documents are supported -- those of the 
+kind that can be read by \code{\link[xml2]{read_xml}} and navigated through 
+\code{\link[xml2]{xml_find_all}}. For xml files, an additional
 argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
 appending different text elements together.}
 \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
@@ -65,10 +67,11 @@ Note that this can happen in a number of ways, including passing a path
 to a file that does not exist, to an empty archive file, or to a glob 
 pattern that matches no files.}
 
-\item{text_field}{a variable (column) name or column number indicating where 
-to find the texts that form the documents for the corpus.  This must be 
-specified for file types \code{.csv}, \code{.json}, and \code{.xls}/\code{.xlsx} 
-files.  For XML files, an XPath expression can be specified.}
+\item{text_field, docid_field}{a variable (column) name or column number
+indicating where to find the texts that form the documents for the corpus
+and their identifiers.  This must be specified for file types \code{.csv},
+\code{.json}, and \code{.xls}/\code{.xlsx} files.  For XML files, an XPath
+expression can be specified.}
 
 \item{docvarsfrom}{used to specify that docvars should be taken from the 
 filenames, when the \code{readtext} inputs are filenames and the elements 
