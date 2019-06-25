@@ -929,6 +929,9 @@ test_that("tests for files with doc_id", {
         texts(readtext("../data/json/withdocid.json", docid_field = "doc_id", text_field = "text")),
         c(doc1 = "Lorem ipsum", doc2 = "Dolor sit")
     )
+    expect_message(
+        readtext("../data/csv/withdocid.csv", text_field = "text"),
+        'A field called "doc_id" exists in the file. If you intend to use it as a document identifier, use "docid_field" option.')
     expect_error(
         readtext("../data/xls/withdocid.xls", docid_field = "nonesuch"),
         "There is no field called nonesuch"
