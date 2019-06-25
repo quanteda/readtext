@@ -36,8 +36,9 @@ into docvars.  The correct format for each JSON file is automatically detected.}
 \item{\code{html}}{HTML documents, including specialized formats from known
 sources, such as Nexis-formatted HTML.  See the \code{source} parameter
 below.}
-\item{\code{xml}}{Basic flat XML documents are supported -- those of the 
-kind supported by \code{\link[XML]{xmlToDataFrame}}.  For xml files, an additional
+\item{\code{xml}}{XML documents are supported -- those of the 
+kind that can be read by \code{\link[xml2]{read_xml}} and navigated through 
+\code{\link[xml2]{xml_find_all}}. For xml files, an additional
 argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
 appending different text elements together.}
 \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
