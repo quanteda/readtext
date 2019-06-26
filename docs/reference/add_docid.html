@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • readtext</title>
+<title>Set the docid for multi-document objects — add_docid • readtext</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Set the docid for multi-document objects — add_docid" />
+
+<meta property="og:description" content="Set the docid for multi-document objects" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -49,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -95,17 +98,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Set the docid for multi-document objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/quanteda/readtext/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>add_docid.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="readtext_vignette.html">Read text files with readtext()</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Set the docid for multi-document objects</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>add_docid</span>(<span class='no'>x</span>, <span class='no'>path</span>, <span class='no'>docid_field</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>data.frame; contains texts and document variables</p></td>
+    </tr>
+    <tr>
+      <th>path</th>
+      <td><p>character; file path from which <code>x</code> is created; only use in error message</p></td>
+    </tr>
+    <tr>
+      <th>docid_field</th>
+      <td><p>numeric or character; indicate position of a text column in x</p></td>
+    </tr>
+    <tr>
+      <th>impute_types</th>
+      <td><p>logical; if <code>TRUE</code>, set types of variables automatically</p></td>
+    </tr>
+    </table>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
   </div>
 </div>
 
