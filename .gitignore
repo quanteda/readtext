@@ -32,3 +32,5 @@ rsconnect/
 *.Rproj
 *.DS_Store
 .Rproj.user
+revdep/*
+
