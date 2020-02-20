@@ -898,6 +898,12 @@ test_that("readtext works with one-column csv files (#138)", {
                    y = 1:2,
                    stringsAsFactors = FALSE)
     )
+    expect_equivalent(
+        readtext("../data/csv/data_twocol.csv", text_field = "x", docid_field = "y"),
+        data.frame(doc_id = c("1", "2"),
+                   text = c("foo foo foo foo", "bar bar bar bar"),
+                   stringsAsFactors = FALSE)
+    )
 })
 
 test_that("tests for ODS files", {

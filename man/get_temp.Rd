@@ -4,8 +4,7 @@
 \alias{get_temp}
 \title{Get path to temporary file or directory}
 \usage{
-get_temp(prefix = "readtext-", temp_dir = NULL, directory = FALSE,
-  seed = NULL)
+get_temp(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL)
 }
 \arguments{
 \item{prefix}{a string appended to random file or directory names.}

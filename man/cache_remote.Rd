@@ -4,8 +4,7 @@
 \alias{cache_remote}
 \title{Internal function to cache remote file}
 \usage{
-cache_remote(url, ignore_missing, cache, basename = NULL,
-  verbosity = 1)
+cache_remote(url, ignore_missing, cache, basename = NULL, verbosity = 1)
 }
 \arguments{
 \item{url}{location of a remote file}

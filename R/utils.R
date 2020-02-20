@@ -368,6 +368,6 @@ add_docid <- function(x, path, docid_field) {
         }
     }
     row.names(x) <- x[, which(flag)]
-    x <- x[, -which(flag)]
+    x <- x[, -which(flag), drop = FALSE]
     return(x)
 }

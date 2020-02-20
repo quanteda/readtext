@@ -1,3 +1,7 @@
+readtext v0.76
+==============
+* Fixed a bug in the assignment function for document IDs that caused failure when reading a file with only a text_field and a specified docid_field.
+
 readtext v0.75
 ==============
 * Added docid_field argument for columnar data (#155).
