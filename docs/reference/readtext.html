@@ -8,21 +8,25 @@
 
 <title>read a text file(s) — readtext • readtext</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,13 +36,14 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="read a text file(s) — readtext" />
 
+<meta property="og:title" content="read a text file(s) — readtext" />
 <meta property="og:description" content="Read texts and (if any) associated document-level meta-data from one or more source files. 
 The text source files 
 come from the textual component of the files, and the document-level
 metadata (&quot;docvars&quot;) come from either the file contents or filenames." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -50,6 +55,7 @@ metadata (&quot;docvars&quot;) come from either the file contents or filenames."
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -68,7 +74,7 @@ metadata (&quot;docvars&quot;) come from either the file contents or filenames."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readtext</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.75</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.76</span>
       </span>
     </div>
 
@@ -81,11 +87,10 @@ metadata (&quot;docvars&quot;) come from either the file contents or filenames."
   <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/quanteda/readtext">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -96,6 +101,7 @@ metadata (&quot;docvars&quot;) come from either the file contents or filenames."
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -107,20 +113,27 @@ metadata (&quot;docvars&quot;) come from either the file contents or filenames."
     </div>
 
     <div class="ref-description">
-    
     <p>Read texts and (if any) associated document-level meta-data from one or more source files. 
 The text source files 
 come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>readtext</span>(<span class='no'>file</span>, <span class='kw'>ignore_missing_files</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>docid_field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"metadata"</span>, <span class='st'>"filenames"</span>,
-  <span class='st'>"filepaths"</span>), <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"_"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='readtext_options.html'>readtext_options</a></span>(<span class='st'>"verbosity"</span>), <span class='no'>...</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>readtext</span>(
+  <span class='no'>file</span>,
+  <span class='kw'>ignore_missing_files</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>docid_field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"metadata"</span>, <span class='st'>"filenames"</span>, <span class='st'>"filepaths"</span>),
+  <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"_"</span>,
+  <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbosity</span> <span class='kw'>=</span> <span class='fu'><a href='readtext_options.html'>readtext_options</a></span>(<span class='st'>"verbosity"</span>),
+  <span class='no'>...</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -151,8 +164,8 @@ into docvars.  The correct format for each JSON file is automatically detected.<
 sources, such as Nexis-formatted HTML.  See the <code>source</code> parameter
 below.</p></dd>
 <dt><code>xml</code></dt><dd><p>XML documents are supported -- those of the 
-kind that can be read by <code><a href='https://www.rdocumentation.org/packages/xml2/topics/read_xml'>read_xml</a></code> and navigated through 
-<code><a href='https://www.rdocumentation.org/packages/xml2/topics/xml_find_all'>xml_find_all</a></code>. For xml files, an additional
+kind that can be read by <code><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_xml</a></code> and navigated through 
+<code><a href='http://xml2.r-lib.org/reference/xml_find_all.html'>xml_find_all</a></code>. For xml files, an additional
 argument <code>collapse</code> may be passed through <code>...</code> that names the character(s) to use in 
 appending different text elements together.</p></dd>
 <dt><code>pdf</code></dt><dd><p>pdf formatted files, converted through <span class="pkg">pdftools</span>.</p></dd>  
@@ -173,6 +186,7 @@ contained files must be either at the top level or in a single directory.
 Archives, remote URLs and glob patterns can resolve to any of the other 
 filetypes, so you could have, for example, a remote URL to a zip file which
 contained Twitter JSON files.</p></dd>
+
 </dl></td>
     </tr>
     <tr>
@@ -242,13 +256,13 @@ when <code>file</code> is a URL.</p></td>
     <tr>
       <th>...</th>
       <td><p>additional arguments passed through to low-level file reading 
-function, such as <code><a href='https://www.rdocumentation.org/packages/base/topics/connections'>file</a></code>, <code>fread</code>, etc.  Useful 
+function, such as <code><a href='https://rdrr.io/r/base/connections.html'>file</a></code>, <code>fread</code>, etc.  Useful 
 for specifying an input encoding option, which is specified in the same was
-as it would be give to <code><a href='https://www.rdocumentation.org/packages/base/topics/iconv'>iconv</a></code>.  See the Encoding section of 
-<a href='https://www.rdocumentation.org/packages/base/topics/connections'>file</a> for details.</p></td>
+as it would be give to <code><a href='https://rdrr.io/r/base/iconv.html'>iconv</a></code>.  See the Encoding section of 
+<a href='https://rdrr.io/r/base/connections.html'>file</a> for details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a data.frame consisting of a columns <code>doc_id</code> and <code>text</code> 
@@ -256,15 +270,15 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
   additional columns consisting of document-level variables either found 
   in the file containing the texts, or created through the 
   <code>readtext</code> call.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## get the data directory</span>
-<span class='kw'>if</span> (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) <span class='kw pkg'>pkgload</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/pkgload/topics/load_all'>load_all</a></span>()</div><div class='output co'>#&gt; <span class='message'>Loading readtext</span></div><div class='input'><span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>## get the data directory</span>
+<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) <span class='kw pkg'>pkgload</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgload/man/load_all.html'>load_all</a></span>()</div><div class='output co'>#&gt; <span class='message'>Loading readtext</span></div><div class='input'><span class='no'>DATA_DIR</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"readtext"</span>)
 
 <span class='co'>## read in some text data</span>
 <span class='co'># all UDHR files</span>
-(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/UDHR/*"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 13 documents and 0 docvars.
+(<span class='no'>rt1</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/UDHR/*"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 13 documents and 0 docvars.
 #&gt; <span style='color: #555555;'># Description: df[,2] [13 × 2]</span><span>
 #&gt;   doc_id            text                         
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        
@@ -276,9 +290,9 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>6</span><span> UDHR_georgian.txt </span><span style='color: #555555;'>"</span><span>\"FLFVBFYBC \"...</span><span style='color: #555555;'>"</span><span>          
 #&gt; </span><span style='color: #555555;'># … with 7 more rows</span><span></div><div class='input'>
 <span class='co'># manifestos with docvars from filenames</span>
-(<span class='no'>rt2</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/EU_manifestos/*.txt"</span>),
+(<span class='no'>rt2</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/EU_manifestos/*.txt"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
-                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"unit"</span>, <span class='st'>"context"</span>, <span class='st'>"year"</span>, <span class='st'>"language"</span>, <span class='st'>"party"</span>),
+                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"unit"</span>, <span class='st'>"context"</span>, <span class='st'>"year"</span>, <span class='st'>"language"</span>, <span class='st'>"party"</span>),
                  <span class='kw'>encoding</span> <span class='kw'>=</span> <span class='st'>"LATIN1"</span>))</div><div class='output co'>#&gt; readtext object consisting of 17 documents and 5 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,7] [17 × 7]</span><span>
 #&gt;   doc_id                  text                unit  context  year language party
@@ -291,7 +305,7 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>6</span><span> EU_euro_2004_es_V.txt   </span><span style='color: #555555;'>"</span><span>\"Manifesto\n\"..… EU    euro     </span><span style='text-decoration: underline;'>2</span><span>004 es       V    
 #&gt; </span><span style='color: #555555;'># … with 11 more rows</span><span></div><div class='input'>
 <span class='co'># recurse through subdirectories</span>
-(<span class='no'>rt3</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/movie_reviews/*"</span>),
+(<span class='no'>rt3</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/txt/movie_reviews/*"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='st'>"sentiment"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Fewer docnames supplied than existing docvars - last 3 docvars given generic names.</span></div><div class='output co'>#&gt; readtext object consisting of 10 documents and 4 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,6] [10 × 6]</span><span>
 #&gt;   doc_id     text       sentiment                      docvar2   docvar3 docvar4
@@ -304,7 +318,7 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>6</span><span> pos_cv000… </span><span style='color: #555555;'>"</span><span>\"films … /Users/kbenoit/Dropbox (Perso… reviews/… cv000   29590.…
 #&gt; </span><span style='color: #555555;'># … with 4 more rows</span><span></div><div class='input'>
 <span class='co'>## read in csv data</span>
-(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/csv/inaugCorpus.csv"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 5 documents and 3 docvars.
+(<span class='no'>rt4</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/csv/inaugCorpus.csv"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 5 documents and 3 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,5] [5 × 5]</span><span>
 #&gt;   doc_id            text                 Year President  FirstName
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
@@ -314,7 +328,7 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>4</span><span> inaugCorpus.csv.4 </span><span style='color: #555555;'>"</span><span>\"Friends an\"...</span><span style='color: #555555;'>"</span><span>  </span><span style='text-decoration: underline;'>1</span><span>801 Jefferson  Thomas   
 #&gt; </span><span style='color: #555555;'>5</span><span> inaugCorpus.csv.5 </span><span style='color: #555555;'>"</span><span>\"Proceeding\"...</span><span style='color: #555555;'>"</span><span>  </span><span style='text-decoration: underline;'>1</span><span>805 Jefferson  Thomas   </div><div class='input'>
 <span class='co'>## read in tab-separated data</span>
-(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))</div><div class='output co'>#&gt; readtext object consisting of 33 documents and 9 docvars.
+(<span class='no'>rt5</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/tsv/dailsample.tsv"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"speech"</span>))</div><div class='output co'>#&gt; readtext object consisting of 33 documents and 9 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,11] [33 × 11]</span><span>
 #&gt;   doc_id text  speechID memberID partyID constID title date  member_name
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      
@@ -326,7 +340,7 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>6</span><span> dails… </span><span style='color: #555555;'>"</span><span>\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…
 #&gt; </span><span style='color: #555555;'># … with 27 more rows, and 2 more variables: party_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, const_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'>## read in JSON data</span>
-(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))</div><div class='output co'>#&gt; readtext object consisting of 3 documents and 3 docvars.
+(<span class='no'>rt6</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/json/inaugural_sample.json"</span>), <span class='kw'>text_field</span> <span class='kw'>=</span> <span class='st'>"texts"</span>))</div><div class='output co'>#&gt; readtext object consisting of 3 documents and 3 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,5] [3 × 5]</span><span>
 #&gt;   doc_id                  text                 Year President  FirstName
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    
@@ -335,9 +349,9 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>3</span><span> inaugural_sample.json.3 </span><span style='color: #555555;'>"</span><span>\"When it wa\"...</span><span style='color: #555555;'>"</span><span>  </span><span style='text-decoration: underline;'>1</span><span>797 Adams      John     </div><div class='input'>
 <span class='co'>## read in pdf data</span>
 <span class='co'># UNHDR</span>
-(<span class='no'>rt7</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
+(<span class='no'>rt7</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
                  <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filenames"</span>,
-                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 11 documents and 2 docvars.
+                 <span class='kw'>docvarnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"document"</span>, <span class='st'>"language"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 11 documents and 2 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,4] [11 × 4]</span><span>
 #&gt;   doc_id           text                          document language
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
@@ -347,26 +361,26 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>4</span><span> UDHR_english.pdf </span><span style='color: #555555;'>"</span><span>\"Universal \"...</span><span style='color: #555555;'>"</span><span>           UDHR     english 
 #&gt; </span><span style='color: #555555;'>5</span><span> UDHR_french.pdf  </span><span style='color: #555555;'>"</span><span>\"Déclaratio\"...</span><span style='color: #555555;'>"</span><span>           UDHR     french  
 #&gt; </span><span style='color: #555555;'>6</span><span> UDHR_greek.pdf   </span><span style='color: #555555;'>"</span><span>\"ΟΙΚΟΥΜΕΝΙΚ\"...</span><span style='color: #555555;'>"</span><span>           UDHR     greek   
-#&gt; </span><span style='color: #555555;'># … with 5 more rows</span><span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Encoding'>Encoding</a></span>(<span class='no'>rt7</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt;  [1] "UTF-8"   "UTF-8"   "UTF-8"   "unknown" "UTF-8"   "UTF-8"   "UTF-8"  
+#&gt; </span><span style='color: #555555;'># … with 5 more rows</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Encoding.html'>Encoding</a></span>(<span class='no'>rt7</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt;  [1] "UTF-8"   "UTF-8"   "UTF-8"   "unknown" "UTF-8"   "UTF-8"   "UTF-8"  
 #&gt;  [8] "UTF-8"   "UTF-8"   "UTF-8"   "UTF-8"  </div><div class='input'>
 <span class='co'>## read in Word data (.doc)</span>
-(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.doc"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 4 documents and 0 docvars.
+(<span class='no'>rt8</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.doc"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 4 documents and 0 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,2] [4 × 2]</span><span>
 #&gt;   doc_id                                 text                
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               
 #&gt; </span><span style='color: #555555;'>1</span><span> 21Parti_Socialiste_SUMMARY_2004.doc    </span><span style='color: #555555;'>"</span><span>\"[pic]\nRésu\"...</span><span style='color: #555555;'>"</span><span>
 #&gt; </span><span style='color: #555555;'>2</span><span> 21vivant2004.doc                       </span><span style='color: #555555;'>"</span><span>\"http://www\"...</span><span style='color: #555555;'>"</span><span> 
 #&gt; </span><span style='color: #555555;'>3</span><span> 21VLD2004.doc                          </span><span style='color: #555555;'>"</span><span>\"http://www\"...</span><span style='color: #555555;'>"</span><span> 
-#&gt; </span><span style='color: #555555;'>4</span><span> 32_socialisti_democratici_italiani.doc </span><span style='color: #555555;'>"</span><span>\"DIVENTARE \"...</span><span style='color: #555555;'>"</span><span> </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Encoding'>Encoding</a></span>(<span class='no'>rt8</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8" "UTF-8" "UTF-8"</div><div class='input'>
+#&gt; </span><span style='color: #555555;'>4</span><span> 32_socialisti_democratici_italiani.doc </span><span style='color: #555555;'>"</span><span>\"DIVENTARE \"...</span><span style='color: #555555;'>"</span><span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Encoding.html'>Encoding</a></span>(<span class='no'>rt8</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8" "UTF-8" "UTF-8"</div><div class='input'>
 <span class='co'>## read in Word data (.docx)</span>
-(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.docx"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 2 documents and 0 docvars.
+(<span class='no'>rt9</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/word/*.docx"</span>)))</div><div class='output co'>#&gt; readtext object consisting of 2 documents and 0 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,2] [2 × 2]</span><span>
 #&gt;   doc_id                      text               
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
 #&gt; </span><span style='color: #555555;'>1</span><span> UK_2015_EccentricParty.docx </span><span style='color: #555555;'>"</span><span>\"The Eccent\"...</span><span style='color: #555555;'>"</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> UK_2015_LoonyParty.docx     </span><span style='color: #555555;'>"</span><span>\"The Offici\"...</span><span style='color: #555555;'>"</span><span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Encoding'>Encoding</a></span>(<span class='no'>rt9</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8"</div><div class='input'>
+#&gt; </span><span style='color: #555555;'>2</span><span> UK_2015_LoonyParty.docx     </span><span style='color: #555555;'>"</span><span>\"The Offici\"...</span><span style='color: #555555;'>"</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Encoding.html'>Encoding</a></span>(<span class='no'>rt9</span>$<span class='no'>text</span>)</div><div class='output co'>#&gt; [1] "UTF-8" "UTF-8"</div><div class='input'>
 <span class='co'>## use elements of path and filename as docvars</span>
-(<span class='no'>rt10</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
+(<span class='no'>rt10</span> <span class='kw'>&lt;-</span> <span class='fu'>readtext</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>DATA_DIR</span>, <span class='st'>"/pdf/UDHR/*.pdf"</span>),
                   <span class='kw'>docvarsfrom</span> <span class='kw'>=</span> <span class='st'>"filepaths"</span>, <span class='kw'>dvsep</span> <span class='kw'>=</span> <span class='st'>"[/_.]"</span>))</div><div class='output co'>#&gt; readtext object consisting of 11 documents and 14 docvars.
 #&gt; </span><span style='color: #555555;'># Description: df[,16] [11 × 16]</span><span>
 #&gt;   doc_id text  docvar1 docvar2 docvar3 docvar4 docvar5 docvar6 docvar7 docvar8
@@ -378,20 +392,20 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 #&gt; </span><span style='color: #555555;'>5</span><span> UDHR_… </span><span style='color: #555555;'>"</span><span>\"D… </span><span style='color: #BB0000;'>NA</span><span>      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
 #&gt; </span><span style='color: #555555;'>6</span><span> UDHR_… </span><span style='color: #555555;'>"</span><span>\"Ο… </span><span style='color: #BB0000;'>NA</span><span>      Users   kbenoit Dropbo… GitHub  quante… readte… inst   
 #&gt; </span><span style='color: #555555;'># … with 5 more rows, and 6 more variables: docvar9 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar10 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
-#&gt; #   docvar11 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar12 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar13 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar14 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+#&gt; #   docvar11 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar12 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar13 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, docvar14 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'># }
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -399,13 +413,16 @@ as it would be give to <code><a href='https://www.rdocumentation.org/packages/ba
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
