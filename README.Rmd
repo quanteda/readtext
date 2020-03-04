@@ -13,10 +13,13 @@ knitr::opts_chunk$set(
   fig.path = "images/"
 )
 ```
-
+```{r echo=FALSE, results="hide", message=FALSE}
+library("badger")
+```
 # readtext: Import and handling for plain and formatted text files
 
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
+`r badge_devel("quanteda/readtext", "royalblue")`
 [![Travis-CI Build Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
 [![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/quanteda/readtext)
 [![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)][1]

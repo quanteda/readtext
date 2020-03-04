@@ -1,11 +1,11 @@
 ## Purpose: Improves functionality and adds document identifier
 
-Added docid_field argument for columnar data, and makes parsing large JSON objects more robuist.
+Minor bug fix.
 
 ## Test environments
 
-* local OS X install, R 3.6.0
-* ubuntu 18.04 LTS, R 3.6.0
+* local OS X install, R 3.6.2
+* ubuntu 18.04 LTS, R 3.6.2
 * win-builder (devel and release)
 
 ## R CMD check results

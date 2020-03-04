@@ -4,6 +4,7 @@
 
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
+[![](https://img.shields.io/badge/devel%20version-0.76-royalblue.svg)](https://github.com/quanteda/readtext)
 [![Travis-CI Build
 Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
 [![Build
@@ -85,7 +86,7 @@ DATA_DIR <- system.file("extdata/", package = "readtext")
 # read in all files from a folder
 readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ## readtext object consisting of 13 documents and 0 docvars.
-## # Description: data.frame [13 × 2]
+## # Description: df[,2] [13 × 2]
 ##   doc_id            text                         
 ##   <chr>             <chr>                        
 ## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
@@ -105,7 +106,7 @@ texts, using the `text_field` argument:
 # read in comma-separated values and specify text field
 readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ## readtext object consisting of 5 documents and 3 docvars.
-## # Description: data.frame [5 × 5]
+## # Description: df[,5] [5 × 5]
 ##   doc_id            text                 Year President  FirstName
 ##   <chr>             <chr>               <int> <chr>      <chr>    
 ## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
@@ -132,12 +133,7 @@ all docvars and other meta-data.
 ``` r
 require(quanteda)
 ## Loading required package: quanteda
-## Registered S3 methods overwritten by 'ggplot2':
-##   method         from 
-##   [.quosures     rlang
-##   c.quosures     rlang
-##   print.quosures rlang
-## Package version: 1.4.4
+## Package version: 2.0.0.9000
 ## Parallel computing: 2 of 12 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
@@ -153,15 +149,11 @@ summary(corpus_csv, 5)
 ## Corpus consisting of 5 documents, showing 5 documents:
 ## 
 ##               Text Types Tokens Sentences Year  President FirstName
-##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
+##  inaugCorpus.csv.1   625   1539        23 1789 Washington    George
 ##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
-##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
-##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
-##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
-## 
-## Source: /Users/kbenoit/Dropbox (Personal)/GitHub/quanteda/readtext/* on x86_64 by kbenoit
-## Created: Wed May  8 08:00:43 2019
-## Notes:
+##  inaugCorpus.csv.3   826   2577        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1923        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2380        45 1805  Jefferson    Thomas
 ```
 
 ### Text Interchange Format compatibility
