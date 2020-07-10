@@ -22,7 +22,7 @@ Imports:
     httr,
     jsonlite (>= 0.9.10),
     pdftools,
-    readODS,
+    readODS (>= 1.7.0),
     readxl,
     streamR,
     stringi,

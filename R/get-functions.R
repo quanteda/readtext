@@ -245,7 +245,7 @@ get_excel <- function(path, text_field, docid_field, source, ...) {
 
 
 get_ods <- function(path, text_field, docid_field, source, ...) {
-    sheet_names <- readODS::ods_sheets(path)
+    sheet_names <- readODS::list_ods_sheets(path)
     suppressMessages(
         sheets <- lapply(sheet_names, function(x, ...) readODS::read_ods(path, sheet = x, ...))
     )
