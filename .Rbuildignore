@@ -21,3 +21,4 @@ __MACOSX
 ^docs/
 ^pkgdown/
 ^CRAN-RELEASE$
+^\.github$

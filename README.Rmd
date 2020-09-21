@@ -18,13 +18,14 @@ library("badger")
 ```
 # readtext: Import and handling for plain and formatted text files
 
+<!-- badges: start -->
 [![CRAN Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 `r badge_devel("quanteda/readtext", "royalblue")`
-[![Travis-CI Build Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
-[![Build status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/quanteda/readtext)
+[![R build status](https://github.com/quanteda/readtext/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/readtext/actions)
 [![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)][1]
 [![Downloads](http://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
+<!-- badges: end -->
 
 
 [1]: https://codecov.io/gh/quanteda/readtext/branch/master

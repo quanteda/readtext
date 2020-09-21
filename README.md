@@ -2,17 +2,18 @@
 
 # readtext: Import and handling for plain and formatted text files
 
+<!-- badges: start -->
+
 [![CRAN
 Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-[![](https://img.shields.io/badge/devel%20version-0.76-royalblue.svg)](https://github.com/quanteda/readtext)
-[![Travis-CI Build
-Status](https://travis-ci.org/quanteda/readtext.svg?branch=master)](https://travis-ci.org/quanteda/readtext)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/x6dtvh2m7mj3b026/branch/master?svg=true)](https://ci.appveyor.com/project/quanteda/readtext)
+[![](https://img.shields.io/badge/devel%20version-0.80-royalblue.svg)](https://github.com/quanteda/readtext)
+[![R build
+status](https://github.com/quanteda/readtext/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/readtext/actions)
 [![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)](https://codecov.io/gh/quanteda/readtext/branch/master)
 [![Downloads](http://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
+<!-- badges: end -->
 
 An R package for reading text files in all their various formats, by Ken
 Benoit, Adam Obeng, Paul Nulty, Aki Matsuo, Kohei Watanabe, and Stefan
@@ -133,7 +134,7 @@ all docvars and other meta-data.
 ``` r
 require(quanteda)
 ## Loading required package: quanteda
-## Package version: 2.0.0.9000
+## Package version: 2.1.2
 ## Parallel computing: 2 of 12 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
