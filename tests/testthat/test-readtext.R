@@ -581,7 +581,6 @@ test_that("test html file",{
 
 })
 
-
 test_that("test malformed html file",{
     skip_on_os("windows")
     expected <- c("The quick brown fox \n    \njumps over the lazy dog")
@@ -592,28 +591,23 @@ test_that("test malformed html file",{
     )
 })
 
-
 test_that("test for pdf file", {
     skip_on_os("windows")
-    skip_on_os("linux")
-    expected <- c(test.pdf = "The quick brown fox jumps over the lazy dog\n                                     1\n")
-    expect_equal(
-        texts(readtext("../data/pdf/test.pdf")),
-        expected
+    expect_output(
+        cat(texts(readtext("../data/pdf/test.pdf"))),
+        "The quick brown fox jumps over the lazy dog\n" 
     )
 })
 
 test_that("test for odt file", {
 	expected <- c("The quick brown fox jumps over the lazy dog")
 	names(expected) <- "test.odt"
-	
 	expect_equal(
 		texts(readtext("../data/odt/test.odt")),
 		expected
 	)
 	
 })
-
 
 test_that("test for docx file", {
     expected <- c("The quick brown fox jumps over the lazy dog")
@@ -623,10 +617,7 @@ test_that("test for docx file", {
         texts(readtext("../data/docx/test.docx")),
         expected
     )
-
 })
-
-
 
 test_that("test for doc file", {
     skip_on_os("windows")  
