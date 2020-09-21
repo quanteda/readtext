@@ -1,11 +1,11 @@
 ---
-title: "Read text files with readtext()"
+title: "Reading text files with readtext"
 output: 
   rmarkdown::html_vignette:
     css: mystyle.css
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{Readtextfiles}
+  %\VignetteIndexEntry{Reading text files with readtext}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
