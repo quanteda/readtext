@@ -174,7 +174,7 @@ extract_archive <- function(file, ignore_missing) {
         stop("File '", file, "' does not exist.")
 
     path <- get_temp(directory = TRUE)
-    ext <- tools::file_ext(file)
+    ext <- tolower(tools::file_ext(file))
     if (ext %in% c("zip", "docx", "odt")) {
         utils::unzip(file, exdir = path)
     } else if (ext %in% c("gz", "tar", "bz")) {
