@@ -52,92 +52,9 @@ readtext(paste0(DATA_DIR, "/word/*.docx"))
 ## -----------------------------------------------------------------------------
 # Note: Example required: which URL should we use?
 
-## ---- message = FALSE---------------------------------------------------------
-require(quanteda)
-
 ## -----------------------------------------------------------------------------
 # Note: Archive file required. The only zip archive included in readtext has 
 # different encodings and is difficult to import (see section 4.2).
-
-## -----------------------------------------------------------------------------
-# read in comma-separated values with readtext
-rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
-
-# create quanteda corpus
-corpus_csv <- corpus(rt_csv)
-summary(corpus_csv, 5)
-
-## ---- message = FALSE---------------------------------------------------------
-# Load stringi package
-require(stringi)
-
-## -----------------------------------------------------------------------------
-# Make some text with page numbers
-sample_text_a <- "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, 
-page 1 
-with the newspaper from a boy named quick Seamus, in his mouth.
-page 2
-The quicker brown fox jumped over 2 lazy dogs."
-
-sample_text_a
-
-# Remove "page" and respective digit
-sample_text_a2 <- unlist(stri_split_fixed(sample_text_a, '\n'), use.names = FALSE)
-sample_text_a2 <- stri_replace_all_regex(sample_text_a2, "page \\d*", "")
-sample_text_a2 <- stri_trim_both(sample_text_a2)
-sample_text_a2 <- sample_text_a2[sample_text_a2 != '']
-stri_paste(sample_text_a2, collapse = '\n')
-
-## -----------------------------------------------------------------------------
-sample_text_b <- "The quick brown fox named Seamus 
-- 1 - 
-jumps over the lazy dog also named Seamus, with 
-- 2 - 
-the newspaper from a boy named quick Seamus, in his mouth. 
-- 33 - 
-The quicker brown fox jumped over 2 lazy dogs."
-
-sample_text_b
-
-sample_text_b2 <- unlist(stri_split_fixed(sample_text_b, '\n'), use.names = FALSE)
-sample_text_b2 <- stri_replace_all_regex(sample_text_b2, "[-] \\d* [-]", "")
-sample_text_b2 <- stri_trim_both(sample_text_b2)
-sample_text_b2 <- sample_text_b2[sample_text_b2 != '']
-stri_paste(sample_text_b2, collapse = '\n')
-
-## -----------------------------------------------------------------------------
-# create a temporary directory to extract the .zip file
-FILEDIR <- tempdir()
-# unzip file
-unzip(system.file("extdata", "data_files_encodedtexts.zip", package = "readtext"), exdir = FILEDIR)
-
-## -----------------------------------------------------------------------------
-# get encoding from filename
-filenames <- list.files(FILEDIR, "^(Indian|UDHR_).*\\.txt$")
-
-head(filenames)
-
-# Strip the extension
-filenames <- gsub(".txt$", "", filenames)
-parts <- strsplit(filenames, "_")
-fileencodings <- sapply(parts, "[", 3)
-
-head(fileencodings)
-
-# Check whether certain file encodings are not supported
-notAvailableIndex <- which(!(fileencodings %in% iconvlist()))
-fileencodings[notAvailableIndex]
-
-## -----------------------------------------------------------------------------
-txts <- readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip"), 
-                 encoding = fileencodings,
-                 docvarsfrom = "filenames", 
-                 docvarnames = c("document", "language", "input_encoding"))
-print(txts, n = 50)
-
-## -----------------------------------------------------------------------------
-corpus_txts <- corpus(txts)
-summary(corpus_txts, 5)
 
 ## ---- message = FALSE---------------------------------------------------------
 require(quanteda)

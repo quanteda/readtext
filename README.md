@@ -5,12 +5,12 @@
 <!-- badges: start -->
 
 [![CRAN
-Version](http://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
+Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 [![](https://img.shields.io/badge/devel%20version-0.80-royalblue.svg)](https://github.com/quanteda/readtext)
 [![R build
 status](https://github.com/quanteda/readtext/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/readtext/actions)
 [![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)](https://codecov.io/gh/quanteda/readtext/branch/master)
-[![Downloads](http://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
+[![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
 <!-- badges: end -->
@@ -125,7 +125,7 @@ For a more complete demonstration, see the package
 ### With **quanteda**
 
 **readtext** was originally developed in early versions of the
-[**quanteda**](http:/github.com/quanteda/quanteda) package for the
+[**quanteda**](https://github.com/quanteda/quanteda) package for the
 quantitative analysis of textual data. Because **quanteda**’s corpus
 constructor recognizes the data.frame format returned by `readtext()`,
 it can construct a corpus directly from a readtext object, preserving

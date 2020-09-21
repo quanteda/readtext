@@ -36,7 +36,7 @@ Suggests:
     rmarkdown,
     quanteda (>= 1.1.0),
     testthat
-URL: http://github.com/quanteda/readtext
+URL: https://github.com/quanteda/readtext
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
