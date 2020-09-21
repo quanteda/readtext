@@ -256,18 +256,18 @@ test_that("test xml files with XPath", {
 
     actual <- readtext("../data/xml/tei.xml",
                       text_field = "/d1:TEI/d1:text/d1:body//d1:p")#,
-                      # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                      # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
     expect_equal(texts(actual), expected)
 
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
                        text_field = "/d1:TEI/d1:text/d1:body//d1:p")
-                       # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                       # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "The Pquick Pbrown Pfox")
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
                       text_field = "/d1:TEI//*/text()")#,
-                      # namespaces = c(tei = "http://www.tei-c.org/ns/1.0"))
+                      # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
     expect_equal(unname(texts(actual)), "Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
 
 })
@@ -511,12 +511,12 @@ test_that("Test function to list files", {
 test_that("Test function to list files with remote sources", {
     skip_on_cran()
     expect_error(
-      readtext:::list_files("http://www.google.com/404.txt"),
+      readtext:::list_files("https://www.google.com/404.txt"),
       ".*404.*"
     )
     
     expect_equal(
-      dim(readtext("http://www.google.com/404.txt", ignore_missing_files = TRUE)),
+      dim(readtext("https://www.google.com/404.txt", ignore_missing_files = TRUE)),
       c(1,2)
     )
 })

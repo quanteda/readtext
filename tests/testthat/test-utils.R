@@ -60,7 +60,7 @@ test_that("file_ext returns expected extensions", {
 
 test_that("Test download_remote", {
     expect_error(
-        download_remote("http://www.google.com/404.txt", ignore_missing = FALSE)
+        download_remote("https://www.google.com/404.txt", ignore_missing = FALSE)
     )
 
 })

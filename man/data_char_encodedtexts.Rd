@@ -4,7 +4,9 @@
 \name{data_char_encodedtexts}
 \alias{data_char_encodedtexts}
 \title{encoded texts for testing}
-\format{An object of class \code{character} of length 10.}
+\format{
+An object of class \code{character} of length 10.
+}
 \usage{
 data_char_encodedtexts
 }
@@ -13,8 +15,10 @@ data_char_encodedtexts
 different encodings
 }
 \examples{
+\dontrun{
 Encoding(data_char_encodedtexts)
 data.frame(labelled = names(data_char_encodedtexts), 
            detected = encoding(data_char_encodedtexts)$all)
+}
 }
 \keyword{datasets}
