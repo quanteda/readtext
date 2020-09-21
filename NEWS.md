@@ -1,3 +1,8 @@
+readtext v0.80
+==============
+* Updated for compatibility with newer versions of the **readODS** and **pdftools** packages.
+* ".DOCX" (with uppercase filename extensions) are now handled correctly.
+
 readtext v0.76
 ==============
 * Fixed a bug in the assignment function for document IDs that caused failure when reading a file with only a text_field and a specified docid_field.
