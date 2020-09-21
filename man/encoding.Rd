@@ -27,12 +27,12 @@ libraries.  See the ICU User Guide,
 \url{http://userguide.icu-project.org/conversion/detection}.
 }
 \examples{
-encoding(data_char_encodedtexts)
+\dontrun{encoding(data_char_encodedtexts)
 # show detected value for each text, versus known encoding
 data.frame(labelled = names(data_char_encodedtexts), 
            detected = encoding(data_char_encodedtexts)$all)
 
-\dontrun{# Russian text, Windows-1251
+# Russian text, Windows-1251
 myreadtext <- readtext("https://kenbenoit.net/files/01_er_5.txt")
 encoding(myreadtext)
 }
