@@ -2,27 +2,27 @@
 #'
 #' Get or set global options affecting functions across \pkg{readtext}.
 #' @param ... options to be set, as key-value pair, same as
-#'   \code{\link{options}}. This may be a list of valid key-value pairs, useful
+#'   [options()]. This may be a list of valid key-value pairs, useful
 #'   for setting a group of options at once (see examples).
-#' @param reset logical; if \code{TRUE}, reset all \pkg{readtext} options to
+#' @param reset logical; if `TRUE`, reset all \pkg{readtext} options to
 #'   their default values
-#' @param initialize logical; if \code{TRUE}, reset only the \pkg{readtext}
+#' @param initialize logical; if `TRUE`, reset only the \pkg{readtext}
 #'   options that are not already defined.  Used for setting initial values when
 #'   some have been defined previously, such as in `.Rprofile`.
 #' @details Currently available options are: \describe{
-#' \item{\code{verbosity}}{Default
+#' \item{`verbosity`}{Default
 #'   verbosity for messages produced when reading files.  See
-#'   \code{\link{readtext}}.}
+#'   [readtext()].}
 #' }
-#' @return When called using a \code{key = value} pair (where \code{key} can be
-#' a label or quoted character name)), the option is set and \code{TRUE} is
+#' @return When called using a `key = value` pair (where `key` can be
+#' a label or quoted character name)), the option is set and `TRUE` is
 #' returned invisibly.
 #'
 #' When called with no arguments, a named list of the package options is
 #' returned.
 #'
-#' When called with \code{reset = TRUE} as an argument, all arguments are
-#' options are reset to their default values, and \code{TRUE} is returned
+#' When called with `reset = TRUE` as an argument, all arguments are
+#' options are reset to their default values, and `TRUE` is returned
 #' invisibly.
 #' @export
 #' @examples

@@ -13,10 +13,10 @@ files}
 \item{paragraph_separator}{a character to separate paragraphs in body texts}
 
 \item{verbosity}{\itemize{
-  \item 0: output errors only
-  \item 1: output errors and warnings (default)
-  \item 2: output a brief summary message
-  \item 3: output detailed file-related messages
+\item 0: output errors only
+\item 1: output errors and warnings (default)
+\item 2: output a brief summary message
+\item 3: output detailed file-related messages
 }}
 
 \item{...}{only to trap extra arguments}

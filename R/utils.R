@@ -43,11 +43,11 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
 #' Get path to temporary file or directory
 #' 
 #' @param prefix a string appended to random file or directory names.
-#' @param temp_dir a path to temporary directory. If \code{NULL}, value from
-#'   \code{tempdir()} will be used.
-#' @param directory logical; if \code{TRUE}, temporary directory will be
+#' @param temp_dir a path to temporary directory. If `NULL`, value from
+#'   `tempdir()` will be used.
+#' @param directory logical; if `TRUE`, temporary directory will be
 #'   created.
-#' @param seed  a seed value for \code{digest::digest}. If code{NULL}, a random
+#' @param seed  a seed value for `digest::digest`. If code{NULL}, a random
 #'   value will be used.
 #' @keywords internal
 get_temp <- function(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL) {
@@ -204,11 +204,11 @@ download_remote <- function (url, ignore_missing, cache, verbosity = 1) {
 
 #' Internal function to cache remote file
 #' @param url location of a remote file
-#' @param ignore_missing if \code{TRUE}, warns for download status
-#' @param cache \code{TRUE}, save file in system's temporary folder and load it
+#' @param ignore_missing if `TRUE`, warns for download status
+#' @param cache `TRUE`, save file in system's temporary folder and load it
 #'   from the next time
 #' @param basename name of temporary file to preserve file extensions. If
-#'   \code{NULL}, random string will be used.
+#'   `NULL`, random string will be used.
 #' @inheritParams readtext
 #' @import  httr
 #' @keywords internal
@@ -249,7 +249,7 @@ cache_remote <- function(url, ignore_missing, cache, basename = NULL, verbosity 
 
 #' Return basenames that are unique
 #' @param x character vector; file paths
-#' @param path_only logical; if \code{TRUE}, only return the unique part of the path
+#' @param path_only logical; if `TRUE`, only return the unique part of the path
 #' @keywords internal
 #' @examples
 #' files <- c("../data/glob/subdir1/test.txt", "../data/glob/subdir2/test.txt")
@@ -276,7 +276,7 @@ basename_unique <- function(x, path_only = FALSE) {
 
 #' Detect and set variable types automatically
 #' 
-#' Detect and set variable types in a similar way as \code{read.csv()} does.
+#' Detect and set variable types in a similar way as `read.csv()` does.
 #' Should be used when imported data.frame is all characters.
 #' @param x data.frame; columns are all characters vectors
 #' @keywords internal
@@ -301,9 +301,9 @@ is_probably_xpath <- function(x) {
 #' Move text to the first column and set types to document variables
 #' 
 #' @param x data.frame; contains texts and document variables
-#' @param path character; file path from which \code{x} is created; only use in error message
+#' @param path character; file path from which `x` is created; only use in error message
 #' @param text_field numeric or character; indicate position of a text column in x
-#' @param impute_types logical; if \code{TRUE}, set types of variables automatically
+#' @param impute_types logical; if `TRUE`, set types of variables automatically
 #' @keywords internal
 sort_fields <- function(x, path, text_field, impute_types = TRUE) {
     x <- as.data.frame(x)
@@ -334,9 +334,9 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
 #' Set the docid for multi-document objects
 #' 
 #' @param x data.frame; contains texts and document variables
-#' @param path character; file path from which \code{x} is created; only use in error message
+#' @param path character; file path from which `x` is created; only use in error message
 #' @param docid_field numeric or character; indicate position of a text column in x
-#' @param impute_types logical; if \code{TRUE}, set types of variables automatically
+#' @param impute_types logical; if `TRUE`, set types of variables automatically
 #' @keywords internal
 add_docid <- function(x, path, docid_field) {
     if(is.null(docid_field) && ("doc_id" %in% names(x))) {

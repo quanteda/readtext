@@ -8,7 +8,7 @@ readtext_options(..., reset = FALSE, initialize = FALSE)
 }
 \arguments{
 \item{...}{options to be set, as key-value pair, same as
-\code{\link{options}}. This may be a list of valid key-value pairs, useful
+\code{\link[=options]{options()}}. This may be a list of valid key-value pairs, useful
 for setting a group of options at once (see examples).}
 
 \item{reset}{logical; if \code{TRUE}, reset all \pkg{readtext} options to
@@ -16,7 +16,7 @@ their default values}
 
 \item{initialize}{logical; if \code{TRUE}, reset only the \pkg{readtext}
 options that are not already defined.  Used for setting initial values when
-some have been defined previously, such as in `.Rprofile`.}
+some have been defined previously, such as in \code{.Rprofile}.}
 }
 \value{
 When called using a \code{key = value} pair (where \code{key} can be
@@ -36,8 +36,8 @@ Get or set global options affecting functions across \pkg{readtext}.
 \details{
 Currently available options are: \describe{
 \item{\code{verbosity}}{Default
-  verbosity for messages produced when reading files.  See
-  \code{\link{readtext}}.}
+verbosity for messages produced when reading files.  See
+\code{\link[=readtext]{readtext()}}.}
 }
 }
 \examples{

@@ -1,18 +1,18 @@
 #' detect the encoding of texts
 #' 
-#' Detect the encoding of texts in a character \link{readtext} object and report
+#' Detect the encoding of texts in a character [readtext] object and report
 #' on the most likely encoding for each document.  Useful in detecting the
 #' encoding of input texts, so that a source encoding can be (re)specified when
-#' inputting a set of texts using \code{\link{readtext}}, prior to constructing
+#' inputting a set of texts using [readtext()], prior to constructing
 #' a corpus.
 #' 
-#' Based on \link[stringi]{stri_enc_detect}, which is in turn based on the ICU
+#' Based on [stri_enc_detect][stringi::stri_enc_detect], which is in turn based on the ICU
 #' libraries.  See the ICU User Guide, 
-#' \url{http://userguide.icu-project.org/conversion/detection}.
+#' <http://userguide.icu-project.org/conversion/detection>.
 #' @param x character vector, corpus, or readtext object whose texts' encodings
 #'   will be detected.
-#' @param verbose if \code{FALSE}, do not print diagnostic report
-#' @param ... additional arguments passed to \link[stringi]{stri_enc_detect}
+#' @param verbose if `FALSE`, do not print diagnostic report
+#' @param ... additional arguments passed to [stri_enc_detect][stringi::stri_enc_detect]
 #' @examples
 #' \dontrun{encoding(data_char_encodedtexts)
 #' # show detected value for each text, versus known encoding

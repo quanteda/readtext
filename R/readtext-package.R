@@ -12,9 +12,9 @@
 #' \pkg{readtext} reads in the document-level meta-data associated with texts, 
 #' if those texts are in a format (e.g. .csv, .json) that includes additional, 
 #' non-textual data.
-#' @section Package options: \describe{ \item{\code{readtext_verbosity}}{Default
+#' @section Package options: \describe{ \item{`readtext_verbosity`}{Default
 #'   verbosity for messages produced when reading files.  See
-#'   \code{\link{readtext}}.} }
+#'   [readtext()].} }
 #' @author Ken Benoit, Adam Obeng, and Paul Nulty
 #' @docType package
 #' @name readtext-package

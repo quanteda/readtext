@@ -5,13 +5,13 @@
 \alias{data_files_encodedtexts}
 \title{a .zip file of texts containing a variety of differently encoded texts}
 \source{
-The Universal Declaration of Human Rights resources, 
-  \url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
+The Universal Declaration of Human Rights resources,
+\url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
 }
 \description{
 A set of translations of the Universal Declaration of Human
-  Rights, plus one or two other miscellaneous texts, for testing the text
-  input functions that need to translate different input encodings.
+Rights, plus one or two other miscellaneous texts, for testing the text
+input functions that need to translate different input encodings.
 }
 \examples{
 \dontrun{# unzip the files to a temporary directory

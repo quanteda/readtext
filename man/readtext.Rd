@@ -20,19 +20,19 @@ readtext(
 )
 }
 \arguments{
-\item{file}{the complete filename(s) to be read. This is designed to 
+\item{file}{the complete filename(s) to be read. This is designed to
 automagically handle a number of common scenarios, so the value can be a
-"glob"-type wildcard value.  Currently available filetypes are: 
+"glob"-type wildcard value.  Currently available filetypes are:
 
 \strong{Single file formats:}
 
 \describe{
 \item{\code{txt}}{plain text files:
 So-called structured text files, which describe both texts and metadata:
-For all structured text filetypes, the column, field, or node 
+For all structured text filetypes, the column, field, or node
 which contains the the text must be specified with the \code{text_field}
 parameter, and all other fields are treated as docvars.}
-\item{\code{json}}{data in some form of JavaScript 
+\item{\code{json}}{data in some form of JavaScript
 Object Notation, consisting of the texts and optionally additional docvars.
 The supported formats are:
 \itemize{
@@ -41,39 +41,39 @@ The supported formats are:
 \item line-delimited JSON, of the format produced from a Twitter stream.
 This type of file has special handling which simplifies the Twitter format
 into docvars.  The correct format for each JSON file is automatically detected.}}
-\item{\code{csv,tab,tsv}}{comma- or tab-separated values}
+\item{\verb{csv,tab,tsv}}{comma- or tab-separated values}
 \item{\code{html}}{HTML documents, including specialized formats from known
 sources, such as Nexis-formatted HTML.  See the \code{source} parameter
 below.}
-\item{\code{xml}}{XML documents are supported -- those of the 
-kind that can be read by \code{\link[xml2]{read_xml}} and navigated through 
-\code{\link[xml2]{xml_find_all}}. For xml files, an additional
-argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
+\item{\code{xml}}{XML documents are supported -- those of the
+kind that can be read by \code{\link[xml2:read_xml]{xml2::read_xml()}} and navigated through
+\code{\link[xml2:xml_find_all]{xml2::xml_find_all()}}. For xml files, an additional
+argument \code{collapse} may be passed through \code{...} that names the character(s) to use in
 appending different text elements together.}
-\item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
+\item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}
 \item{\code{odt}}{Open Document Text formatted files.}
-\item{\code{doc, docx}}{Microsoft Word formatted files.}
+\item{\verb{doc, docx}}{Microsoft Word formatted files.}
 \item{\code{rtf}}{Rich Text Files.}
-   
-\strong{Reading multiple files and file types:} 
 
-In addition, \code{file} can also not be a path 
+\strong{Reading multiple files and file types:}
+
+In addition, \code{file} can also not be a path
 to a single local file, but also combinations of any of the above types, such as:
- \item{a wildcard value}{any valid 
-pathname with a wildcard ("glob") expression that can be expanded by the 
-operating system.  This may consist of multiple file types.} 
-\item{a URL to a remote}{which is downloaded then loaded} 
-\item{\code{zip,tar,tar.gz,tar.bz}}{archive file, which is unzipped. The 
+\item{a wildcard value}{any valid
+pathname with a wildcard ("glob") expression that can be expanded by the
+operating system.  This may consist of multiple file types.}
+\item{a URL to a remote}{which is downloaded then loaded}
+\item{\verb{zip,tar,tar.gz,tar.bz}}{archive file, which is unzipped. The
 contained files must be either at the top level or in a single directory.
-Archives, remote URLs and glob patterns can resolve to any of the other 
+Archives, remote URLs and glob patterns can resolve to any of the other
 filetypes, so you could have, for example, a remote URL to a zip file which
 contained Twitter JSON files.}
 }}
 
 \item{ignore_missing_files}{if \code{FALSE}, then if the file
 argument doesn't resolve to an existing file, then an error will be thrown.
-Note that this can happen in a number of ways, including passing a path 
-to a file that does not exist, to an empty archive file, or to a glob 
+Note that this can happen in a number of ways, including passing a path
+to a file that does not exist, to an empty archive file, or to a glob
 pattern that matches no files.}
 
 \item{text_field, docid_field}{a variable (column) name or column number
@@ -82,21 +82,21 @@ and their identifiers.  This must be specified for file types \code{.csv},
 \code{.json}, and \code{.xls}/\code{.xlsx} files.  For XML files, an XPath
 expression can be specified.}
 
-\item{docvarsfrom}{used to specify that docvars should be taken from the 
-filenames, when the \code{readtext} inputs are filenames and the elements 
-of the filenames are document variables, separated by a delimiter 
+\item{docvarsfrom}{used to specify that docvars should be taken from the
+filenames, when the \code{readtext} inputs are filenames and the elements
+of the filenames are document variables, separated by a delimiter
 (\code{dvsep}).  This allows easy assignment of docvars from filenames such
 as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
 or from meta-data embedded in the text file header (\code{headers}).
 If \code{docvarsfrom} is set to \code{"filepaths"}, consider the full path to the
 file, not just the filename.}
 
-\item{dvsep}{separator (a regular expression character string) used in 
-filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
+\item{dvsep}{separator (a regular expression character string) used in
+filenames to delimit docvar elements if  \code{docvarsfrom="filenames"}
 or \code{docvarsfrom="filepaths"} is used}
 
-\item{docvarnames}{character vector of variable names for \code{docvars}, if 
-\code{docvarsfrom} is specified.  If this argument is not used, default 
+\item{docvarnames}{character vector of variable names for \code{docvars}, if
+\code{docvarsfrom} is specified.  If this argument is not used, default
 docvar names will be used (\code{docvar1}, \code{docvar2}, ...).}
 
 \item{encoding}{vector: either the encoding of all files, or one encoding
@@ -110,28 +110,28 @@ as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
 when \code{file} is a URL.}
 
 \item{verbosity}{\itemize{
-  \item 0: output errors only
-  \item 1: output errors and warnings (default)
-  \item 2: output a brief summary message
-  \item 3: output detailed file-related messages
+\item 0: output errors only
+\item 1: output errors and warnings (default)
+\item 2: output a brief summary message
+\item 3: output detailed file-related messages
 }}
 
-\item{...}{additional arguments passed through to low-level file reading 
-function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
+\item{...}{additional arguments passed through to low-level file reading
+function, such as \code{\link[=file]{file()}}, \code{\link[=fread]{fread()}}, etc.  Useful
 for specifying an input encoding option, which is specified in the same was
-as it would be give to \code{\link{iconv}}.  See the Encoding section of 
+as it would be give to \code{\link[=iconv]{iconv()}}.  See the Encoding section of
 \link{file} for details.}
 }
 \value{
-a data.frame consisting of a columns \code{doc_id} and \code{text} 
-  that contain a document identifier and the texts respectively, with any 
-  additional columns consisting of document-level variables either found 
-  in the file containing the texts, or created through the 
-  \code{readtext} call.
+a data.frame consisting of a columns \code{doc_id} and \code{text}
+that contain a document identifier and the texts respectively, with any
+additional columns consisting of document-level variables either found
+in the file containing the texts, or created through the
+\code{readtext} call.
 }
 \description{
-Read texts and (if any) associated document-level meta-data from one or more source files. 
-The text source files 
+Read texts and (if any) associated document-level meta-data from one or more source files.
+The text source files
 come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.
 }

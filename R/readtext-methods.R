@@ -24,7 +24,7 @@ print.readtext <- function(x, n = 6L, text_width = 10L, ...) {
 
 #' return only the texts from a readtext object
 #' 
-#' An accessor function to return the texts from a \link{readtext} object as a
+#' An accessor function to return the texts from a [readtext] object as a
 #' character vector, with names matching the document names.
 #' @method as.character readtext
 #' @param x the readtext object whose texts will be extracted

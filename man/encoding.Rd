@@ -12,18 +12,18 @@ will be detected.}
 
 \item{verbose}{if \code{FALSE}, do not print diagnostic report}
 
-\item{...}{additional arguments passed to \link[stringi]{stri_enc_detect}}
+\item{...}{additional arguments passed to \link[stringi:stri_enc_detect]{stri_enc_detect}}
 }
 \description{
 Detect the encoding of texts in a character \link{readtext} object and report
 on the most likely encoding for each document.  Useful in detecting the
 encoding of input texts, so that a source encoding can be (re)specified when
-inputting a set of texts using \code{\link{readtext}}, prior to constructing
+inputting a set of texts using \code{\link[=readtext]{readtext()}}, prior to constructing
 a corpus.
 }
 \details{
-Based on \link[stringi]{stri_enc_detect}, which is in turn based on the ICU
-libraries.  See the ICU User Guide, 
+Based on \link[stringi:stri_enc_detect]{stri_enc_detect}, which is in turn based on the ICU
+libraries.  See the ICU User Guide,
 \url{http://userguide.icu-project.org/conversion/detection}.
 }
 \examples{

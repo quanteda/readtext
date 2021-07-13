@@ -9,15 +9,15 @@
 #    single filename, a vector of file names a remote URL, or a file "mask" using a 
 #'   "glob"-type wildcard value.  Currently available filetypes are: 
 #'   
-#'   \strong{Single file formats:}
+#'   **Single file formats:**
 #'   
 #'   \describe{
-#'   \item{\code{txt}}{plain text files:
+#'   \item{`txt`}{plain text files:
 #'   So-called structured text files, which describe both texts and metadata:
 #'   For all structured text filetypes, the column, field, or node 
-#'   which contains the the text must be specified with the \code{text_field}
+#'   which contains the the text must be specified with the `text_field`
 #'   parameter, and all other fields are treated as docvars.}
-#'   \item{\code{json}}{data in some form of JavaScript 
+#'   \item{`json`}{data in some form of JavaScript 
 #'   Object Notation, consisting of the texts and optionally additional docvars.
 #'   The supported formats are:
 #'   \itemize{
@@ -26,29 +26,29 @@
 #'   \item line-delimited JSON, of the format produced from a Twitter stream.
 #'   This type of file has special handling which simplifies the Twitter format
 #'   into docvars.  The correct format for each JSON file is automatically detected.}}
-#'   \item{\code{csv,tab,tsv}}{comma- or tab-separated values}
-#'   \item{\code{html}}{HTML documents, including specialized formats from known
-#'   sources, such as Nexis-formatted HTML.  See the \code{source} parameter
+#'   \item{`csv,tab,tsv`}{comma- or tab-separated values}
+#'   \item{`html`}{HTML documents, including specialized formats from known
+#'   sources, such as Nexis-formatted HTML.  See the `source` parameter
 #'   below.}
-#'   \item{\code{xml}}{XML documents are supported -- those of the 
-#'   kind that can be read by \code{\link[xml2]{read_xml}} and navigated through 
-#'   \code{\link[xml2]{xml_find_all}}. For xml files, an additional
-#'   argument \code{collapse} may be passed through \code{...} that names the character(s) to use in 
+#'   \item{`xml`}{XML documents are supported -- those of the 
+#'   kind that can be read by [xml2::read_xml()] and navigated through 
+#'   [xml2::xml_find_all()]. For xml files, an additional
+#'   argument `collapse` may be passed through `...` that names the character(s) to use in 
 #'   appending different text elements together.}
-#'   \item{\code{pdf}}{pdf formatted files, converted through \pkg{pdftools}.}  
-#'   \item{\code{odt}}{Open Document Text formatted files.}
-#'   \item{\code{doc, docx}}{Microsoft Word formatted files.}
-#'   \item{\code{rtf}}{Rich Text Files.}
+#'   \item{`pdf`}{pdf formatted files, converted through \pkg{pdftools}.}  
+#'   \item{`odt`}{Open Document Text formatted files.}
+#'   \item{`doc, docx`}{Microsoft Word formatted files.}
+#'   \item{`rtf`}{Rich Text Files.}
 #'      
-#'   \strong{Reading multiple files and file types:} 
+#'   **Reading multiple files and file types:** 
 #'   
-#'   In addition, \code{file} can also not be a path 
+#'   In addition, `file` can also not be a path 
 #'   to a single local file, but also combinations of any of the above types, such as:
 #'    \item{a wildcard value}{any valid 
 #'   pathname with a wildcard ("glob") expression that can be expanded by the 
 #'   operating system.  This may consist of multiple file types.} 
 #'   \item{a URL to a remote}{which is downloaded then loaded} 
-#'   \item{\code{zip,tar,tar.gz,tar.bz}}{archive file, which is unzipped. The 
+#'   \item{`zip,tar,tar.gz,tar.bz`}{archive file, which is unzipped. The 
 #'   contained files must be either at the top level or in a single directory.
 #'   Archives, remote URLs and glob patterns can resolve to any of the other 
 #'   filetypes, so you could have, for example, a remote URL to a zip file which
@@ -56,35 +56,35 @@
 #'   }
 #' @param text_field,docid_field a variable (column) name or column number
 #'   indicating where to find the texts that form the documents for the corpus
-#'   and their identifiers.  This must be specified for file types \code{.csv},
-#'   \code{.json}, and \code{.xls}/\code{.xlsx} files.  For XML files, an XPath
+#'   and their identifiers.  This must be specified for file types `.csv`,
+#'   `.json`, and `.xls`/`.xlsx` files.  For XML files, an XPath
 #'   expression can be specified.
 #' @param docvarsfrom  used to specify that docvars should be taken from the 
-#'   filenames, when the \code{readtext} inputs are filenames and the elements 
+#'   filenames, when the `readtext` inputs are filenames and the elements 
 #'   of the filenames are document variables, separated by a delimiter 
-#'   (\code{dvsep}).  This allows easy assignment of docvars from filenames such
-#'   as \code{1789-Washington.txt}, \code{1793-Washington}, etc. by \code{dvsep}
-#'   or from meta-data embedded in the text file header (\code{headers}).
-#'   If \code{docvarsfrom} is set to \code{"filepaths"}, consider the full path to the
+#'   (`dvsep`).  This allows easy assignment of docvars from filenames such
+#'   as `1789-Washington.txt`, `1793-Washington`, etc. by `dvsep`
+#'   or from meta-data embedded in the text file header (`headers`).
+#'   If `docvarsfrom` is set to `"filepaths"`, consider the full path to the
 #'   file, not just the filename.
 #' @param dvsep separator (a regular expression character string) used in 
-#'  filenames to delimit docvar elements if  \code{docvarsfrom="filenames"} 
-#'  or \code{docvarsfrom="filepaths"} is used
-#' @param docvarnames character vector of variable names for \code{docvars}, if 
-#'   \code{docvarsfrom} is specified.  If this argument is not used, default 
-#'   docvar names will be used (\code{docvar1}, \code{docvar2}, ...).
+#'  filenames to delimit docvar elements if  `docvarsfrom="filenames"` 
+#'  or `docvarsfrom="filepaths"` is used
+#' @param docvarnames character vector of variable names for `docvars`, if 
+#'   `docvarsfrom` is specified.  If this argument is not used, default 
+#'   docvar names will be used (`docvar1`, `docvar2`, ...).
 #' @param encoding vector: either the encoding of all files, or one encoding
 #'   for each files
-#' @param ignore_missing_files if \code{FALSE}, then if the file
+#' @param ignore_missing_files if `FALSE`, then if the file
 #'   argument doesn't resolve to an existing file, then an error will be thrown.
 #'   Note that this can happen in a number of ways, including passing a path 
 #'   to a file that does not exist, to an empty archive file, or to a glob 
 #'   pattern that matches no files.
 #' @param source used to specify specific formats of some input file types, such
-#'   as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
-#'   \code{"nexis"} for HTML.
-#' @param cache if \code{TRUE}, save remote file to a temporary folder. Only used
-#'   when \code{file} is a URL.
+#'   as JSON or HTML. Currently supported types are `"twitter"` for JSON and
+#'   `"nexis"` for HTML.
+#' @param cache if `TRUE`, save remote file to a temporary folder. Only used
+#'   when `file` is a URL.
 #' @param verbosity \itemize{
 #'   \item 0: output errors only
 #'   \item 1: output errors and warnings (default)
@@ -92,15 +92,15 @@
 #'   \item 3: output detailed file-related messages
 #' }
 #' @param ... additional arguments passed through to low-level file reading 
-#'   function, such as \code{\link{file}}, \code{\link{fread}}, etc.  Useful 
+#'   function, such as [file()], [fread()], etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
-#'   as it would be give to \code{\link{iconv}}.  See the Encoding section of 
-#'   \link{file} for details.  
-#' @return a data.frame consisting of a columns \code{doc_id} and \code{text} 
+#'   as it would be give to [iconv()].  See the Encoding section of 
+#'   [file] for details.  
+#' @return a data.frame consisting of a columns `doc_id` and `text` 
 #'   that contain a document identifier and the texts respectively, with any 
 #'   additional columns consisting of document-level variables either found 
 #'   in the file containing the texts, or created through the 
-#'   \code{readtext} call.
+#'   `readtext` call.
 #' @export
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk

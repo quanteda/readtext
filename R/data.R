@@ -2,7 +2,7 @@
 #' @name data_files_encodedtexts
 #' @title a .zip file of texts containing a variety of differently encoded texts
 #' @source The Universal Declaration of Human Rights resources, 
-#'   \url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
+#'   <http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx>
 #' @docType data
 #' @description A set of translations of the Universal Declaration of Human
 #'   Rights, plus one or two other miscellaneous texts, for testing the text
@@ -51,7 +51,7 @@ NULL
 
 #' encoded texts for testing
 #' 
-#' \code{data_char_encodedtexts} is a 10-element character vector with 10
+#' `data_char_encodedtexts` is a 10-element character vector with 10
 #' different encodings
 #' @examples
 #' \dontrun{

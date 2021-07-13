@@ -18,10 +18,10 @@ from the next time}
 \code{NULL}, random string will be used.}
 
 \item{verbosity}{\itemize{
-  \item 0: output errors only
-  \item 1: output errors and warnings (default)
-  \item 2: output a brief summary message
-  \item 3: output detailed file-related messages
+\item 0: output errors only
+\item 1: output errors and warnings (default)
+\item 2: output a brief summary message
+\item 3: output detailed file-related messages
 }}
 }
 \description{

@@ -1,5 +1,5 @@
 Package: readtext
-Version: 0.80
+Version: 0.81
 Type: Package
 Title: Import and Handling for Plain and Formatted Text Files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
@@ -14,7 +14,7 @@ Description: Functions for importing and handling text files and formatted text
     '.html', '.pdf', '.doc', '.docx', '.rtf', '.xls', '.xlsx', and others.
 License: GPL-3
 Depends:
-    R (>= 3.1)
+    R (>= 3.6)
 Imports:
     antiword,
     data.table,
@@ -34,7 +34,7 @@ Suggests:
     knitr,
     pkgload,
     rmarkdown,
-    quanteda (>= 1.1.0),
+    quanteda (>= 3.0),
     testthat
 URL: https://github.com/quanteda/readtext
 Encoding: UTF-8
@@ -42,3 +42,4 @@ BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
