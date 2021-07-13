@@ -26,7 +26,7 @@
 #' invisibly.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # save the current options
 #' (opt <- readtext_options())
 #'

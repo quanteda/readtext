@@ -136,7 +136,7 @@ come from the textual component of the files, and the document-level
 metadata ("docvars") come from either the file contents or filenames.
 }
 \examples{
-\donttest{
+\dontrun{
 ## get the data directory
 if (!interactive()) pkgload::load_all()
 DATA_DIR <- system.file("extdata/", package = "readtext")

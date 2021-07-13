@@ -105,7 +105,7 @@
 #' @importFrom utils unzip type.convert
 #' @importFrom httr GET write_disk
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' ## get the data directory
 #' if (!interactive()) pkgload::load_all()
 #' DATA_DIR <- system.file("extdata/", package = "readtext")
