@@ -1,3 +1,8 @@
+readtext v0.81
+==============
+* Fixed a problem in the examples breaking CRAN checks on Solaris.
+* Changed documentation to markdown.
+
 readtext v0.80
 ==============
 * Updated for compatibility with newer versions of the **readODS** and **pdftools** packages.

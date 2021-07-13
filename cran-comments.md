@@ -1,12 +1,10 @@
-## Purpose: Fix breaking issues related to other packages
+## Purpose: Fix a problem in examples on Solaris
 
-Fixes issues relating to changes in pdftools.  Also updates some URLs.
+We were notified recently that there were problems with readtext that needed fixing, in the "donttest" category.  These are now not run in the examples.
 
 ## Test environments
 
-* local OS X install, R 4.0.2
-* Ubuntu 18.04 LTS and 20.04, R 4.0.2
-* Linux Debian Linux, R-release, GCC on rHub
+* local OS X install, R 4.1.0
 * win-builder (devel and release)
 
 ## R CMD check results
