@@ -15,6 +15,7 @@ readtext(
   encoding = NULL,
   source = NULL,
   cache = TRUE,
+  sep = ",",
   verbosity = readtext_options("verbosity"),
   ...
 )
@@ -108,6 +109,8 @@ as JSON or HTML. Currently supported types are \code{"twitter"} for JSON and
 
 \item{cache}{if \code{TRUE}, save remote file to a temporary folder. Only used
 when \code{file} is a URL.}
+
+\item{sep}{separator for csv, default to ","}
 
 \item{verbosity}{\itemize{
 \item 0: output errors only

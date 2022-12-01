@@ -91,6 +91,7 @@
 #'   \item 2: output a brief summary message
 #'   \item 3: output detailed file-related messages
 #' }
+#' @param sep separator for csv, default to ","
 #' @param ... additional arguments passed through to low-level file reading 
 #'   function, such as [file()], [fread()], etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
@@ -156,7 +157,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
                     docid_field = NULL,
                     docvarsfrom = c("metadata", "filenames", "filepaths"), dvsep = "_",
                     docvarnames = NULL, encoding = NULL, source = NULL, cache = TRUE,
-                    verbosity = readtext_options("verbosity"),
+                    sep = ",", verbosity = readtext_options("verbosity"),
                     ...) {
 
     args <- list(...)
@@ -205,7 +206,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
     
     sources <- mapply(function(x, e) {
         get_source(x, text_field = text_field, docid_field = docid_field, 
-                   encoding = e, source = source, verbosity = verbosity, ...)
+                   encoding = e, source = source, verbosity = verbosity, sep = sep, ...)
     }, files, encoding, SIMPLIFY = FALSE)
 
     # combine all of the data.frames returned
@@ -241,7 +242,7 @@ readtext <- function(file, ignore_missing_files = FALSE, text_field = NULL,
 
 ## Read each file as appropriate, calling the get_* functions for recognized
 ## file types
-get_source <- function(path, text_field, docid_field, replace_specialchar = FALSE, verbosity = 1, ...,
+get_source <- function(path, text_field, docid_field, replace_specialchar = FALSE, verbosity = 1, sep, ...,
                        # deprecated arguments
                        textfield) {
 
@@ -264,7 +265,7 @@ get_source <- function(path, text_field, docid_field, replace_specialchar = FALS
 
     result <- switch(ext,
                txt = get_txt(path, ...),
-               csv = get_csv(path, text_field, docid_field, sep = ",", ...),
+               csv = get_csv(path, text_field, docid_field, sep = sep, ...),
                tsv = get_csv(path, text_field, docid_field, sep = "\t", ...),
                tab = get_csv(path, text_field, docid_field, sep = "\t", ...),
                json = get_json(path, text_field, docid_field, verbosity = verbosity, ...),
