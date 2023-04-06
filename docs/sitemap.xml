@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://readtext.quanteda.io/404.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/articles/readtext_vignette.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/authors.html</loc>
+  </url>
+  <url>
     <loc>http://readtext.quanteda.io/index.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/news/index.html</loc>
   </url>
   <url>
     <loc>http://readtext.quanteda.io/reference/add_docid.html</loc>
@@ -22,6 +40,12 @@
     <loc>http://readtext.quanteda.io/reference/data_files_encodedtexts.html</loc>
   </url>
   <url>
+    <loc>http://readtext.quanteda.io/reference/docnames.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/reference/docvars.html</loc>
+  </url>
+  <url>
     <loc>http://readtext.quanteda.io/reference/encoding.html</loc>
   </url>
   <url>
@@ -32,6 +56,9 @@
   </url>
   <url>
     <loc>http://readtext.quanteda.io/reference/impute_types.html</loc>
+  </url>
+  <url>
+    <loc>http://readtext.quanteda.io/reference/index.html</loc>
   </url>
   <url>
     <loc>http://readtext.quanteda.io/reference/print.readtext.html</loc>
@@ -49,6 +76,6 @@
     <loc>http://readtext.quanteda.io/reference/sort_fields.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/articles/readtext_vignette.html</loc>
+    <loc>http://readtext.quanteda.io/reference/texts.html</loc>
   </url>
 </urlset>

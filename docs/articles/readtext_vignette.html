@@ -5,21 +5,23 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Read text files with readtext() • readtext</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<title>Reading text files with readtext • readtext</title>
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Read text files with readtext()">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:title" content="Reading text files with readtext">
+<meta property="og:description" content="readtext">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readtext</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.76</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.82</span>
       </span>
     </div>
 
@@ -47,8 +49,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/quanteda/readtext">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/quanteda/readtext/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -65,380 +67,541 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Read text files with readtext()</h1>
+      <h1 data-toc-skip>Reading text files with readtext</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/quanteda/readtext/blob/master/vignettes/readtext_vignette.Rmd"><code>vignettes/readtext_vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/quanteda/readtext/blob/HEAD/vignettes/readtext_vignette.Rmd" class="external-link"><code>vignettes/readtext_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>readtext_vignette.Rmd</code></div>
 
     </div>
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Load readtext package</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readtext)</a></code></pre></div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>1. Introduction</h1>
-<p>The vignette walks you through importing a variety of different text files into R using the <strong>readtext</strong> package. Currently, <strong>readtext</strong> supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and Microsoft Word formatted files (.pdf, .doc, .docx).</p>
-<p><strong>readtext</strong> also handles multiple files and file types using for instance a “glob” expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to determine the format of the files explicitly - <strong>readtext</strong> takes this information from the file ending.</p>
-<p>The <strong>readtext</strong> package comes with a data directory called <code>extdata</code> that contains examples of all files listed above. In the vignette, we use this data directory.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Get the data directory from readtext</span></a>
-<a class="sourceLine" id="cb2-2" title="2">DATA_DIR &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata/"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>)</a></code></pre></div>
-<p>The <code>extdata</code> directory contains several subfolders that include different text files. In the following examples, we load one or more files stored in each of these folders. The <code>paste0</code> command is used to concatenate the <code>extdata</code> folder from the <strong>readtext</strong> package with the subfolders. When reading in custom text files, you will need to determine your own data directory (see <code>?setwd()</code>).</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load readtext package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/quanteda/readtext" class="external-link">"readtext"</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="introduction">1. Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>The vignette walks you through importing a variety of different text
+files into R using the <strong>readtext</strong> package. Currently,
+<strong>readtext</strong> supports plain text files (.txt), data in some
+form of JavaScript Object Notation (.json), comma-or tab-separated
+values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF and
+Microsoft Word formatted files (.pdf, .doc, .docx).</p>
+<p><strong>readtext</strong> also handles multiple files and file types
+using for instance a “glob” expression, files from a URL or an archive
+file (.zip, .tar, .tar.gz, .tar.bz). Usually, you do not have to
+determine the format of the files explicitly - <strong>readtext</strong>
+takes this information from the file ending.</p>
+<p>The <strong>readtext</strong> package comes with a data directory
+called <code>extdata</code> that contains examples of all files listed
+above. In the vignette, we use this data directory.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the data directory from readtext</span></span>
+<span><span class="va">DATA_DIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/"</span>, package <span class="op">=</span> <span class="st">"readtext"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>extdata</code> directory contains several subfolders that
+include different text files. In the following examples, we load one or
+more files stored in each of these folders. The <code>paste0</code>
+command is used to concatenate the <code>extdata</code> folder from the
+<strong>readtext</strong> package with the subfolders. When reading in
+custom text files, you will need to determine your own data directory
+(see <code>?setwd()</code>).</p>
 </div>
-<div id="reading-one-or-more-text-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reading-one-or-more-text-files" class="anchor"></a>2. Reading one or more text files</h1>
-<div id="plain-text-files--txt" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plain-text-files--txt" class="anchor"></a>2.1 Plain text files (.txt)</h2>
-<p>The folder “txt” contains a subfolder named UDHR with .txt files of the Universal Declaration of Human Rights in 13 languages.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Read in all files from a folder</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/txt/UDHR/*"</span>))</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">## readtext object consisting of 13 documents and 0 docvars.</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">## # Description: df[,2] [13 × 2]</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">##   doc_id            text                         </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">##   &lt;chr&gt;             &lt;chr&gt;                        </span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">## 2 UDHR_czech.txt    "\"VŠEOBECNÁ \"..."          </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">## 3 UDHR_danish.txt   "\"Den 10. de\"..."          </span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">## 4 UDHR_english.txt  "\"Universal \"..."          </span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">## 5 UDHR_french.txt   "\"Déclaratio\"..."          </span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          </span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">## # … with 7 more rows</span></a></code></pre></div>
-<p>We can specify document-level metadata (<code>docvars</code>) based on the file names or on a separate data.frame. Below we take the docvars from the filenames (<code>docvarsfrom = "filenames"</code>) and set the names for each variable (<code>docvarnames = c("unit", "context", "year", "language", "party")</code>). The command <code>dvsep = "_"</code> determines the separator (a regular expression character string) included in the filenames to delimit the <code>docvar</code> elements.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Manifestos with docvars from filenames</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/txt/EU_manifestos/*.txt"</span>),</a>
-<a class="sourceLine" id="cb4-3" title="3">         <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb4-4" title="4">         <span class="dt">docvarnames =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span>),</a>
-<a class="sourceLine" id="cb4-5" title="5">         <span class="dt">dvsep =</span> <span class="st">"_"</span>, </a>
-<a class="sourceLine" id="cb4-6" title="6">         <span class="dt">encoding =</span> <span class="st">"ISO-8859-1"</span>)</a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">## readtext object consisting of 17 documents and 5 docvars.</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">## # Description: df[,7] [17 × 7]</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">##   doc_id                  text                unit  context  year language party</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">##   &lt;chr&gt;                   &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co">## 1 EU_euro_2004_de_PSE.txt "\"PES · PSE \"..." EU    euro     2004 de       PSE  </span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="co">## 2 EU_euro_2004_de_V.txt   "\"Gemeinsame\"..." EU    euro     2004 de       V    </span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">## 3 EU_euro_2004_en_PSE.txt "\"PES · PSE \"..." EU    euro     2004 en       PSE  </span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">## 4 EU_euro_2004_en_V.txt   "\"Manifesto\n\"..… EU    euro     2004 en       V    </span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="co">## 5 EU_euro_2004_es_PSE.txt "\"PES · PSE \"..." EU    euro     2004 es       PSE  </span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="co">## 6 EU_euro_2004_es_V.txt   "\"Manifesto\n\"..… EU    euro     2004 es       V    </span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="co">## # … with 11 more rows</span></a></code></pre></div>
-<p><strong>readtext</strong> can also curse through subdirectories. In our example, the folder <code>txt/movie_reviews</code> contains two subfolders (called <code>neg</code> and <code>pos</code>). We can load all texts included in both folders.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Recurse through subdirectories</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/txt/movie_reviews/*"</span>))</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">## readtext object consisting of 10 documents and 0 docvars.</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">## # Description: df[,2] [10 × 2]</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">##   doc_id              text                </span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">##   &lt;chr&gt;               &lt;chr&gt;               </span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co">## 1 neg_cv000_29416.txt "\"plot : two\"..." </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">## 2 neg_cv001_19502.txt "\"the happy \"..." </span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">## 3 neg_cv002_17424.txt "\"it is movi\"..." </span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="co">## 4 neg_cv003_12683.txt "\" \" quest f\"..."</span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co">## 5 neg_cv004_12641.txt "\"synopsis :\"..." </span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="co">## 6 pos_cv000_29590.txt "\"films adap\"..." </span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="co">## # … with 4 more rows</span></a></code></pre></div>
+<div class="section level2">
+<h2 id="reading-one-or-more-text-files">2. Reading one or more text files<a class="anchor" aria-label="anchor" href="#reading-one-or-more-text-files"></a>
+</h2>
+<div class="section level3">
+<h3 id="plain-text-files--txt">2.1 Plain text files (.txt)<a class="anchor" aria-label="anchor" href="#plain-text-files--txt"></a>
+</h3>
+<p>The folder “txt” contains a subfolder named UDHR with .txt files of
+the Universal Declaration of Human Rights in 13 languages.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Read in all files from a folder</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/txt/UDHR/*"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 13 documents and 0 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 13 × 2\033[39m"                                                                               </span></span>
+<span><span class="co">##  [2] "  doc_id            text                         "                                                                          </span></span>
+<span><span class="co">##  [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m             \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                        "</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m1\033[39m UDHR_chinese.txt  \033[38;5;246m\"\033[39m\\\"世界人权宣言\\n联合国\\\"...\033[38;5;246m\"\033[39m" </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m2\033[39m UDHR_czech.txt    \033[38;5;246m\"\033[39m\\\"VŠEOBECNÁ \\\"...\033[38;5;246m\"\033[39m          "  </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m3\033[39m UDHR_danish.txt   \033[38;5;246m\"\033[39m\\\"Den 10. de\\\"...\033[38;5;246m\"\033[39m          "  </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m4\033[39m UDHR_english.txt  \033[38;5;246m\"\033[39m\\\"Universal \\\"...\033[38;5;246m\"\033[39m          "  </span></span>
+<span><span class="co">##  [8] "\033[38;5;250m5\033[39m UDHR_french.txt   \033[38;5;246m\"\033[39m\\\"Déclaratio\\\"...\033[38;5;246m\"\033[39m          "  </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m6\033[39m UDHR_georgian.txt \033[38;5;246m\"\033[39m\\\"FLFVBFYBC \\\"...\033[38;5;246m\"\033[39m          "  </span></span>
+<span><span class="co">## [10] "\033[38;5;246m# ℹ 7 more rows\033[39m"                                                                                      </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
+<p>We can specify document-level metadata (<code>docvars</code>) based
+on the file names or on a separate data.frame. Below we take the docvars
+from the filenames (<code>docvarsfrom = "filenames"</code>) and set the
+names for each variable
+(<code>docvarnames = c("unit", "context", "year", "language", "party")</code>).
+The command <code>dvsep = "_"</code> determines the separator (a regular
+expression character string) included in the filenames to delimit the
+<code>docvar</code> elements.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Manifestos with docvars from filenames</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/txt/EU_manifestos/*.txt"</span><span class="op">)</span>,</span>
+<span>         docvarsfrom <span class="op">=</span> <span class="st">"filenames"</span>, </span>
+<span>         docvarnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span><span class="op">)</span>,</span>
+<span>         dvsep <span class="op">=</span> <span class="st">"_"</span>, </span>
+<span>         encoding <span class="op">=</span> <span class="st">"ISO-8859-1"</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 17 documents and 5 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 17 × 7\033[39m"                                                                                                                                                                                                                                                                                                       </span></span>
+<span><span class="co">##  [2] "  doc_id                  text                unit  context  year language party"                                                                                                                                                                                                                                                                   </span></span>
+<span><span class="co">##  [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                   \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m               \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m   \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m"</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m1\033[39m EU_euro_2004_de_PSE.txt \033[38;5;246m\"\033[39m\\\"PES · PSE \\\"...\033[38;5;246m\"\033[39m EU    euro     \033[4m2\033[24m004 de       PSE  "                                                                                                                                                                            </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m2\033[39m EU_euro_2004_de_V.txt   \033[38;5;246m\"\033[39m\\\"Gemeinsame\\\"...\033[38;5;246m\"\033[39m EU    euro     \033[4m2\033[24m004 de       V    "                                                                                                                                                                            </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m3\033[39m EU_euro_2004_en_PSE.txt \033[38;5;246m\"\033[39m\\\"PES · PSE \\\"...\033[38;5;246m\"\033[39m EU    euro     \033[4m2\033[24m004 en       PSE  "                                                                                                                                                                            </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m4\033[39m EU_euro_2004_en_V.txt   \033[38;5;246m\"\033[39m\\\"Manifesto\\n\\\"..… EU    euro     \033[4m2\033[24m004 en       V    "                                                                                                                                                                                                  </span></span>
+<span><span class="co">##  [8] "\033[38;5;250m5\033[39m EU_euro_2004_es_PSE.txt \033[38;5;246m\"\033[39m\\\"PES · PSE \\\"...\033[38;5;246m\"\033[39m EU    euro     \033[4m2\033[24m004 es       PSE  "                                                                                                                                                                            </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m6\033[39m EU_euro_2004_es_V.txt   \033[38;5;246m\"\033[39m\\\"Manifesto\\n\\\"..… EU    euro     \033[4m2\033[24m004 es       V    "                                                                                                                                                                                                  </span></span>
+<span><span class="co">## [10] "\033[38;5;246m# ℹ 11 more rows\033[39m"                                                                                                                                                                                                                                                                                                             </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
+<p><strong>readtext</strong> can also curse through subdirectories. In
+our example, the folder <code>txt/movie_reviews</code> contains two
+subfolders (called <code>neg</code> and <code>pos</code>). We can load
+all texts included in both folders.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Recurse through subdirectories</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/txt/movie_reviews/*"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 10 documents and 0 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 10 × 2\033[39m"                                                                        </span></span>
+<span><span class="co">##  [2] "  doc_id              text                "                                                                          </span></span>
+<span><span class="co">##  [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m               \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m               "</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m1\033[39m neg_cv000_29416.txt \033[38;5;246m\"\033[39m\\\"plot : two\\\"...\033[38;5;246m\"\033[39m "  </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m2\033[39m neg_cv001_19502.txt \033[38;5;246m\"\033[39m\\\"the happy \\\"...\033[38;5;246m\"\033[39m "  </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m3\033[39m neg_cv002_17424.txt \033[38;5;246m\"\033[39m\\\"it is movi\\\"...\033[38;5;246m\"\033[39m "  </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m4\033[39m neg_cv003_12683.txt \033[38;5;246m\"\033[39m\\\" \\\" quest f\\\"...\033[38;5;246m\"\033[39m"</span></span>
+<span><span class="co">##  [8] "\033[38;5;250m5\033[39m neg_cv004_12641.txt \033[38;5;246m\"\033[39m\\\"synopsis :\\\"...\033[38;5;246m\"\033[39m "  </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m6\033[39m pos_cv000_29590.txt \033[38;5;246m\"\033[39m\\\"films adap\\\"...\033[38;5;246m\"\033[39m "  </span></span>
+<span><span class="co">## [10] "\033[38;5;246m# ℹ 4 more rows\033[39m"                                                                               </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 </div>
-<div id="comma--or-tab-separated-values--csv--tab--tsv" class="section level2">
-<h2 class="hasAnchor">
-<a href="#comma--or-tab-separated-values--csv--tab--tsv" class="anchor"></a>2.2 Comma- or tab-separated values (.csv, .tab, .tsv)</h2>
-<p>Read in comma separated values (.csv files) that contain textual data. We determine the <code>texts</code> variable in our .csv file as the <code>text_field</code>. This is the column that contains the actual text. The other columns of the original csv file (<code>Year</code>, <code>President</code>, <code>FirstName</code>) are by default treated as document-level variables.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Read in comma-separated values</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">## readtext object consisting of 5 documents and 3 docvars.</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">## # Description: df[,5] [5 × 5]</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">##   doc_id            text                 Year President  FirstName</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">##   &lt;chr&gt;             &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   </span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">## 2 inaugCorpus.csv.2 "\"Fellow cit\"..."  1793 Washington George   </span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co">## 3 inaugCorpus.csv.3 "\"When it wa\"..."  1797 Adams      John     </span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">## 4 inaugCorpus.csv.4 "\"Friends an\"..."  1801 Jefferson  Thomas   </span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">## 5 inaugCorpus.csv.5 "\"Proceeding\"..."  1805 Jefferson  Thomas</span></a></code></pre></div>
+<div class="section level3">
+<h3 id="comma--or-tab-separated-values--csv--tab--tsv">2.2 Comma- or tab-separated values (.csv, .tab, .tsv)<a class="anchor" aria-label="anchor" href="#comma--or-tab-separated-values--csv--tab--tsv"></a>
+</h3>
+<p>Read in comma separated values (.csv files) that contain textual
+data. We determine the <code>texts</code> variable in our .csv file as
+the <code>text_field</code>. This is the column that contains the actual
+text. The other columns of the original csv file (<code>Year</code>,
+<code>President</code>, <code>FirstName</code>) are by default treated
+as document-level variables.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Read in comma-separated values</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/csv/inaugCorpus.csv"</span><span class="op">)</span>, text_field <span class="op">=</span> <span class="st">"texts"</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 5 documents and 3 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">## [1] "\033[38;5;246m# A data frame: 5 × 5\033[39m"                                                                                                                                                                                                                </span></span>
+<span><span class="co">## [2] "  doc_id            text                 Year President  FirstName"                                                                                                                                                                                         </span></span>
+<span><span class="co">## [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m             \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m               \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m      \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    "</span></span>
+<span><span class="co">## [4] "\033[38;5;250m1\033[39m inaugCorpus.csv.1 \033[38;5;246m\"\033[39m\\\"Fellow-Cit\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m789 Washington George   "                                                                                                  </span></span>
+<span><span class="co">## [5] "\033[38;5;250m2\033[39m inaugCorpus.csv.2 \033[38;5;246m\"\033[39m\\\"Fellow cit\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m793 Washington George   "                                                                                                  </span></span>
+<span><span class="co">## [6] "\033[38;5;250m3\033[39m inaugCorpus.csv.3 \033[38;5;246m\"\033[39m\\\"When it wa\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m797 Adams      John     "                                                                                                  </span></span>
+<span><span class="co">## [7] "\033[38;5;250m4\033[39m inaugCorpus.csv.4 \033[38;5;246m\"\033[39m\\\"Friends an\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m801 Jefferson  Thomas   "                                                                                                  </span></span>
+<span><span class="co">## [8] "\033[38;5;250m5\033[39m inaugCorpus.csv.5 \033[38;5;246m\"\033[39m\\\"Proceeding\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m805 Jefferson  Thomas   "                                                                                                  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 <p>The same procedure applies to tab-separated values.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Read in tab-separated values</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/tsv/dailsample.tsv"</span>), <span class="dt">text_field =</span> <span class="st">"speech"</span>)</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">## readtext object consisting of 33 documents and 9 docvars.</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="co">## # Description: df[,11] [33 × 11]</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="co">##   doc_id text  speechID memberID partyID constID title date  member_name</span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="co">##   &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;    &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">## 1 dails… "\"M…        1      977      22     158 1. C… 1919… Count Geor…</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="co">## 2 dails… "\"I…        2     1603      22     103 1. C… 1919… Mr. Pádrai…</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">## 3 dails… "\"'…        3      116      22     178 1. C… 1919… Mr. Cathal…</span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="co">## 4 dails… "\"T…        4      116      22     178 2. C… 1919… Mr. Cathal…</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co">## 5 dails… "\"L…        5      116      22     178 3. A… 1919… Mr. Cathal…</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">## 6 dails… "\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="co">## # … with 27 more rows, and 2 more variables: party_name &lt;chr&gt;, const_name &lt;chr&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Read in tab-separated values</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/tsv/dailsample.tsv"</span><span class="op">)</span>, text_field <span class="op">=</span> <span class="st">"speech"</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 33 documents and 9 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 33 × 11\033[39m"                                                                                                                                                                                                                                                                                                                                                                                </span></span>
+<span><span class="co">##  [2] "  doc_id         text  speechID memberID partyID constID title date  member_name"                                                                                                                                                                                                                                                                                                                                             </span></span>
+<span><span class="co">##  [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m          \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m   \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m   \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m      "</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m1\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"M…        1      977      22     158 1. C… 1919… Count Geor…"                                                                                                                                                                                                                                                                                              </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m2\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"I…        2     \033[4m1\033[24m603      22     103 1. C… 1919… Mr. Pádrai…"                                                                                                                                                                                                                                                                               </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m3\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"'…        3      116      22     178 1. C… 1919… Mr. Cathal…"                                                                                                                                                                                                                                                                                              </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m4\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"T…        4      116      22     178 2. C… 1919… Mr. Cathal…"                                                                                                                                                                                                                                                                                              </span></span>
+<span><span class="co">##  [8] "\033[38;5;250m5\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"L…        5      116      22     178 3. A… 1919… Mr. Cathal…"                                                                                                                                                                                                                                                                                              </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m6\033[39m dailsample.ts… \033[38;5;246m\"\033[39m\\\"-…        6      116      22     178 3. A… 1919… Mr. Cathal…"                                                                                                                                                                                                                                                                                              </span></span>
+<span><span class="co">## [10] "\033[38;5;246m# ℹ 27 more rows\033[39m"                                                                                                                                                                                                                                                                                                                                                                                       </span></span>
+<span><span class="co">## [11] "\033[38;5;246m# ℹ 2 more variables: party_name &lt;chr&gt;, const_name &lt;chr&gt;\033[39m"                                                                                                                                                                                                                                                                                                                                               </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 </div>
-<div id="json-data--json" class="section level2">
-<h2 class="hasAnchor">
-<a href="#json-data--json" class="anchor"></a>2.3 JSON data (.json)</h2>
-<p>You can also read .json data. Again you need to specify the <code>text_field</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co">## Read in JSON data</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/json/inaugural_sample.json"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co">## readtext object consisting of 3 documents and 3 docvars.</span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="co">## # Description: df[,5] [3 × 5]</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">##   doc_id                  text                 Year President  FirstName</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">##   &lt;chr&gt;                   &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;    </span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">## 1 inaugural_sample.json.1 "\"Fellow-Cit\"..."  1789 Washington George   </span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">## 2 inaugural_sample.json.2 "\"Fellow cit\"..."  1793 Washington George   </span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">## 3 inaugural_sample.json.3 "\"When it wa\"..."  1797 Adams      John</span></a></code></pre></div>
+<div class="section level3">
+<h3 id="json-data--json">2.3 JSON data (.json)<a class="anchor" aria-label="anchor" href="#json-data--json"></a>
+</h3>
+<p>You can also read .json data. Again you need to specify the
+<code>text_field</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Read in JSON data</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/json/inaugural_sample.json"</span><span class="op">)</span>, text_field <span class="op">=</span> <span class="st">"texts"</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 3 documents and 3 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">## [1] "\033[38;5;246m# A data frame: 3 × 5\033[39m"                                                                                                                                                                                                                      </span></span>
+<span><span class="co">## [2] "  doc_id                  text                 Year President  FirstName"                                                                                                                                                                                         </span></span>
+<span><span class="co">## [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                   \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m               \033[3m\033[38;5;246m&lt;int&gt;\033[39m\033[23m \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m      \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    "</span></span>
+<span><span class="co">## [4] "\033[38;5;250m1\033[39m inaugural_sample.json.1 \033[38;5;246m\"\033[39m\\\"Fellow-Cit\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m789 Washington George   "                                                                                                  </span></span>
+<span><span class="co">## [5] "\033[38;5;250m2\033[39m inaugural_sample.json.2 \033[38;5;246m\"\033[39m\\\"Fellow cit\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m793 Washington George   "                                                                                                  </span></span>
+<span><span class="co">## [6] "\033[38;5;250m3\033[39m inaugural_sample.json.3 \033[38;5;246m\"\033[39m\\\"When it wa\\\"...\033[38;5;246m\"\033[39m  \033[4m1\033[24m797 Adams      John     "                                                                                                  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 </div>
-<div id="pdf-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pdf-files" class="anchor"></a>2.4 PDF files</h2>
-<p><strong>readtext</strong> can also read in and convert .pdf files.</p>
-<p>In the example below we load all .pdf files stored in the <code>UDHR</code> folder, and determine that the <code>docvars</code> shall be taken from the filenames. We call the document-level variables <code>document</code> and <code>language</code>, and specify the delimiter (<code>dvsep</code>).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">## Read in Universal Declaration of Human Rights pdf files</span></a>
-<a class="sourceLine" id="cb9-2" title="2">(rt_pdf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/pdf/UDHR/*.pdf"</span>), </a>
-<a class="sourceLine" id="cb9-3" title="3">                    <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb9-4" title="4">                    <span class="dt">docvarnames =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"document"</span>, <span class="st">"language"</span>),</a>
-<a class="sourceLine" id="cb9-5" title="5">                    <span class="dt">sep =</span> <span class="st">"_"</span>))</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">## readtext object consisting of 11 documents and 2 docvars.</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">## # Description: df[,4] [11 × 4]</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co">##   doc_id           text                          document language</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="co">##   &lt;chr&gt;            &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">## 1 UDHR_chinese.pdf "\"世界人权宣言\n联合国\"..." UDHR     chinese </span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">## 2 UDHR_czech.pdf   "\"VŠEOBECNÁ \"..."           UDHR     czech   </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co">## 3 UDHR_danish.pdf  "\"Den 10. de\"..."           UDHR     danish  </span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">## 4 UDHR_english.pdf "\"Universal \"..."           UDHR     english </span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="co">## 5 UDHR_french.pdf  "\"Déclaratio\"..."           UDHR     french  </span></a>
-<a class="sourceLine" id="cb9-15" title="15"><span class="co">## 6 UDHR_greek.pdf   "\"ΟΙΚΟΥΜΕΝΙΚ\"..."           UDHR     greek   </span></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="co">## # … with 5 more rows</span></a></code></pre></div>
+<div class="section level3">
+<h3 id="pdf-files">2.4 PDF files<a class="anchor" aria-label="anchor" href="#pdf-files"></a>
+</h3>
+<p><strong>readtext</strong> can also read in and convert .pdf
+files.</p>
+<p>In the example below we load all .pdf files stored in the
+<code>UDHR</code> folder, and determine that the <code>docvars</code>
+shall be taken from the filenames. We call the document-level variables
+<code>document</code> and <code>language</code>, and specify the
+delimiter (<code>dvsep</code>).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Read in Universal Declaration of Human Rights pdf files</span></span>
+<span><span class="op">(</span><span class="va">rt_pdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/pdf/UDHR/*.pdf"</span><span class="op">)</span>, </span>
+<span>                    docvarsfrom <span class="op">=</span> <span class="st">"filenames"</span>, </span>
+<span>                    docvarnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"document"</span>, <span class="st">"language"</span><span class="op">)</span>,</span>
+<span>                    sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 11 documents and 2 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 11 × 4\033[39m"                                                                                                                                                                          </span></span>
+<span><span class="co">##  [2] "  doc_id           text                          document language"                                                                                                                                                    </span></span>
+<span><span class="co">##  [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m            \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                         \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m   "</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m1\033[39m UDHR_chinese.pdf \033[38;5;246m\"\033[39m\\\"世界人权宣言\\n\\n联合\\\"...\033[38;5;246m\"\033[39m UDHR     chinese "                                                                          </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m2\033[39m UDHR_czech.pdf   \033[38;5;246m\"\033[39m\\\"VŠEOBECNÁ \\\"...\033[38;5;246m\"\033[39m           UDHR     czech   "                                                                            </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m3\033[39m UDHR_danish.pdf  \033[38;5;246m\"\033[39m\\\"Den 10. de\\\"...\033[38;5;246m\"\033[39m           UDHR     danish  "                                                                            </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m4\033[39m UDHR_english.pdf \033[38;5;246m\"\033[39m\\\"Universal \\\"...\033[38;5;246m\"\033[39m           UDHR     english "                                                                            </span></span>
+<span><span class="co">##  [8] "\033[38;5;250m5\033[39m UDHR_french.pdf  \033[38;5;246m\"\033[39m\\\"Déclaratio\\\"...\033[38;5;246m\"\033[39m           UDHR     french  "                                                                            </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m6\033[39m UDHR_greek.pdf   \033[38;5;246m\"\033[39m\\\"ΟΙΚΟΥΜΕΝΙΚ\\\"...\033[38;5;246m\"\033[39m           UDHR     greek   "                                                                            </span></span>
+<span><span class="co">## [10] "\033[38;5;246m# ℹ 5 more rows\033[39m"                                                                                                                                                                                 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 </div>
-<div id="microsoft-word-files--doc--docx" class="section level2">
-<h2 class="hasAnchor">
-<a href="#microsoft-word-files--doc--docx" class="anchor"></a>2.5 Microsoft Word files (.doc, .docx)</h2>
-<p>Microsoft Word formatted files are converted through the package <strong>antiword</strong> for older <code>.doc</code> files, and using <strong>XML</strong> for newer <code>.docx</code> files.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co">## Read in Word data (.docx)</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/word/*.docx"</span>))</a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co">## readtext object consisting of 2 documents and 0 docvars.</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co">## # Description: df[,2] [2 × 2]</span></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="co">##   doc_id                      text               </span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co">##   &lt;chr&gt;                       &lt;chr&gt;              </span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">## 1 UK_2015_EccentricParty.docx "\"The Eccent\"..."</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="co">## 2 UK_2015_LoonyParty.docx     "\"The Offici\"..."</span></a></code></pre></div>
+<div class="section level3">
+<h3 id="microsoft-word-files--doc--docx">2.5 Microsoft Word files (.doc, .docx)<a class="anchor" aria-label="anchor" href="#microsoft-word-files--doc--docx"></a>
+</h3>
+<p>Microsoft Word formatted files are converted through the package
+<strong>antiword</strong> for older <code>.doc</code> files, and using
+<strong>XML</strong> for newer <code>.docx</code> files.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Read in Word data (.docx)</span></span>
+<span><span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/word/*.docx"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 2 documents and 0 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">## [1] "\033[38;5;246m# A data frame: 2 × 2\033[39m"                                                                                </span></span>
+<span><span class="co">## [2] "  doc_id                      text               "                                                                          </span></span>
+<span><span class="co">## [3] "  \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                       \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m              "</span></span>
+<span><span class="co">## [4] "\033[38;5;250m1\033[39m UK_2015_EccentricParty.docx \033[38;5;246m\"\033[39m\\\"The Eccent\\\"...\033[38;5;246m\"\033[39m"  </span></span>
+<span><span class="co">## [5] "\033[38;5;250m2\033[39m UK_2015_LoonyParty.docx     \033[38;5;246m\"\033[39m\\\"The Offici\\\"...\033[38;5;246m\"\033[39m"  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
 </div>
-<div id="text-from-urls" class="section level2">
-<h2 class="hasAnchor">
-<a href="#text-from-urls" class="anchor"></a>2.6 Text from URLs</h2>
+<div class="section level3">
+<h3 id="text-from-urls">2.6 Text from URLs<a class="anchor" aria-label="anchor" href="#text-from-urls"></a>
+</h3>
 <p>You can also read in text directly from a URL.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Note: Example required: which URL should we use?</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Note: Example required: which URL should we use?</span></span></code></pre></div>
 </div>
-<div id="text-from-archive-files--zip--tar--tar-gz--tar-bz" class="section level2">
-<h2 class="hasAnchor">
-<a href="#text-from-archive-files--zip--tar--tar-gz--tar-bz" class="anchor"></a>2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)</h2>
+<div class="section level3">
+<h3 id="text-from-archive-files--zip--tar--tar-gz--tar-bz">2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)<a class="anchor" aria-label="anchor" href="#text-from-archive-files--zip--tar--tar-gz--tar-bz"></a>
+</h3>
 <p>Finally, it is possible to include text from archives.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Note: Archive file required. The only zip archive included in readtext has </span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="co"># different encodings and is difficult to import (see section 4.2).</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Note: Archive file required. The only zip archive included in readtext has </span></span>
+<span><span class="co"># different encodings and is difficult to import (see section 4.2).</span></span></code></pre></div>
 </div>
 </div>
-<div id="inter-operability-with-quanteda" class="section level1">
-<h1 class="hasAnchor">
-<a href="#inter-operability-with-quanteda" class="anchor"></a>3. Inter-operability with quanteda</h1>
-<p><strong>readtext</strong> was originally developed in early versions of the <a href="http://github.com/quanteda/quanteda"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. It was spawned from the <code>textfile()</code> function from that package, and now lives exclusively in <strong>readtext</strong>. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code><a href="../reference/readtext.html">readtext()</a></code>, it can construct a corpus directly from a <code>readtext</code> object, preserving all docvars and other meta-data.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(quanteda)</a></code></pre></div>
-<p>You can easily construct a corpus from a <strong>readtext</strong> object.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># read in comma-separated values with readtext</span></a>
-<a class="sourceLine" id="cb14-2" title="2">rt_csv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/csv/inaugCorpus.csv"</span>), <span class="dt">text_field =</span> <span class="st">"texts"</span>)</a>
-<a class="sourceLine" id="cb14-3" title="3"></a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="co"># create quanteda corpus</span></a>
-<a class="sourceLine" id="cb14-5" title="5">corpus_csv &lt;-<span class="st"> </span><span class="kw"><a href="https://quanteda.io/reference/corpus.html">corpus</a></span>(rt_csv)</a>
-<a class="sourceLine" id="cb14-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(corpus_csv, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb14-7" title="7"><span class="co">## Corpus consisting of 5 documents, showing 5 documents:</span></a>
-<a class="sourceLine" id="cb14-8" title="8"><span class="co">## </span></a>
-<a class="sourceLine" id="cb14-9" title="9"><span class="co">##               Text Types Tokens Sentences Year  President FirstName</span></a>
-<a class="sourceLine" id="cb14-10" title="10"><span class="co">##  inaugCorpus.csv.1   625   1539        23 1789 Washington    George</span></a>
-<a class="sourceLine" id="cb14-11" title="11"><span class="co">##  inaugCorpus.csv.2    96    147         4 1793 Washington    George</span></a>
-<a class="sourceLine" id="cb14-12" title="12"><span class="co">##  inaugCorpus.csv.3   826   2577        37 1797      Adams      John</span></a>
-<a class="sourceLine" id="cb14-13" title="13"><span class="co">##  inaugCorpus.csv.4   717   1923        41 1801  Jefferson    Thomas</span></a>
-<a class="sourceLine" id="cb14-14" title="14"><span class="co">##  inaugCorpus.csv.5   804   2380        45 1805  Jefferson    Thomas</span></a></code></pre></div>
+<div class="section level2">
+<h2 id="inter-operability-with-quanteda">3. Inter-operability with quanteda<a class="anchor" aria-label="anchor" href="#inter-operability-with-quanteda"></a>
+</h2>
+<p><strong>readtext</strong> was originally developed in early versions
+of the <a href="https://github.com/quanteda/quanteda" class="external-link"><strong>quanteda</strong></a>
+package for the quantitative analysis of textual data. It was spawned
+from the <code>textfile()</code> function from that package, and now
+lives exclusively in <strong>readtext</strong>. Because
+<strong>quanteda</strong>’s corpus constructor recognizes the data.frame
+format returned by <code><a href="../reference/readtext.html">readtext()</a></code>, it can construct a corpus
+directly from a <code>readtext</code> object, preserving all docvars and
+other meta-data.</p>
+<p>You can easily construct a corpus from a <strong>readtext</strong>
+object.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://quanteda.io" class="external-link">"quanteda"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span><span class="co"># read in comma-separated values with readtext</span></span>
+<span><span class="va">rt_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/csv/inaugCorpus.csv"</span><span class="op">)</span>, text_field <span class="op">=</span> <span class="st">"texts"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create quanteda corpus</span></span>
+<span><span class="va">corpus_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="va">rt_csv</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">corpus_csv</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">## Loading required package: quanteda</span></span>
+<span><span class="co">## Package version: 3.2.4</span></span>
+<span><span class="co">## Unicode version: 14.0</span></span>
+<span><span class="co">## ICU version: 71.1</span></span>
+<span><span class="co">## Parallel computing: 10 of 10 threads used.</span></span>
+<span><span class="co">## See https://quanteda.io for tutorials and examples.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'quanteda'</span></span>
+<span><span class="co">## The following objects are masked from 'package:readtext':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     docnames, docvars, texts</span></span>
+<span><span class="co">## Corpus consisting of 5 documents, showing 5 documents:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##               Text Types Tokens Sentences Year  President FirstName</span></span>
+<span><span class="co">##  inaugCorpus.csv.1   625   1539        23 1789 Washington    George</span></span>
+<span><span class="co">##  inaugCorpus.csv.2    96    147         4 1793 Washington    George</span></span>
+<span><span class="co">##  inaugCorpus.csv.3   826   2577        37 1797      Adams      John</span></span>
+<span><span class="co">##  inaugCorpus.csv.4   717   1923        41 1801  Jefferson    Thomas</span></span>
+<span><span class="co">##  inaugCorpus.csv.5   804   2380        45 1805  Jefferson    Thomas</span></span></code></pre></div>
 </div>
-<div id="solving-common-problems" class="section level1">
-<h1 class="hasAnchor">
-<a href="#solving-common-problems" class="anchor"></a>4. Solving common problems</h1>
-<div id="remove-page-numbers-using-regular-expressions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#remove-page-numbers-using-regular-expressions" class="anchor"></a>4.1 Remove page numbers using regular expressions</h2>
-<p>When a document contains page numbers, they are imported as well. If you want to remove them, you can use a regular expression. We strongly recommend using the <a href="http://github.com/gagolews/stringi"><strong>stringi</strong></a> package. For the most common regular expressions you can look at this <a href="http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf">cheatsheet</a>.</p>
-<p>You first need to check in the original file in which format the page numbers occur (e.g., “1”, “-1-”, “page 1” etc.). We can make use of the fact that page numbers are almost always preceded and followed by a linebreak (<code>\n</code>). After loading the text with <strong>readtext</strong>, you can replace the page numbers.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Load stringi package</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(stringi)</a></code></pre></div>
+<div class="section level2">
+<h2 id="solving-common-problems">4. Solving common problems<a class="anchor" aria-label="anchor" href="#solving-common-problems"></a>
+</h2>
+<div class="section level3">
+<h3 id="remove-page-numbers-using-regular-expressions">4.1 Remove page numbers using regular expressions<a class="anchor" aria-label="anchor" href="#remove-page-numbers-using-regular-expressions"></a>
+</h3>
+<p>When a document contains page numbers, they are imported as well. If
+you want to remove them, you can use a regular expression. We strongly
+recommend using the <a href="https://github.com/gagolews/stringi" class="external-link"><strong>stringi</strong></a>
+package. For the most common regular expressions you can look at this <a href="https://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf" class="external-link">cheatsheet</a>.</p>
+<p>You first need to check in the original file in which format the page
+numbers occur (e.g., “1”, “-1-”, “page 1” etc.). We can make use of the
+fact that page numbers are almost always preceded and followed by a
+linebreak (<code>\n</code>). After loading the text with
+<strong>readtext</strong>, you can replace the page numbers.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load stringi package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://stringi.gagolewski.com/" class="external-link">"stringi"</a></span><span class="op">)</span></span></code></pre></div>
 <p>In the first example, the page numbers have the format “page X”.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Make some text with page numbers</span></a>
-<a class="sourceLine" id="cb16-2" title="2">sample_text_a &lt;-<span class="st"> "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, </span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">page 1 </span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">with the newspaper from a boy named quick Seamus, in his mouth.</span></a>
-<a class="sourceLine" id="cb16-5" title="5"><span class="st">page 2</span></a>
-<a class="sourceLine" id="cb16-6" title="6"><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb16-7" title="7"></a>
-<a class="sourceLine" id="cb16-8" title="8">sample_text_a</a>
-<a class="sourceLine" id="cb16-9" title="9"><span class="co">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, \npage 1 \nwith the newspaper from a boy named quick Seamus, in his mouth.\npage 2\nThe quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb16-10" title="10"></a>
-<a class="sourceLine" id="cb16-11" title="11"><span class="co"># Remove "page" and respective digit</span></a>
-<a class="sourceLine" id="cb16-12" title="12">sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_split.html">stri_split_fixed</a></span>(sample_text_a, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-13" title="13">sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_replace.html">stri_replace_all_regex</a></span>(sample_text_a2, <span class="st">"page </span><span class="ch">\\</span><span class="st">d*"</span>, <span class="st">""</span>)</a>
-<a class="sourceLine" id="cb16-14" title="14">sample_text_a2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_trim.html">stri_trim_both</a></span>(sample_text_a2)</a>
-<a class="sourceLine" id="cb16-15" title="15">sample_text_a2 &lt;-<span class="st"> </span>sample_text_a2[sample_text_a2 <span class="op">!=</span><span class="st"> ''</span>]</a>
-<a class="sourceLine" id="cb16-16" title="16"><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_join.html">stri_paste</a></span>(sample_text_a2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb16-17" title="17"><span class="co">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus,\nwith the newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</span></a></code></pre></div>
-<p>In the second example we remove page numbers which have the format “- X -”.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">sample_text_b &lt;-<span class="st"> "The quick brown fox named Seamus </span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">- 1 - </span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">jumps over the lazy dog also named Seamus, with </span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="st">- 2 - </span></a>
-<a class="sourceLine" id="cb17-5" title="5"><span class="st">the newspaper from a boy named quick Seamus, in his mouth. </span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="st">- 33 - </span></a>
-<a class="sourceLine" id="cb17-7" title="7"><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb17-8" title="8"></a>
-<a class="sourceLine" id="cb17-9" title="9">sample_text_b</a>
-<a class="sourceLine" id="cb17-10" title="10"><span class="co">## [1] "The quick brown fox named Seamus \n- 1 - \njumps over the lazy dog also named Seamus, with \n- 2 - \nthe newspaper from a boy named quick Seamus, in his mouth. \n- 33 - \nThe quicker brown fox jumped over 2 lazy dogs."</span></a>
-<a class="sourceLine" id="cb17-11" title="11"></a>
-<a class="sourceLine" id="cb17-12" title="12">sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_split.html">stri_split_fixed</a></span>(sample_text_b, <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>), <span class="dt">use.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-13" title="13">sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_replace.html">stri_replace_all_regex</a></span>(sample_text_b2, <span class="st">"[-] </span><span class="ch">\\</span><span class="st">d* [-]"</span>, <span class="st">""</span>)</a>
-<a class="sourceLine" id="cb17-14" title="14">sample_text_b2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_trim.html">stri_trim_both</a></span>(sample_text_b2)</a>
-<a class="sourceLine" id="cb17-15" title="15">sample_text_b2 &lt;-<span class="st"> </span>sample_text_b2[sample_text_b2 <span class="op">!=</span><span class="st"> ''</span>]</a>
-<a class="sourceLine" id="cb17-16" title="16"><span class="kw"><a href="https://rdrr.io/pkg/stringi/man/stri_join.html">stri_paste</a></span>(sample_text_b2, <span class="dt">collapse =</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</a>
-<a class="sourceLine" id="cb17-17" title="17"><span class="co">## [1] "The quick brown fox named Seamus\njumps over the lazy dog also named Seamus, with\nthe newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</span></a></code></pre></div>
-<p>Such <strong>stringi</strong> functions can also be applied to <strong>readtext</strong> objects.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Make some text with page numbers</span></span>
+<span><span class="va">sample_text_a</span> <span class="op">&lt;-</span> <span class="st">"The quick brown fox named Seamus jumps over the lazy dog also named Seamus, </span></span>
+<span><span class="st">page 1 </span></span>
+<span><span class="st">with the newspaper from a boy named quick Seamus, in his mouth.</span></span>
+<span><span class="st">page 2</span></span>
+<span><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></span>
+<span></span>
+<span><span class="va">sample_text_a</span></span>
+<span><span class="co">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus, \npage 1 \nwith the newspaper from a boy named quick Seamus, in his mouth.\npage 2\nThe quicker brown fox jumped over 2 lazy dogs."</span></span>
+<span></span>
+<span><span class="co"># Remove "page" and respective digit</span></span>
+<span><span class="va">sample_text_a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_split.html" class="external-link">stri_split_fixed</a></span><span class="op">(</span><span class="va">sample_text_a</span>, <span class="st">'\n'</span><span class="op">)</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">sample_text_a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_replace.html" class="external-link">stri_replace_all_regex</a></span><span class="op">(</span><span class="va">sample_text_a2</span>, <span class="st">"page \\d*"</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">sample_text_a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_trim.html" class="external-link">stri_trim_both</a></span><span class="op">(</span><span class="va">sample_text_a2</span><span class="op">)</span></span>
+<span><span class="va">sample_text_a2</span> <span class="op">&lt;-</span> <span class="va">sample_text_a2</span><span class="op">[</span><span class="va">sample_text_a2</span> <span class="op">!=</span> <span class="st">''</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_join.html" class="external-link">stri_paste</a></span><span class="op">(</span><span class="va">sample_text_a2</span>, collapse <span class="op">=</span> <span class="st">'\n'</span><span class="op">)</span></span>
+<span><span class="co">## [1] "The quick brown fox named Seamus jumps over the lazy dog also named Seamus,\nwith the newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</span></span></code></pre></div>
+<p>In the second example we remove page numbers which have the format “-
+X -”.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sample_text_b</span> <span class="op">&lt;-</span> <span class="st">"The quick brown fox named Seamus </span></span>
+<span><span class="st">- 1 - </span></span>
+<span><span class="st">jumps over the lazy dog also named Seamus, with </span></span>
+<span><span class="st">- 2 - </span></span>
+<span><span class="st">the newspaper from a boy named quick Seamus, in his mouth. </span></span>
+<span><span class="st">- 33 - </span></span>
+<span><span class="st">The quicker brown fox jumped over 2 lazy dogs."</span></span>
+<span></span>
+<span><span class="va">sample_text_b</span></span>
+<span><span class="co">## [1] "The quick brown fox named Seamus \n- 1 - \njumps over the lazy dog also named Seamus, with \n- 2 - \nthe newspaper from a boy named quick Seamus, in his mouth. \n- 33 - \nThe quicker brown fox jumped over 2 lazy dogs."</span></span>
+<span></span>
+<span><span class="va">sample_text_b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_split.html" class="external-link">stri_split_fixed</a></span><span class="op">(</span><span class="va">sample_text_b</span>, <span class="st">'\n'</span><span class="op">)</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">sample_text_b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_replace.html" class="external-link">stri_replace_all_regex</a></span><span class="op">(</span><span class="va">sample_text_b2</span>, <span class="st">"[-] \\d* [-]"</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="va">sample_text_b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_trim.html" class="external-link">stri_trim_both</a></span><span class="op">(</span><span class="va">sample_text_b2</span><span class="op">)</span></span>
+<span><span class="va">sample_text_b2</span> <span class="op">&lt;-</span> <span class="va">sample_text_b2</span><span class="op">[</span><span class="va">sample_text_b2</span> <span class="op">!=</span> <span class="st">''</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stringi/man/stri_join.html" class="external-link">stri_paste</a></span><span class="op">(</span><span class="va">sample_text_b2</span>, collapse <span class="op">=</span> <span class="st">'\n'</span><span class="op">)</span></span>
+<span><span class="co">## [1] "The quick brown fox named Seamus\njumps over the lazy dog also named Seamus, with\nthe newspaper from a boy named quick Seamus, in his mouth.\nThe quicker brown fox jumped over 2 lazy dogs."</span></span></code></pre></div>
+<p>Such <strong>stringi</strong> functions can also be applied to
+<strong>readtext</strong> objects.</p>
 </div>
-<div id="read-files-with-different-encodings" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read-files-with-different-encodings" class="anchor"></a>4.2 Read files with different encodings</h2>
-<p>Sometimes files of the same type have different encodings. If the encoding of a file is included in the file name, we can extract this information and import the texts correctly.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># create a temporary directory to extract the .zip file</span></a>
-<a class="sourceLine" id="cb18-2" title="2">FILEDIR &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>()</a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="co"># unzip file</span></a>
-<a class="sourceLine" id="cb18-4" title="4"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"data_files_encodedtexts.zip"</span>, <span class="dt">package =</span> <span class="st">"readtext"</span>), <span class="dt">exdir =</span> FILEDIR)</a></code></pre></div>
+<div class="section level3">
+<h3 id="read-files-with-different-encodings">4.2 Read files with different encodings<a class="anchor" aria-label="anchor" href="#read-files-with-different-encodings"></a>
+</h3>
+<p>Sometimes files of the same type have different encodings. If the
+encoding of a file is included in the file name, we can extract this
+information and import the texts correctly.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># create a temporary directory to extract the .zip file</span></span>
+<span><span class="va">FILEDIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># unzip file</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"data_files_encodedtexts.zip"</span>, package <span class="op">=</span> <span class="st">"readtext"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">FILEDIR</span><span class="op">)</span></span></code></pre></div>
 <p>Here, we will get the encoding from the filenames themselves.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># get encoding from filename</span></a>
-<a class="sourceLine" id="cb19-2" title="2">filenames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(FILEDIR, <span class="st">"^(Indian|UDHR_).*</span><span class="ch">\\</span><span class="st">.txt$"</span>)</a>
-<a class="sourceLine" id="cb19-3" title="3"></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(filenames)</a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="co">## [1] "IndianTreaty_English_UTF-16LE.txt"  "IndianTreaty_English_UTF-8-BOM.txt"</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="co">## [3] "UDHR_Arabic_ISO-8859-6.txt"         "UDHR_Arabic_UTF-8.txt"             </span></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="co">## [5] "UDHR_Arabic_WINDOWS-1256.txt"       "UDHR_Chinese_GB2312.txt"</span></a>
-<a class="sourceLine" id="cb19-8" title="8"></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="co"># Strip the extension</span></a>
-<a class="sourceLine" id="cb19-10" title="10">filenames &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">".txt$"</span>, <span class="st">""</span>, filenames)</a>
-<a class="sourceLine" id="cb19-11" title="11">parts &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span>(filenames, <span class="st">"_"</span>)</a>
-<a class="sourceLine" id="cb19-12" title="12">fileencodings &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(parts, <span class="st">"["</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb19-13" title="13"></a>
-<a class="sourceLine" id="cb19-14" title="14"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(fileencodings)</a>
-<a class="sourceLine" id="cb19-15" title="15"><span class="co">## [1] "UTF-16LE"     "UTF-8-BOM"    "ISO-8859-6"   "UTF-8"        "WINDOWS-1256"</span></a>
-<a class="sourceLine" id="cb19-16" title="16"><span class="co">## [6] "GB2312"</span></a>
-<a class="sourceLine" id="cb19-17" title="17"></a>
-<a class="sourceLine" id="cb19-18" title="18"><span class="co"># Check whether certain file encodings are not supported</span></a>
-<a class="sourceLine" id="cb19-19" title="19">notAvailableIndex &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="op">!</span>(fileencodings <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/iconv.html">iconvlist</a></span>()))</a>
-<a class="sourceLine" id="cb19-20" title="20">fileencodings[notAvailableIndex]</a>
-<a class="sourceLine" id="cb19-21" title="21"><span class="co">## [1] "UTF-8-BOM"</span></a></code></pre></div>
-<p>If we read the text files without specifying the encoding, we get erroneously formatted text. To avoid this, we determine the <code>encoding</code> using the character object <code>fileencoding</code> created above.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get encoding from filename</span></span>
+<span><span class="va">filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">FILEDIR</span>, <span class="st">"^(Indian|UDHR_).*\\.txt$"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">filenames</span><span class="op">)</span></span>
+<span><span class="co">## [1] "IndianTreaty_English_UTF-16LE.txt"  "IndianTreaty_English_UTF-8-BOM.txt"</span></span>
+<span><span class="co">## [3] "UDHR_Arabic_ISO-8859-6.txt"         "UDHR_Arabic_UTF-8.txt"             </span></span>
+<span><span class="co">## [5] "UDHR_Arabic_WINDOWS-1256.txt"       "UDHR_Chinese_GB2312.txt"</span></span>
+<span></span>
+<span><span class="co"># Strip the extension</span></span>
+<span><span class="va">filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">".txt$"</span>, <span class="st">""</span>, <span class="va">filenames</span><span class="op">)</span></span>
+<span><span class="va">parts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">filenames</span>, <span class="st">"_"</span><span class="op">)</span></span>
+<span><span class="va">fileencodings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">parts</span>, <span class="st">"["</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fileencodings</span><span class="op">)</span></span>
+<span><span class="co">## [1] "UTF-16LE"     "UTF-8-BOM"    "ISO-8859-6"   "UTF-8"        "WINDOWS-1256"</span></span>
+<span><span class="co">## [6] "GB2312"</span></span>
+<span></span>
+<span><span class="co"># Check whether certain file encodings are not supported</span></span>
+<span><span class="va">notAvailableIndex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">fileencodings</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/iconv.html" class="external-link">iconvlist</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fileencodings</span><span class="op">[</span><span class="va">notAvailableIndex</span><span class="op">]</span></span>
+<span><span class="co">## [1] "UTF-8-BOM"</span></span></code></pre></div>
+<p>If we read the text files without specifying the encoding, we get
+erroneously formatted text. To avoid this, we determine the
+<code>encoding</code> using the character object
+<code>fileencoding</code> created above.</p>
 <p>We can also add <code>docvars</code> based on the filenames.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">txts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readtext.html">readtext</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(DATA_DIR, <span class="st">"/data_files_encodedtexts.zip"</span>), </a>
-<a class="sourceLine" id="cb20-2" title="2">                 <span class="dt">encoding =</span> fileencodings,</a>
-<a class="sourceLine" id="cb20-3" title="3">                 <span class="dt">docvarsfrom =</span> <span class="st">"filenames"</span>, </a>
-<a class="sourceLine" id="cb20-4" title="4">                 <span class="dt">docvarnames =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"document"</span>, <span class="st">"language"</span>, <span class="st">"input_encoding"</span>))</a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(txts, <span class="dt">n =</span> <span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb20-6" title="6"><span class="co">## readtext object consisting of 36 documents and 3 docvars.</span></a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co">## # Description: df[,5] [36 × 5]</span></a>
-<a class="sourceLine" id="cb20-8" title="8"><span class="co">##    doc_id                 text                document   language input_encoding</span></a>
-<a class="sourceLine" id="cb20-9" title="9"><span class="co">##    &lt;chr&gt;                  &lt;chr&gt;               &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;         </span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="co">##  1 IndianTreaty_English_… "\"WHEREAS, t\"..." IndianTre… English  UTF-16LE      </span></a>
-<a class="sourceLine" id="cb20-11" title="11"><span class="co">##  2 IndianTreaty_English_… "\"ARTICLE 1.\"..." IndianTre… English  UTF-8-BOM     </span></a>
-<a class="sourceLine" id="cb20-12" title="12"><span class="co">##  3 UDHR_Arabic_ISO-8859-… "\"الديباجة\nل\"..… UDHR       Arabic   ISO-8859-6    </span></a>
-<a class="sourceLine" id="cb20-13" title="13"><span class="co">##  4 UDHR_Arabic_UTF-8.txt  "\"الديباجة\nل\"..… UDHR       Arabic   UTF-8         </span></a>
-<a class="sourceLine" id="cb20-14" title="14"><span class="co">##  5 UDHR_Arabic_WINDOWS-1… "\"الديباجة\nل\"..… UDHR       Arabic   WINDOWS-1256  </span></a>
-<a class="sourceLine" id="cb20-15" title="15"><span class="co">##  6 UDHR_Chinese_GB2312.t… "\"世界人权宣言\n联合国\"..… UDHR       Chinese  GB2312        </span></a>
-<a class="sourceLine" id="cb20-16" title="16"><span class="co">##  7 UDHR_Chinese_GBK.txt   "\"世界人权宣言\n联合国\"..… UDHR       Chinese  GBK           </span></a>
-<a class="sourceLine" id="cb20-17" title="17"><span class="co">##  8 UDHR_Chinese_UTF-8.txt "\"世界人权宣言\n联合国\"..… UDHR       Chinese  UTF-8         </span></a>
-<a class="sourceLine" id="cb20-18" title="18"><span class="co">##  9 UDHR_English_UTF-16BE… "\"Universal \"..." UDHR       English  UTF-16BE      </span></a>
-<a class="sourceLine" id="cb20-19" title="19"><span class="co">## 10 UDHR_English_UTF-16LE… "\"Universal \"..." UDHR       English  UTF-16LE      </span></a>
-<a class="sourceLine" id="cb20-20" title="20"><span class="co">## 11 UDHR_English_UTF-8.txt "\"Universal \"..." UDHR       English  UTF-8         </span></a>
-<a class="sourceLine" id="cb20-21" title="21"><span class="co">## 12 UDHR_English_WINDOWS-… "\"Universal \"..." UDHR       English  WINDOWS-1252  </span></a>
-<a class="sourceLine" id="cb20-22" title="22"><span class="co">## 13 UDHR_French_ISO-8859-… "\"Déclaratio\"..." UDHR       French   ISO-8859-1    </span></a>
-<a class="sourceLine" id="cb20-23" title="23"><span class="co">## 14 UDHR_French_UTF-8.txt  "\"Déclaratio\"..." UDHR       French   UTF-8         </span></a>
-<a class="sourceLine" id="cb20-24" title="24"><span class="co">## 15 UDHR_French_WINDOWS-1… "\"Déclaratio\"..." UDHR       French   WINDOWS-1252  </span></a>
-<a class="sourceLine" id="cb20-25" title="25"><span class="co">## 16 UDHR_German_ISO-8859-… "\"Die Allgem\"..." UDHR       German   ISO-8859-1    </span></a>
-<a class="sourceLine" id="cb20-26" title="26"><span class="co">## 17 UDHR_German_UTF-8.txt  "\"Die Allgem\"..." UDHR       German   UTF-8         </span></a>
-<a class="sourceLine" id="cb20-27" title="27"><span class="co">## 18 UDHR_German_WINDOWS-1… "\"Die Allgem\"..." UDHR       German   WINDOWS-1252  </span></a>
-<a class="sourceLine" id="cb20-28" title="28"><span class="co">## 19 UDHR_Greek_CP1253.txt  "\"ΟΙΚΟΥΜΕΝΙΚ\"..." UDHR       Greek    CP1253        </span></a>
-<a class="sourceLine" id="cb20-29" title="29"><span class="co">## 20 UDHR_Greek_ISO-8859-7… "\"ΟΙΚΟΥΜΕΝΙΚ\"..." UDHR       Greek    ISO-8859-7    </span></a>
-<a class="sourceLine" id="cb20-30" title="30"><span class="co">## 21 UDHR_Greek_UTF-8.txt   "\"ΟΙΚΟΥΜΕΝΙΚ\"..." UDHR       Greek    UTF-8         </span></a>
-<a class="sourceLine" id="cb20-31" title="31"><span class="co">## 22 UDHR_Hindi_UTF-8.txt   "\"मानव अधिका\"..." UDHR       Hindi    UTF-8         </span></a>
-<a class="sourceLine" id="cb20-32" title="32"><span class="co">## 23 UDHR_Icelandic_ISO-88… "\"Mannréttin\"..." UDHR       Iceland… ISO-8859-1    </span></a>
-<a class="sourceLine" id="cb20-33" title="33"><span class="co">## 24 UDHR_Icelandic_UTF-8.… "\"Mannréttin\"..." UDHR       Iceland… UTF-8         </span></a>
-<a class="sourceLine" id="cb20-34" title="34"><span class="co">## 25 UDHR_Icelandic_WINDOW… "\"Mannréttin\"..." UDHR       Iceland… WINDOWS-1252  </span></a>
-<a class="sourceLine" id="cb20-35" title="35"><span class="co">## 26 UDHR_Japanese_CP932.t… "\"『世界人権宣言』\n \"..… UDHR       Japanese CP932         </span></a>
-<a class="sourceLine" id="cb20-36" title="36"><span class="co">## 27 UDHR_Japanese_ISO-202… "\"『世界人権宣言』\n \"..… UDHR       Japanese ISO-2022-JP   </span></a>
-<a class="sourceLine" id="cb20-37" title="37"><span class="co">## 28 UDHR_Japanese_UTF-8.t… "\"『世界人権宣言』\n \"..… UDHR       Japanese UTF-8         </span></a>
-<a class="sourceLine" id="cb20-38" title="38"><span class="co">## 29 UDHR_Japanese_WINDOWS… "\"『世界人権宣言』\n \"..… UDHR       Japanese WINDOWS-936   </span></a>
-<a class="sourceLine" id="cb20-39" title="39"><span class="co">## 30 UDHR_Korean_ISO-2022-… "\"세 계 인 권 선 \"...… UDHR       Korean   ISO-2022-KR   </span></a>
-<a class="sourceLine" id="cb20-40" title="40"><span class="co">## 31 UDHR_Korean_UTF-8.txt  "\"세 계 인 권 선 \"...… UDHR       Korean   UTF-8         </span></a>
-<a class="sourceLine" id="cb20-41" title="41"><span class="co">## 32 UDHR_Russian_ISO-8859… "\"Всеобщая д\"..." UDHR       Russian  ISO-8859-5    </span></a>
-<a class="sourceLine" id="cb20-42" title="42"><span class="co">## 33 UDHR_Russian_KOI8-R.t… "\"Всеобщая д\"..." UDHR       Russian  KOI8-R        </span></a>
-<a class="sourceLine" id="cb20-43" title="43"><span class="co">## 34 UDHR_Russian_UTF-8.txt "\"Всеобщая д\"..." UDHR       Russian  UTF-8         </span></a>
-<a class="sourceLine" id="cb20-44" title="44"><span class="co">## 35 UDHR_Russian_WINDOWS-… "\"Всеобщая д\"..." UDHR       Russian  WINDOWS-1251  </span></a>
-<a class="sourceLine" id="cb20-45" title="45"><span class="co">## 36 UDHR_Thai_UTF-8.txt    "\"ปฏิญญาสากล\"..."  UDHR       Thai     UTF-8</span></a></code></pre></div>
-<p>From this file we can easily create a <strong>quanteda</strong> <code>corpus</code> object.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">corpus_txts &lt;-<span class="st"> </span><span class="kw"><a href="https://quanteda.io/reference/corpus.html">corpus</a></span>(txts)</a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(corpus_txts, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="co">## Corpus consisting of 36 documents, showing 5 documents:</span></a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="co">## </span></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="co">##                                Text Types Tokens Sentences     document</span></a>
-<a class="sourceLine" id="cb21-6" title="6"><span class="co">##   IndianTreaty_English_UTF-16LE.txt   617   2577       155 IndianTreaty</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="co">##  IndianTreaty_English_UTF-8-BOM.txt   645   3092       154 IndianTreaty</span></a>
-<a class="sourceLine" id="cb21-8" title="8"><span class="co">##          UDHR_Arabic_ISO-8859-6.txt   753   1555        86         UDHR</span></a>
-<a class="sourceLine" id="cb21-9" title="9"><span class="co">##               UDHR_Arabic_UTF-8.txt   753   1555        86         UDHR</span></a>
-<a class="sourceLine" id="cb21-10" title="10"><span class="co">##        UDHR_Arabic_WINDOWS-1256.txt   753   1555        86         UDHR</span></a>
-<a class="sourceLine" id="cb21-11" title="11"><span class="co">##  language input_encoding</span></a>
-<a class="sourceLine" id="cb21-12" title="12"><span class="co">##   English       UTF-16LE</span></a>
-<a class="sourceLine" id="cb21-13" title="13"><span class="co">##   English      UTF-8-BOM</span></a>
-<a class="sourceLine" id="cb21-14" title="14"><span class="co">##    Arabic     ISO-8859-6</span></a>
-<a class="sourceLine" id="cb21-15" title="15"><span class="co">##    Arabic          UTF-8</span></a>
-<a class="sourceLine" id="cb21-16" title="16"><span class="co">##    Arabic   WINDOWS-1256</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/data_files_encodedtexts.zip"</span><span class="op">)</span>, </span>
+<span>                 encoding <span class="op">=</span> <span class="va">fileencodings</span>,</span>
+<span>                 docvarsfrom <span class="op">=</span> <span class="st">"filenames"</span>, </span>
+<span>                 docvarnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"document"</span>, <span class="st">"language"</span>, <span class="st">"input_encoding"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">txts</span>, n <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="co">## readtext object consisting of 36 documents and 3 docvars.</span></span>
+<span><span class="co">## $text</span></span>
+<span><span class="co">##  [1] "\033[38;5;246m# A data frame: 36 × 5\033[39m"                                                                                                                                                                                                                             </span></span>
+<span><span class="co">##  [2] "   doc_id                             text      document language input_encoding"                                                                                                                                                                                         </span></span>
+<span><span class="co">##  [3] "   \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m                              \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m     \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m    \033[3m\033[38;5;246m&lt;chr&gt;\033[39m\033[23m         "</span></span>
+<span><span class="co">##  [4] "\033[38;5;250m 1\033[39m IndianTreaty_English_UTF-16LE.txt  \033[38;5;246m\"\033[39m\\\"WHERE… IndianT… English  UTF-16LE      "                                                                                                                                          </span></span>
+<span><span class="co">##  [5] "\033[38;5;250m 2\033[39m IndianTreaty_English_UTF-8-BOM.txt \033[38;5;246m\"\033[39m\\\"ARTIC… IndianT… English  UTF-8-BOM     "                                                                                                                                          </span></span>
+<span><span class="co">##  [6] "\033[38;5;250m 3\033[39m UDHR_Arabic_ISO-8859-6.txt         \033[38;5;246m\"\033[39m\\\"الديب… UDHR     Arabic   ISO-8859-6    "                                                                                                                                          </span></span>
+<span><span class="co">##  [7] "\033[38;5;250m 4\033[39m UDHR_Arabic_UTF-8.txt              \033[38;5;246m\"\033[39m\\\"الديب… UDHR     Arabic   UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">##  [8] "\033[38;5;250m 5\033[39m UDHR_Arabic_WINDOWS-1256.txt       \033[38;5;246m\"\033[39m\\\"الديب… UDHR     Arabic   WINDOWS-1256  "                                                                                                                                          </span></span>
+<span><span class="co">##  [9] "\033[38;5;250m 6\033[39m UDHR_Chinese_GB2312.txt            \033[38;5;246m\"\033[39m\\\"世界…  UDHR     Chinese  GB2312        "                                                                                                                                          </span></span>
+<span><span class="co">## [10] "\033[38;5;250m 7\033[39m UDHR_Chinese_GBK.txt               \033[38;5;246m\"\033[39m\\\"世界…  UDHR     Chinese  GBK           "                                                                                                                                          </span></span>
+<span><span class="co">## [11] "\033[38;5;250m 8\033[39m UDHR_Chinese_UTF-8.txt             \033[38;5;246m\"\033[39m\\\"世界…  UDHR     Chinese  UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [12] "\033[38;5;250m 9\033[39m UDHR_English_UTF-16BE.txt          \033[38;5;246m\"\033[39m\\\"Unive… UDHR     English  UTF-16BE      "                                                                                                                                          </span></span>
+<span><span class="co">## [13] "\033[38;5;250m10\033[39m UDHR_English_UTF-16LE.txt          \033[38;5;246m\"\033[39m\\\"Unive… UDHR     English  UTF-16LE      "                                                                                                                                          </span></span>
+<span><span class="co">## [14] "\033[38;5;250m11\033[39m UDHR_English_UTF-8.txt             \033[38;5;246m\"\033[39m\\\"Unive… UDHR     English  UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [15] "\033[38;5;250m12\033[39m UDHR_English_WINDOWS-1252.txt      \033[38;5;246m\"\033[39m\\\"Unive… UDHR     English  WINDOWS-1252  "                                                                                                                                          </span></span>
+<span><span class="co">## [16] "\033[38;5;250m13\033[39m UDHR_French_ISO-8859-1.txt         \033[38;5;246m\"\033[39m\\\"Décla… UDHR     French   ISO-8859-1    "                                                                                                                                          </span></span>
+<span><span class="co">## [17] "\033[38;5;250m14\033[39m UDHR_French_UTF-8.txt              \033[38;5;246m\"\033[39m\\\"Décla… UDHR     French   UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [18] "\033[38;5;250m15\033[39m UDHR_French_WINDOWS-1252.txt       \033[38;5;246m\"\033[39m\\\"Décla… UDHR     French   WINDOWS-1252  "                                                                                                                                          </span></span>
+<span><span class="co">## [19] "\033[38;5;250m16\033[39m UDHR_German_ISO-8859-1.txt         \033[38;5;246m\"\033[39m\\\"Die A… UDHR     German   ISO-8859-1    "                                                                                                                                          </span></span>
+<span><span class="co">## [20] "\033[38;5;250m17\033[39m UDHR_German_UTF-8.txt              \033[38;5;246m\"\033[39m\\\"Die A… UDHR     German   UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [21] "\033[38;5;250m18\033[39m UDHR_German_WINDOWS-1252.txt       \033[38;5;246m\"\033[39m\\\"Die A… UDHR     German   WINDOWS-1252  "                                                                                                                                          </span></span>
+<span><span class="co">## [22] "\033[38;5;250m19\033[39m UDHR_Greek_CP1253.txt              \033[38;5;246m\"\033[39m\\\"ΟΙΚΟΥ… UDHR     Greek    CP1253        "                                                                                                                                          </span></span>
+<span><span class="co">## [23] "\033[38;5;250m20\033[39m UDHR_Greek_ISO-8859-7.txt          \033[38;5;246m\"\033[39m\\\"ΟΙΚΟΥ… UDHR     Greek    ISO-8859-7    "                                                                                                                                          </span></span>
+<span><span class="co">## [24] "\033[38;5;250m21\033[39m UDHR_Greek_UTF-8.txt               \033[38;5;246m\"\033[39m\\\"ΟΙΚΟΥ… UDHR     Greek    UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [25] "\033[38;5;250m22\033[39m UDHR_Hindi_UTF-8.txt               \033[38;5;246m\"\033[39m\\\"मानव … UDHR     Hindi    UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [26] "\033[38;5;250m23\033[39m UDHR_Icelandic_ISO-8859-1.txt      \033[38;5;246m\"\033[39m\\\"Mannr… UDHR     Iceland… ISO-8859-1    "                                                                                                                                          </span></span>
+<span><span class="co">## [27] "\033[38;5;250m24\033[39m UDHR_Icelandic_UTF-8.txt           \033[38;5;246m\"\033[39m\\\"Mannr… UDHR     Iceland… UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [28] "\033[38;5;250m25\033[39m UDHR_Icelandic_WINDOWS-1252.txt    \033[38;5;246m\"\033[39m\\\"Mannr… UDHR     Iceland… WINDOWS-1252  "                                                                                                                                          </span></span>
+<span><span class="co">## [29] "\033[38;5;250m26\033[39m UDHR_Japanese_CP932.txt            \033[38;5;246m\"\033[39m\\\"『世…  UDHR     Japanese CP932         "                                                                                                                                          </span></span>
+<span><span class="co">## [30] "\033[38;5;250m27\033[39m UDHR_Japanese_ISO-2022-JP.txt      \033[38;5;246m\"\033[39m\\\"『世…  UDHR     Japanese ISO-2022-JP   "                                                                                                                                          </span></span>
+<span><span class="co">## [31] "\033[38;5;250m28\033[39m UDHR_Japanese_UTF-8.txt            \033[38;5;246m\"\033[39m\\\"『世…  UDHR     Japanese UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [32] "\033[38;5;250m29\033[39m UDHR_Japanese_WINDOWS-936.txt      \033[38;5;246m\"\033[39m\\\"『世…  UDHR     Japanese WINDOWS-936   "                                                                                                                                          </span></span>
+<span><span class="co">## [33] "\033[38;5;250m30\033[39m UDHR_Korean_ISO-2022-KR.txt        \033[38;5;246m\"\033[39m\\\"세 계… UDHR     Korean   ISO-2022-KR   "                                                                                                                                          </span></span>
+<span><span class="co">## [34] "\033[38;5;250m31\033[39m UDHR_Korean_UTF-8.txt              \033[38;5;246m\"\033[39m\\\"세 계… UDHR     Korean   UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [35] "\033[38;5;250m32\033[39m UDHR_Russian_ISO-8859-5.txt        \033[38;5;246m\"\033[39m\\\"Всеоб… UDHR     Russian  ISO-8859-5    "                                                                                                                                          </span></span>
+<span><span class="co">## [36] "\033[38;5;250m33\033[39m UDHR_Russian_KOI8-R.txt            \033[38;5;246m\"\033[39m\\\"Всеоб… UDHR     Russian  KOI8-R        "                                                                                                                                          </span></span>
+<span><span class="co">## [37] "\033[38;5;250m34\033[39m UDHR_Russian_UTF-8.txt             \033[38;5;246m\"\033[39m\\\"Всеоб… UDHR     Russian  UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## [38] "\033[38;5;250m35\033[39m UDHR_Russian_WINDOWS-1251.txt      \033[38;5;246m\"\033[39m\\\"Всеоб… UDHR     Russian  WINDOWS-1251  "                                                                                                                                          </span></span>
+<span><span class="co">## [39] "\033[38;5;250m36\033[39m UDHR_Thai_UTF-8.txt                \033[38;5;246m\"\033[39m\\\"ปฏิญญา… UDHR     Thai     UTF-8         "                                                                                                                                          </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $summary</span></span>
+<span><span class="co">## $summary[[1]]</span></span>
+<span><span class="co">## NULL</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attr(,"class")</span></span>
+<span><span class="co">## [1] "trunc_mat"</span></span></code></pre></div>
+<p>From this file we can easily create a <strong>quanteda</strong>
+<code>corpus</code> object.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://quanteda.io" class="external-link">"quanteda"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">corpus_txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">corpus_txts</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">## Corpus consisting of 36 documents, showing 5 documents:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##                                Text Types Tokens Sentences     document</span></span>
+<span><span class="co">##   IndianTreaty_English_UTF-16LE.txt   617   2577       152 IndianTreaty</span></span>
+<span><span class="co">##  IndianTreaty_English_UTF-8-BOM.txt   645   3092       150 IndianTreaty</span></span>
+<span><span class="co">##          UDHR_Arabic_ISO-8859-6.txt   753   1555        86         UDHR</span></span>
+<span><span class="co">##               UDHR_Arabic_UTF-8.txt   753   1555        86         UDHR</span></span>
+<span><span class="co">##        UDHR_Arabic_WINDOWS-1256.txt   753   1555        86         UDHR</span></span>
+<span><span class="co">##  language input_encoding</span></span>
+<span><span class="co">##   English       UTF-16LE</span></span>
+<span><span class="co">##   English      UTF-8-BOM</span></span>
+<span><span class="co">##    Arabic     ISO-8859-6</span></span>
+<span><span class="co">##    Arabic          UTF-8</span></span>
+<span><span class="co">##    Arabic   WINDOWS-1256</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">1. Introduction</a></li>
-      <li>
-<a href="#reading-one-or-more-text-files">2. Reading one or more text files</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#plain-text-files--txt">2.1 Plain text files (.txt)</a></li>
-      <li><a href="#comma--or-tab-separated-values--csv--tab--tsv">2.2 Comma- or tab-separated values (.csv, .tab, .tsv)</a></li>
-      <li><a href="#json-data--json">2.3 JSON data (.json)</a></li>
-      <li><a href="#pdf-files">2.4 PDF files</a></li>
-      <li><a href="#microsoft-word-files--doc--docx">2.5 Microsoft Word files (.doc, .docx)</a></li>
-      <li><a href="#text-from-urls">2.6 Text from URLs</a></li>
-      <li><a href="#text-from-archive-files--zip--tar--tar-gz--tar-bz">2.7 Text from archive files (.zip, .tar, .tar.gz, .tar.bz)</a></li>
-      </ul>
-</li>
-      <li><a href="#inter-operability-with-quanteda">3. Inter-operability with quanteda</a></li>
-      <li>
-<a href="#solving-common-problems">4. Solving common problems</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#remove-page-numbers-using-regular-expressions">4.1 Remove page numbers using regular expressions</a></li>
-      <li><a href="#read-files-with-different-encodings">4.2 Read files with different encodings</a></li>
-      </ul>
-</li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Kenneth Benoit, Adam Obeng.</p>
+  <p></p>
+<p>Developed by Kenneth Benoit, Adam Obeng.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -446,6 +609,8 @@
 
   
 
+
+  
 
   </body>
 </html>
