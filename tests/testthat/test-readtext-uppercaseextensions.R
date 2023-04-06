@@ -5,7 +5,7 @@ context("test filename extension case")
 
 test_that("test case for txt files with glob", {
     expect_equal(
-        length(texts(readtext( '../data/TXTcaps/*.TXT'))),
+        length(as.character(readtext( '../data/TXTcaps/*.TXT'))),
         2
     )
 
@@ -15,7 +15,7 @@ test_that("test case for txt files with glob", {
 
 test_that("test case for csv files with glob", {
     expect_equal(
-        length(texts(readtext(
+        length(as.character(readtext(
             '../data/CSVcaps/*.CSV', text_field='text'
         ))),
         4

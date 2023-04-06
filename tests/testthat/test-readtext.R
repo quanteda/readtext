@@ -2,21 +2,29 @@
 # TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn"t seem to require text_field
 
-library(quanteda)
-
 context("test readtext.R")
 
 test_that("test readtext with single filename", {
     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     expect_equal(
-        texts(readtext("../data/fox/fox.txt")),
+        as.character(readtext("../data/fox/fox.txt")),
         fox
+    )
+})
+
+test_that("test for deprecated warning for text()", {
+    fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
+    expect_warning(
+        texts(readtext("../data/fox/fox.txt")),
+        "'texts.readtext' is deprecated.
+Use 'Use as.character() instead' instead.",
+        fixed = TRUE
     )
 })
 
 test_that("test readtext with vector of filenames", {
     expect_equal(
-        length(texts(readtext(
+        length(as.character(readtext(
             c(
                 "../data/fruits/apple.txt",
                 "../data/fruits/orange.txt"
@@ -28,14 +36,14 @@ test_that("test readtext with vector of filenames", {
 
 test_that("test readtext with glob-style mask", {
     expect_equal(
-        length(texts(readtext(
+        length(as.character(readtext(
             "../data/glob/*.txt"
         ))),
         5
     )
 
     expect_equal(
-        length(texts(readtext(
+        length(as.character(readtext(
             "../data/glob/?.txt"
         ))),
         4
@@ -43,7 +51,7 @@ test_that("test readtext with glob-style mask", {
 
     # Glob in non-last part of filename
     expect_equal(
-        length(texts(readtext(
+        length(as.character(readtext(
             "../data/glob/*/test.txt"
         ))),
         2
@@ -54,7 +62,7 @@ test_that("test readtext with glob-style mask", {
     # exist in the package... This should still pass if run the test manually
     # (having created the file, supposing your platform supports it)
     #  expect_equal(
-    #      length(texts(readtext(
+    #      length(as.character(readtext(
     #              "../data/glob/special/\\*.txt"
     #      ))),
     #      1
@@ -75,19 +83,19 @@ test_that("test structured readtext with glob-style mask", {
 
 test_that("test remote text file", {
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt")),
+        as.character(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt")),
         c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
     # ignore_missing_files with an existing file should make no difference
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt",
+        as.character(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt",
                        ignore_missing_files = TRUE)),
         c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
     
     # ingores parameters in URL
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt?x=1&y=2",
+        as.character(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/fox/fox.txt?x=1&y=2",
                        ignore_missing_files = TRUE)),
         c(fox.txt = "The quick brown fox jumps over the lazy dog.")
     )
@@ -98,7 +106,7 @@ test_that("test remote text file", {
 
 test_that("test remote csv file", {
     expect_equal(
-        texts(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", text_field = "text")),
+        as.character(readtext("https://raw.githubusercontent.com/kbenoit/readtext/master/tests/data/csv/test.csv", text_field = "text")),
         c(test.csv.1 = "Lorem ipsum.", test.csv.2 = "Dolor sit")
     )
 })
@@ -107,21 +115,13 @@ test_that("test remote csv file", {
 context("test that require recursive invocation of listFileNames (i.e. because a special filename resolves to another special filename)")
 
 test_that("test zip file", {
-    skip_on_appveyor()
     skip_on_cran()
     skip_on_os("windows")
     DATA_DIR <- system.file("extdata/", package = "readtext")
         expect_equal(
-        length(texts(readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip")))),
+        length(as.character(readtext(paste0(DATA_DIR, "/data_files_encodedtexts.zip")))),
         36
     )
-})
-
-
-
-
-test_that("test non-implemented functions", {
-    # 100% code coverage of non-existent functions!
 })
 
 test_that("test warning for unrecognized filetype", {
@@ -139,7 +139,6 @@ test_that("test warning for unrecognized filetype", {
         readtext("../data/unknown/unknown", verbosity = 0)$text,
         "The quick brown fox jumps over the lazy dog."
     )
-
 })
 
 
@@ -153,7 +152,7 @@ test_that("test csv files", {
                           stringsAsFactors = FALSE))
     )
     expect_equal(
-        texts(testcorpus),
+        as.character(testcorpus),
         c(test.csv.1 = "Lorem ipsum.", test.csv.2 = "Dolor sit")
     )
 
@@ -176,7 +175,7 @@ test_that("test tab files", {
                           stringsAsFactors = FALSE))
     )
     expect_that(
-        texts(testreadtext),
+        as.character(testreadtext),
         equals(c(test.tab.1 = "Lorem ipsum.", test.tab.2 = "Dolor sit"))
     )
     
@@ -195,7 +194,7 @@ test_that("test tsv files", {
                           stringsAsFactors = FALSE))
     )
     expect_that(
-        texts(testreadtext),
+        as.character(testreadtext),
         equals(c(test.tsv.1 = "Lorem ipsum.", test.tsv.2 = "Dolor sit"))
     )
     
@@ -210,18 +209,18 @@ test_that("test tsv files", {
 test_that("test xml files", {
     # Test corpus object
     testcorpus <- readtext("../data/xml/test.xml", text_field = "text")
-    expect_that(
+    expect_equal(
         data.frame(testcorpus[, -c(1, 2)]),
-        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
-                          stringsAsFactors = FALSE))
+        data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
+                          stringsAsFactors = FALSE)
     )
-    expect_that(
-        unname(texts(testcorpus)),
-        equals(c("Lorem ipsum.","Dolor sit"))
+    expect_equal(
+        unname(as.character(testcorpus)),
+        c("Lorem ipsum.", "Dolor sit")
     )
-    expect_that(
+    expect_equal(
         docnames(testcorpus),
-        equals(c("test.xml.1", "test.xml.2"))
+        c("test.xml.1", "test.xml.2")
     )
 
     expect_warning(
@@ -229,7 +228,7 @@ test_that("test xml files", {
         "You should specify text_field by name.*"
     )
     expect_that(
-        unname(texts(suppressWarnings(readtext("../data/xml/test.xml", text_field = 1)))),
+        unname(as.character(suppressWarnings(readtext("../data/xml/test.xml", text_field = 1)))),
         equals(c("Lorem ipsum.", "Dolor sit"))
     )
     expect_that(
@@ -257,18 +256,18 @@ test_that("test xml files with XPath", {
     actual <- readtext("../data/xml/tei.xml",
                       text_field = "/d1:TEI/d1:text/d1:body//d1:p")#,
                       # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
-    expect_equal(texts(actual), expected)
+    expect_equal(as.character(actual), expected)
 
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
                        text_field = "/d1:TEI/d1:text/d1:body//d1:p")
                        # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
-    expect_equal(unname(texts(actual)), "The Pquick Pbrown Pfox")
+    expect_equal(unname(as.character(actual)), "The Pquick Pbrown Pfox")
 
     actual <- readtext("../data/xml/tei.xml", collapse = "P",
                       text_field = "/d1:TEI//*/text()")#,
                       # namespaces = c(tei = "https://www.tei-c.org/ns/1.0"))
-    expect_equal(unname(texts(actual)), "Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
+    expect_equal(unname(as.character(actual)), "Lorem Ipsum 1PSome PlacePAnywhere, USPNopePThe Pquick Pbrown PfoxPNope")
 
 })
 
@@ -352,19 +351,12 @@ test_that("test readtext() with docvarsfrom = filenames", {
     
 })
 
-
-test_that("test texts.readtext error with groups != NULL", {
-    expect_error(
-        texts(readtext("../data/fox/fox.txt"), groups = "anything")
-    )
-})
-
 test_that("test docvars.readtext warning with field != NULL", {
-    expect_warning(
-        docvars(readtext("../data/fox/fox.txt"), field = "anything")
+    expect_identical(
+        docvars(readtext("../data/fox/fox.txt")),
+        data.frame(x = 1)[, 0, drop=FALSE]
     )
 })
-
 
 test_that("test that readtext encoding argument must be either length 1 or same length as the number of files", {
     expect_error(
@@ -411,7 +403,7 @@ test_that("test reading structured text files with different columns", {
     expected_texts <- c("apple", "orange", "apple", "banana")
     names(expected_texts) <- c("1.csv.1", "1.csv.2", "2.csv.1", "2.csv.2")
     expect_equal(
-        texts(testcorpus),
+        as.character(testcorpus),
         expected_texts
     )
 })
@@ -525,11 +517,11 @@ test_that("Test function to list files with remote sources", {
 test_that("text vectors have names of the files they come from by default (bug 221)", {
 
         expect_equal(
-            names(texts(readtext("../data/fox/fox.txt"))),
+            names(as.character(readtext("../data/fox/fox.txt"))),
             "fox.txt"
         )
 
-        actual_names <- names(texts(readtext(
+        actual_names <- names(as.character(readtext(
             "../data/csv/test*.csv", text_field = "text"
         )))
         expect_true(
@@ -539,7 +531,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
             )
         )
 
-        actual_names <- names(texts(readtext(
+        actual_names <- names(as.character(readtext(
             "../data/glob/*.txt"
         )))
         expect_true(
@@ -549,7 +541,7 @@ test_that("text vectors have names of the files they come from by default (bug 2
             )
         )
 
-        actual_names <- names(texts(readtext(
+        actual_names <- names(as.character(readtext(
             "../data/tar/test.tar"
         )))
         expect_true(
@@ -565,7 +557,7 @@ test_that("test globbed tar file",{
     skip_on_cran()
     skip_on_os("linux")
     expect_equal(
-        unname(texts(readtext("../data/tar/*"))),
+        unname(as.character(readtext("../data/tar/*"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
@@ -575,7 +567,7 @@ test_that("test html file",{
     names(expected) <- "html5.html"
 
     expect_equal(
-        texts(readtext("../data/html/html5.html")),
+        as.character(readtext("../data/html/html5.html")),
         expected
     )
 
@@ -586,7 +578,7 @@ test_that("test malformed html file",{
     expected <- c("The quick brown fox \n    \njumps over the lazy dog")
     names(expected) <- "malformed_html5.html"
     expect_equal(
-        texts(readtext("../data/html/malformed_html5.html")),
+        as.character(readtext("../data/html/malformed_html5.html")),
         expected
     )
 })
@@ -594,7 +586,7 @@ test_that("test malformed html file",{
 test_that("test for pdf file", {
     skip_on_os("windows")
     expect_output(
-        cat(texts(readtext("../data/pdf/test.pdf"))),
+        cat(as.character(readtext("../data/pdf/test.pdf"))),
         "The quick brown fox jumps over the lazy dog\n" 
     )
 })
@@ -603,7 +595,7 @@ test_that("test for odt file", {
 	expected <- c("The quick brown fox jumps over the lazy dog")
 	names(expected) <- "test.odt"
 	expect_equal(
-		texts(readtext("../data/odt/test.odt")),
+		as.character(readtext("../data/odt/test.odt")),
 		expected
 	)
 	
@@ -614,7 +606,7 @@ test_that("test for docx file", {
     names(expected) <- "test.docx"
     
     expect_equal(
-        texts(readtext("../data/docx/test.docx")),
+        as.character(readtext("../data/docx/test.docx")),
         expected
     )
 })
@@ -624,7 +616,7 @@ test_that("test for doc file", {
     expected <- paste(rep(c("The quick brown fox jumps over the lazy dog."), 10), collapse = " ")
     names(expected) <- "test.doc"
 
-    txts <- texts(readtext("../data/doc/test.doc"))
+    txts <- as.character(readtext("../data/doc/test.doc"))
     namestmp <- names(txts)
     txts <- stringi::stri_replace_all_regex(txts, "\\n", " ")
     names(txts) <- namestmp
@@ -639,7 +631,7 @@ test_that("test json files", {
     skip_on_cran()
     skip_on_os("linux")
     expect_equal(
-        unname(texts(readtext("../data/json/test*json", text_field = "text"))),
+        unname(as.character(readtext("../data/json/test*json", text_field = "text"))),
         c("Lorem ipsum", "Dolor sit", "The quick", "brown fox", "Now is the winter")
     )
     
@@ -676,7 +668,7 @@ test_that("test json files", {
     tweetSource <- readtext("../data/tweets/stream.json", source = "twitter")
     
     expect_equal(
-        texts(tweetSource),
+        as.character(tweetSource),
         c(stream.json.1 = "I jumped over the lazy @dog", stream.json.2 = "Yawn")
     )
     
@@ -709,7 +701,7 @@ test_that("A single-level tar file containing txt files can be loaded",{
     skip_on_cran()
     skip_on_os("linux")
     expect_equal(
-        unname(texts(readtext("../data/tar/test.tar"))),
+        unname(as.character(readtext("../data/tar/test.tar"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
@@ -719,7 +711,7 @@ test_that("A single-level tar.gz file containing txt files can be loaded",{
     skip_on_cran()
     skip_on_os("linux")
     expect_equal(
-        unname(texts(readtext("../data/targz/test.tar.gz"))),
+        unname(as.character(readtext("../data/targz/test.tar.gz"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
@@ -730,7 +722,7 @@ test_that("A single-level tar.bz file containing txt files can be loaded",{
     skip_on_os("linux")
     skip_on_os("windows")
     expect_equal(
-        unname(texts(readtext("../data/tarbz/test.tar.bz"))),
+        unname(as.character(readtext("../data/tarbz/test.tar.bz"))),
         c("Lorem ipsum", "brown fox", "Dolor sit", "The quick")
     )
 })
@@ -785,7 +777,7 @@ test_that("readtext called with textfield works with deprecation warning", {
         6
     )
     expect_equal(
-        length(texts(readtext("../data/csv/test*.csv", text_field = "text"))),
+        length(as.character(readtext("../data/csv/test*.csv", text_field = "text"))),
         6
     )
     expect_warning(
@@ -797,7 +789,7 @@ test_that("readtext called with textfield works with deprecation warning", {
 
 test_that("tests for Excel files", {
 
-    expect_equal(unname(texts(
+    expect_equal(unname(as.character(
         readtext("../data/xls/test.xlsx", text_field = "text"))),
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
@@ -812,7 +804,7 @@ test_that("tests for Excel files", {
 
 
     expect_equal(
-        texts(readtext("../data/xls/test.xls", text_field = "text")),
+        as.character(readtext("../data/xls/test.xls", text_field = "text")),
         c("test.xls.1" = "The quick", "test.xls.2" = "brown fox", 
           "test.xls.3" = "jumps over", "test.xls.4" = "the lazy dog.")
     )
@@ -829,7 +821,7 @@ test_that("tests for Excel files", {
 })
 
 test_that("tests for ODS files", {
-    expect_equal(unname(texts(
+    expect_equal(unname(as.character(
         readtext("../data/ods/test.ods", text_field = "text"))),
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
@@ -899,7 +891,7 @@ test_that("readtext works with one-column csv files (#138)", {
 
 test_that("tests for ODS files", {
     expect_identical(
-        unname(texts(readtext("../data/rtf/*.rtf"))),
+        unname(as.character(readtext("../data/rtf/*.rtf"))),
         c("The quick brown fox jumps over the lazy dog",
           "This is an example of “rich text” format.")
     )
@@ -907,23 +899,23 @@ test_that("tests for ODS files", {
 
 test_that("tests for files with doc_id", {
     expect_identical(
-        texts(readtext("../data/csv/withdocid.csv", docid_field = "doc_id", text_field = "text")),
+        as.character(readtext("../data/csv/withdocid.csv", docid_field = "doc_id", text_field = "text")),
         c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
     )
     expect_identical(
-        texts(readtext("../data/csv/withdocid.csv", text_field = "text"))[1],
+        as.character(readtext("../data/csv/withdocid.csv", text_field = "text"))[1],
         c(withdocid.csv.1 = "The quick")
     )
     expect_identical(
-        texts(readtext("../data/ods/withdocid.ods", docid_field = "doc_id", text_field = "text")),
+        as.character(readtext("../data/ods/withdocid.ods", docid_field = "doc_id", text_field = "text")),
         c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
     )
     expect_identical(
-        texts(readtext("../data/xls/withdocid.xls", docid_field = "doc_id", text_field = "text")),
+        as.character(readtext("../data/xls/withdocid.xls", docid_field = "doc_id", text_field = "text")),
         c(doc1 = "The quick", doc2 = "brown fox", doc3 = "jumped over")
     )
     expect_identical(
-        texts(readtext("../data/json/withdocid.json", docid_field = "doc_id", text_field = "text")),
+        as.character(readtext("../data/json/withdocid.json", docid_field = "doc_id", text_field = "text")),
         c(doc1 = "Lorem ipsum", doc2 = "Dolor sit")
     )
     expect_message(

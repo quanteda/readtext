@@ -26,10 +26,10 @@ test_that("Test readtext:::get_temp function for test dirs", {
 })
 
 test_that("Test is_probably_xpath", {
-    expect_false(is_probably_xpath("A"))
-    expect_false(is_probably_xpath("a:what"))
-    expect_true(is_probably_xpath("/A/B/C"))
-    expect_true(is_probably_xpath("A/B/C"))
+    expect_false(readtext:::is_probably_xpath("A"))
+    expect_false(readtext:::is_probably_xpath("a:what"))
+    expect_true(readtext:::is_probably_xpath("/A/B/C"))
+    expect_true(readtext:::is_probably_xpath("A/B/C"))
 })
 
 test_that("Test readtext:::get_docvars_filenames for parsing filenames", {
@@ -46,7 +46,6 @@ test_that("Test readtext:::get_docvars_filenames for parsing filenames", {
     expect_equal(names(df), c("country", "color", "animal"))
     expect_s3_class(df, "data.frame")
 })
-
 
 test_that("file_ext returns expected extensions", {
     filenames <- c("~/tmp/documents/USA_blue_horse.txt",

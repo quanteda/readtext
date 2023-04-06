@@ -1,7 +1,6 @@
 context("test readtext methods")
 
 test_that("test print.readtext", {
-    
     expect_that(
         print(readtext("../data/fox/fox.txt")),
         prints_text("readtext object consisting of 1 document and 0 docvars.")

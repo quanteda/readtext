@@ -1,4 +1,4 @@
-require(stringi)
+library("stringi")
 context("nexis")
 
 test_that("importer can read English newspapers", {

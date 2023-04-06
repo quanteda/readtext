@@ -1,28 +1,30 @@
 context("test encoding function")
 
 test_that("test encoding function on simple text files", {
-  skip_on_appveyor()
-  skip_on_os("windows")
-  skip_on_cran()
-  cat("This is UTF-8 aęiíoõuü 日本語", file = (tempf <- tempfile(fileext = ".txt")))
+    skip_on_os("windows")
+    skip_on_cran()
+    cat("This is UTF-8 aęiíoõuü 日本語", file = (tempf <- tempfile(fileext = ".txt")))
     rt <- readtext(tempf)
-    enc <- encoding(rt, verbose = FALSE)
+    suppressMessages(enc <- encoding(rt, verbose = FALSE))
     expect_equal(
         enc,
         list(probably = "UTF-8", all = "UTF-8")
     )
-
+    
     expect_equal(
         enc,
         list(probably = "UTF-8", all = "UTF-8")
     )
-
+    
     expect_message(
-        encoding(rt, verbose = TRUE),
+        encoding(rt, verbose = FALSE),
         "Probable encoding: UTF-8"
     )
-
-    rt <- readtext(tempf, encoding = "UTF-8")
+    
+    expect_identical(
+        Encoding(as.character(readtext(tempf, encoding = "UTF-8"))),
+        "UTF-8"
+    )
 })
 
 test_that("test encoding function on simple text files, Russian 8-bit encoding", {

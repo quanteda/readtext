@@ -1,8 +1,7 @@
 Sys.setenv("R_TESTS" = "")
 
-library(testthat)
-library(readtext)
-library(quanteda)
+library("testthat")
+library("readtext")
 
 # save, then reset, readtext options
 opts <- readtext_options()
