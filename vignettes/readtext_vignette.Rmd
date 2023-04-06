@@ -17,7 +17,7 @@ knitr::opts_chunk$set(collapse = TRUE,
 
 ```{r eval=TRUE, message = FALSE}
 # Load readtext package
-library(readtext)
+library("readtext")
 ```
 
 # 1. Introduction
@@ -136,19 +136,19 @@ Finally, it is possible to include text from archives.
 
 **readtext** was originally developed in early versions of the [**quanteda**](https://github.com/quanteda/quanteda) package for the quantitative analysis of textual data.  It was spawned from the `textfile()` function from that package, and now lives exclusively in **readtext**. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a `readtext` object, preserving all docvars and other meta-data.
 
-```{r, message = FALSE}
-require(quanteda)
-```
 
 You can easily construct a corpus from a **readtext** object.
 
 ```{r}
+if (require("quanteda")) {
+
 # read in comma-separated values with readtext
 rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 
 # create quanteda corpus
 corpus_csv <- corpus(rt_csv)
 summary(corpus_csv, 5)
+}
 ```
 
 # 4. Solving common problems 
@@ -161,7 +161,7 @@ You first need to check in the original file in which format the page numbers oc
 
 ```{r, message = FALSE}
 # Load stringi package
-require(stringi)
+require("stringi")
 ```
 
 In the first example, the page numbers have the format "page X".
@@ -249,6 +249,8 @@ print(txts, n = 50)
 From this file we can easily create a **quanteda** `corpus` object.
 
 ```{r}
+if (require("quanteda")) {
 corpus_txts <- corpus(txts)
 summary(corpus_txts, 5)
+}
 ```
