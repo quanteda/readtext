@@ -1,4 +1,3 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # readtext: Import and handling for plain and formatted text files
 
@@ -133,7 +132,7 @@ all docvars and other meta-data.
 
 ``` r
 library("quanteda")
-## Package version: 3.2.4
+## Package version: 3.3.0
 ## Unicode version: 14.0
 ## ICU version: 71.1
 ## Parallel computing: 10 of 10 threads used.
