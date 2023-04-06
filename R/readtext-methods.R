@@ -7,7 +7,7 @@
 #' @param text_width number of characters to display of the text field
 #' @param ... not used here
 #' @importFrom utils head
-#' @importFrom tibble trunc_mat
+#' @importFrom pillar tbl_format_setup tbl_format_header tbl_format_body tbl_format_footer
 #' @importFrom stringi stri_sub
 #' @keywords internal
 #' @export
@@ -18,8 +18,34 @@ print.readtext <- function(x, n = 6L, text_width = 10L, ...) {
         ".\n", sep = "")
     x$text <- paste0("\"", stringi::stri_sub(x$text, length = text_width), "\"...")
     # x <- cbind(data.frame(doc_id = rownames(x), stringsAsFactors = FALSE), x)
-    class(x) <- "data.frame"
-    print(tibble::trunc_mat(x, n = n))
+    # class(x) <- "data.frame"
+    print(trunc_mat_tibble(x, n = n))
+}
+
+trunc_mat_tibble <- function(x, n = NULL, width = NULL, n_extra = NULL) {
+    if (!inherits(x, "tbl")) {
+        class(x) <- c("tbl", class(x))
+    }
+    
+    setup <- pillar::tbl_format_setup(x, width = width, n = n, max_extra_cols = n_extra)
+    
+    header <- pillar::tbl_format_header(x, setup)
+    body <- pillar::tbl_format_body(x, setup)
+    footer <- pillar::tbl_format_footer(x, setup)
+    
+    text <- c(header, body, footer)
+    structure(list(text = text, summary = list(NULL)), class = "trunc_mat")
+}
+
+#' @export
+format.trunc_mat_tibble <- function(x, width = NULL, ...) {
+    unclass(x)[[1]]
+}
+
+#' @export
+print.trunc_mat_tibble <- function(x, ...) {
+    writeLines(format(x, ...))
+    invisible(x)
 }
 
 #' return only the texts from a readtext object
