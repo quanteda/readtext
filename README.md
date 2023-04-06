@@ -132,7 +132,7 @@ all docvars and other meta-data.
 
 ``` r
 library("quanteda")
-## Package version: 3.3.0
+## Package version: 3.2.4
 ## Unicode version: 14.0
 ## ICU version: 71.1
 ## Parallel computing: 10 of 10 threads used.
@@ -161,8 +161,8 @@ summary(corpus_csv, 5)
 
 **readtext** returns a data.frame that is formatted as per the corpus
 structure of the [Text Interchange
-Format](https://github.com/ropensci/tif), it can easily be used by other
-packages that can accept a corpus in data.frame format.
+Format](https://github.com/ropenscilabs/tif), it can easily be used by
+other packages that can accept a corpus in data.frame format.
 
 If you only want a named `character` object, **readtext** also defines
 an `as.character()` method that inputs its data.frame and returns just
