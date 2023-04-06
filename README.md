@@ -6,13 +6,13 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-[![](https://img.shields.io/badge/devel%20version-0.80-royalblue.svg)](https://github.com/quanteda/readtext)
-[![R build
-status](https://github.com/quanteda/readtext/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/readtext/actions)
-[![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)](https://codecov.io/gh/quanteda/readtext/branch/master)
+[![](https://img.shields.io/badge/devel%20version-0.82-royalblue.svg)](https://github.com/quanteda/readtext)
 [![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
+[![R-CMD-check](https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/quanteda/readtext/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/readtext?branch=master)
 <!-- badges: end -->
 
 An R package for reading text files in all their various formats, by Ken
@@ -43,13 +43,13 @@ functions are handled by the **stringi** package.)
 ## How to Install
 
 1.  From CRAN
-    
+
     ``` r
     install.packages("readtext")
     ```
 
 2.  From GitHub, if you want the latest development version.
-    
+
     ``` r
     # devtools packaged required to install readtext from Github 
     devtools::install_github("quanteda/readtext") 
@@ -87,7 +87,7 @@ DATA_DIR <- system.file("extdata/", package = "readtext")
 # read in all files from a folder
 readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ## readtext object consisting of 13 documents and 0 docvars.
-## # Description: df[,2] [13 × 2]
+## # A data frame: 13 × 2
 ##   doc_id            text                         
 ##   <chr>             <chr>                        
 ## 1 UDHR_chinese.txt  "\"世界人权宣言\n联合国\"..."
@@ -96,7 +96,7 @@ readtext(paste0(DATA_DIR, "/txt/UDHR/*"))
 ## 4 UDHR_english.txt  "\"Universal \"..."          
 ## 5 UDHR_french.txt   "\"Déclaratio\"..."          
 ## 6 UDHR_georgian.txt "\"FLFVBFYBC \"..."          
-## # … with 7 more rows
+## # ℹ 7 more rows
 ```
 
 For files that contain multiple documents, such as comma-separated-value
@@ -107,7 +107,7 @@ texts, using the `text_field` argument:
 # read in comma-separated values and specify text field
 readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 ## readtext object consisting of 5 documents and 3 docvars.
-## # Description: df[,5] [5 × 5]
+## # A data frame: 5 × 5
 ##   doc_id            text                 Year President  FirstName
 ##   <chr>             <chr>               <int> <chr>      <chr>    
 ## 1 inaugCorpus.csv.1 "\"Fellow-Cit\"..."  1789 Washington George   
@@ -132,16 +132,17 @@ it can construct a corpus directly from a readtext object, preserving
 all docvars and other meta-data.
 
 ``` r
-require(quanteda)
-## Loading required package: quanteda
-## Package version: 2.1.2
-## Parallel computing: 2 of 12 threads used.
+library("quanteda")
+## Package version: 3.2.4
+## Unicode version: 14.0
+## ICU version: 71.1
+## Parallel computing: 10 of 10 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
 ## Attaching package: 'quanteda'
-## The following object is masked from 'package:utils':
+## The following objects are masked from 'package:readtext':
 ## 
-##     View
+##     docnames, docvars, texts
 # read in comma-separated values with readtext
 rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 # create quanteda corpus

@@ -34,3 +34,5 @@ rsconnect/
 .Rproj.user
 revdep/*
 
+/doc/
+/Meta/

@@ -21,10 +21,10 @@ library("badger")
 <!-- badges: start -->
 [![CRAN Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
 `r badge_devel("quanteda/readtext", "royalblue")`
-[![R build status](https://github.com/quanteda/readtext/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/readtext/actions)
-[![codecov.io](https://codecov.io/github/quanteda/readtext/coverage.svg?branch=master)][1]
 [![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
+[![R-CMD-check](https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/quanteda/readtext/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/readtext?branch=master)
 <!-- badges: end -->
 
 
@@ -93,7 +93,7 @@ For a more complete demonstration, see the package [vignette](https://readtext.q
 **readtext** was originally developed in early versions of the [**quanteda**](https://github.com/quanteda/quanteda) package for the quantitative analysis of textual data. Because **quanteda**'s corpus constructor recognizes the data.frame format returned by `readtext()`, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.
 
 ```{r}
-require(quanteda)
+library("quanteda")
 # read in comma-separated values with readtext
 rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 # create quanteda corpus
