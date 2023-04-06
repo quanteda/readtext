@@ -1,11 +1,15 @@
 ## Purpose: Fix a problem in examples on Solaris
 
-We were notified recently that there were problems with readtext that needed fixing, in the "donttest" category.  These are now not run in the examples.
+Update suggests dependencies, resolve conflicts with quanteda functions.
 
 ## Test environments
 
-* local OS X install, R 4.1.0
-* win-builder (devel and release)
+* local OS X install, R 4.2.3
+* local macOS 13.2.1, R 4.2.3
+* Ubuntu 22.04 LTS, R 4.2.3
+* Windows release via devtools::check_win_release()
+* Windows devel via devtools::check_win_devel()
+* Windows oldrelease via devtools::check_win_oldrelease()
 
 ## R CMD check results
 
@@ -13,4 +17,4 @@ No ERRORS, NOTES, WARNINGS.
 
 ## Reverse dependencies
 
-No errors when running `devtools::revdep_check()`.
+No errors when running `revdepcheck::revdep_check()`.
