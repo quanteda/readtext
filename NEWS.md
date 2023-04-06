@@ -1,5 +1,11 @@
 readtext v0.81
 ==============
+* Moves some quanteda functions to this package: `docvars()`, `docnames()`, `texts()`
+* Updates print method to use **pillar** instead of tibble
+* Modernizes some of the **testthat** syntax.
+
+readtext v0.81
+==============
 * Fixed a problem in the examples breaking CRAN checks on Solaris.
 * Changed documentation to markdown.
 

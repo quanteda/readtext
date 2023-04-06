@@ -1,5 +1,5 @@
 Package: readtext
-Version: 0.81
+Version: 0.82
 Type: Package
 Title: Import and Handling for Plain and Formatted Text Files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =
@@ -21,13 +21,13 @@ Imports:
     digest,
     httr,
     jsonlite (>= 0.9.10),
+    pillar,
     pdftools,
     readODS (>= 1.7.0),
     readxl,
     streamR,
     stringi,
     striprtf,
-    tibble,
     xml2,
     utils
 Suggests:
@@ -35,11 +35,12 @@ Suggests:
     pkgload,
     rmarkdown,
     quanteda (>= 3.0),
-    testthat
+    testthat,
+    covr
 URL: https://github.com/quanteda/readtext
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
