@@ -8,7 +8,7 @@
 #' 
 #' Based on [stri_enc_detect][stringi::stri_enc_detect], which is in turn based on the ICU
 #' libraries.  See the ICU User Guide, 
-#' <http://userguide.icu-project.org/conversion/detection>.
+#' <https://unicode-org.github.io/icu/userguide/>.
 #' @param x character vector, corpus, or readtext object whose texts' encodings
 #'   will be detected.
 #' @param verbose if `FALSE`, do not print diagnostic report

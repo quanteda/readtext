@@ -6,7 +6,7 @@
 \title{a .zip file of texts containing a variety of differently encoded texts}
 \source{
 The Universal Declaration of Human Rights resources,
-\url{http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
+\url{https://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx}
 }
 \description{
 A set of translations of the Universal Declaration of Human

@@ -24,7 +24,7 @@ a corpus.
 \details{
 Based on \link[stringi:stri_enc_detect]{stri_enc_detect}, which is in turn based on the ICU
 libraries.  See the ICU User Guide,
-\url{http://userguide.icu-project.org/conversion/detection}.
+\url{https://unicode-org.github.io/icu/userguide/}.
 }
 \examples{
 \dontrun{encoding(data_char_encodedtexts)

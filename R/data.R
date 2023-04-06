@@ -2,7 +2,7 @@
 #' @name data_files_encodedtexts
 #' @title a .zip file of texts containing a variety of differently encoded texts
 #' @source The Universal Declaration of Human Rights resources, 
-#'   <http://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx>
+#'   <https://www.ohchr.org/EN/UDHR/Pages/SearchByLang.aspx>
 #' @docType data
 #' @description A set of translations of the Universal Declaration of Human
 #'   Rights, plus one or two other miscellaneous texts, for testing the text
