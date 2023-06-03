@@ -1,4 +1,8 @@
-readtext v0.81
+readtext v0.90
+==============
+* Removes the deprecated quanteda functions: `docvars()`, `docnames()`, `texts()`.
+
+readtext v0.82
 ==============
 * Moves some quanteda functions to this package: `docvars()`, `docnames()`, `texts()`
 * Updates print method to use **pillar** instead of tibble

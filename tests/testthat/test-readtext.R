@@ -2,7 +2,7 @@
 # TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn"t seem to require text_field
 
-context("test readtext.R")
+library("quanteda")
 
 test_that("test readtext with single filename", {
     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
@@ -169,19 +169,19 @@ test_that("test csv files", {
 
 test_that("test tab files", {
     testreadtext <- readtext("../data/tab/test.tab", text_field = "text")
-    expect_that(
-        docvars(testreadtext),
-        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
-                          stringsAsFactors = FALSE))
+    expect_equal(
+        docvars(corpus(testreadtext)),
+        data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
+                          stringsAsFactors = FALSE)
     )
-    expect_that(
-        as.character(testreadtext),
-        equals(c(test.tab.1 = "Lorem ipsum.", test.tab.2 = "Dolor sit"))
+    expect_equal(
+        testreadtext$text,
+        unname(c(test.tab.1 = "Lorem ipsum.", test.tab.2 = "Dolor sit"))
     )
     
     expect_error(
-        readtext("../data/tab/test.tab", text_field = "nonexistant"),
-                 "There is no field called nonexistant"
+        readtext("../data/tab/test.tab", text_field = "nonexistent"),
+                 "There is no field called nonexistent"
     )
     
 })
@@ -825,13 +825,14 @@ test_that("tests for ODS files", {
         readtext("../data/ods/test.ods", text_field = "text"))),
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
-    expect_equal(
-        docvars(readtext("../data/ods/test.ods", text_field = "text")),
-        data.frame(list(
-                        colour = c("orange", "blue", "pink", "pink"),
-                        number = c(0, NA, NA, NA),
-                        taste = c(NA, NA, "sweet", "umami")
-                        ), stringsAsFactors = FALSE)
+    expect_identical(
+        readtext("../data/ods/test.ods", text_field = "text"),
+        structure(list(doc_id = c("test.ods.1", "test.ods.2", "test.ods.3", 
+                                  "test.ods.4"), text = c("The quick", "brown fox", "jumps over", 
+                                                          "the lazy dog."), colour = c("orange", "blue", "pink", "pink"
+                                                          ), number = c(0L, NA, NA, NA), taste = c(NA, NA, "sweet", "umami"
+                                                          )), row.names = c(NA, -4L), class = c("readtext", "data.frame"
+                                                          ))
     )
 
 })
