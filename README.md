@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-[![](https://img.shields.io/badge/devel%20version-0.82-royalblue.svg)](https://github.com/quanteda/readtext)
+[![](https://img.shields.io/badge/devel%20version-0.90-royalblue.svg)](https://github.com/quanteda/readtext)
 [![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
@@ -132,7 +132,7 @@ all docvars and other meta-data.
 
 ``` r
 library("quanteda")
-## Package version: 3.2.4
+## Package version: 3.3.1
 ## Unicode version: 14.0
 ## ICU version: 71.1
 ## Parallel computing: 10 of 10 threads used.
