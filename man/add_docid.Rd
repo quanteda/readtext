@@ -12,8 +12,6 @@ add_docid(x, path, docid_field)
 \item{path}{character; file path from which \code{x} is created; only use in error message}
 
 \item{docid_field}{numeric or character; indicate position of a text column in x}
-
-\item{impute_types}{logical; if \code{TRUE}, set types of variables automatically}
 }
 \description{
 Set the docid for multi-document objects

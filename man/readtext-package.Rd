@@ -25,6 +25,14 @@ verbosity for messages produced when reading files.  See
 \code{\link[=readtext]{readtext()}}.} }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/quanteda/readtext}
+  \item Report bugs at \url{https://github.com/quanteda/readtext/issues}
+}
+
+}
 \author{
 Ken Benoit, Adam Obeng, and Paul Nulty
 }

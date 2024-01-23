@@ -15,7 +15,7 @@ get_temp(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL)
 \item{directory}{logical; if \code{TRUE}, temporary directory will be
 created.}
 
-\item{seed}{a seed value for \code{digest::digest}. If code{NULL}, a random
+\item{seed}{a seed value for \code{digest::digest}. If \code{NULL}, a random
 value will be used.}
 }
 \description{

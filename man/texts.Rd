@@ -13,9 +13,6 @@ texts(x, ...)
 \item{x}{a \link{readtext} object}
 
 \item{...}{not used}
-
-\item{spacer}{when concatenating texts by using \code{groups}, this will be the
-spacing added between texts.  (Default is two spaces.)}
 }
 \value{
 a character vector of the texts in the corpus

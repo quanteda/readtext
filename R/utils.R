@@ -47,7 +47,7 @@ get_docvars_filenames <- function(path, dvsep = "_", docvarnames = NULL,
 #'   `tempdir()` will be used.
 #' @param directory logical; if `TRUE`, temporary directory will be
 #'   created.
-#' @param seed  a seed value for `digest::digest`. If code{NULL}, a random
+#' @param seed  a seed value for `digest::digest`. If `NULL`, a random
 #'   value will be used.
 #' @keywords internal
 get_temp <- function(prefix = "readtext-", temp_dir = NULL, directory = FALSE, seed = NULL) {
@@ -336,7 +336,6 @@ sort_fields <- function(x, path, text_field, impute_types = TRUE) {
 #' @param x data.frame; contains texts and document variables
 #' @param path character; file path from which `x` is created; only use in error message
 #' @param docid_field numeric or character; indicate position of a text column in x
-#' @param impute_types logical; if `TRUE`, set types of variables automatically
 #' @keywords internal
 add_docid <- function(x, path, docid_field) {
     if(is.null(docid_field) && ("doc_id" %in% names(x))) {

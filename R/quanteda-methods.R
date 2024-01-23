@@ -8,8 +8,6 @@
 #' character vector of documents.
 #' @param x a [readtext] object
 #' @param ... not used
-#' @param spacer when concatenating texts by using `groups`, this will be the
-#'   spacing added between texts.  (Default is two spaces.)
 #' @return a character vector of the texts in the corpus
 #' @export
 #' @keywords corpus internal
