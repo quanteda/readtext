@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-[![](https://img.shields.io/badge/devel%20version-0.90-royalblue.svg)](https://github.com/quanteda/readtext)
+[![](https://img.shields.io/badge/devel%20version-0.90.1-royalblue.svg)](https://github.com/quanteda/readtext)
 [![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
@@ -132,16 +132,16 @@ all docvars and other meta-data.
 
 ``` r
 library("quanteda")
-## Package version: 3.3.1
+## Package version: 4.0.0
 ## Unicode version: 14.0
 ## ICU version: 71.1
 ## Parallel computing: 10 of 10 threads used.
 ## See https://quanteda.io for tutorials and examples.
 ## 
 ## Attaching package: 'quanteda'
-## The following objects are masked from 'package:readtext':
+## The following object is masked from 'package:readtext':
 ## 
-##     docnames, docvars, texts
+##     texts
 # read in comma-separated values with readtext
 rt_csv <- readtext(paste0(DATA_DIR, "/csv/inaugCorpus.csv"), text_field = "texts")
 # create quanteda corpus
@@ -150,11 +150,11 @@ summary(corpus_csv, 5)
 ## Corpus consisting of 5 documents, showing 5 documents:
 ## 
 ##               Text Types Tokens Sentences Year  President FirstName
-##  inaugCorpus.csv.1   625   1539        23 1789 Washington    George
+##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
 ##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
-##  inaugCorpus.csv.3   826   2577        37 1797      Adams      John
-##  inaugCorpus.csv.4   717   1923        41 1801  Jefferson    Thomas
-##  inaugCorpus.csv.5   804   2380        45 1805  Jefferson    Thomas
+##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
 ```
 
 ### Text Interchange Format compatibility
