@@ -1,4 +1,4 @@
-url: http://readtext.quanteda.io
+url: https://readtext.quanteda.io
 template:
   params:
     bootswatch: readable
@@ -10,3 +10,5 @@ navbar:
       href: articles/readtext_vignette.html
     - text: "Reference"
       href: reference/index.html
+    - text: "News"
+      href: news/index.html
