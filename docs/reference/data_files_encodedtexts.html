@@ -19,7 +19,7 @@ input functions that need to translate different input encodings."><!-- mathjax 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">readtext</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.91</span>
       </span>
     </div>
 
@@ -69,18 +69,18 @@ input functions that need to translate different input encodings.</p>
 <span class="r-in"><span><span class="va">FILEDIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"data_files_encodedtexts.zip"</span>, package <span class="op">=</span> <span class="st">"readtext"</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>      exdir <span class="op">=</span> <span class="va">FILEDIR</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dir.create(exdir, showWarnings = FALSE, recursive = TRUE):</span> object 'FILEDIR' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FILEDIR' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get encoding from filename</span></span></span>
 <span class="r-in"><span><span class="va">filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">FILEDIR</span>, <span class="st">"\\.txt$"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in list.files(FILEDIR, "\\.txt$"):</span> object 'FILEDIR' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FILEDIR' not found</span>
 <span class="r-in"><span><span class="co"># strip the extension</span></span></span>
 <span class="r-in"><span><span class="va">filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">".txt$"</span>, <span class="st">""</span>, <span class="va">filenames</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is.factor(x):</span> object 'filenames' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'filenames' not found</span>
 <span class="r-in"><span><span class="va">parts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">filenames</span>, <span class="st">"_"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in strsplit(filenames, "_"):</span> object 'filenames' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'filenames' not found</span>
 <span class="r-in"><span><span class="va">fileencodings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">parts</span>, <span class="st">"["</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in lapply(X = X, FUN = FUN, ...):</span> object 'parts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'parts' not found</span>
 <span class="r-in"><span><span class="va">fileencodings</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fileencodings' not found</span>
 <span class="r-in"><span></span></span>
@@ -88,54 +88,54 @@ input functions that need to translate different input encodings.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Encoding conversions not available for this platform:"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Encoding conversions not available for this platform:</span>
 <span class="r-in"><span><span class="va">notAvailableIndex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">fileencodings</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/iconv.html" class="external-link">iconvlist</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fileencodings %in% iconvlist():</span> object 'fileencodings' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fileencodings' not found</span>
 <span class="r-in"><span><span class="va">fileencodings</span><span class="op">[</span><span class="va">notAvailableIndex</span><span class="op">]</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'fileencodings' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># try readtext</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://quanteda.io" class="external-link">quanteda</a></span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: quanteda</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Package version: 3.2.4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Package version: 3.3.1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Unicode version: 14.0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ICU version: 71.1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Parallel computing: 10 of 10 threads used.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> See https://quanteda.io for tutorials and examples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘quanteda’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:readtext’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:readtext’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     docnames, docvars, texts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     texts</span>
 <span class="r-in"><span><span class="va">txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">FILEDIR</span>, <span class="st">"/"</span>, <span class="st">"*.txt"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in paste0(FILEDIR, "/", "*.txt"):</span> object 'FILEDIR' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FILEDIR' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span> <span class="co"># gibberish</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span> <span class="co"># hex</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">40</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span> <span class="co"># hex</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># read them in again</span></span></span>
 <span class="r-in"><span><span class="va">txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">FILEDIR</span>,  <span class="st">"/"</span>, <span class="st">"*.txt"</span><span class="op">)</span>, encoding <span class="op">=</span> <span class="va">fileencodings</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in paste0(FILEDIR, "/", "*.txt"):</span> object 'FILEDIR' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FILEDIR' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span>  <span class="co"># English</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span>  <span class="co"># Arabic, looking good </span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">40</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span> <span class="co"># Cyrillic, looking good</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span>  <span class="co"># Chinese, looking good</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="texts.html">texts</a></span><span class="op">(</span><span class="va">txts</span><span class="op">)</span><span class="op">[</span><span class="fl">26</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">80</span><span class="op">)</span> <span class="co"># Hindi, looking good</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in texts(txts):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">FILEDIR</span>, <span class="st">"/"</span>, <span class="st">"*.txt"</span><span class="op">)</span>, encoding <span class="op">=</span> <span class="va">fileencodings</span>,</span></span>
 <span class="r-in"><span>                  docvarsfrom <span class="op">=</span> <span class="st">"filenames"</span>, </span></span>
 <span class="r-in"><span>                  docvarnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"document"</span>, <span class="st">"language"</span>, <span class="st">"inputEncoding"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in paste0(FILEDIR, "/", "*.txt"):</span> object 'FILEDIR' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'FILEDIR' not found</span>
 <span class="r-in"><span><span class="va">encodingCorpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://quanteda.io/reference/corpus.html" class="external-link">corpus</a></span><span class="op">(</span><span class="va">txts</span>, source <span class="op">=</span> <span class="st">"Created by encoding-tests.R"</span><span class="op">)</span> </span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in corpus(txts, source = "Created by encoding-tests.R"):</span> object 'txts' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'txts' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">encodingCorpus</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summary(encodingCorpus):</span> object 'encodingCorpus' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'encodingCorpus' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

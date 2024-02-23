@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">readtext</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.82</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.91</span>
       </span>
     </div>
 
@@ -94,11 +94,11 @@
 <p>From GitHub, if you want the latest development version.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># devtools packaged required to install readtext from Github </span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"quanteda/readtext"</span><span class="op">)</span> </span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"quanteda/readtext"</span><span class="op">)</span> </span></code></pre></div>
 </li>
 </ol>
 <p>Linux note: There are a couple of dependencies that may not be available on linux systems. On Debian/Ubuntu try installing these packages by running these commands at the command line:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libpoppler-cpp-dev   <span class="co"># for antiword</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libpoppler-cpp-dev   <span class="co"># for antiword</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="demonstration-reading-one-or-more-text-files">Demonstration: Reading one or more text files<a class="anchor" aria-label="anchor" href="#demonstration-reading-one-or-more-text-files"></a>
@@ -106,8 +106,7 @@
 <p><strong>readtext</strong> supports plain text files (.txt), data in some form of JavaScript Object Notation (.json), comma-or tab-separated values (.csv, .tab, .tsv), XML documents (.xml), as well as PDF, Microsoft Word formatted files and other document formats (.pdf, .doc, .docx, .odt, .rtf). <strong>readtext</strong> also handles multiple files and file types using for instance a “glob” expression, files from a URL or an archive file (.zip, .tar, .tar.gz, .tar.bz).</p>
 <p>The file formats are determined automatically by the filename extensions. If a file has no extension or is unknown, <strong>readtext</strong> will assume that it is plain text. The following command, for instance, will load in all of the files from the subdirectory <code>txt/UDHR/</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quanteda/readtext" class="external-link">readtext</a></span><span class="op">)</span></span>
-<span><span class="co">## Loading required package: readtext</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/quanteda/readtext" class="external-link">"readtext"</a></span><span class="op">)</span></span>
 <span><span class="co"># get the data directory from readtext</span></span>
 <span><span class="va">DATA_DIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/"</span>, package <span class="op">=</span> <span class="st">"readtext"</span><span class="op">)</span></span>
 <span></span>
@@ -149,16 +148,16 @@
 <p><strong>readtext</strong> was originally developed in early versions of the <a href="https://github.com/quanteda/quanteda" class="external-link"><strong>quanteda</strong></a> package for the quantitative analysis of textual data. Because <strong>quanteda</strong>’s corpus constructor recognizes the data.frame format returned by <code><a href="reference/readtext.html">readtext()</a></code>, it can construct a corpus directly from a readtext object, preserving all docvars and other meta-data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://quanteda.io" class="external-link">"quanteda"</a></span><span class="op">)</span></span>
-<span><span class="co">## Package version: 3.2.4</span></span>
+<span><span class="co">## Package version: 3.3.1</span></span>
 <span><span class="co">## Unicode version: 14.0</span></span>
 <span><span class="co">## ICU version: 71.1</span></span>
 <span><span class="co">## Parallel computing: 10 of 10 threads used.</span></span>
 <span><span class="co">## See https://quanteda.io for tutorials and examples.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Attaching package: 'quanteda'</span></span>
-<span><span class="co">## The following objects are masked from 'package:readtext':</span></span>
+<span><span class="co">## The following object is masked from 'package:readtext':</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##     docnames, docvars, texts</span></span>
+<span><span class="co">##     texts</span></span>
 <span><span class="co"># read in comma-separated values with readtext</span></span>
 <span><span class="va">rt_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/readtext.html">readtext</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">DATA_DIR</span>, <span class="st">"/csv/inaugCorpus.csv"</span><span class="op">)</span>, text_field <span class="op">=</span> <span class="st">"texts"</span><span class="op">)</span></span>
 <span><span class="co"># create quanteda corpus</span></span>
@@ -221,7 +220,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=readtext" class="external-link"><img src="https://www.r-pkg.org/badges/version/readtext" alt="CRAN Version"></a></li>
-<li><a href="https://github.com/quanteda/readtext" class="external-link"><img src="https://img.shields.io/badge/devel%20version-0.82-royalblue.svg"></a></li>
+<li><a href="https://github.com/quanteda/readtext" class="external-link"><img src="https://img.shields.io/badge/devel%20version-0.91-royalblue.svg"></a></li>
 <li><a href="https://CRAN.R-project.org/package=readtext" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/readtext" alt="Downloads"></a></li>
 <li><a href="https://CRAN.R-project.org/package=readtext" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange" alt="Total Downloads"></a></li>
 <li><a href="https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/quanteda/readtext/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
