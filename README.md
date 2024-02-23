@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/readtext)](https://CRAN.R-project.org/package=readtext)
-[![](https://img.shields.io/badge/devel%20version-0.90.1-royalblue.svg)](https://github.com/quanteda/readtext)
+[![](https://img.shields.io/badge/devel%20version-0.91-royalblue.svg)](https://github.com/quanteda/readtext)
 [![Downloads](https://cranlogs.r-pkg.org/badges/readtext)](https://CRAN.R-project.org/package=readtext)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/readtext?color=orange)](https://CRAN.R-project.org/package=readtext)
@@ -51,7 +51,7 @@ functions are handled by the **stringi** package.)
 
     ``` r
     # devtools packaged required to install readtext from Github 
-    devtools::install_github("quanteda/readtext") 
+    remotes::install_github("quanteda/readtext") 
     ```
 
 Linux note: There are a couple of dependencies that may not be available
@@ -78,8 +78,7 @@ assume that it is plain text. The following command, for instance, will
 load in all of the files from the subdirectory `txt/UDHR/`:
 
 ``` r
-require(readtext)
-## Loading required package: readtext
+library("readtext")
 # get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
 
@@ -132,7 +131,7 @@ all docvars and other meta-data.
 
 ``` r
 library("quanteda")
-## Package version: 4.0.0
+## Package version: 3.3.1
 ## Unicode version: 14.0
 ## ICU version: 71.1
 ## Parallel computing: 10 of 10 threads used.
@@ -150,11 +149,11 @@ summary(corpus_csv, 5)
 ## Corpus consisting of 5 documents, showing 5 documents:
 ## 
 ##               Text Types Tokens Sentences Year  President FirstName
-##  inaugCorpus.csv.1   625   1540        23 1789 Washington    George
+##  inaugCorpus.csv.1   625   1539        23 1789 Washington    George
 ##  inaugCorpus.csv.2    96    147         4 1793 Washington    George
-##  inaugCorpus.csv.3   826   2578        37 1797      Adams      John
-##  inaugCorpus.csv.4   717   1927        41 1801  Jefferson    Thomas
-##  inaugCorpus.csv.5   804   2381        45 1805  Jefferson    Thomas
+##  inaugCorpus.csv.3   826   2577        37 1797      Adams      John
+##  inaugCorpus.csv.4   717   1923        41 1801  Jefferson    Thomas
+##  inaugCorpus.csv.5   804   2380        45 1805  Jefferson    Thomas
 ```
 
 ### Text Interchange Format compatibility

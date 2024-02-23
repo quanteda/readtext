@@ -1,12 +1,13 @@
-## Purpose: Fix a problem in examples on Solaris
+## Purpose
 
-Update suggests dependencies, resolve conflicts with quanteda functions.
+* Fixes NOTES on some platforms in v0.90.
+* Updates tests for compatibility with quanteda 4.0.
 
 ## Test environments
 
-* local OS X install, R 4.3.0
-* local macOS 13.2.1, R 4.3.0
-* Ubuntu 22.04 LTS, R 4.3.0
+* local OS X install, R 4.3.2
+* local macOS 14.2.1, R 4.3.2
+* Ubuntu 22.04 LTS, R 4.3.2
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
 * Windows oldrelease via devtools::check_win_oldrelease()

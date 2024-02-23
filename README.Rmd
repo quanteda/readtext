@@ -50,7 +50,7 @@ As encoding can also be a challenging issue for those reading in texts, we inclu
 
     ```{r, eval = FALSE}
     # devtools packaged required to install readtext from Github 
-    devtools::install_github("quanteda/readtext") 
+    remotes::install_github("quanteda/readtext") 
     ```
 
 Linux note: There are a couple of dependencies that may not be available on linux systems. On Debian/Ubuntu try installing these packages by running these commands at the command line:
@@ -66,7 +66,7 @@ sudo apt-get install libpoppler-cpp-dev   # for antiword
 The file formats are determined automatically by the filename extensions.  If a file has no extension or is unknown, **readtext** will assume that it is plain text.  The following command, for instance, will load in all of the files from the subdirectory `txt/UDHR/`:
 
 ```{r}
-require(readtext)
+library("readtext")
 # get the data directory from readtext
 DATA_DIR <- system.file("extdata/", package = "readtext")
 

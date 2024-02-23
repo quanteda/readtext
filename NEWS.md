@@ -1,3 +1,7 @@
+readtext v0.91
+==============
+* Completes changes for compatibility with quanteda 4.0.
+
 readtext v0.90
 ==============
 * Removes the deprecated quanteda functions: `docvars()`, `docnames()`, `texts()`.
