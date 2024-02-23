@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://readtext.quanteda.io/404.html</loc>
+    <loc>https://readtext.quanteda.io/404.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/CONDUCT.html</loc>
+    <loc>https://readtext.quanteda.io/CONDUCT.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/articles/index.html</loc>
+    <loc>https://readtext.quanteda.io/articles/index.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/articles/readtext_vignette.html</loc>
+    <loc>https://readtext.quanteda.io/articles/readtext_vignette.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/authors.html</loc>
+    <loc>https://readtext.quanteda.io/authors.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/index.html</loc>
+    <loc>https://readtext.quanteda.io/index.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/news/index.html</loc>
+    <loc>https://readtext.quanteda.io/news/index.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/add_docid.html</loc>
+    <loc>https://readtext.quanteda.io/reference/add_docid.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/as.character.readtext.html</loc>
+    <loc>https://readtext.quanteda.io/reference/as.character.readtext.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/basename_unique.html</loc>
+    <loc>https://readtext.quanteda.io/reference/basename_unique.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/cache_remote.html</loc>
+    <loc>https://readtext.quanteda.io/reference/cache_remote.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/data_char_encodedtexts.html</loc>
+    <loc>https://readtext.quanteda.io/reference/data_char_encodedtexts.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/data_files_encodedtexts.html</loc>
+    <loc>https://readtext.quanteda.io/reference/data_files_encodedtexts.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/docnames.html</loc>
+    <loc>https://readtext.quanteda.io/reference/docnames.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/docvars.html</loc>
+    <loc>https://readtext.quanteda.io/reference/docvars.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/encoding.html</loc>
+    <loc>https://readtext.quanteda.io/reference/encoding.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/get_nexis_html.html</loc>
+    <loc>https://readtext.quanteda.io/reference/get_nexis_html.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/get_temp.html</loc>
+    <loc>https://readtext.quanteda.io/reference/get_temp.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/impute_types.html</loc>
+    <loc>https://readtext.quanteda.io/reference/impute_types.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/index.html</loc>
+    <loc>https://readtext.quanteda.io/reference/index.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/print.readtext.html</loc>
+    <loc>https://readtext.quanteda.io/reference/print.readtext.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/readtext-package.html</loc>
+    <loc>https://readtext.quanteda.io/reference/readtext-package.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/readtext.html</loc>
+    <loc>https://readtext.quanteda.io/reference/readtext.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/readtext_options.html</loc>
+    <loc>https://readtext.quanteda.io/reference/readtext_options.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/sort_fields.html</loc>
+    <loc>https://readtext.quanteda.io/reference/sort_fields.html</loc>
   </url>
   <url>
-    <loc>http://readtext.quanteda.io/reference/texts.html</loc>
+    <loc>https://readtext.quanteda.io/reference/texts.html</loc>
   </url>
 </urlset>

@@ -3,8 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   readtext_vignette: readtext_vignette.html
-last_built: 2024-02-23T05:03Z
+last_built: 2024-02-23T05:11Z
 urls:
-  reference: http://readtext.quanteda.io/reference
-  article: http://readtext.quanteda.io/articles
+  reference: https://readtext.quanteda.io/reference
+  article: https://readtext.quanteda.io/articles
 
