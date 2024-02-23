@@ -16,6 +16,5 @@
 #'   verbosity for messages produced when reading files.  See
 #'   [readtext()].} }
 #' @author Ken Benoit, Adam Obeng, and Paul Nulty
-#' @docType package
 #' @name readtext-package
-NULL
+"_PACKAGE"
