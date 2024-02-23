@@ -2,7 +2,7 @@
 # TODO: Check and remove extranous codes # TODO: recurse file listing for e.g. remote ZIP file
 # TODO: readtext with csv doesn"t seem to require text_field
 
-library("quanteda")
+dvars <- function(x) as.data.frame(x)[, -c(1:2)]
 
 test_that("test readtext with single filename", {
     fox <- c(fox.txt = "The quick brown fox jumps over the lazy dog.")
@@ -146,10 +146,9 @@ test_that("test warning for unrecognized filetype", {
 test_that("test csv files", {
     # Test corpus object
     testcorpus <- readtext("../data/csv/test.csv", text_field = "text")
-    expect_that(
-        docvars(testcorpus),
-        equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)),
-                          stringsAsFactors = FALSE))
+    expect_identical(
+        as.data.frame(testcorpus)[, -c(1:2)],
+        data.frame(list(colour = c("green", "red"), number = c(42L, 99L)))
     )
     expect_equal(
         as.character(testcorpus),
@@ -168,14 +167,14 @@ test_that("test csv files", {
 })
 
 test_that("test tab files", {
-    testreadtext <- readtext("../data/tab/test.tab", text_field = "text")
+    testcorpus <- readtext("../data/tab/test.tab", text_field = "text")
     expect_equal(
-        docvars(corpus(testreadtext)),
+        as.data.frame(testcorpus)[, -c(1:2)],
         data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
                           stringsAsFactors = FALSE)
     )
     expect_equal(
-        testreadtext$text,
+        testcorpus$text,
         unname(c(test.tab.1 = "Lorem ipsum.", test.tab.2 = "Dolor sit"))
     )
     
@@ -187,14 +186,14 @@ test_that("test tab files", {
 })
 
 test_that("test tsv files", {
-    testreadtext <- readtext("../data/tsv/test.tsv", text_field = "text")
+    testcorpus <- readtext("../data/tsv/test.tsv", text_field = "text")
     expect_that(
-        docvars(testreadtext),
+        as.data.frame(testcorpus)[, -c(1:2)],
         equals(data.frame(list(colour = c("green", "red"), number = c(42, 99)), 
                           stringsAsFactors = FALSE))
     )
     expect_that(
-        as.character(testreadtext),
+        as.character(testcorpus),
         equals(c(test.tsv.1 = "Lorem ipsum.", test.tsv.2 = "Dolor sit"))
     )
     
@@ -218,8 +217,8 @@ test_that("test xml files", {
         unname(as.character(testcorpus)),
         c("Lorem ipsum.", "Dolor sit")
     )
-    expect_equal(
-        docnames(testcorpus),
+    expect_identical(
+        testcorpus$doc_id,
         c("test.xml.1", "test.xml.2")
     )
 
@@ -227,13 +226,13 @@ test_that("test xml files", {
         readtext("../data/xml/test.xml", text_field = 1),
         "You should specify text_field by name.*"
     )
-    expect_that(
+    expect_identical(
         unname(as.character(suppressWarnings(readtext("../data/xml/test.xml", text_field = 1)))),
-        equals(c("Lorem ipsum.", "Dolor sit"))
+        c("Lorem ipsum.", "Dolor sit")
     )
-    expect_that(
-        docnames(testcorpus),
-        equals(c("test.xml.1", "test.xml.2"))
+    expect_identical(
+        testcorpus$doc_id,
+        c("test.xml.1", "test.xml.2")
     )
     
     expect_error(
@@ -275,20 +274,20 @@ test_that("test xml files with XPath", {
 test_that("test readtext() with docvarsfrom = filenames", {
     
     expect_that(
-        docvars(readtext("../data/docvars/one/*", docvarsfrom = "filenames")),
+        dvars(readtext("../data/docvars/one/*", docvarsfrom = "filenames")),
         equals(data.frame(list(docvar1 = c(1L, 2L), docvar2 = c("apple", "orange")), 
                           stringsAsFactors = FALSE))
     )
     
     expect_that(
-        docvars(readtext("../data/docvars/dash/*", docvarsfrom = "filenames", dvsep = "-")),
+        dvars(readtext("../data/docvars/dash/*", docvarsfrom = "filenames", dvsep = "-")),
         equals(data.frame(list(docvar1 = c(1,2), docvar2 = c("apple", "orange")), 
                           stringsAsFactors = FALSE))
     )
     
     
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames")),
+        dvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames")),
         equals(data.frame(list(docvar1 = c(1,2), docvar2 = c("apple", "orange")), docvar3 = c("red", "orange"), 
                           stringsAsFactors = FALSE))
     )
@@ -304,27 +303,27 @@ test_that("test readtext() with docvarsfrom = filenames", {
     )
     
     expect_that(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+        dvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
                          docvarnames = c("id", "fruit", "colour"))),
         equals(data.frame(list(id = c(1,2), fruit = c("apple", "orange")), 
                           colour = c("red", "orange"), stringsAsFactors = FALSE))
     )
 
     expect_warning(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+        dvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
                          docvarnames = c("id", "fruit")
         )),
         "Fewer docnames supplied than existing docvars - last 1 docvar given generic names."
     )
     expect_that(
-        docvars(suppressWarnings(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+        dvars(suppressWarnings(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
                          docvarnames = c("id", "fruit")))),
         equals(data.frame(list(id = c(1,2), fruit = c("apple", "orange")), 
                           docvar3 = c("red", "orange"), stringsAsFactors = FALSE))
     )
     
     expect_warning(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
+        dvars(readtext("../data/docvars/two/*txt", docvarsfrom = "filenames",
                          docvarnames = c("id")
         )),
         "Fewer docnames supplied than existing docvars - last 2 docvars given generic names."
@@ -333,19 +332,19 @@ test_that("test readtext() with docvarsfrom = filenames", {
     #TODO: What happens if you supply more docnames?
     
     expect_error(
-        docvars(readtext("../data/docvars/two/*txt", docvarsfrom = "nonesuch"))
+        dvars(readtext("../data/docvars/two/*txt", docvarsfrom = "nonesuch"))
     )
     
     #  Docvars from both metadata and filename
     expect_equal(
-        docvars(readtext("../data/docvars/csv/*", docvarsfrom = c("filenames"), docvarnames = c("id", "fruit"), text_field = "text")),
+        dvars(readtext("../data/docvars/csv/*", docvarsfrom = c("filenames"), docvarnames = c("id", "fruit"), text_field = "text")),
         data.frame(list(shape = c("round", NA), texture = c(NA, "rough"), id = c(1, 2), fruit = c("apple", "orange")), 
                    stringsAsFactors = FALSE)
     )
     
     # #  Docvars from both metadata and filename
     # expect_equal(
-    #     docvars(readtext("../data/docvars/json/*", docvarsfrom = c("filenames", "metadata"), docvarnames = c("id", "fruit"), text_field = "text")),
+    #     dvars(readtext("../data/docvars/json/*", docvarsfrom = c("filenames", "metadata"), docvarnames = c("id", "fruit"), text_field = "text")),
     #     data.frame(list(id = c(1, 2), fruit = c("apple", "orange"), shape = c("round", NA), texture = c(NA, "rough")), stringsAsFactors = FALSE)
     # )
     
@@ -353,7 +352,7 @@ test_that("test readtext() with docvarsfrom = filenames", {
 
 test_that("test docvars.readtext warning with field != NULL", {
     expect_identical(
-        docvars(readtext("../data/fox/fox.txt")),
+        dvars(readtext("../data/fox/fox.txt")),
         data.frame(x = 1)[, 0, drop=FALSE]
     )
 })
@@ -393,7 +392,7 @@ test_that("test reading structured text files with different columns", {
     )
     
     expect_equal(
-        docvars(testcorpus),
+        dvars(testcorpus),
         data.frame(list(
             color = c("green", "orange", NA, NA), 
             shape = c(NA, NA, "round", "long")
@@ -643,7 +642,7 @@ test_that("test json files", {
         stringsAsFactors = FALSE)
     expected_docvars <- expected_docvars[order(expected_docvars$number),]
     row.names(expected_docvars) <- NULL
-    actual_docvars <- docvars(readtext("../data/json/test*json", text_field = "text"))
+    actual_docvars <- dvars(readtext("../data/json/test*json", text_field = "text"))
     actual_docvars <- actual_docvars[order(actual_docvars$number),]
     row.names(actual_docvars) <- NULL
     row.names(actual_docvars)
@@ -673,12 +672,12 @@ test_that("test json files", {
     )
     
     expect_equal(
-        docvars(tweetSource)$statuses_count,
+        dvars(tweetSource)$statuses_count,
         c(16204, 200)
     )
     
     expect_equal(
-        docvars(tweetSource)$screen_name,
+        dvars(tweetSource)$screen_name,
         c("foxxy", "dog")
     )
     
@@ -773,7 +772,7 @@ test_that("readtext called with textfield works with deprecation warning", {
         6
     )
     expect_equal(
-        nrow(docvars(readtext("../data/csv/test*.csv", text_field = "text"))),
+        nrow(dvars(readtext("../data/csv/test*.csv", text_field = "text"))),
         6
     )
     expect_equal(
@@ -794,7 +793,7 @@ test_that("tests for Excel files", {
         c("The quick", "brown fox", "jumps over", "the lazy dog.")
     )
     expect_that(
-        docvars(readtext("../data/xls/test.xlsx", text_field = "text")),
+        dvars(readtext("../data/xls/test.xlsx", text_field = "text")),
         equals(data.frame(list(
                         colour = c("orange", "blue", "pink", "pink"),
                         number = c(0, NA, NA, NA),
@@ -809,7 +808,7 @@ test_that("tests for Excel files", {
           "test.xls.3" = "jumps over", "test.xls.4" = "the lazy dog.")
     )
     expect_that(
-        docvars(readtext("../data/xls/test.xls", text_field = "text")),
+        dvars(readtext("../data/xls/test.xls", text_field = "text")),
         equals(data.frame(list(
                         colour = c("orange", "blue", "pink", "pink"),
                         number = c(0, NA, NA, NA),
