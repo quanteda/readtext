@@ -37,7 +37,7 @@ Suggests:
     quanteda (>= 3.0),
     testthat,
     covr
-URL: https://github.com/quanteda/readtext
+URL: https://readtext.quanteda.io/, https://github.com/quanteda/readtext
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
