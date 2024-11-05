@@ -92,7 +92,7 @@
 #'   \item 3: output detailed file-related messages
 #' }
 #' @param ... additional arguments passed through to low-level file reading 
-#'   function, such as [file()], [fread()], etc.  Useful 
+#'   function, such as [file()], [data.table::fread()], etc.  Useful 
 #'   for specifying an input encoding option, which is specified in the same was
 #'   as it would be give to [iconv()].  See the Encoding section of 
 #'   [file] for details.  
