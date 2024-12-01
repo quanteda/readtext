@@ -37,10 +37,10 @@ Suggests:
     quanteda (>= 3.0),
     testthat,
     covr
-URL: https://github.com/quanteda/readtext
+URL: https://readtext.quanteda.io/, https://github.com/quanteda/readtext
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/readtext/issues
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
