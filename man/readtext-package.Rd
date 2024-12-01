@@ -28,6 +28,7 @@ verbosity for messages produced when reading files.  See
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://readtext.quanteda.io/}
   \item \url{https://github.com/quanteda/readtext}
   \item Report bugs at \url{https://github.com/quanteda/readtext/issues}
 }
