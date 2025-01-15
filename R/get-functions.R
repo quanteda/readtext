@@ -181,7 +181,8 @@ get_odt <- function(path, source, ...) {
 	
 	txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
 	txt <- paste0(txt, collapse = "\n")
-	
+
+	unlink(path, recursive = TRUE)
 	data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
@@ -198,6 +199,7 @@ get_docx <- function(path, source, ...) {
     txt <- txt[!grepl("^\\s*$", txt)] # Remove text which is just whitespace
     txt <- paste0(txt, collapse = "\n")
 
+    unlink(path, recursive = TRUE)
     data.frame(text = txt, stringsAsFactors = FALSE)
 }
 
