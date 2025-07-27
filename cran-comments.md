@@ -1,13 +1,11 @@
 ## Purpose
 
-* Fixes NOTES on some platforms in v0.90.
-* Updates tests for compatibility with quanteda 4.0.
+* Fixes broken link to fread() noted by CRAN (in NOTE).
 
 ## Test environments
 
-* local OS X install, R 4.3.2
-* local macOS 14.2.1, R 4.3.2
-* Ubuntu 22.04 LTS, R 4.3.2
+* local OS X install, R 4.5.1
+* local macOS 15.5, R 4.5.1
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
 * Windows oldrelease via devtools::check_win_oldrelease()

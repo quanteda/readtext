@@ -117,7 +117,7 @@ when \code{file} is a URL.}
 }}
 
 \item{...}{additional arguments passed through to low-level file reading
-function, such as \code{\link[=file]{file()}}, \code{\link[data.table:fread]{data.table::fread()}}, etc.  Useful
+function, such as \code{\link[=file]{file()}}, \link[data.table]{fread}, etc.  Useful
 for specifying an input encoding option, which is specified in the same was
 as it would be give to \code{\link[=iconv]{iconv()}}.  See the Encoding section of
 \link{file} for details.}

@@ -1,5 +1,6 @@
 url: https://readtext.quanteda.io
 template:
+  bootstrap: 3
   params:
     bootswatch: readable
 navbar:

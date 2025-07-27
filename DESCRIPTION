@@ -1,5 +1,5 @@
 Package: readtext
-Version: 0.92
+Version: 0.92.1
 Type: Package
 Title: Import and Handling for Plain and Formatted Text Files
 Authors@R: c( person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role =

@@ -1,10 +1,9 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: 3.6.4
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   readtext_vignette: readtext_vignette.html
-last_built: 2024-02-23T05:11Z
+last_built: 2025-07-27T09:25Z
 urls:
   reference: https://readtext.quanteda.io/reference
   article: https://readtext.quanteda.io/articles
-
